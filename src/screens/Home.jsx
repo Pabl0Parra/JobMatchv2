@@ -1,10 +1,11 @@
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
+import DisplayContainer from '../components/DisplayContainer';
 
 const Home = () => {
   return (
-    <View>
+    <DisplayContainer>
       <Text>Home</Text>
-    </View>
+    </DisplayContainer>
   )
 }
 
