@@ -1,5 +1,4 @@
 import React from "react";
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 //screens
@@ -10,16 +9,11 @@ import Messages from "../screens/Messages";
 import Profile from "../screens/Profile";
 
 //icons
-import { AntDesign } from "@expo/vector-icons";
-import { MaterialIcons } from '@expo/vector-icons';
-import { Fontisto } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import { MaterialIcons, Fontisto, FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
-function BottomTab() {
+export default function BottomTab() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -88,11 +82,3 @@ function BottomTab() {
     </Tab.Navigator>
   );
 }
-
-export default function NavigationTab(){
-  return(
-  <NavigationContainer>
-    <BottomTab/>
-  </NavigationContainer>
-  )
-} 
