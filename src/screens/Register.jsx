@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import {
-  View,
   Text,
   Image,
   TextInput,
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import DisplayContainer from "../components/DisplayContainer";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -39,14 +39,19 @@ const Register = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <DisplayContainer>
       <Image
-        // Aquí se añade el logo
-        // source={require("./logo.png")}
-        style={styles.logo}
+        source={{
+          uri: `https://us.123rf.com/450wm/mathier/mathier1905/mathier190500002/mathier190500002.jpg`,
+        }}
+        style={styles.image}
         resizeMode="contain"
       />
-      <Text style={styles.h1}>Logo</Text>
+      <Text style={styles.textDescription}>
+        Forem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis
+        molestie, est a, mattis tellus.
+      </Text>
+      <Text style={styles.text}>Crea tu cuenta</Text>
       <TextInput
         style={styles.input}
         placeholder="Correo"
@@ -71,61 +76,60 @@ const Register = () => {
         secureTextEntry
       />
       <TouchableOpacity style={styles.button} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Crea tu cuenta</Text>
+        <Text style={styles.text}>Crea tu cuenta</Text>
       </TouchableOpacity>
-      <Text style={styles.registerText}>
-        ¿Tienes cuenta? <Text style={styles.registerLink}>Entra aquí</Text>
+      <Text style={styles.text}>
+        ¿Aún no tienes una cuenta?
+        <Text
+          style={{ ...styles.text, ...styles.textButton }}
+          onPress={() => navigation.navigate("Login")}
+        >
+          Crear cuenta
+        </Text>
       </Text>
-    </View>
+    </DisplayContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    padding: 32,
-    backgroundColor: "#fff",
+  image: {
+    width: 79,
+    height: 79,
   },
-  logo: {
-    width: 128,
-    height: 128,
-    marginVertical: 32,
+  text: {
+    textAlign: "center",
+    fontFamily: "Roboto",
+    fontSize: 18,
+    fontWeight: "semibold",
   },
-  h1: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 82,
+  textDescription: {
+    textAlign: "center",
+    fontFamily: "Inter",
+    fontSize: 16,
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: 18,
   },
   input: {
-    width: "100%",
-    height: 56,
-    paddingHorizontal: 16,
-    marginBottom: 16,
+    width: 300,
+    height: 40,
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 4,
+    borderColor: "gray",
+    borderRadius: 6,
+    margin: 10,
+    padding: 10,
   },
   button: {
-    width: "100%",
-    height: 56,
-    backgroundColor: "gray",
     justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 4,
+    width: 288,
+    height: 40,
+    backgroundColor: "#D9D9D9",
+    borderRadius: 25,
   },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  registerText: {
-    marginTop: 16,
+  textButton: {
+    color: "#0000ff",
     fontSize: 16,
-  },
-  registerLink: {
-    color: "grey",
-    fontWeight: "bold",
+    marginLeft: 8,
   },
 });
 
