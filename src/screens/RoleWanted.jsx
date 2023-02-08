@@ -1,29 +1,26 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Button } from "react-native";
 
-const CompanyScreen = ({ navigation }) => {
-  const [company, setCompany] = useState("");
-  const [sector, setSector] = useState("");
+const RoleWantedScreen = ({ navigation }) => {
+  const [role, setRole] = useState("");
 
   return (
     <View style={styles.container}>
-      <Text style={styles.questionText}>¿Cómo se llama la empresa?</Text>
-      <Text style={styles.requestText}>Introduce los siguientes datos:</Text>
+      <Text style={styles.questionText}>¿Qué perfil buscas?</Text>
+      <Text style={styles.requestText}>
+        Por favor, introduce el rol deseado:
+      </Text>
       <TextInput
         style={styles.input}
-        value={company}
-        placeholder="Nombre de la empresa"
-        onChangeText={(text) => setCompany(text)}
+        value={role}
+        placeholder="País"
+        onChangeText={(text) => setRole(text)}
       />
-      <TextInput
-        style={styles.input}
-        value={sector}
-        placeholder="Sector de la empresa"
-        onChangeText={(text) => setSector(text)}
-      />
+
       <Button
         title="Siguiente"
-        onPress={() => navigation.navigate("RoleWanted", { company, sector })}
+        // TODO: Uncomment this line and pass the role to the next screen WHICH IS?
+        // onPress={() => navigation.navigate("Email", { role })}
         style={styles.nextButton}
       />
     </View>
@@ -61,4 +58,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CompanyScreen;
+export default CountryScreen;
