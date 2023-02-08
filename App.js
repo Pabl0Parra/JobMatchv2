@@ -4,9 +4,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import theme from "./src/theme";
 import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
-import Home from "./src/screens/Home";
 import { auth } from "./src/firebase/credentials";
 import { onAuthStateChanged } from "@firebase/auth";
+import BottomTab from "./src/components/BottomTab";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,8 +31,7 @@ export default function App() {
           </>
         ) 
         : 
-        null}
-        <Stack.Screen name="Home" component={Home} />
+        <BottomTab />}
       </Stack.Navigator>
     </NavigationContainer>
   );
