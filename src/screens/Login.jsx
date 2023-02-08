@@ -10,7 +10,7 @@ import DisplayContainer from "../components/DisplayContainer";
 
 const Login = () => {
   return (
-    <DisplayContainer>
+    <DisplayContainer >
       <Image
         style={styles.image}
         source={{

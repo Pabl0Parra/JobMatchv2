@@ -1,13 +1,14 @@
 import { StyleSheet, View } from 'react-native';
 
-const DisplayContainer = ({children}) => {
+const DisplayContainer = ({children, style, ...restOfProp}) => {
 
   const componentStyles = [
-    styles.container
+    styles.container,
+    style
   ]
 
   return (
-    <View style={componentStyles}>
+    <View style={componentStyles} {...restOfProp}>
       {children}
     </View>
   )
