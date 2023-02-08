@@ -10,23 +10,20 @@ import {
 import DisplayContainer from "../components/DisplayContainer";
 import loginWithEmail from "../firebase/functions/loginWithEmailPassword";
 import loginWithGoogle from "../firebase/functions/LoginWithGoogle";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
-const Login = ({navigate}) => {
-
+const Login = ({ navigate }) => {
   const [dataLogin, setDataLogin] = useState({ email: "", password: "" });
   const navigation = useNavigation();
 
   const emailLogin = async (e) => {
-
     const res = await loginWithEmail(dataLogin.email, dataLogin.password);
 
     if (res === undefined) {
       return console.log("email o password incorrecto");
     } else {
-      navigation.navigate('Home');
-    };
-
+      navigation.navigate("Home");
+    }
   };
 
   return (
@@ -77,7 +74,15 @@ const Login = ({navigate}) => {
           </Text>
         </Pressable>
       </View>
-      <Text style={styles.text}>¿Aún no tienes una cuenta? Crear cuenta</Text>
+      <Text style={styles.text}>
+        ¿Aún no tienes una cuenta?
+        <Text
+          style={{ ...styles.text, ...styles.textButton }}
+          onPress={() => navigation.navigate("Register")}
+        >
+          Crear cuenta
+        </Text>
+      </Text>
     </DisplayContainer>
   );
 };
@@ -116,6 +121,11 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: "#D9D9D9",
     borderRadius: 25,
+  },
+  textButton: {
+    color: "#0000ff",
+    fontSize: 16,
+    marginLeft: 8,
   },
 });
 
