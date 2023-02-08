@@ -1,29 +1,29 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Button } from "react-native";
 
-const CountryScreen = ({ navigation }) => {
-  const [country, setCountry] = useState("");
-  const [city, setCity] = useState("");
+const CompanyScreen = ({ navigation }) => {
+  const [company, setCompany] = useState("");
+  const [sector, setSector] = useState("");
 
   return (
     <View style={styles.container}>
-      <Text style={styles.welcomeText}>Te damos la bienvenida,</Text>
+      <Text style={styles.questionText}>¿Cómo se llama la empresa?</Text>
       <Text style={styles.requestText}>Introduce los siguientes datos:</Text>
       <TextInput
         style={styles.input}
-        value={country}
-        placeholder="País"
-        onChangeText={(text) => setCountry(text)}
+        value={company}
+        placeholder="Nombre de la empresa"
+        onChangeText={(text) => setCompany(text)}
       />
       <TextInput
         style={styles.input}
-        value={city}
-        placeholder="Ciudad"
-        onChangeText={(text) => setCity(text)}
+        value={sector}
+        placeholder="Sector de la empresa"
+        onChangeText={(text) => setSector(text)}
       />
       <Button
         title="Siguiente"
-        onPress={() => navigation.navigate("NextScreen", { country, city })}
+        onPress={() => navigation.navigate("RoleWanted", { company, sector })}
         style={styles.nextButton}
       />
     </View>
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     marginTop: 80,
   },
-  welcomeText: {
+  questionText: {
     fontSize: 22,
     marginBottom: 10,
   },
@@ -61,4 +61,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CountryScreen;
+export default CompanyScreen;

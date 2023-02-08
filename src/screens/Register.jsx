@@ -15,7 +15,10 @@ const Register = () => {
 
   const handleRegister = () => {
     // Validate fields
-    // TODO: Validate valid email
+    // TODO: Validate valid email, validate password length, etc.
+    // TODO: Show error messages
+    // TODO: Show loading indicator
+    // TODO: Perform register
 
     if (!email) {
       alert("Email is required");
@@ -38,6 +41,7 @@ const Register = () => {
   return (
     <View style={styles.container}>
       <Image
+        // Aquí se añade el logo
         // source={require("./logo.png")}
         style={styles.logo}
         resizeMode="contain"
