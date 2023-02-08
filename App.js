@@ -23,16 +23,12 @@ export default function App() {
 
   return (
     <NavigationContainer theme={theme}>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {user === null ? (
-          <>
+      {user === null ? (
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
-          </>
-        ) 
-        : 
-        <BottomTab />}
-      </Stack.Navigator>
+          </Stack.Navigator>
+      ) : <BottomTab />}
     </NavigationContainer>
   );
 }

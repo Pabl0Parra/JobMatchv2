@@ -12,7 +12,7 @@ import loginWithEmail from "../firebase/functions/loginWithEmailPassword";
 import loginWithGoogle from "../firebase/functions/LoginWithGoogle";
 import { useNavigation } from '@react-navigation/native';
 
-const Login = () => {
+const Login = ({navigate}) => {
 
   const [dataLogin, setDataLogin] = useState({ email: "", password: "" });
   const navigation = useNavigation();
@@ -24,7 +24,7 @@ const Login = () => {
     if (res === undefined) {
       return console.log("email o password incorrecto");
     } else {
-      navigation.push('Home');
+      navigation.navigate('Home');
     };
 
   };
