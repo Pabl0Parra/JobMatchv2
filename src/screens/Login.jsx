@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Text,
   Image,
@@ -7,10 +8,29 @@ import {
   View,
 } from "react-native";
 import DisplayContainer from "../components/DisplayContainer";
+import loginWithEmail from "../firebase/functions/loginWithEmailPassword";
+import loginWithGoogle from "../firebase/functions/LoginWithGoogle";
+import { useNavigation } from '@react-navigation/native';
 
 const Login = () => {
+
+  const [dataLogin, setDataLogin] = useState({ email: "", password: "" });
+  const navigation = useNavigation();
+
+  const emailLogin = async (e) => {
+
+    const res = await loginWithEmail(dataLogin.email, dataLogin.password);
+
+    if (res === undefined) {
+      return console.log("email o password incorrecto");
+    } else {
+      navigation.push('Home');
+    };
+
+  };
+
   return (
-    <DisplayContainer >
+    <DisplayContainer>
       <Image
         style={styles.image}
         source={{
@@ -27,16 +47,34 @@ const Login = () => {
         <Text style={styles.text}>Iniciar sesión</Text>
       </View>
       <View>
-        <TextInput style={styles.input} placeholder="Correo" />
-        <TextInput style={styles.input} placeholder="Contraseña" />
+        <TextInput
+          style={styles.input}
+          placeholder="Correo"
+          value={dataLogin.email}
+          onChange={(e) =>
+            setDataLogin({ ...dataLogin, email: e.target.value })
+          }
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Contraseña"
+          value={dataLogin.password}
+          onChange={(e) =>
+            setDataLogin({ ...dataLogin, password: e.target.value })
+          }
+        />
       </View>
-      <View style={{gap: 10}}>
-        <Pressable style={styles.button} onPress={(e) => console.log(e)}>
-          <Text style={{...styles.text, color: "#666666"}}>iniciar sesión</Text>
+      <View style={{ gap: 10 }}>
+        <Pressable style={styles.button} onPress={emailLogin}>
+          <Text style={{ ...styles.text, color: "#666666" }}>
+            iniciar sesión
+          </Text>
         </Pressable>
         <Text style={styles.textDescription}>O</Text>
         <Pressable style={styles.button} onPress={(e) => console.log(e)}>
-          <Text style={{...styles.text, color: "#666666"}}>iniciar sesión con Google</Text>
+          <Text style={{ ...styles.text, color: "#666666" }}>
+            iniciar sesión con Google
+          </Text>
         </Pressable>
       </View>
       <Text style={styles.text}>¿Aún no tienes una cuenta? Crear cuenta</Text>
