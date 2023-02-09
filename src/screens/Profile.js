@@ -1,9 +1,13 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
+import logOut from "../firebase/functions/logOut"
 
 const Profile = () => {
   return (
     <View style={styles.container}>
       <Text>Profile</Text>
+      <Button title="cerrar sesión"
+      onPress={() => logOut()}/>
+=======
     </View>
   );
 };
