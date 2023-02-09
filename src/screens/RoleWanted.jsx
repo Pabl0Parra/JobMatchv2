@@ -13,7 +13,7 @@ const RoleWantedScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         value={role}
-        placeholder="País"
+        placeholder="Perfil"
         onChangeText={(text) => setRole(text)}
       />
 
@@ -58,4 +58,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CountryScreen;
+export default RoleWantedScreen;

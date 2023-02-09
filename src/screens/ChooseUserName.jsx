@@ -2,32 +2,32 @@ import React, { useState } from "react";
 import { Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import DisplayContainer from "../components/DisplayContainer";
 
-const CompanyScreen = ({ navigation }) => {
-  const [company, setCompany] = useState("");
-  const [sector, setSector] = useState("");
+const UserName = ({ navigation }) => {
+  const [userName, setUserName] = useState("");
+  const [userLastName, setUserLastName] = useState("");
 
   return (
     <DisplayContainer>
-      <Text style={styles.questionText}>¿Cómo se llama la empresa?</Text>
+      <Text style={styles.questionText}>¿Cómo te llamas?</Text>
       <Text style={styles.requestText}>Introduce los siguientes datos:</Text>
       <TextInput
         style={styles.input}
-        value={company}
-        placeholder="Nombre de la empresa"
-        onChangeText={(text) => setCompany(text)}
+        value={userName}
+        placeholder="Nombre de usuario"
+        onChangeText={(text) => setUserName(text)}
       />
       <TextInput
         style={styles.input}
-        value={sector}
-        placeholder="Sector de la empresa"
-        onChangeText={(text) => setSector(text)}
+        value={userLastName}
+        placeholder="Apellido de usuario"
+        onChangeText={(text) => setUserLastName(text)}
       />
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          navigation.navigate("RoleWanted", { company, sector });
+          navigation.navigate("ChooseUserType", { userName, userLastName });
         }}
-        disabled={!company || !sector}
+        disabled={!userName || !userLastName}
       >
         <Text style={styles.buttonText}>Siguiente</Text>
       </TouchableOpacity>
@@ -36,13 +36,6 @@ const CompanyScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "start",
-    padding: 32,
-    backgroundColor: "#fff",
-    marginTop: 80,
-  },
   questionText: {
     fontSize: 22,
     marginBottom: 10,
@@ -59,11 +52,19 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 10,
   },
-  nextButton: {
-    marginTop: 80,
-    width: "100%",
-    borderRadius: 200,
+  button: {
+    justifyContent: "center",
+    width: 288,
+    height: 40,
+    backgroundColor: "#D9D9D9",
+    borderRadius: 25,
+    marginTop: 40,
+  },
+  buttonText: {
+    textAlign: "center",
+    color: "white",
+    fontSize: 16,
   },
 });
 
-export default CompanyScreen;
+export default UserName;
