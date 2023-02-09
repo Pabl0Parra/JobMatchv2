@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Text,
   Image,
@@ -10,8 +10,12 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import DisplayContainer from "../components/DisplayContainer";
 import registerUser from "../firebase/functions/registerUser";
+import { useNavigation } from "@react-navigation/native";
 
 const Register = () => {
+
+  const navigation = useNavigation();
+
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const passwordLength = 6;
 
@@ -85,7 +89,9 @@ const Register = () => {
             <Text style={styles.buttonText}>Registrarse</Text>
           </TouchableOpacity>
           <Text style={styles.registerText}>
-            ¿Tienes cuenta? <Text style={styles.registerLink}>Entra aquí</Text>
+            ¿Tienes cuenta? 
+            <Text style={{ ...styles.text, ...styles.textButton }}
+              onPress={() => navigation.navigate("Login")}>Entra aquí</Text>
           </Text>
         </DisplayContainer>
       )}
