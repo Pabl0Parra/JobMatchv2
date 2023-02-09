@@ -21,7 +21,7 @@ export default function BottomTab() {
         tabBarActiveTintColor: "#1D8489",
         tabBarInactiveTintColor:"#C8CFCF",
         tabBarStyle:{
-          height:"8%",
+          height:"10%",
         },
         tabBarItemStyle:{
           paddingVertical: 10,
