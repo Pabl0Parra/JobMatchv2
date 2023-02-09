@@ -36,13 +36,6 @@ const ChooseCompanyName = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "start",
-    padding: 32,
-    backgroundColor: "#fff",
-    marginTop: 80,
-  },
   questionText: {
     fontSize: 22,
     marginBottom: 10,
