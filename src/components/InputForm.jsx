@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#D9D9D9",
     borderRadius: 25,
     marginTop: 40,
+    cursor: "pointer",
   },
   buttonText: {
     textAlign: "center",
