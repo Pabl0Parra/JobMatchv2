@@ -4,17 +4,17 @@ import {
   StyleSheet,
   Image,
   ScrollView,
-  TouchableOpacity,
+  Button,
 } from "react-native";
 
-import { AntDesign, Entypo } from "@expo/vector-icons";
+import ActionsButtons from "./ActionsButtons";
 
-const Card = () => {
+const Card = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image
         source={{
-          uri: "https://reactnative.dev/img/tiny_logo.png",
+          uri: "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg",
         }}
         style={styles.image}
       />
@@ -37,18 +37,16 @@ const Card = () => {
           <Text>
             Dolores error aliquid quos est maxime quidem molestias, at
             recusandae veniam itaque adipisci reiciendis, quo dolorem nisi
-            officiis facilis laboriosam ea! Voluptatem quidem eveniet corporis
-            enim error maiores nisi mollitia.
+            officiis facilis laboriosam ea!
           </Text>
+          <Button
+            title="Ver perfil"
+            onPress={() =>
+              navigation.navigate("Details", { name: "Detalles del perfil" })
+            }
+          />
         </ScrollView>
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity style={styles.button}>
-            <Entypo name="cross" size={32} color="black" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <AntDesign name="hearto" size={32} color="black" />
-          </TouchableOpacity>
-        </View>
+        <ActionsButtons />
       </View>
     </View>
   );
@@ -92,20 +90,6 @@ const styles = StyleSheet.create({
     width: "80%",
     paddingVertical: 40,
     textAlign: "justify",
-  },
-  buttonsContainer: {
-    width: "90%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom:15,
-  },
-  button: {
-    width: 50,
-    height: 50,
-    borderRadius: 50,
-    backgroundColor: "grey",
-    justifyContent: "center",
-    alignItems: "center",
   },
 });
 export default Card;
