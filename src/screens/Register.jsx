@@ -36,8 +36,6 @@ const Register = () => {
       .required("Este campo es requerido"),
   });
 
-  console.log(emailRegex.test());
-
   return (
     <Formik
       initialValues={{ email: "", password: "", confirmPassword: "" }}
@@ -128,7 +126,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "gray",
     borderRadius: 6,
-    margin: 10,
+    // margin: 10,
     padding: 10,
   },
   button: {
