@@ -44,7 +44,7 @@ const Register = () => {
       validationSchema={validationSchema}
       onSubmit={({ email, password }) => {
         registerUser(email, password);
-        navigation.navigate("UserType");
+        navigation.navigate("ChooseUserType");
       }}
     >
       {({ handleSubmit, handleChange, values, errors, touched }) => (
