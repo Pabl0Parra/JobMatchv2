@@ -1,3 +1,4 @@
+
 import { View, Text, StyleSheet } from "react-native";
 import Constants from 'expo-constants';
 import Card from "../components/Card";
