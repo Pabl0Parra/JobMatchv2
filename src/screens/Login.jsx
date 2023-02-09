@@ -1,89 +1,108 @@
-import { useState } from "react";
 import {
   Text,
   Image,
   TextInput,
-  Pressable,
+  TouchableOpacity,
   StyleSheet,
   View,
 } from "react-native";
 import DisplayContainer from "../components/DisplayContainer";
+import { Formik } from "formik";
+import * as yup from "yup";
 import loginWithEmail from "../firebase/functions/loginWithEmailPassword";
-import loginWithGoogle from "../firebase/functions/LoginWithGoogle";
 import { useNavigation } from "@react-navigation/native";
 
-const Login = ({ navigate }) => {
-  const [dataLogin, setDataLogin] = useState({ email: "", password: "" });
+const Login = () => {
   const navigation = useNavigation();
 
-  const emailLogin = async (e) => {
-    const res = await loginWithEmail(dataLogin.email, dataLogin.password);
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const passwordLength = 6;
 
-    if (res === undefined) {
-      return console.log("email o password incorrecto");
-    } else {
-      navigation.navigate("Home");
-    }
-  };
+  const validationSchema = yup.object().shape({
+    email: yup
+      .string()
+      .required("Este campo es requerido")
+      .matches(emailRegex, "Formato de correo inválido"),
+    password: yup
+      .string()
+      .required("Este campo es requerido")
+      .min(
+        passwordLength,
+        `Contraseña debe tener al menos ${passwordLength} caracteres`
+      ),
+  });
 
   return (
-    <DisplayContainer>
-      <Image
-        style={styles.image}
-        source={{
-          uri: `https://us.123rf.com/450wm/mathier/mathier1905/mathier190500002/mathier190500002.jpg`,
-        }}
-      />
-      <View>
-        <Text style={styles.textDescription}>
-          Forem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-          turpis molestie, est a, mattis tellus.
-        </Text>
-      </View>
-      <View>
-        <Text style={styles.text}>Iniciar sesión</Text>
-      </View>
-      <View>
-        <TextInput
-          style={styles.input}
-          placeholder="Correo"
-          value={dataLogin.email}
-          onChange={(e) =>
-            setDataLogin({ ...dataLogin, email: e.target.value })
-          }
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Contraseña"
-          value={dataLogin.password}
-          onChange={(e) =>
-            setDataLogin({ ...dataLogin, password: e.target.value })
-          }
-        />
-      </View>
-      <View style={{ gap: 10 }}>
-        <Pressable style={styles.button} onPress={emailLogin}>
-          <Text style={{ ...styles.text, color: "#666666" }}>
-            iniciar sesión
-          </Text>
-        </Pressable>
-        <Text style={styles.textDescription}>O</Text>
-        <Pressable style={styles.button} onPress={(e) => console.log(e)}>
+    <Formik
+      initialValues={{ email: "", password: "" }}
+      validationSchema={validationSchema}
+      onSubmit={({ email, password }) => {
+        loginWithEmail(email, password);
+      }}
+    >
+      {({ handleSubmit, handleChange, values, errors, touched }) => (
+        <DisplayContainer>
+          <Image
+            style={styles.image}
+            source={{
+              uri: `https://us.123rf.com/450wm/mathier/mathier1905/mathier190500002/mathier190500002.jpg`,
+            }}
+          />
+          <View>
+            <Text style={styles.textDescription}>
+              Forem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
+              turpis molestie, est a, mattis tellus.
+            </Text>
+          </View>
+          <View>
+            <Text style={styles.text}>Iniciar sesión</Text>
+          </View>
+          <View>
+            <TextInput
+              style={styles.input}
+              placeholder="Correo"
+              onChangeText={handleChange("email")}
+              value={values.email}
+            />
+            {errors.email && touched.email ? (
+              <Text style={styles.errorMessage}>{errors.email}</Text>
+            ) : null}
+            <TextInput
+              secureTextEntry
+              style={styles.input}
+              placeholder="Contraseña"
+              onChangeText={handleChange("password")}
+              value={values.password}
+            />
+            {errors.password && touched.password ? (
+              <Text style={styles.errorMessage}>{errors.password}</Text>
+            ) : null}
+          </View>
+          <View style={{ gap: 10 }}>
+            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+              <Text style={{ ...styles.text, color: "#666666" }}>
+                iniciar sesión
+              </Text>
+            </TouchableOpacity>
+            {/* <Text style={styles.textDescription}>O</Text>
+        <TouchableOpacity style={styles.button} onPress={(e) => console.log(e)}>
           <Text style={{ ...styles.text, color: "#666666" }}>
             iniciar sesión con Google
           </Text>
-        </Pressable>
-      </View>
-      <Text style={styles.text}>
-        ¿Aún no tienes una cuenta?
-        <Text
-          style={{ ...styles.text, ...styles.textButton }}
-          onPress={() => navigation.navigate("Register")}
-        >
-          Crear cuenta
-        </Text>
-      </Text>
-    </DisplayContainer>
+        </TouchableOpacity> */}
+          </View>
+          <Text style={styles.text}>
+            ¿Aún no tienes una cuenta?
+            <Text
+              style={{ ...styles.text, ...styles.textButton }}
+              onPress={() => navigation.navigate("Register")}
+            >
+              Crear cuenta
+            </Text>
+          </Text>
+        </DisplayContainer>
+      )}
+    </Formik>
   );
 };
 
@@ -126,6 +145,10 @@ const styles = StyleSheet.create({
     color: "#0000ff",
     fontSize: 16,
     marginLeft: 8,
+  },
+  errorMessage: {
+    color: "red",
+    marginLeft: 10,
   },
 });
 
