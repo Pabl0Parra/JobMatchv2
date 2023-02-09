@@ -3,15 +3,29 @@ import { Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import DisplayContainer from "../components/DisplayContainer";
 
 const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
+  const [fieldValues, setFieldValues] = useState(() =>
+    fields.reduce(
+      (acc, field) => ({
+        ...acc,
+        [field.label]: "",
+      }),
+      {}
+    )
+  );
+
   const inputs = fields.map((field) => {
-    const [value, setValue] = useState("");
     return (
       <TextInput
         key={field.label}
         style={styles.input}
-        value={value}
+        value={fieldValues[field.label]}
         placeholder={field.label}
-        onChangeText={(text) => setValue(text)}
+        onChangeText={(text) =>
+          setFieldValues((values) => ({
+            ...values,
+            [field.label]: text,
+          }))
+        }
       />
     );
   });
@@ -24,9 +38,9 @@ const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          onSubmit(fields.map((field) => field.value));
+          onSubmit(fields.map((field) => fieldValues[field.label]));
         }}
-        disabled={fields.some((field) => !field.value)}
+        disabled={fields.some((field) => !fieldValues[field.label])}
       >
         <Text style={styles.buttonText}>Siguiente</Text>
       </TouchableOpacity>
