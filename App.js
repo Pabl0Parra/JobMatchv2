@@ -7,6 +7,7 @@ import Register from "./src/screens/Register";
 import { auth } from "./src/firebase/credentials";
 import { onAuthStateChanged } from "@firebase/auth";
 import BottomTab from "./src/components/BottomTab";
+import ChooseUserType from "./src/screens/UserType";
 
 const Stack = createNativeStackNavigator();
 

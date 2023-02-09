@@ -13,7 +13,6 @@ import registerUser from "../firebase/functions/registerUser";
 import { useNavigation } from "@react-navigation/native";
 
 const Register = () => {
-
   const navigation = useNavigation();
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -45,6 +44,7 @@ const Register = () => {
       validationSchema={validationSchema}
       onSubmit={({ email, password }) => {
         registerUser(email, password);
+        navigation.navigate("UserType");
       }}
     >
       {({ handleSubmit, handleChange, values, errors, touched }) => (
@@ -89,9 +89,13 @@ const Register = () => {
             <Text style={styles.buttonText}>Registrarse</Text>
           </TouchableOpacity>
           <Text style={styles.registerText}>
-            ¿Tienes cuenta? 
-            <Text style={{ ...styles.text, ...styles.textButton }}
-              onPress={() => navigation.navigate("Login")}>Entra aquí</Text>
+            ¿Tienes cuenta?
+            <Text
+              style={{ ...styles.text, ...styles.textButton }}
+              onPress={() => navigation.navigate("Login")}
+            >
+              Entra aquí
+            </Text>
           </Text>
         </DisplayContainer>
       )}

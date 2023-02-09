@@ -23,7 +23,7 @@ const CountryScreen = ({ navigation }) => {
       />
       <Button
         title="Siguiente"
-        onPress={() => navigation.navigate("Company", { country, city })}
+        onPress={() => navigation.navigate("CompanyName", { country, city })}
         style={styles.nextButton}
       />
     </View>
