@@ -46,7 +46,7 @@ const ChooseUserType = ({ navigation }) => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          navigation.navigate("Country", { userType: selectedValue });
+          navigation.navigate("Country", { ChooseUserType: selectedValue });
         }}
         disabled={!selectedValue}
       >
