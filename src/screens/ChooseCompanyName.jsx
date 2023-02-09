@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import DisplayContainer from "../components/DisplayContainer";
 
-const CompanyScreen = ({ navigation }) => {
+const ChooseCompanyName = ({ navigation }) => {
   const [company, setCompany] = useState("");
   const [sector, setSector] = useState("");
 
@@ -66,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CompanyScreen;
+export default ChooseCompanyName;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import DisplayContainer from "../components/DisplayContainer";
 
-const UserName = ({ navigation }) => {
+const ChooseUserName = ({ navigation }) => {
   const [userName, setUserName] = useState("");
   const [userLastName, setUserLastName] = useState("");
 
@@ -67,4 +67,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserName;
+export default ChooseUserName;

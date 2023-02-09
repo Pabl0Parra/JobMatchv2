@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Button } from "react-native";
 
-const CountryScreen = ({ navigation }) => {
+const ChooseCountry = ({ navigation }) => {
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
 
@@ -61,4 +61,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CountryScreen;
+export default ChooseCountry;
