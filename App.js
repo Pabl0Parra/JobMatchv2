@@ -7,6 +7,7 @@ import Register from "./src/screens/Register";
 import { auth } from "./src/firebase/credentials";
 import { onAuthStateChanged } from "@firebase/auth";
 import BottomTab from "./src/components/BottomTab";
+import Details from "./src/screens/Details";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,14 +24,26 @@ export default function App() {
 
   return (
     <NavigationContainer theme={theme}>
-      {user === null ? (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={Register} />
-        </Stack.Navigator>
-      ) : (
-        <BottomTab />
-      )}
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {user === null ? (
+          <>
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Register" component={Register} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen name="Main" component={BottomTab} />
+            <Stack.Screen
+              name="Details"
+              component={Details}
+              options={{
+                headerShown: true,
+                headerTitle: "Detalles del perfil",
+              }}
+            />
+          </>
+        )}
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
