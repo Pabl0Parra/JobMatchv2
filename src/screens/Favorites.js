@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet } from 'react-native';
 import Header from '../components/Header';
 
-const Saved = () => {
+const Favorites = () => {
   return (
     <View style={styles.container}>
     <Header />
-      <Text>Saved</Text>
+      <Text>En esta seccion se ven perfiles que te gustaron pero aun no les diste like para poder matchear</Text>
     </View>
   );
 };
@@ -18,4 +18,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Saved;
+export default Favorites;
