@@ -1,7 +1,10 @@
 import React from "react";
 import InputForm from "../components/InputForm";
+import { useNavigation } from "@react-navigation/native";
 
-const ChooseCountry = ({ navigation }) => {
+const ChooseCountry = () => {
+  const navigation = useNavigation();
+
   return (
     <InputForm
       fields={[

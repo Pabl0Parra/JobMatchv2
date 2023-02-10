@@ -9,7 +9,7 @@ const ChooseUserName = ({ navigation }) => {
         { label: "Apellido de usuario", value: "" },
       ]}
       onSubmit={(values) => {
-        navigation.navigate("ChooseUserType", {
+        navigation.navigate("ChooseProfilePicture", {
           userName: values[0],
           userLastName: values[1],
         });

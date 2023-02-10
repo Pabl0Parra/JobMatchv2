@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { RadioButton } from "react-native-paper";
 import DisplayContainer from "../components/DisplayContainer";
+import { useNavigation } from "@react-navigation/native";
 
-const ChooseUserType = ({ navigation }) => {
+const ChooseUserType = () => {
+  const navigation = useNavigation();
+
   const [selectedValue, setSelectedValue] = useState("");
 
   return (
@@ -46,7 +49,9 @@ const ChooseUserType = ({ navigation }) => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          navigation.navigate("Country", { ChooseUserType: selectedValue });
+          navigation.navigate("ChooseCountry", {
+            ChooseUserType: selectedValue,
+          });
         }}
         disabled={!selectedValue}
       >

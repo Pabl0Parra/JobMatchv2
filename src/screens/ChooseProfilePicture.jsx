@@ -26,8 +26,10 @@ const ChooseProfilePicture = () => {
     pickImage();
   };
 
+  // aquí se cierra la alerta y se navega a Home
   const hideAlert = () => {
     setShowAlert(false);
+    navigation.navigate("Home");
   };
 
   return (
@@ -51,10 +53,14 @@ const ChooseProfilePicture = () => {
         </TouchableOpacity>
       ) : null}
       {/* hay que hacer que el botón de finalizar solo se active cuando se haya seleccionado una foto, 
-       hay que hacer que el proceso de registro acabe aquí --> mover register() a este componente*/}
+       hay que hacer que el proceso de createUser acabe aquí --> importar createUser() a este componente*/}
       <TouchableOpacity
         style={styles.finished}
-        onPress={() => setShowAlert(true)}
+        onPress={() => {
+          setShowAlert(true);
+          // aquí debería de ir la función de crear usuario
+          // createUser(email, password, name, surname, image, userType, country)
+        }}
       >
         <Text style={styles.finishedText}>Finalizar</Text>
       </TouchableOpacity>

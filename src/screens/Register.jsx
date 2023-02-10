@@ -83,7 +83,10 @@ const Register = () => {
           {errors.confirmPassword && touched.confirmPassword ? (
             <Text style={styles.errorMessage}>{errors.confirmPassword}</Text>
           ) : null}
-          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate("RegisterStack")}
+          >
             <Text style={styles.buttonText}>Registrarse</Text>
           </TouchableOpacity>
           <Text style={styles.registerText}>
