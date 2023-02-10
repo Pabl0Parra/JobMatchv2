@@ -9,7 +9,6 @@ import {
 import Constants from "expo-constants";
 import ActionsButtons from "../components/ActionsButtons";
 import { useEffect, useState } from "react";
-import Header from "../components/Header";
 import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 const Details = () => {
@@ -86,7 +85,7 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "50%",
-    aspectRatio: "2/3",
+    aspectRatio: 2/3,
   },
   detailsContainer: {
     height: "60%",

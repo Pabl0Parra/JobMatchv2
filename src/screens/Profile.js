@@ -9,7 +9,6 @@ const Profile = () => {
       <Text>Profile</Text>
       <Button title="cerrar sesión"
       onPress={() => logOut()}/>
-=======
     </View>
   );
 };

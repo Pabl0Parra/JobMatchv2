@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
   textDescription: {
     textAlign: "center",
-    fontFamily: "Inter",
+    fontFamily: "Roboto",
     fontSize: 16,
     fontStyle: "normal",
     fontWeight: "400",
