@@ -11,8 +11,10 @@ import Details from "./src/screens/Details";
 import ChooseUserType from "./src/screens/ChooseUserType";
 import ChooseCountry from "./src/screens/ChooseCountry";
 import ChooseUserName from "./src/screens/ChooseUserName";
+import ChooseCompanyName from "./src/screens/ChooseCompanyName";
 import ChooseUserRole from "./src/screens/ChooseUserRole";
 import ChooseProfilePicture from "./src/screens/ChooseProfilePicture";
+import ChooseRoleWanted from "./src/screens/ChooseRoleWanted";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,7 +25,15 @@ const RegisterStackScreen = () => (
     <RegisterStack.Screen name="ChooseUserType" component={ChooseUserType} />
     <RegisterStack.Screen name="ChooseCountry" component={ChooseCountry} />
     <RegisterStack.Screen name="ChooseUserName" component={ChooseUserName} />
+    <RegisterStack.Screen
+      name="ChooseCompanyName"
+      component={ChooseCompanyName}
+    />
     <RegisterStack.Screen name="ChooseUserRole" component={ChooseUserRole} />
+    <RegisterStack.Screen
+      name="ChooseRoleWanted"
+      component={ChooseRoleWanted}
+    />
     <RegisterStack.Screen
       name="ChooseProfilePicture"
       component={ChooseProfilePicture}

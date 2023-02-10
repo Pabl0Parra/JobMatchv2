@@ -33,7 +33,8 @@ const ChooseUserType = () => {
             />
           </View>
         </View>
-        <View style={styles.optionBox}>
+        {/* SE QUEDA AQUÍ POR SI DECIDIMOS IMPLEMENTAR EL TERCER TIPO DE USUARIO
+         <View style={styles.optionBox}>
           <View style={styles.radioContainer}>
             <Text style={styles.radioText}>Abierto a crecer</Text>
             <RadioButton
@@ -42,16 +43,20 @@ const ChooseUserType = () => {
                 selectedValue === "open to grow" ? "checked" : "unchecked"
               }
               onPress={() => setSelectedValue("open to grow")}
-            />
+           
           </View>
-        </View>
+        </View> /> */}
       </View>
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          navigation.navigate("ChooseCountry", {
-            ChooseUserType: selectedValue,
-          });
+          const navigateTo = {
+            worker: "ChooseUserName",
+            employer: "ChooseCompanyName",
+            // "open to grow": "ChooseUserName",
+          };
+
+          navigation.navigate(navigateTo[selectedValue] || "");
         }}
         disabled={!selectedValue}
       >
