@@ -9,7 +9,8 @@ import {
 import { Formik } from "formik";
 import * as yup from "yup";
 import DisplayContainer from "../components/DisplayContainer";
-import registerUser from "../firebase/functions/registerUser";
+import checkRegisteredEmail from "../firebase/functions/checkRegisteredEmail";
+import registerUser from '../firebase/functions/registerUser'
 import { useNavigation } from "@react-navigation/native";
 
 const Register = () => {
@@ -36,14 +37,23 @@ const Register = () => {
       .required("Este campo es requerido"),
   });
 
+  const formSubmit = async ({email, password}) => {
+
+    const registeredUser = await checkRegisteredEmail(email);
+
+    if (registeredUser) {console.log("ya hay un usuario registrado con el email proporcionado")}
+    else {
+      // registerUser(email, password);
+      navigation.navigate("RegisterStack");
+    } 
+    
+  }
+
   return (
     <Formik
       initialValues={{ email: "", password: "", confirmPassword: "" }}
       validationSchema={validationSchema}
-      onSubmit={({ email, password }) => {
-        registerUser(email, password);
-        navigation.navigate("ChooseUserType");
-      }}
+      onSubmit={formSubmit}
     >
       {({ handleSubmit, handleChange, values, errors, touched }) => (
         <DisplayContainer>
@@ -85,7 +95,7 @@ const Register = () => {
           ) : null}
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate("RegisterStack")}
+            onPress={handleSubmit}
           >
             <Text style={styles.buttonText}>Registrarse</Text>
           </TouchableOpacity>
