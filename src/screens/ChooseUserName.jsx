@@ -1,7 +1,10 @@
 import React from "react";
 import InputForm from "../components/InputForm";
+import { useNavigation } from "@react-navigation/native";
 
-const ChooseUserName = ({ navigation }) => {
+const ChooseUserName = () => {
+  const navigation = useNavigation();
+
   return (
     <InputForm
       fields={[
@@ -9,7 +12,7 @@ const ChooseUserName = ({ navigation }) => {
         { label: "Apellido de usuario", value: "" },
       ]}
       onSubmit={(values) => {
-        navigation.navigate("ChooseProfilePicture", {
+        navigation.navigate("ChooseUserRole", {
           userName: values[0],
           userLastName: values[1],
         });
