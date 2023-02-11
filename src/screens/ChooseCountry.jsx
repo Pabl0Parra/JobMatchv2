@@ -12,7 +12,7 @@ const ChooseCountry = () => {
         { label: "Ciudad", value: "" },
       ]}
       onSubmit={(values) => {
-        navigation.navigate("ChooseUserName", {
+        navigation.navigate("ChooseProfilePicture", {
           country: values[0],
           city: values[1],
         });

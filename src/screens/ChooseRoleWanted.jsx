@@ -9,7 +9,7 @@ const ChooseRoleWanted = () => {
     <InputForm
       fields={[{ label: "Perfil", value: "" }]}
       onSubmit={(values) => {
-        navigation.navigate("ChooseProfilePicture", { role: values[0] });
+        navigation.navigate("ChooseCountry", { role: values[0] });
       }}
       questionText="¿Qué perfil buscas?"
       requestText="Por favor, introduce el rol deseado:"
