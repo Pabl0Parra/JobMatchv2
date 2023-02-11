@@ -1,10 +1,28 @@
+import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, TextInput, Text, TouchableOpacity } from "react-native";
 import DisplayContainer from "../components/DisplayContainer";
-import { useNavigation } from "@react-navigation/native";
+import checkRegisteredEmail from "../firebase/functions/checkRegisteredEmail";
 
 const ResetPassword = () => {
-
   const navigation = useNavigation();
+
+  const [email, setEmail] = useState("");
+
+  const requestNewPassword = async () => {
+    const registeredUser = await checkRegisteredEmail(email);
+
+    if (!registeredUser) {
+      // implementar un mensaje de error con AwesomeAlert
+      console.log(
+        `No hemos encontrado ninguna cuenta asociada a ${email}. Prueba con otro email.`
+      );
+    } else {
+        console.log(
+            `Introduce el código de verificación de 6 dígitos que te hemos enviado a ${email}.`
+          );
+    }
+  };
 
   return (
     <DisplayContainer>
@@ -14,16 +32,18 @@ const ResetPassword = () => {
       <Text style={styles.text}>
         Restablecer la contraseña en dos pasos rápidos
       </Text>
-      <TextInput style={styles.input} placeholder="Correo" />
-      <TouchableOpacity style={styles.button} onPress={(e) => console.log(e)}>
+      <TextInput
+        style={styles.input}
+        placeholder="Correo"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <TouchableOpacity style={styles.button} onPress={requestNewPassword}>
         <Text style={{ ...styles.text, color: "#666666" }}>
           Restablecer la contraseña
         </Text>
       </TouchableOpacity>
-      <Text
-        style={{ ...styles.text, color: "#666666" }}
-        onPress={() => navigation.navigate("Login")}
-      >
+      <Text style={styles.text} onPress={() => navigation.navigate("Login")}>
         Volver
       </Text>
     </DisplayContainer>
