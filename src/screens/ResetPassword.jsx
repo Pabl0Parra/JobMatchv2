@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, TextInput, Text, TouchableOpacity } from "react-native";
 import DisplayContainer from "../components/DisplayContainer";
 import checkRegisteredEmail from "../firebase/functions/checkRegisteredEmail";
-import sendEmailResetPass from "../firebase/functions/SendEmailResetPass";
+import sendEmailResetPass from "../firebase/functions/sendEmailResetPass";
 
 const ResetPassword = () => {
   const navigation = useNavigation();
