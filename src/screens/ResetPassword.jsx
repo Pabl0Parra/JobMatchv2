@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, TextInput, Text, TouchableOpacity } from "react-native";
 import DisplayContainer from "../components/DisplayContainer";
 import checkRegisteredEmail from "../firebase/functions/checkRegisteredEmail";
+import sendEmailResetPass from "../firebase/functions/SendEmailResetPass";
 
 const ResetPassword = () => {
   const navigation = useNavigation();
@@ -21,6 +22,7 @@ const ResetPassword = () => {
         console.log(
             `Introduce el código de verificación de 6 dígitos que te hemos enviado a ${email}.`
           );
+        sendEmailResetPass(email)
     }
   };
 
