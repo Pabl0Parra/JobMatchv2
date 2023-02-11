@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 //screens
 import Home from "../screens/Home";
-import Saved from "../screens/Saved";
+import Favorites from "../screens/Favorites";
 import Explore from "../screens/Explore";
 import Messages from "../screens/Messages";
 import Profile from "../screens/Profile";
@@ -48,11 +48,11 @@ export default function BottomTab() {
         }}
       />
       <Tab.Screen
-        name="Saved"
-        component={Saved}
+        name="Favorites"
+        component={Favorites}
         options={{
           tabBarIcon: ({ color }) => (
-            <Fontisto name="favorite" size={32} color={color} />
+            <MaterialCommunityIcons name="heart" size={32} color={color} />
           ),
           headerShown: false
         }}
