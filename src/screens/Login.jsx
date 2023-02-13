@@ -91,15 +91,22 @@ const Login = () => {
           </Text>
         </TouchableOpacity> */}
           </View>
-          <Text style={styles.text}>
-            ¿Aún no tienes una cuenta?
-            <Text
-              style={{ ...styles.text, ...styles.textButton }}
-              onPress={() => navigation.navigate("Register")}
-            >
-              Crear cuenta
+          <View>
+            <Text style={styles.text}>
+              ¿Aún no tienes una cuenta?
+              <Text
+                style={{ ...styles.text, ...styles.textButton }}
+                onPress={() => navigation.navigate("Register")}
+              >
+                Crear cuenta
+              </Text>
             </Text>
-          </Text>
+            <Text 
+            style={{ ...styles.text, ...styles.textButton }}
+            onPress={() => navigation.navigate("ResetPassword")}>
+              ¿Has olvidado tu contraseña?
+            </Text>
+          </View>
         </DisplayContainer>
       )}
     </Formik>

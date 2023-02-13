@@ -15,6 +15,7 @@ import ChooseCompanyName from "./src/screens/ChooseCompanyName";
 import ChooseUserRole from "./src/screens/ChooseUserRole";
 import ChooseProfilePicture from "./src/screens/ChooseProfilePicture";
 import ChooseRoleWanted from "./src/screens/ChooseRoleWanted";
+import ResetPassword from "./src/screens/ResetPassword";
 
 const Stack = createNativeStackNavigator();
 
@@ -59,6 +60,7 @@ export default function App() {
           <>
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
+            <Stack.Screen name="ResetPassword" component={ResetPassword} />
             <Stack.Screen
               name="RegisterStack"
               component={RegisterStackScreen}
