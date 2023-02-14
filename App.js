@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import theme from "./src/theme";
@@ -16,6 +16,8 @@ import ChooseUserRole from "./src/screens/ChooseUserRole";
 import ChooseProfilePicture from "./src/screens/ChooseProfilePicture";
 import ChooseRoleWanted from "./src/screens/ChooseRoleWanted";
 import ResetPassword from "./src/screens/ResetPassword";
+import Loading from "./src/screens/Loading";
+import LandingPage from "./src/screens/LandingPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,7 +45,15 @@ const RegisterStackScreen = () => (
 );
 
 export default function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(undefined);
+  const [onLandingPage, setOnLandingPage] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setOnLandingPage(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
   onAuthStateChanged(auth, (userFirebase) => {
     if (userFirebase) {
@@ -56,28 +66,34 @@ export default function App() {
   return (
     <NavigationContainer theme={theme}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {user === null ? (
-          <>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Register" component={Register} />
-            <Stack.Screen name="ResetPassword" component={ResetPassword} />
-            <Stack.Screen
-              name="RegisterStack"
-              component={RegisterStackScreen}
-            />
-          </>
+        {onLandingPage ? (
+          <Stack.Screen name="LandingPage" component={LandingPage} />
+        ) : user !== undefined ? (
+          user === null ? (
+            <>
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="Register" component={Register} />
+              <Stack.Screen name="ResetPassword" component={ResetPassword} />
+              <Stack.Screen
+                name="RegisterStack"
+                component={RegisterStackScreen}
+              />
+            </>
+          ) : (
+            <>
+              <Stack.Screen name="Main" component={BottomTab} />
+              <Stack.Screen
+                name="Details"
+                component={Details}
+                options={{
+                  headerShown: true,
+                  headerTitle: "Detalles del perfil",
+                }}
+              />
+            </>
+          )
         ) : (
-          <>
-            <Stack.Screen name="Main" component={BottomTab} />
-            <Stack.Screen
-              name="Details"
-              component={Details}
-              options={{
-                headerShown: true,
-                headerTitle: "Detalles del perfil",
-              }}
-            />
-          </>
+          <Stack.Screen name="Loading" component={Loading} />
         )}
       </Stack.Navigator>
     </NavigationContainer>
