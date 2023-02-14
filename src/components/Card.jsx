@@ -9,21 +9,21 @@ import {
 
 import ActionsButtons from "./ActionsButtons";
 
-const Card = ({ navigation }) => {
+const Card = ({ navigation, card, action}) => {
   return (
     <View style={styles.container}>
       <Image
         source={{
-          uri: "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg",
+          uri: card.avatar,
         }}
         style={styles.image}
       />
       <View style={styles.card}>
         <View style={styles.header}>
           <View>
-            <Text>Nombre</Text>
+            <Text>{card.name}</Text>
             <Text>Edad</Text>
-            <Text>Profesion</Text>
+            <Text>{card.rol}</Text>
           </View>
         </View>
         <ScrollView style={styles.description}>
@@ -46,7 +46,7 @@ const Card = ({ navigation }) => {
             }
           />
         </ScrollView>
-        <ActionsButtons />
+        <ActionsButtons pressed={action}/>
       </View>
     </View>
   );
@@ -59,13 +59,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   card: {
-    width: "90%",
+    width: "100%",
     height: "100%",
     backgroundColor: "lightblue",
     justifyContent: "center",
     alignItems: "center",
     paddingTop: 20,
     paddingHorizontal: 10,
+
+    shadowColor:"#000",
+    shadowOffset:{width:0, height:5},
+    shadowOpacity:0.3,
+    shadowRadius:2,
+    elevation:3,
   },
   header: {
     height: "25%",
