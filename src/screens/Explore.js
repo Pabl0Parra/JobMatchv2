@@ -1,12 +1,13 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import Header from '../components/Header';
+import DisplayContainer from '../components/DisplayContainer';
 
 const Explore = () => {
   return (
-    <View style={styles.container}>
+    <DisplayContainer style={styles.container}>
     <Header />
       <Text>Explore</Text>
-    </View>
+    </DisplayContainer>
   );
 };
 const styles = StyleSheet.create({

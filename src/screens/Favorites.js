@@ -1,12 +1,13 @@
 import { View, Text, StyleSheet } from 'react-native';
 import Header from '../components/Header';
+import DisplayContainer from '../components/DisplayContainer';
 
 const Favorites = () => {
   return (
-    <View style={styles.container}>
+    <DisplayContainer style={styles.container}>
     <Header />
       <Text>En esta seccion se ven perfiles que te gustaron pero aun no les diste like para poder matchear</Text>
-    </View>
+    </DisplayContainer>
   );
 };
 const styles = StyleSheet.create({

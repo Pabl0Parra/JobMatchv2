@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
+import DisplayContainer from '../components/DisplayContainer';
 
 const Messages = () => {
   return (
-    <View style={styles.container}>
+    <DisplayContainer style={styles.container}>
       <Text>Messages</Text>
-    </View>
+    </DisplayContainer>
   );
 };
 const styles = StyleSheet.create({
