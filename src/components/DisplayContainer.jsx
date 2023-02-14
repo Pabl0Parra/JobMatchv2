@@ -1,4 +1,5 @@
 import { StyleSheet, View } from 'react-native';
+import Constants from "expo-constants";
 
 const DisplayContainer = ({children, style, ...restOfProp}) => {
 
@@ -19,9 +20,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 20,
         gap: 25,
-        margin: 0
+        margin: 0,
+        marginTop: Constants.statusBarHeight
     },
 });
 
