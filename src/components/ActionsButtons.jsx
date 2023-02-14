@@ -1,13 +1,13 @@
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
-const ActionsButtons = () => {
+const ActionsButtons = ({pressed}) => {
   return (
     <View style={styles.buttonsContainer}>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={()=>pressed.current.swipeLeft()}>
         <Entypo name="cross" size={32} color="black" />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={()=>pressed.current.swipeRight()}>
         <AntDesign name="hearto" size={32} color="black" />
       </TouchableOpacity>
     </View>
@@ -16,7 +16,7 @@ const ActionsButtons = () => {
 
 const styles = StyleSheet.create({
   buttonsContainer: {
-    width: "90%",
+    width: "80%",
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 15,
@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
   button: {
     width: 50,
     height: 50,
-    borderRadius: 50,
-    backgroundColor: "grey",
+    borderRadius: 25,
+    backgroundColor: "#fafafa",
     justifyContent: "center",
     alignItems: "center",
   },

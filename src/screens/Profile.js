@@ -12,10 +12,6 @@ import logOut from "../firebase/functions/logOut";
 import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import { Switch } from "react-native-paper";
-
-/* import { CircularProgressbar } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css"; */
-import * as Progress from "react-native-progress";
 import CircularProgress from "../components/CircularProgress";
 
 const Profile = () => {
