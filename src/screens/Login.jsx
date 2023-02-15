@@ -1,7 +1,6 @@
 import {
   Text,
   Image,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
   View,
@@ -11,6 +10,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import loginWithEmail from "../firebase/functions/loginWithEmailPassword";
 import { useNavigation } from "@react-navigation/native";
+import InputContainer from "../components/InputContainer";
 
 const Login = () => {
   const navigation = useNavigation();
@@ -41,7 +41,7 @@ const Login = () => {
       }}
     >
       {({ handleSubmit, handleChange, values, errors, touched }) => (
-        <DisplayContainer>
+        <DisplayContainer style={{marginHorizontal: 20}}>
           <Image
             style={styles.image}
             source={{
@@ -58,25 +58,21 @@ const Login = () => {
             <Text style={styles.text}>Iniciar sesión</Text>
           </View>
           <View>
-            <TextInput
-              style={styles.input}
+            <InputContainer
               placeholder="Correo"
               onChangeText={handleChange("email")}
               value={values.email}
+              touched={touched.email}
+              error={errors.email}
             />
-            {errors.email && touched.email ? (
-              <Text style={styles.errorMessage}>{errors.email}</Text>
-            ) : null}
-            <TextInput
+            <InputContainer
               secureTextEntry
-              style={styles.input}
               placeholder="Contraseña"
               onChangeText={handleChange("password")}
               value={values.password}
+              touched={touched.password}
+              error={errors.password}
             />
-            {errors.password && touched.password ? (
-              <Text style={styles.errorMessage}>{errors.password}</Text>
-            ) : null}
           </View>
           <View style={{ gap: 10 }}>
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
@@ -132,15 +128,6 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     lineHeight: 18,
   },
-  input: {
-    width: 300,
-    height: 40,
-    borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 6,
-    margin: 10,
-    padding: 10,
-  },
   button: {
     justifyContent: "center",
     width: 288,
@@ -152,11 +139,7 @@ const styles = StyleSheet.create({
     color: "#0000ff",
     fontSize: 16,
     marginLeft: 8,
-  },
-  errorMessage: {
-    color: "red",
-    marginLeft: 10,
-  },
+  }
 });
 
 export default Login;
