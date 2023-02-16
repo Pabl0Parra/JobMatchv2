@@ -1,7 +1,6 @@
 import { Formik } from "formik";
 import * as yup from "yup";
-import { Text, StyleSheet, TouchableOpacity } from "react-native";
-import DisplayContainer from "../components/DisplayContainer";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import InputContainer from "./InputContainer";
 
 const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
@@ -63,7 +62,7 @@ const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
       }}
     >
       {({ handleSubmit, handleChange, values, errors, touched }) => (
-        <DisplayContainer>
+        <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
           <Text style={styles.questionText}>{questionText}</Text>
           <Text style={styles.requestText}>{requestText}</Text>
           {fields.map((field) => (
@@ -83,7 +82,7 @@ const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
           >
             <Text style={styles.buttonText}>Siguiente</Text>
           </TouchableOpacity>
-        </DisplayContainer>
+        </View>
       )}
     </Formik>
   );
@@ -98,6 +97,7 @@ const styles = StyleSheet.create({
   requestText: {
     fontSize: 16,
     marginBottom: 16,
+    textAlign: "center"
   },
   button: {
     justifyContent: "center",
