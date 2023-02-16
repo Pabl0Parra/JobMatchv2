@@ -8,8 +8,8 @@ const ChooseUserName = () => {
   return (
     <InputForm
       fields={[
-        { label: "Nombre de usuario", value: "" },
-        { label: "Apellido de usuario", value: "" },
+        { label: "Nombre de usuario", value: "", name: "name", type: "text" },
+        { label: "Apellido de usuario", value: "", name: "lastName", type: "text" },
       ]}
       onSubmit={(values) => {
         navigation.navigate("ChooseUserRole", {
