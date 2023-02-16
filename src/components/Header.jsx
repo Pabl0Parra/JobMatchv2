@@ -1,17 +1,18 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome, Feather } from "@expo/vector-icons";
+import LogoHeader from "../svgs/LogoHeader";
 
 const Header = ({ screen }) => {
   return (
     <View style={styles.container}>
-      <Text>Job Match</Text>
+      <LogoHeader/>
       {screen === "Home" ? (
         <TouchableOpacity style={styles.notification}>
-          <FontAwesome name="bell-o" size={20} color="black" />
+          <FontAwesome name="bell-o" size={24} color="#091D5C" />
         </TouchableOpacity>
       ) : screen === "Profile" ? (
         <TouchableOpacity style={styles.notification}>
-          <Feather name="settings" size={24} color="black" />
+          <Feather name="settings" size={24} color="#091D5C" />
         </TouchableOpacity>
       ) : null}
     </View>
@@ -24,11 +25,11 @@ const styles = StyleSheet.create({
     left: 0,
     width: "100%",
     height: "8%",
-    backgroundColor: "lightblue",
+    backgroundColor: "#fff",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 15,
+    paddingHorizontal: 16,
   },
   notification: {
     width: 30,

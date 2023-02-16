@@ -1,14 +1,17 @@
-import { AntDesign, Entypo } from "@expo/vector-icons";
+import { AntDesign, Entypo, Fontisto } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 const ActionsButtons = ({pressed}) => {
   return (
     <View style={styles.buttonsContainer}>
       <TouchableOpacity style={styles.button} onPress={()=>pressed.current.swipeLeft()}>
-        <Entypo name="cross" size={32} color="black" />
+        <Entypo name="cross" size={32} color="#091D5C" />
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={()=>pressed.current.swipeRight()}>
-        <AntDesign name="hearto" size={32} color="black" />
+      <Fontisto name="favorite" size={24} color="#091D5C" />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={()=>pressed.current.swipeRight()}>
+        <AntDesign name="hearto" size={32} color="#091D5C" />
       </TouchableOpacity>
     </View>
   );

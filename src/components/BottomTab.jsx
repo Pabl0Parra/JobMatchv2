@@ -17,7 +17,7 @@ export default function BottomTab() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: "#1D8489",
+        tabBarActiveTintColor: "#091D5C",
         tabBarInactiveTintColor:"#C8CFCF",
         tabBarStyle:{
           height:"10%",
