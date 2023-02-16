@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import theme from "./src/theme";
 import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
-import { auth } from "./src/firebase/credentials";
+import { auth, db } from "./src/firebase/credentials";
 import { onAuthStateChanged } from "@firebase/auth";
 import BottomTab from "./src/components/BottomTab";
 import Details from "./src/screens/Details";
@@ -18,6 +18,9 @@ import ChooseRoleWanted from "./src/screens/ChooseRoleWanted";
 import ResetPassword from "./src/screens/ResetPassword";
 import Loading from "./src/screens/Loading";
 import LandingPage from "./src/screens/LandingPage";
+import MatchModal from "./src/screens/MatchModal";
+import { getDoc, doc } from "@firebase/firestore";
+import { CurrentUserData } from "./src/context/UserContext";
 
 const Stack = createNativeStackNavigator();
 
@@ -45,57 +48,73 @@ const RegisterStackScreen = () => (
 );
 
 export default function App() {
-  const [user, setUser] = useState(undefined);
+  const [user, setUser] = useState();
   const [onLandingPage, setOnLandingPage] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setOnLandingPage(false);
     }, 3000);
+
+    onAuthStateChanged(auth, async (userFirebase) => {
+      if (userFirebase) {
+        const docRef = doc(db, "HomeTest", userFirebase.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          console.log("Document data:", docSnap.data());
+          setUser(docSnap);
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      } else {
+        setUser(null);
+      }
+    });
     return () => clearTimeout(timer);
   }, []);
 
-  onAuthStateChanged(auth, (userFirebase) => {
-    if (userFirebase) {
-      setUser(userFirebase);
-    } else {
-      setUser(null);
-    }
-  });
-
   return (
-    <NavigationContainer theme={theme}>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {onLandingPage ? (
-          <Stack.Screen name="LandingPage" component={LandingPage} />
-        ) : user !== undefined ? (
-          user === null ? (
-            <>
-              <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen name="Register" component={Register} />
-              <Stack.Screen name="ResetPassword" component={ResetPassword} />
-              <Stack.Screen
-                name="RegisterStack"
-                component={RegisterStackScreen}
-              />
-            </>
+    <CurrentUserData.Provider value={user}>
+      <NavigationContainer theme={theme}>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          {onLandingPage ? (
+            <Stack.Screen name="LandingPage" component={LandingPage} />
+          ) : user !== undefined ? (
+            user === null ? (
+              <>
+                <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="Register" component={Register} />
+                <Stack.Screen name="ResetPassword" component={ResetPassword} />
+                <Stack.Screen
+                  name="RegisterStack"
+                  component={RegisterStackScreen}
+                />
+              </>
+            ) : (
+              <>
+                <Stack.Screen name="Main" component={BottomTab} />
+                <Stack.Screen
+                  name="Details"
+                  component={Details}
+                  options={{
+                    headerShown: true,
+                    headerTitle: "Detalles del perfil",
+                  }}
+                />
+                <Stack.Group
+                  screenOptions={{ presentation: "transparentModal" }}
+                >
+                  <Stack.Screen name="MatchModal" component={MatchModal} />
+                </Stack.Group>
+              </>
+            )
           ) : (
-            <>
-              <Stack.Screen name="Main" component={BottomTab} />
-              <Stack.Screen
-                name="Details"
-                component={Details}
-                options={{
-                  headerShown: true,
-                  headerTitle: "Detalles del perfil",
-                }}
-              />
-            </>
-          )
-        ) : (
-          <Stack.Screen name="Loading" component={Loading} />
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+            <Stack.Screen name="Loading" component={Loading} />
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </CurrentUserData.Provider>
   );
 }
