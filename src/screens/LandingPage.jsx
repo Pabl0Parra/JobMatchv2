@@ -1,13 +1,12 @@
-import { Text } from 'react-native';
-import DisplayContainer from '../components/DisplayContainer';
+import DisplayContainer from "../components/DisplayContainer";
+import LogoSvg from "../componentsSVG/LogoSvg";
 
 const LandingPage = () => {
   return (
-    <DisplayContainer style={{backgroundColor: "#091D5C"}}>
-      <Text>LandingPage</Text>
+    <DisplayContainer style={{ backgroundColor: "#091D5C" }}>
+      <LogoSvg />
     </DisplayContainer>
-  )
-}
+  );
+};
 
-
-export default LandingPage
+export default LandingPage;

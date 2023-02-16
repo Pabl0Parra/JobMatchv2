@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import Constants from "expo-constants";
 
-const DisplayContainer = ({children, style, ...restOfProp}) => {
+const DisplayContainer = ({ children, style, ...restOfProp }) => {
 
   const componentStyles = [
     styles.container,
@@ -16,14 +16,15 @@ const DisplayContainer = ({children, style, ...restOfProp}) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: 25,
-        margin: 0,
-        marginTop: Constants.statusBarHeight
-    },
+  container: {
+    position: "relative",
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 25,
+    margin: 0,
+    marginTop: Constants.statusBarHeight
+  },
 });
 
 export default DisplayContainer;

@@ -1,69 +1,117 @@
-import React, { useState } from "react";
-import { Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
-import DisplayContainer from "../components/DisplayContainer";
+import { Formik } from "formik";
+import { useNavigation } from "@react-navigation/native";
+import * as yup from "yup";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import InputContainer from "./InputContainer";
 
 const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
-  const [fieldValues, setFieldValues] = useState(() =>
-    fields.reduce(
+  const navigation = useNavigation();
+
+  const generateInitialValues = () => {
+    return fields.reduce(
       (acc, field) => ({
         ...acc,
-        [field.label]: "",
+        [field.name]: "",
       }),
       {}
-    )
-  );
-
-  const inputs = fields.map((field) => {
-    return (
-      <TextInput
-        key={field.label}
-        style={styles.input}
-        value={fieldValues[field.label]}
-        placeholder={field.label}
-        onChangeText={(text) =>
-          setFieldValues((values) => ({
-            ...values,
-            [field.label]: text,
-          }))
-        }
-      />
     );
-  });
+  };
+  const validationSchema = () => {
+    return fields.reduce((acc, field) => {
+      let yupVal;
+
+      switch (field.type) {
+        case "email":
+          yupVal = yup
+            .string()
+            .required("Este campo es requerido")
+            .matches(
+              /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              "Formato de correo inválido"
+            );
+          break;
+        case "password":
+          yupVal = yup
+            .string()
+            .required("Este campo es requerido")
+            .min(6, `Contraseña debe tener al menos 6 caracteres`);
+          break;
+        case "text":
+          yupVal = yup.string().required("Este campo es requerido");
+          break;
+      }
+
+      return {
+        ...acc,
+        [field.name]: yupVal,
+      };
+    }, {});
+  };
 
   return (
-    <DisplayContainer>
-      <Text style={styles.questionText}>{questionText}</Text>
-      <Text style={styles.requestText}>{requestText}</Text>
-      {inputs}
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          onSubmit(fields.map((field) => fieldValues[field.label]));
-        }}
-        disabled={fields.some((field) => !fieldValues[field.label])}
-      >
-        <Text style={styles.buttonText}>Siguiente</Text>
-      </TouchableOpacity>
-    </DisplayContainer>
+    <Formik
+      initialValues={generateInitialValues()}
+      validationSchema={yup.object().shape(validationSchema())}
+      onSubmit={(obj) => {
+        onSubmit(fields.map((field) => obj[field.name]));
+      }}
+    >
+      {({ handleSubmit, handleChange, values, errors, touched }) => (
+        <View style={styles.container}>
+          <Text style={styles.questionText}>{questionText}</Text>
+          <Text style={styles.requestText}>{requestText}</Text>
+          {fields.map((field) => (
+            <View key={`${field.name}Input`}>
+              <InputContainer
+                value={values[field.name]}
+                placeholder={field.label}
+                onChangeText={handleChange(`${field.name}`)}
+                touched={touched[field.name]}
+                error={errors[field.name]}
+                showHidePassword={field.type === "password"}
+              />
+              {field.recoverPassword ? (
+                <Text
+                  style={styles.textRecoverPassword}
+                  onPress={() => navigation.navigate("ResetPassword")}
+                >
+                  ¿Has olvidado tu contraseña?
+                </Text>
+              ) : null}
+            </View>
+          ))}
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleSubmit} /* 
+            disabled={fields.some((field) => !fieldValues[field.name])} */
+          >
+            <Text style={styles.buttonText}>Siguiente</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </Formik>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   questionText: {
-    fontSize: 22,
+    color: "#192B65",
+    fontSize: 26,
+    fontWeight: "bold",
     marginBottom: 10,
+    textAlign: "center"
   },
   requestText: {
-    fontSize: 16,
-    marginBottom: 16,
-  },
-  input: {
-    height: 40,
-    width: 300,
-    borderColor: "gray",
-    borderWidth: 1,
-    padding: 10,
-    marginVertical: 10,
+    color: "#192B65",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 22,
+    textAlign: "center"
   },
   button: {
     justifyContent: "center",
@@ -78,6 +126,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
     fontSize: 16,
+  },
+  textRecoverPassword: {
+    marginHorizontal: 10,
+    fontSize: 16,
+    color: "blue",
   },
 });
 
