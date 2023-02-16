@@ -44,10 +44,6 @@ const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
           yupVal = yup
             .string()
             .required("Este campo es requerido")
-            .min(
-              6,
-              `El campo debe tener al menos 6 caracteres`
-            );
           break;
       }
 
@@ -56,20 +52,6 @@ const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
         [field.name]: yupVal,
       };
     }, {});
-
-    /* {
-      email: yup
-        .string()
-        .required("Este campo es requerido")
-        .matches(emailRegex, "Formato de correo inválido"),
-      password: yup
-        .string()
-        .required("Este campo es requerido")
-        .min(
-          passwordLength,
-          `Contraseña debe tener al menos ${passwordLength} caracteres`
-        ),
-    }; */
   };
 
   return (
@@ -111,6 +93,7 @@ const styles = StyleSheet.create({
   questionText: {
     fontSize: 22,
     marginBottom: 10,
+    textAlign: "center"
   },
   requestText: {
     fontSize: 16,

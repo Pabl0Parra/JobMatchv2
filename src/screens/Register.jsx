@@ -44,7 +44,7 @@ const Register = () => {
       // implementar un mensaje de error con AwesomeAlert
       console.log("ya hay un usuario registrado con el email proporcionado");
     } else {
-      navigation.navigate("RegisterStack");
+      navigation.navigate("RegisterStack", { email, password });
     }
   };
 

@@ -8,8 +8,8 @@ const ChooseCountry = () => {
   return (
     <InputForm
       fields={[
-        { label: "País", value: "" },
-        { label: "Ciudad", value: "" },
+        { label: "País", name: "country", type: "text" },
+        { label: "Ciudad", name: "city", type: "text" },
       ]}
       onSubmit={(values) => {
         navigation.navigate("ChooseProfilePicture", {
