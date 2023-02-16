@@ -1,9 +1,13 @@
 import { Formik } from "formik";
+import { useNavigation } from "@react-navigation/native";
 import * as yup from "yup";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import InputContainer from "./InputContainer";
 
 const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
+
+  const navigation = useNavigation();
+
   const generateInitialValues = () => {
     return fields.reduce(
       (acc, field) => ({
@@ -13,7 +17,6 @@ const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
       {}
     );
   };
-
   const validationSchema = () => {
 
     return fields.reduce((acc, field) => {
@@ -39,7 +42,7 @@ const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
               `Contraseña debe tener al menos 6 caracteres`
             );
           break;
-          case "text":
+        case "text":
           yupVal = yup
             .string()
             .required("Este campo es requerido")
@@ -62,19 +65,27 @@ const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
       }}
     >
       {({ handleSubmit, handleChange, values, errors, touched }) => (
-        <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
           <Text style={styles.questionText}>{questionText}</Text>
           <Text style={styles.requestText}>{requestText}</Text>
-          {fields.map((field) => (
+          {fields.map((field) => (<View key={`${field.name}Input`}>
             <InputContainer
-              key={`${field.name}Input`}
               value={values[field.name]}
               placeholder={field.label}
               onChangeText={handleChange(`${field.name}`)}
               touched={touched[field.name]}
               error={errors[field.name]}
+              showHidePassword={field.type === "password"}
             />
-          ))}
+            {field.recoverPassword ?
+              <Text
+                style={styles.textRecoverPassword}
+                onPress={() => navigation.navigate("ResetPassword")}>
+                ¿Has olvidado tu contraseña?
+              </Text> : null}
+          </View>
+          )
+          )}
           <TouchableOpacity
             style={styles.button}
             onPress={handleSubmit} /* 
@@ -113,6 +124,11 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
   },
+  textRecoverPassword: {
+    marginHorizontal: 10,
+    fontSize: 16,
+    color: "blue"
+  }
 });
 
 export default InputForm;
