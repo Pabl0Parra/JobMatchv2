@@ -10,13 +10,13 @@ const Login = () => {
 
   return (
     <DisplayContainer>
-      <View style={styles.backgroundTop}>
-        <View style={{gap: 10, paddingHorizontal: 40}}>
+      <View style={styles.background}>
+        <View style={styles.groupTop}>
           <LogoSvg />
-          <Text style={{...styles.backgroundTopText, lineHeight: 45, marginTop: 10}}>
+          <Text style={{ ...styles.textTop, lineHeight: 45, marginTop: 15 }}>
             ¡Te estabamos {"\n"}esperando!
           </Text>
-          <Text style={{ ...styles.backgroundTopText, fontSize: 20 }}>
+          <Text style={{ ...styles.textTop, fontSize: 20 }}>
             Conecta con las mejores {"\n"}opciones laborales
           </Text>
         </View>
@@ -52,7 +52,11 @@ const Login = () => {
 };
 
 const styles = StyleSheet.create({
-  backgroundTop: {
+  groupTop: {
+    gap: 5,
+    paddingLeft: 12
+  },
+  background: {
     position: "absolute",
     top: 0,
     height: "48%",
@@ -61,25 +65,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
     gap: 35,
     backgroundColor: "#192B65",
     borderBottomLeftRadius: "9% 4%",
     borderBottomRightRadius: "9% 4%",
   },
-  backgroundTopText: {
+  textTop: {
     color: "white",
     textAlign: "left",
     fontWeight: 400,
-    fontSize: 48,
+    fontSize: 48
   },
   backgroundForm: {
     alignItems: "center",
     gap: 20,
     borderRadius: 55,
     paddingVertical: 24,
+    paddingHorizontal: 34,
     backgroundColor: "#FFFFFF",
-    shadowColor: '#171717',
-    shadowOffset: {width: 0, height: 8},
+    shadowColor: "#171717",
+    shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
