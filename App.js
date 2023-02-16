@@ -26,8 +26,8 @@ const RegisterStack = createNativeStackNavigator();
 const RegisterStackScreen = () => (
   <RegisterStack.Navigator screenOptions={{ headerShown: false }}>
     <RegisterStack.Screen name="ChooseUserType" component={ChooseUserType} />
-    <RegisterStack.Screen name="ChooseCountry" component={ChooseCountry} />
     <RegisterStack.Screen name="ChooseUserName" component={ChooseUserName} />
+    <RegisterStack.Screen name="ChooseCountry" component={ChooseCountry} />
     <RegisterStack.Screen
       name="ChooseCompanyName"
       component={ChooseCompanyName}

@@ -1,15 +1,12 @@
 import React from "react";
 import InputForm from "../components/InputForm";
-import { useNavigation } from "@react-navigation/native";
 
-const ChooseUserName = () => {
-  const navigation = useNavigation();
-
+const ChooseUserName = ({ navigation }) => {
   return (
     <InputForm
       fields={[
-        { label: "Nombre de usuario", value: "" },
-        { label: "Apellido de usuario", value: "" },
+        { label: "Nombre de usuario", name: "name", type: "text" },
+        { label: "Apellido de usuario", name: "lastName", type: "text" },
       ]}
       onSubmit={(values) => {
         navigation.navigate("ChooseUserRole", {

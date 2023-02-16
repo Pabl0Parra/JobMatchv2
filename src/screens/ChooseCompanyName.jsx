@@ -8,8 +8,8 @@ const ChooseCompanyName = () => {
   return (
     <InputForm
       fields={[
-        { label: "Nombre de la empresa", value: "" },
-        { label: "Sector de la empresa", value: "" },
+        { label: "Nombre de la empresa", name: "company", type: "text" },
+        { label: "Sector de la empresa", name: "sector", type: "text" },
       ]}
       onSubmit={(values) => {
         navigation.navigate("ChooseRoleWanted", {

@@ -7,7 +7,7 @@ const ChooseRoleWanted = () => {
 
   return (
     <InputForm
-      fields={[{ label: "Perfil", value: "" }]}
+      fields={[{ label: "Perfil", name: "role", type: "text" }]}
       onSubmit={(values) => {
         navigation.navigate("ChooseCountry", { role: values[0] });
       }}
