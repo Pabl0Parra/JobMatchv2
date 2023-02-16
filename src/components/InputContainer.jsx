@@ -1,12 +1,16 @@
+import { useState } from "react";
 import { StyleSheet, TextInput, Text } from "react-native";
 
-const InputContainer = ({ styleContainer, styleError, touched, error, textErrorProp, ...restOfProp }) => {
+const InputContainer = ({ styleContainer, styleError, touched, error, textErrorProp, showHidePassword, ...restOfProp }) => {
   const styleC = [styles.container, styleContainer];
   const styleE = [styles.errorMessage, styleError];
+  const [isPasswordSecure] = useState(showHidePassword)
 
   return (
     <>
-      <TextInput style={styleC} {...restOfProp} />
+      <TextInput style={styleC}
+        secureTextEntry={isPasswordSecure}
+        {...restOfProp} />
       {error && touched ? (
         <Text style={styleE} {...textErrorProp}>{error}</Text>
       ) : null}

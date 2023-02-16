@@ -1,10 +1,12 @@
 import { Formik } from "formik";
+import { useNavigation } from "@react-navigation/native";
 import * as yup from "yup";
-import { Text, StyleSheet, TouchableOpacity } from "react-native";
-import DisplayContainer from "../components/DisplayContainer";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import InputContainer from "./InputContainer";
 
 const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
+  const navigation = useNavigation();
+
   const generateInitialValues = () => {
     return fields.reduce(
       (acc, field) => ({
@@ -14,11 +16,8 @@ const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
       {}
     );
   };
-
   const validationSchema = () => {
-
     return fields.reduce((acc, field) => {
-
       let yupVal;
 
       switch (field.type) {
@@ -35,15 +34,10 @@ const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
           yupVal = yup
             .string()
             .required("Este campo es requerido")
-            .min(
-              6,
-              `Contraseña debe tener al menos 6 caracteres`
-            );
+            .min(6, `Contraseña debe tener al menos 6 caracteres`);
           break;
-          case "text":
-          yupVal = yup
-            .string()
-            .required("Este campo es requerido")
+        case "text":
+          yupVal = yup.string().required("Este campo es requerido");
           break;
       }
 
@@ -63,18 +57,28 @@ const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
       }}
     >
       {({ handleSubmit, handleChange, values, errors, touched }) => (
-        <DisplayContainer>
+        <View style={styles.container}>
           <Text style={styles.questionText}>{questionText}</Text>
           <Text style={styles.requestText}>{requestText}</Text>
           {fields.map((field) => (
-            <InputContainer
-              key={`${field.name}Input`}
-              value={values[field.name]}
-              placeholder={field.label}
-              onChangeText={handleChange(`${field.name}`)}
-              touched={touched[field.name]}
-              error={errors[field.name]}
-            />
+            <View key={`${field.name}Input`}>
+              <InputContainer
+                value={values[field.name]}
+                placeholder={field.label}
+                onChangeText={handleChange(`${field.name}`)}
+                touched={touched[field.name]}
+                error={errors[field.name]}
+                showHidePassword={field.type === "password"}
+              />
+              {field.recoverPassword ? (
+                <Text
+                  style={styles.textRecoverPassword}
+                  onPress={() => navigation.navigate("ResetPassword")}
+                >
+                  ¿Has olvidado tu contraseña?
+                </Text>
+              ) : null}
+            </View>
           ))}
           <TouchableOpacity
             style={styles.button}
@@ -83,21 +87,31 @@ const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
           >
             <Text style={styles.buttonText}>Siguiente</Text>
           </TouchableOpacity>
-        </DisplayContainer>
+        </View>
       )}
     </Formik>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   questionText: {
-    fontSize: 22,
+    color: "#192B65",
+    fontSize: 26,
+    fontWeight: "bold",
     marginBottom: 10,
     textAlign: "center"
   },
   requestText: {
-    fontSize: 16,
-    marginBottom: 16,
+    color: "#192B65",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 22,
+    textAlign: "center"
   },
   button: {
     justifyContent: "center",
@@ -112,6 +126,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
     fontSize: 16,
+  },
+  textRecoverPassword: {
+    marginHorizontal: 10,
+    fontSize: 16,
+    color: "blue",
   },
 });
 
