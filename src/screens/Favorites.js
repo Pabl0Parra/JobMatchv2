@@ -1,10 +1,12 @@
-import { Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import Header from '../components/Header';
 import DisplayContainer from '../components/DisplayContainer';
 
-const Messages = () => {
+const Favorites = () => {
   return (
     <DisplayContainer style={styles.container}>
-      <Text>Messages</Text>
+    <Header />
+      <Text>En esta seccion se ven perfiles que te gustaron pero aun no les diste like para poder matchear</Text>
     </DisplayContainer>
   );
 };
@@ -16,4 +18,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#ECF0F1",
   },
 });
-export default Messages;
+
+export default Favorites;

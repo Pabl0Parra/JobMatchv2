@@ -1,84 +1,111 @@
-import { useState } from "react";
 import {
   Text,
   Image,
-  TextInput,
-  Pressable,
+  TouchableOpacity,
   StyleSheet,
   View,
 } from "react-native";
 import DisplayContainer from "../components/DisplayContainer";
+import { Formik } from "formik";
+import * as yup from "yup";
 import loginWithEmail from "../firebase/functions/loginWithEmailPassword";
-import loginWithGoogle from "../firebase/functions/LoginWithGoogle";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
+import InputContainer from "../components/InputContainer";
 
-const Login = ({navigate}) => {
-
-  const [dataLogin, setDataLogin] = useState({ email: "", password: "" });
+const Login = () => {
   const navigation = useNavigation();
 
-  const emailLogin = async (e) => {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const passwordLength = 6;
 
-    const res = await loginWithEmail(dataLogin.email, dataLogin.password);
-
-    if (res === undefined) {
-      return console.log("email o password incorrecto");
-    } else {
-      navigation.navigate('Home');
-    };
-
-  };
+  const validationSchema = yup.object().shape({
+    email: yup
+      .string()
+      .required("Este campo es requerido")
+      .matches(emailRegex, "Formato de correo inválido"),
+    password: yup
+      .string()
+      .required("Este campo es requerido")
+      .min(
+        passwordLength,
+        `Contraseña debe tener al menos ${passwordLength} caracteres`
+      ),
+  });
 
   return (
-    <DisplayContainer>
-      <Image
-        style={styles.image}
-        source={{
-          uri: `https://us.123rf.com/450wm/mathier/mathier1905/mathier190500002/mathier190500002.jpg`,
-        }}
-      />
-      <View>
-        <Text style={styles.textDescription}>
-          Forem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-          turpis molestie, est a, mattis tellus.
-        </Text>
-      </View>
-      <View>
-        <Text style={styles.text}>Iniciar sesión</Text>
-      </View>
-      <View>
-        <TextInput
-          style={styles.input}
-          placeholder="Correo"
-          value={dataLogin.email}
-          onChange={(e) =>
-            setDataLogin({ ...dataLogin, email: e.target.value })
-          }
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Contraseña"
-          value={dataLogin.password}
-          onChange={(e) =>
-            setDataLogin({ ...dataLogin, password: e.target.value })
-          }
-        />
-      </View>
-      <View style={{ gap: 10 }}>
-        <Pressable style={styles.button} onPress={emailLogin}>
-          <Text style={{ ...styles.text, color: "#666666" }}>
-            iniciar sesión
-          </Text>
-        </Pressable>
-        <Text style={styles.textDescription}>O</Text>
-        <Pressable style={styles.button} onPress={(e) => console.log(e)}>
+    <Formik
+      initialValues={{ email: "", password: "" }}
+      validationSchema={validationSchema}
+      onSubmit={({ email, password }) => {
+        loginWithEmail(email, password);
+      }}
+    >
+      {({ handleSubmit, handleChange, values, errors, touched }) => (
+        <DisplayContainer style={{marginHorizontal: 20}}>
+          <Image
+            style={styles.image}
+            source={{
+              uri: `https://us.123rf.com/450wm/mathier/mathier1905/mathier190500002/mathier190500002.jpg`,
+            }}
+          />
+          <View>
+            <Text style={styles.textDescription}>
+              Forem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
+              turpis molestie, est a, mattis tellus.
+            </Text>
+          </View>
+          <View>
+            <Text style={styles.text}>Iniciar sesión</Text>
+          </View>
+          <View>
+            <InputContainer
+              placeholder="Correo"
+              onChangeText={handleChange("email")}
+              value={values.email}
+              touched={touched.email}
+              error={errors.email}
+            />
+            <InputContainer
+              secureTextEntry
+              placeholder="Contraseña"
+              onChangeText={handleChange("password")}
+              value={values.password}
+              touched={touched.password}
+              error={errors.password}
+            />
+          </View>
+          <View style={{ gap: 10 }}>
+            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+              <Text style={{ ...styles.text, color: "#666666" }}>
+                iniciar sesión
+              </Text>
+            </TouchableOpacity>
+            {/* <Text style={styles.textDescription}>O</Text>
+        <TouchableOpacity style={styles.button} onPress={(e) => console.log(e)}>
           <Text style={{ ...styles.text, color: "#666666" }}>
             iniciar sesión con Google
           </Text>
-        </Pressable>
-      </View>
-      <Text style={styles.text}>¿Aún no tienes una cuenta? Crear cuenta</Text>
-    </DisplayContainer>
+        </TouchableOpacity> */}
+          </View>
+          <View>
+            <Text style={styles.text}>
+              ¿Aún no tienes una cuenta?
+              <Text
+                style={{ ...styles.text, ...styles.textButton }}
+                onPress={() => navigation.navigate("Register")}
+              >
+                Crear cuenta
+              </Text>
+            </Text>
+            <Text 
+            style={{ ...styles.text, ...styles.textButton }}
+            onPress={() => navigation.navigate("ResetPassword")}>
+              ¿Has olvidado tu contraseña?
+            </Text>
+          </View>
+        </DisplayContainer>
+      )}
+    </Formik>
   );
 };
 
@@ -95,20 +122,11 @@ const styles = StyleSheet.create({
   },
   textDescription: {
     textAlign: "center",
-    fontFamily: "Inter",
+    fontFamily: "Roboto",
     fontSize: 16,
     fontStyle: "normal",
     fontWeight: "400",
     lineHeight: 18,
-  },
-  input: {
-    width: 300,
-    height: 40,
-    borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 6,
-    margin: 10,
-    padding: 10,
   },
   button: {
     justifyContent: "center",
@@ -117,6 +135,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#D9D9D9",
     borderRadius: 25,
   },
+  textButton: {
+    color: "#0000ff",
+    fontSize: 16,
+    marginLeft: 8,
+  }
 });
 
 export default Login;

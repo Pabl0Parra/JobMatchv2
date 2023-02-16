@@ -1,131 +1,159 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-  View,
   Text,
   Image,
   TextInput,
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import { Formik } from "formik";
+import * as yup from "yup";
+import DisplayContainer from "../components/DisplayContainer";
+import checkRegisteredEmail from "../firebase/functions/checkRegisteredEmail";
+import registerUser from "../firebase/functions/registerUser";
+import { useNavigation } from "@react-navigation/native";
 
 const Register = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const navigation = useNavigation();
 
-  const handleRegister = () => {
-    // Validate fields
-    // TODO: Validate valid email, validate password length, etc.
-    // TODO: Show error messages
-    // TODO: Show loading indicator
-    // TODO: Perform register
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const passwordLength = 6;
 
-    if (!email) {
-      alert("Email is required");
-      return;
+  const validationSchema = yup.object().shape({
+    email: yup
+      .string()
+      .required("Este campo es requerido")
+      .matches(emailRegex, "Formato de correo inválido"),
+    password: yup
+      .string()
+      .required("Este campo es requerido")
+      .min(
+        passwordLength,
+        `Contraseña debe tener al menos ${passwordLength} caracteres`
+      ),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password")], "Contraseña no coincide")
+      .required("Este campo es requerido"),
+  });
+
+  const formSubmit = async ({ email, password }) => {
+    const registeredUser = await checkRegisteredEmail(email);
+
+    if (registeredUser) {
+      // implementar un mensaje de error con AwesomeAlert
+      console.log("ya hay un usuario registrado con el email proporcionado");
+    } else {
+      navigation.navigate("RegisterStack", { email, password });
     }
-
-    if (!password) {
-      alert("Password is required");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
-
-    // Perform Register
   };
 
   return (
-    <View style={styles.container}>
-      <Image
-        // Aquí se añade el logo
-        // source={require("./logo.png")}
-        style={styles.logo}
-        resizeMode="contain"
-      />
-      <Text style={styles.h1}>Logo</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Correo"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-        textContentType="emailAddress"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Contraseña"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirma contraseña"
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-        secureTextEntry
-      />
-      <TouchableOpacity style={styles.button} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Crea tu cuenta</Text>
-      </TouchableOpacity>
-      <Text style={styles.registerText}>
-        ¿Tienes cuenta? <Text style={styles.registerLink}>Entra aquí</Text>
-      </Text>
-    </View>
+    <Formik
+      initialValues={{ email: "", password: "", confirmPassword: "" }}
+      validationSchema={validationSchema}
+      onSubmit={formSubmit}
+    >
+      {({ handleSubmit, handleChange, values, errors, touched }) => (
+        <DisplayContainer>
+          <Image
+            style={styles.image}
+            source={{
+              uri: `https://us.123rf.com/450wm/mathier/mathier1905/mathier190500002/mathier190500002.jpg`,
+            }}
+          />
+          <Text style={styles.textDescription}>Crea tu cuenta</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Correo"
+            onChangeText={handleChange("email")}
+            value={values.email}
+          />
+          {errors.email && touched.email ? (
+            <Text style={styles.errorMessage}>{errors.email}</Text>
+          ) : null}
+          <TextInput
+            secureTextEntry
+            style={styles.input}
+            placeholder="Contraseña"
+            onChangeText={handleChange("password")}
+            value={values.password}
+          />
+          {errors.password && touched.password ? (
+            <Text style={styles.errorMessage}>{errors.password}</Text>
+          ) : null}
+          <TextInput
+            secureTextEntry
+            style={styles.input}
+            placeholder="Confirma la contraseña"
+            onChangeText={handleChange("confirmPassword")}
+            value={values.confirmPassword}
+          />
+          {errors.confirmPassword && touched.confirmPassword ? (
+            <Text style={styles.errorMessage}>{errors.confirmPassword}</Text>
+          ) : null}
+          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+            <Text style={styles.buttonText}>Registrarse</Text>
+          </TouchableOpacity>
+          <Text style={styles.registerText}>
+            ¿Tienes cuenta?
+            <Text
+              style={{ ...styles.text, ...styles.textButton }}
+              onPress={() => navigation.navigate("Login")}
+            >
+              Entra aquí
+            </Text>
+          </Text>
+        </DisplayContainer>
+      )}
+    </Formik>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    padding: 32,
-    backgroundColor: "#fff",
+  image: {
+    width: 79,
+    height: 79,
   },
-  logo: {
-    width: 128,
-    height: 128,
-    marginVertical: 32,
+  text: {
+    textAlign: "center",
+    fontFamily: "Roboto",
+    fontSize: 18,
+    fontWeight: "semibold",
   },
-  h1: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 82,
+  textDescription: {
+    textAlign: "center",
+    fontFamily: "Roboto",
+    fontSize: 16,
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: 18,
   },
   input: {
-    width: "100%",
-    height: 56,
-    paddingHorizontal: 16,
-    marginBottom: 16,
+    width: 300,
+    height: 40,
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 4,
+    borderColor: "gray",
+    borderRadius: 6,
+    // margin: 10,
+    padding: 10,
   },
   button: {
-    width: "100%",
-    height: 56,
-    backgroundColor: "gray",
     justifyContent: "center",
+    width: 288,
+    height: 40,
+    backgroundColor: "#D9D9D9",
+    borderRadius: 25,
     alignItems: "center",
-    borderRadius: 4,
   },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  registerText: {
-    marginTop: 16,
+  textButton: {
+    color: "#0000ff",
     fontSize: 16,
+    marginLeft: 8,
   },
-  registerLink: {
-    color: "grey",
-    fontWeight: "bold",
+  errorMessage: {
+    color: "red",
+    marginLeft: 10,
   },
 });
 
