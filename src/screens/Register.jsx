@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Text,
   Image,
@@ -12,9 +12,11 @@ import DisplayContainer from "../components/DisplayContainer";
 import checkRegisteredEmail from "../firebase/functions/checkRegisteredEmail";
 import registerUser from "../firebase/functions/registerUser";
 import { useNavigation } from "@react-navigation/native";
+import { UserDataContext } from "../context/UserDataContext";
 
 const Register = () => {
   const navigation = useNavigation();
+  const { userData, setUserData } = useContext(UserDataContext);
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const passwordLength = 6;
@@ -44,7 +46,8 @@ const Register = () => {
       // implementar un mensaje de error con AwesomeAlert
       console.log("ya hay un usuario registrado con el email proporcionado");
     } else {
-      navigation.navigate("RegisterStack", { email, password });
+      setUserData({ ...userData, email, password });
+      navigation.navigate("RegisterStack");
     }
   };
 

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import DisplayContainer from "../components/DisplayContainer";
 import InputForm from "../components/InputForm";
+import { UserDataContext } from "../context/UserDataContext";
 
 const ChooseUserRole = ({ navigation }) => {
+  const { userData, setUserData } = useContext(UserDataContext);
 
   return (
     <DisplayContainer>
@@ -13,11 +15,13 @@ const ChooseUserRole = ({ navigation }) => {
           { label: "Última empresa", name: "lastCompany", type: "text" },
         ]}
         onSubmit={(values) => {
-          navigation.navigate("ChooseCountry", {
+          setUserData({
+            ...userData,
             userRole: values[0],
             userLastRole: values[1],
             userLastCompany: values[2],
           });
+          navigation.navigate("ChooseCountry");
         }}
         questionText="Tu perfil te ayudará a encontrar el trabajo que buscas."
         requestText="Descubre nuevas oportunidades y personas"

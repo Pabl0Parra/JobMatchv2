@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import DisplayContainer from "../components/DisplayContainer";
 import InputForm from "../components/InputForm";
+import { UserDataContext } from "../context/UserDataContext";
 
 const ChooseUserName = ({ navigation }) => {
+  const { userData, setUserData } = useContext(UserDataContext);
+
   return (
     <DisplayContainer>
       <InputForm
@@ -11,10 +14,12 @@ const ChooseUserName = ({ navigation }) => {
           { label: "Apellido de usuario", name: "lastName", type: "text" },
         ]}
         onSubmit={(values) => {
-          navigation.navigate("ChooseUserRole", {
+          setUserData({
+            ...userData,
             userName: values[0],
             userLastName: values[1],
           });
+          navigation.navigate("ChooseUserRole");
         }}
         questionText="¿Cómo te llamas?"
         requestText="Introduce los siguientes datos:"
