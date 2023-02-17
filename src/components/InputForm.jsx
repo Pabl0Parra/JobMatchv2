@@ -95,31 +95,30 @@ const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
 
 const styles = StyleSheet.create({
   container: {
+    position: "relative",
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
+    justifyContent: "center",
+    gap: "20px",
   },
   questionText: {
     color: "#192B65",
-    fontSize: 26,
+    fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 10,
-    textAlign: "center"
+    textAlign: "center",
   },
   requestText: {
     color: "#192B65",
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 22,
-    textAlign: "center"
+    textAlign: "center",
   },
   button: {
     justifyContent: "center",
-    width: 288,
-    height: 40,
+    width: 280,
+    height: 38,
     backgroundColor: "#D9D9D9",
     borderRadius: 25,
-    marginTop: 40,
     cursor: "pointer",
   },
   buttonText: {
@@ -130,7 +129,8 @@ const styles = StyleSheet.create({
   textRecoverPassword: {
     marginHorizontal: 10,
     fontSize: 16,
-    color: "blue",
+    color: "#192B65",
+    fontWeight: "bold",
   },
 });
 

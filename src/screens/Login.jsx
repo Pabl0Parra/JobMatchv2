@@ -1,26 +1,25 @@
 import { Text, StyleSheet, View } from "react-native";
 import DisplayContainer from "../components/DisplayContainer";
 import loginWithEmail from "../firebase/functions/loginWithEmailPassword";
-import { useNavigation } from "@react-navigation/native";
 import InputForm from "../components/InputForm";
 import LogoSvg from "../componentsSVG/LogoSvg";
+import Constants from "expo-constants";
 
-const Login = () => {
-  const navigation = useNavigation();
-
+const Login = ({ navigation }) => {
   return (
     <DisplayContainer>
       <View style={styles.background}>
         <View style={styles.groupTop}>
           <LogoSvg />
-          <Text style={{ ...styles.textTop, lineHeight: 45, marginTop: 15 }}>
+          <Text style={{ ...styles.textTop, lineHeight: 30, marginTop: 15 }}>
             ¡Te estabamos {"\n"}esperando!
           </Text>
-          <Text style={{ ...styles.textTop, fontSize: 20 }}>
+          <Text style={{ ...styles.textTop, fontSize: 15 }}>
             Conecta con las mejores {"\n"}opciones laborales
           </Text>
         </View>
-        <View style={styles.backgroundForm}>
+      </View>
+      <View style={styles.backgroundForm}>
           <InputForm
             fields={[
               { label: "Correo", name: "email", type: "email" },
@@ -36,16 +35,15 @@ const Login = () => {
             }}
             requestText="Iniciar Sesión"
           />
-          <Text style={styles.text}>
-            ¿Aún no tienes una cuenta?
-            <Text
-              style={{ ...styles.text, ...styles.textButton }}
-              onPress={() => navigation.navigate("Register")}
-            >
-              Crear cuenta
-            </Text>
+        <Text style={styles.text}>
+          ¿Aún no tienes una cuenta?
+          <Text
+            style={{ ...styles.text, ...styles.textButton }}
+            onPress={() => navigation.navigate("Register")}
+          >
+            Crear cuenta
           </Text>
-        </View>
+        </Text>
       </View>
     </DisplayContainer>
   );
@@ -53,41 +51,38 @@ const Login = () => {
 
 const styles = StyleSheet.create({
   groupTop: {
-    gap: 5,
-    paddingLeft: 12
+    position: "relative",
+    top: "10%",
   },
   background: {
     position: "absolute",
     top: 0,
-    height: "48%",
     width: "100%",
-    paddingTop: 360,
-    paddingHorizontal: 40,
+    height: "50%",
+    paddingTop: Constants.statusBarHeight,
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
-    gap: 35,
+    justifyContent: "flex-start",
     backgroundColor: "#192B65",
-    borderBottomLeftRadius: "9% 4%",
-    borderBottomRightRadius: "9% 4%",
   },
   textTop: {
     color: "white",
     textAlign: "left",
-    fontWeight: 400,
-    fontSize: 48
+    fontWeight: "400",
+    fontSize: 32,
   },
   backgroundForm: {
-    alignItems: "center",
-    gap: 20,
+    position: "relative",
+    height: 340,
     borderRadius: 55,
-    paddingVertical: 24,
-    paddingHorizontal: 34,
-    backgroundColor: "#FFFFFF",
-    shadowColor: "#171717",
+    paddingHorizontal: 14,
+    paddingBottom: 15,
+    backgroundColor: "#ffffff",
+    justifyContent: "center",
+    /* shadowColor: "#red",
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.2,
-    shadowRadius: 3,
+    shadowRadius: 3, */
   },
   image: {
     width: 79,
@@ -96,7 +91,7 @@ const styles = StyleSheet.create({
   text: {
     textAlign: "center",
     fontFamily: "Roboto",
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "semibold",
   },
   textDescription: {
