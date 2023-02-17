@@ -8,7 +8,7 @@ import Constants from "expo-constants";
 const Login = ({ navigation }) => {
   return (
     <DisplayContainer>
-      <View style={styles.background}>
+      {/* 
         <View style={styles.groupTop}>
           <LogoSvg />
           <Text style={{ ...styles.textTop, lineHeight: 30, marginTop: 15 }}>
@@ -44,26 +44,66 @@ const Login = ({ navigation }) => {
             Crear cuenta
           </Text>
         </Text>
+      </View> */}
+      <View
+        style={[styles.background, { paddingTop: Constants.statusBarHeight, 
+          borderBottomLeftRadius: 10,
+          borderBottomRightRadius: 10
+         }]}
+      >
+        <View style={styles.groupTop}>
+          <LogoSvg />
+          <Text style={{ ...styles.textTop, lineHeight: 30, marginTop: 20 }}>
+            ¡Te estabamos {"\n"}esperando!
+          </Text>
+          <Text style={{ ...styles.textTop, fontSize: 15 }}>
+            Conecta con las mejores {"\n"}opciones laborales
+          </Text>
+        </View>
+      </View>
+      <View style={[styles.background, { backgroundColor: "#ffffff" }]}></View>
+      <View style={styles.boxForm}>
+        <InputForm
+          fields={[
+            { label: "Correo", name: "email", type: "email" },
+            {
+              label: "Contraseña",
+              name: "password",
+              type: "password",
+              recoverPassword: true,
+            },
+          ]}
+          onSubmit={(values) => {
+            loginWithEmail(values[0], values[1]);
+          }}
+          requestText="Iniciar Sesión"
+        />
+        <Text style={[styles.text, { paddingVertical: 14 }]}>
+          ¿Aún no tienes una cuenta?
+          <Text
+            style={{ ...styles.text, ...styles.textButton }}
+            onPress={() => navigation.navigate("Register")}
+          >
+            Crear cuenta
+          </Text>
+        </Text>
       </View>
     </DisplayContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  groupTop: {
-    position: "relative",
-    top: "10%",
-  },
   background: {
-    position: "absolute",
-    top: 0,
     width: "100%",
-    height: "50%",
-    paddingTop: Constants.statusBarHeight,
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-start",
     backgroundColor: "#192B65",
+  },
+  groupTop: {
+    position: "relative",
+    top: 80,
+    left: -20,
   },
   textTop: {
     color: "white",
@@ -71,9 +111,10 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     fontSize: 32,
   },
-  backgroundForm: {
-    position: "relative",
-    height: 340,
+  boxForm: {
+    flex: 1,
+    position: "absolute",
+    top: "42%",
     borderRadius: 55,
     paddingHorizontal: 14,
     paddingBottom: 15,

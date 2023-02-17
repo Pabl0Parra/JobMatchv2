@@ -2,8 +2,8 @@ import Svg, { G, Path, Defs, ClipPath } from "react-native-svg"
 
 const LogoSvg = (props) => (
   <Svg
-    width={117}
-    height={40}
+    width={117*1.2}
+    height={40*1.2}
     viewBox="0 0 117 40"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
     height: 38,
     backgroundColor: "#D9D9D9",
     borderRadius: 25,
+    marginTop: 14,
     cursor: "pointer",
   },
   buttonText: {
