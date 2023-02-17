@@ -22,7 +22,7 @@ const ChooseProfilePicture = () => {
       // Research uri --> https://docs.expo.io/versions/latest/sdk/imagepicker/#imagepickerlaunchimagelibraryasync
       // access selected assets through the "assets" array instead (warning in console)
       setImage(result.uri);
-      setUserData({ ...userData, profilePicture: result.uri });
+      setUserData({ ...userData, image: result.uri });
     }
   };
 
@@ -33,7 +33,7 @@ const ChooseProfilePicture = () => {
   // aquí se cierra la alerta y se navega a Home
   const hideAlert = () => {
     setShowAlert(false);
-    // navigation.navigate('Home');
+    navigation.navigate("Home");
   };
 
   return (
@@ -63,7 +63,8 @@ const ChooseProfilePicture = () => {
         onPress={() => {
           setShowAlert(true);
           console.log(userData);
-          // createUser({ ...userData, profilePicture: image });
+          // createUser devuelve el user.id que necesita Nico para el Home
+          // createUser({ ...userData});
         }}
       >
         <Text style={styles.finishedText}>Finalizar</Text>

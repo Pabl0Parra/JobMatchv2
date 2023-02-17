@@ -17,6 +17,7 @@ export const UserDataContextProvider = ({ children }) => {
     roleWanted: "",
     country: "",
     city: "",
+    image: "",
   });
 
   return (
