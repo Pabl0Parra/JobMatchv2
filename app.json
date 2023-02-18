@@ -31,7 +31,8 @@
       "permissions": [
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.nico_radin.jobmatch"
+      "package": "com.nico_radin.jobmatch",
+      "softwareKeyboardLayoutMode": "pan"
     },
     "web": {
       "favicon": "./assets/favicon.png"

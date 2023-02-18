@@ -1,5 +1,4 @@
-import { StyleSheet, View } from 'react-native';
-import Constants from "expo-constants";
+import { StyleSheet, View, ScrollView } from 'react-native';
 
 const DisplayContainer = ({ children, style, ...restOfProp }) => {
 
@@ -9,21 +8,20 @@ const DisplayContainer = ({ children, style, ...restOfProp }) => {
   ]
 
   return (
-    <View style={componentStyles} {...restOfProp}>
+    <ScrollView contentContainerStyle={componentStyles} {...restOfProp}>
       {children}
-    </View>
+    </ScrollView>
   )
 };
 
 const styles = StyleSheet.create({
   container: {
-    position: "relative",
+    position: 'relative',
     flex: 1,
+    justifyContent: "flex-start",
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 25,
-    margin: 0,
-    marginTop: Constants.statusBarHeight
+    margin: 0
   },
 });
 
