@@ -1,6 +1,6 @@
 import Svg, { G, Path, Defs, ClipPath } from "react-native-svg"
 
-const LogoSvg = (props) => (
+const LogoForBlueBackground = (props) => (
   <Svg
     width={117*1.2}
     height={40*1.2}
@@ -39,4 +39,4 @@ const LogoSvg = (props) => (
   </Svg>
 );
 
-export default LogoSvg;
+export default LogoForBlueBackground;

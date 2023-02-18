@@ -4,7 +4,13 @@ import * as yup from "yup";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import InputContainer from "./InputContainer";
 
-const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
+const InputForm = ({
+  fields,
+  onSubmit,
+  questionText,
+  requestText,
+  buttonText,
+}) => {
   const navigation = useNavigation();
 
   const generateInitialValues = () => {
@@ -80,16 +86,33 @@ const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
               ) : null}
             </View>
           ))}
+          <View>
           <TouchableOpacity
-            style={styles.button}
-            onPress={handleSubmit} /* 
-            disabled={fields.some((field) => !fieldValues[field.name])} */
+            style={[
+              styles.button,
+              {
+                backgroundColor:
+                ((Object.entries(errors).length === 0) && (fields.some((field) => values[field.name] !== ""))) ? "#091D5C" : "#D9D9D9",
+              },
+            ]}
+            onPress={handleSubmit}
           >
-            <Text style={styles.buttonText}>Siguiente</Text>
+            <Text
+              style={[
+                styles.buttonText,
+                {
+                  color:
+                  ((Object.entries(errors).length === 0) && (fields.some((field) => values[field.name] !== ""))) ? "#84FFFF" : "#666666",
+                },
+              ]}
+            >
+              {buttonText}
+            </Text>
           </TouchableOpacity>
+          </View>
         </View>
       )}
-    </Formik>
+    </Formik>            
   );
 };
 
@@ -115,17 +138,18 @@ const styles = StyleSheet.create({
   },
   button: {
     justifyContent: "center",
+    textAlignVertical: "center",
     width: 280,
     height: 38,
-    backgroundColor: "#D9D9D9",
     borderRadius: 25,
     marginTop: 14,
     cursor: "pointer",
   },
   buttonText: {
     textAlign: "center",
-    color: "white",
     fontSize: 16,
+    fontWeight: "600",
+    color: "#666666",
   },
   textRecoverPassword: {
     marginHorizontal: 10,

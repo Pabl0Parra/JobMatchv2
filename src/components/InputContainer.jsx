@@ -1,9 +1,17 @@
 import { useState } from "react";
-import { StyleSheet, TextInput, Text, View } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-
+import {
+  StyleSheet,
+  TextInput,
+  Text,
+  View,
+  TouchableOpacity,
+  showHide,
+} from "react-native";
+import { Entypo } from "@expo/vector-icons";
 
 const InputContainer = ({
+  value,
+  placeholder,
   styleContainer,
   styleError,
   touched,
@@ -12,36 +20,50 @@ const InputContainer = ({
   showHidePassword,
   ...restOfProp
 }) => {
-  const styleC = [styles.container, styleContainer];
-  const styleE = [styles.errorMessage, styleError];
-  const [isPasswordSecure, setIsPasswordSecure] = useState(true);
+  const [isPasswordSecure, setIsPasswordSecure] = useState(showHidePassword);
 
   return (
     <>
       <View>
         <TextInput
-          style={styleC}
+          style={[
+            styles.container,
+            styleContainer,
+            {
+              borderWidth: value.length ? 1.8 : 1.2,
+              borderColor: value.length ? "#192B65" : "gray",
+              color: value.length ? "#192B65" : "gray",
+              fontWeight: value.length ? "600" : "300",
+            },
+          ]}
+          placeholder={placeholder}
+          autoCorrect={false}
           secureTextEntry={isPasswordSecure}
-          /* right={
-            <TextInput.Icon
-              name={() => (
-                <MaterialIcons
-                  name={isPasswordSecure ? "eye-off" : "eye"}
-                  size={28}
-                />
-              )} // where <Icon /> is any component from vector-icons or anything else
-              onPress={() => {
-                isPasswordSecure
-                  ? setIsPasswordSecure(false)
-                  : setIsPasswordSecure(true);
-              }}
-            />
-          } */
+          value={value}
           {...restOfProp}
         />
+        {showHidePassword ? (
+          <>
+            <TouchableOpacity
+              style={styles.eyeBox}
+              onPress={() => setIsPasswordSecure(!isPasswordSecure)}
+            >
+              <Entypo
+                name={isPasswordSecure ? "eye" : "eye-with-line"}
+                size={26}
+                color={isPasswordSecure ? "#192B65" : "gray"}
+              />
+            </TouchableOpacity>
+          </>
+        ) : null}
+        {value.length ? (
+          <View style={styles.placeholder}>
+            <Text style={{ fontWeight: "600" }}>{placeholder}</Text>
+          </View>
+        ) : null}
       </View>
       {error && touched ? (
-        <Text style={styleE} {...textErrorProp}>
+        <Text style={[styles.errorMessage, styleError]} {...textErrorProp}>
           {error}
         </Text>
       ) : null}
@@ -53,14 +75,25 @@ const styles = StyleSheet.create({
   container: {
     width: 300,
     height: 50,
-    borderWidth: 1,
-    borderColor: "#79747E",
+    borderRadius: 5,
     margin: 10,
     padding: 10,
+    outline: "none",
+  },
+  placeholder: {
+    position: "absolute",
+    left: 20,
+    backgroundColor: "white",
+    paddingHorizontal: 4,
   },
   errorMessage: {
     color: "red",
     marginLeft: 10,
+  },
+  eyeBox: {
+    position: "absolute",
+    right: 20,
+    top: 22,
   },
 });
 

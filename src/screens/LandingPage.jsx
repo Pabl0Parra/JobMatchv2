@@ -1,10 +1,10 @@
 import DisplayContainer from "../components/DisplayContainer";
-import LogoSvg from "../componentsSVG/LogoSvg";
+import LogoForBlueBackground from "../svgs/LogoForBlueBackground";
 
 const LandingPage = () => {
   return (
     <DisplayContainer style={{ backgroundColor: "#091D5C" }}>
-      <LogoSvg />
+      <LogoForBlueBackground />
     </DisplayContainer>
   );
 };
