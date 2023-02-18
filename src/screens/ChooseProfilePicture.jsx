@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import AwesomeAlert from "react-native-awesome-alerts";
 import DisplayContainer from "../components/DisplayContainer";
+import { UserDataContext } from "../context/UserDataContext";
 
 const ChooseProfilePicture = () => {
   const [image, setImage] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
+
+  const { userData, setUserData } = useContext(UserDataContext);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -19,6 +22,7 @@ const ChooseProfilePicture = () => {
       // Research uri --> https://docs.expo.io/versions/latest/sdk/imagepicker/#imagepickerlaunchimagelibraryasync
       // access selected assets through the "assets" array instead (warning in console)
       setImage(result.uri);
+      setUserData({ ...userData, image: result.uri });
     }
   };
 
@@ -58,8 +62,9 @@ const ChooseProfilePicture = () => {
         style={styles.finished}
         onPress={() => {
           setShowAlert(true);
-          // aquí debería de ir la función de crear usuario
-          // createUser(email, password, name, surname, image, userType, country)
+          console.log(userData);
+          // createUser devuelve el user.id que necesita Nico para el Home
+          // createUser({ ...userData});
         }}
       >
         <Text style={styles.finishedText}>Finalizar</Text>
