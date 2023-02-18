@@ -20,7 +20,7 @@ import Loading from "./src/screens/Loading";
 import LandingPage from "./src/screens/LandingPage";
 import MatchModal from "./src/screens/MatchModal";
 import { getDoc, doc } from "@firebase/firestore";
-import { CurrentUserData } from "./src/context/UserContext";
+import { UserDataContextProvider } from "./src/context/UserDataContext";
 
 const Stack = createNativeStackNavigator();
 
@@ -76,7 +76,7 @@ export default function App() {
   }, []);
 
   return (
-    <CurrentUserData.Provider value={user}>
+    <UserDataContextProvider>
       <NavigationContainer theme={theme}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           {onLandingPage ? (
@@ -115,6 +115,6 @@ export default function App() {
           )}
         </Stack.Navigator>
       </NavigationContainer>
-    </CurrentUserData.Provider>
+    </UserDataContextProvider>
   );
 }

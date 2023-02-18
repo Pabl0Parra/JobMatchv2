@@ -1,23 +1,23 @@
-import React from "react";
-import InputForm from "../components/InputForm";
-import { useNavigation } from "@react-navigation/native";
-import DisplayContainer from "../components/DisplayContainer";
+import React, { useContext } from 'react';
+import InputForm from '../components/InputForm';
+import { useNavigation } from '@react-navigation/native';
+import DisplayContainer from '../components/DisplayContainer';
+import { UserDataContext } from '../context/UserDataContext';
 
 const ChooseCountry = () => {
+  const { userData, setUserData } = useContext(UserDataContext);
   const navigation = useNavigation();
 
   return (
     <DisplayContainer>
       <InputForm
         fields={[
-          { label: "País", name: "country", type: "text" },
-          { label: "Ciudad", name: "city", type: "text" },
+          { label: 'País', name: 'country', type: 'text' },
+          { label: 'Ciudad', name: 'city', type: 'text' },
         ]}
         onSubmit={(values) => {
-          navigation.navigate("ChooseProfilePicture", {
-            country: values[0],
-            city: values[1],
-          });
+          setUserData({ ...userData, country: values[0], city: values[1] });
+          navigation.navigate('ChooseProfilePicture');
         }}
         questionText="Te damos la bienvenida,"
         requestText="Introduce los siguientes datos:"

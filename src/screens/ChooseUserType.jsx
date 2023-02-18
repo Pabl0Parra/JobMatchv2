@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { RadioButton } from "react-native-paper";
 import DisplayContainer from "../components/DisplayContainer";
 import { useNavigation } from "@react-navigation/native";
+import { UserDataContext } from "../context/UserDataContext";
 
 const ChooseUserType = () => {
+  const { userData, setUserData } = useContext(UserDataContext);
   const navigation = useNavigation();
 
   const [selectedValue, setSelectedValue] = useState("");
@@ -19,7 +21,10 @@ const ChooseUserType = () => {
             <RadioButton
               value="worker"
               status={selectedValue === "worker" ? "checked" : "unchecked"}
-              onPress={() => setSelectedValue("worker")}
+              onPress={(type) => {
+                setUserData({ ...userData, [type]: "worker" }),
+                  setSelectedValue("worker");
+              }}
             />
           </View>
         </View>
@@ -29,7 +34,10 @@ const ChooseUserType = () => {
             <RadioButton
               value="employer"
               status={selectedValue === "employer" ? "checked" : "unchecked"}
-              onPress={() => setSelectedValue("employer")}
+              onPress={(type) => {
+                setUserData({ ...userData, [type]: "employer" }),
+                  setSelectedValue("employer");
+              }}
             />
           </View>
         </View>
