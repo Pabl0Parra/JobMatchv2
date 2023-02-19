@@ -62,7 +62,7 @@ const Login = ({ navigation }) => {
             <TouchableOpacity
               style={styles.buttonGoogle}
               onPress={(e) =>
-                /* loginWithGoogle() */ console.log("auth google")
+                loginWithGoogle() 
               }
             >
               <Image

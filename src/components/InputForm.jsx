@@ -10,6 +10,7 @@ const InputForm = ({
   questionText,
   requestText,
   buttonText,
+  styleText
 }) => {
   const navigation = useNavigation();
 
@@ -64,8 +65,8 @@ const InputForm = ({
     >
       {({ handleSubmit, handleChange, values, errors, touched }) => (
         <View style={styles.container}>
-          <Text style={styles.questionText}>{questionText}</Text>
-          <Text style={styles.requestText}>{requestText}</Text>
+          <Text style={[styles.questionText, styleText?.question]}>{questionText}</Text>
+          <Text style={[styles.requestText, styleText?.request]}>{requestText}</Text>
           {fields.map((field) => (
             <View key={`${field.name}Input`}>
               <InputContainer
