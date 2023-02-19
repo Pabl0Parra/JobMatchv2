@@ -77,8 +77,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 5,
     margin: 10,
-    padding: 10,
-    outline: "none",
+    padding: 10
   },
   placeholder: {
     position: "absolute",

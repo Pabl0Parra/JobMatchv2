@@ -1,53 +1,68 @@
-import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, TextInput, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 import DisplayContainer from "../components/DisplayContainer";
 import checkRegisteredEmail from "../firebase/functions/checkRegisteredEmail";
 import sendEmailResetPass from "../firebase/functions/sendEmailResetPass";
+import InputForm from "../components/InputForm";
 
 const ResetPassword = () => {
   const navigation = useNavigation();
 
-  const [email, setEmail] = useState("");
-
-  const requestNewPassword = async () => {
-    const registeredUser = await checkRegisteredEmail(email);
+  const requestNewPassword = async (values) => {
+     const registeredUser = await checkRegisteredEmail(values[0]);
 
     if (!registeredUser) {
       // implementar un mensaje de error con AwesomeAlert
       console.log(
-        `No hemos encontrado ninguna cuenta asociada a ${email}. Prueba con otro email.`
+        `No hemos encontrado ninguna cuenta asociada a ${values[0]}. Prueba con otro email.`
       );
     } else {
         console.log(
-            `Introduce el código de verificación de 6 dígitos que te hemos enviado a ${email}.`
+            `Introduce el código de verificación de 6 dígitos que te hemos enviado a ${values[0]}.`
           );
-        sendEmailResetPass(email)
+        sendEmailResetPass(values[0])
     }
   };
 
   return (
-    <DisplayContainer>
-      <Text style={{ ...styles.text, fontSize: 26 }}>
-        ¿Has olvidado tu contraseña?
-      </Text>
-      <Text style={styles.text}>
-        Restablecer la contraseña en dos pasos rápidos
-      </Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Correo"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <TouchableOpacity style={styles.button} onPress={requestNewPassword}>
-        <Text style={{ ...styles.text, color: "#666666" }}>
-          Restablecer la contraseña
+    <DisplayContainer >
+      <View
+        style={[
+          styles.background,
+          {
+            marginBottom: 30,
+            width: "120%",
+            borderBottomLeftRadius: 90,
+            borderBottomRightRadius: 90,
+          },
+        ]}
+      >
+        <Image
+          style={[styles.image]}
+          source={require("../images/image4.png")}
+        />
+      </View>
+      <View style={[styles.background, { backgroundColor: "#ffffff" }]}></View>
+      <View style={styles.boxForm}>
+        <InputForm
+          fields={[{ label: "Correo", name: "email", type: "email" }]}
+          onSubmit={requestNewPassword}
+          questionText="¿Has olvidado tu contraseña?"
+          requestText="Restablecer la contraseña en dos pasos rápidos"
+          styleText={{
+            question: {
+              fontSize: 18,
+            },
+            request: {
+              fontSize: 16,
+            },
+          }}
+          buttonText="Restablecer la contraseña"
+        />
+        <Text style={styles.text} onPress={() => navigation.navigate("Login")}>
+          Volver
         </Text>
-      </TouchableOpacity>
-      <Text style={styles.text} onPress={() => navigation.navigate("Login")}>
-        Volver
-      </Text>
+      </View>
     </DisplayContainer>
   );
 };
@@ -55,26 +70,32 @@ const ResetPassword = () => {
 export default ResetPassword;
 
 const styles = StyleSheet.create({
+  background: {
+    position: "relative",
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "#192B65",
+  },
+  boxForm: {
+    position: "absolute",
+    flex: 1,
+    marginTop: 30,
+    padding: 15,
+    backgroundColor: "#ffffff",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 30,
+  },
   text: {
     textAlign: "center",
     fontFamily: "Roboto",
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "semibold",
+    marginTop: 15,
   },
-  input: {
-    width: 300,
-    height: 40,
-    borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 6,
-    margin: 10,
-    padding: 10,
-  },
-  button: {
-    justifyContent: "center",
-    width: 288,
-    height: 40,
-    backgroundColor: "#D9D9D9",
-    borderRadius: 25,
+  image: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
   },
 });
