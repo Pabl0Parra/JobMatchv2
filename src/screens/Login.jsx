@@ -1,26 +1,38 @@
-import { Text, StyleSheet, View } from "react-native";
+import { Text, StyleSheet, View, TouchableOpacity, Image } from "react-native";
+import LogoForBlueBackround from "../svgs/LogoForBlueBackground";
 import DisplayContainer from "../components/DisplayContainer";
 import loginWithEmail from "../firebase/functions/loginWithEmailPassword";
-import { useNavigation } from "@react-navigation/native";
+import loginWithGoogle from "../firebase/functions/loginWithGoogle";
 import InputForm from "../components/InputForm";
-import LogoSvg from "../componentsSVG/LogoSvg";
 
-const Login = () => {
-  const navigation = useNavigation();
-
+const Login = ({ navigation }) => {
   return (
     <DisplayContainer>
-      <View style={styles.backgroundTop}>
-        <View style={{gap: 10, paddingHorizontal: 40}}>
-          <LogoSvg />
-          <Text style={{...styles.backgroundTopText, lineHeight: 45, marginTop: 10}}>
+      <View
+        style={[
+          styles.background,
+          {
+            marginBottom: 30,
+            width: "120%",
+            borderBottomLeftRadius: 90,
+            borderBottomRightRadius: 90,
+          },
+        ]}
+      >
+        <Image style={[styles.image]} source={require("../images/image4.png")} />
+      </View>
+      <View style={[styles.background, { backgroundColor: "#ffffff" }]}></View>
+      <View style={styles.group}>
+        <View style={{ marginLeft: -30 }}>
+          <LogoForBlueBackround />
+          <Text style={{ ...styles.textTop, lineHeight: 30, marginTop: 20 }}>
             ¡Te estabamos {"\n"}esperando!
           </Text>
-          <Text style={{ ...styles.backgroundTopText, fontSize: 20 }}>
+          <Text style={{ ...styles.textTop, fontSize: 15 }}>
             Conecta con las mejores {"\n"}opciones laborales
           </Text>
         </View>
-        <View style={styles.backgroundForm}>
+        <View style={styles.boxForm}>
           <InputForm
             fields={[
               { label: "Correo", name: "email", type: "email" },
@@ -35,11 +47,38 @@ const Login = () => {
               loginWithEmail(values[0], values[1]);
             }}
             requestText="Iniciar Sesión"
+            buttonText="Iniciar Sesión"
           />
-          <Text style={styles.text}>
-            ¿Aún no tienes una cuenta?
+          <Text
+            style={[
+              styles.text,
+              styles.textButton,
+              { paddingVertical: 8, fontWeight: "700" },
+            ]}
+          >
+            o iniciar sesión con
+          </Text>
+          <View>
+            <TouchableOpacity
+              style={styles.buttonGoogle}
+              onPress={(e) =>
+                /* loginWithGoogle() */ console.log("auth google")
+              }
+            >
+              <Image
+                style={styles.imageGoogle}
+                source={require("../images/google_buscador.png")}
+              />
+            </TouchableOpacity>
+          </View>
+          <Text style={[styles.text, { paddingVertical: 8 }]}>
+            ¿Aún no tienes una cuenta?{" "}
             <Text
-              style={{ ...styles.text, ...styles.textButton }}
+              style={{
+                ...styles.text,
+                ...styles.textButton,
+                fontWeight: "700",
+              }}
               onPress={() => navigation.navigate("Register")}
             >
               Crear cuenta
@@ -52,76 +91,71 @@ const Login = () => {
 };
 
 const styles = StyleSheet.create({
-  backgroundTop: {
+  background: {
+    position: "relative",
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "#192B65",
+  },
+  group: {
     position: "absolute",
-    top: 0,
-    height: "48%",
-    width: "100%",
-    paddingTop: 360,
-    paddingHorizontal: 40,
     flex: 1,
     justifyContent: "center",
-    gap: 35,
-    backgroundColor: "#192B65",
-    borderBottomLeftRadius: "9% 4%",
-    borderBottomRightRadius: "9% 4%",
+    alignItems: "center",
   },
-  backgroundTopText: {
+  textTop: {
     color: "white",
     textAlign: "left",
-    fontWeight: 400,
-    fontSize: 48,
+    fontWeight: "400",
+    fontSize: 32,
   },
-  backgroundForm: {
-    alignItems: "center",
-    gap: 20,
+  boxForm: {
+    flex: 1,
     borderRadius: 55,
-    paddingVertical: 24,
-    backgroundColor: "#FFFFFF",
-    shadowColor: '#171717',
-    shadowOffset: {width: 0, height: 8},
-    shadowOpacity: 0.2,
+    paddingHorizontal: 14,
+    paddingBottom: 15,
+    marginTop: 30,
+    backgroundColor: "#ffffff",
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "gray",
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.5,
     shadowRadius: 3,
   },
   image: {
-    width: 79,
-    height: 79,
+    position: "absolute",
+    width: "100%",
+    height: "100%",
   },
   text: {
     textAlign: "center",
     fontFamily: "Roboto",
-    fontSize: 18,
-    fontWeight: "semibold",
-  },
-  textDescription: {
-    textAlign: "center",
-    fontFamily: "Roboto",
     fontSize: 16,
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: 18,
+    fontWeight: "semibold",
   },
   button: {
     justifyContent: "center",
+    alignItems: "center",
     width: 288,
     height: 40,
     backgroundColor: "#D9D9D9",
     borderRadius: 25,
   },
   textButton: {
-    color: "#0000ff",
+    color: "#1D1152",
     fontSize: 16,
     marginLeft: 8,
+  },
+  buttonGoogle: {
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+  },
+  imageGoogle: {
+    width: 70,
+    height: 70,
   },
 });
 
 export default Login;
-
-{
-  /* <Text style={styles.textDescription}>O</Text>
-<TouchableOpacity style={styles.button} onPress={(e) => console.log(e)}>
-<Text style={{ ...styles.text, color: "#666666" }}>
-iniciar sesión con Google
-</Text>
-</TouchableOpacity> */
-}

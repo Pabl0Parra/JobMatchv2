@@ -4,7 +4,13 @@ import * as yup from "yup";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import InputContainer from "./InputContainer";
 
-const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
+const InputForm = ({
+  fields,
+  onSubmit,
+  questionText,
+  requestText,
+  buttonText,
+}) => {
   const navigation = useNavigation();
 
   const generateInitialValues = () => {
@@ -80,57 +86,76 @@ const InputForm = ({ fields, onSubmit, questionText, requestText }) => {
               ) : null}
             </View>
           ))}
+          <View>
           <TouchableOpacity
-            style={styles.button}
-            onPress={handleSubmit} /* 
-            disabled={fields.some((field) => !fieldValues[field.name])} */
+            style={[
+              styles.button,
+              {
+                backgroundColor:
+                ((Object.entries(errors).length === 0) && (fields.some((field) => values[field.name] !== ""))) ? "#091D5C" : "#D9D9D9",
+              },
+            ]}
+            onPress={handleSubmit}
           >
-            <Text style={styles.buttonText}>Siguiente</Text>
+            <Text
+              style={[
+                styles.buttonText,
+                {
+                  color:
+                  ((Object.entries(errors).length === 0) && (fields.some((field) => values[field.name] !== ""))) ? "#84FFFF" : "#666666",
+                },
+              ]}
+            >
+              {buttonText}
+            </Text>
           </TouchableOpacity>
+          </View>
         </View>
       )}
-    </Formik>
+    </Formik>            
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    position: "relative",
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
+    justifyContent: "center",
+    gap: "20px",
   },
   questionText: {
     color: "#192B65",
-    fontSize: 26,
+    fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 10,
-    textAlign: "center"
+    textAlign: "center",
   },
   requestText: {
     color: "#192B65",
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 22,
-    textAlign: "center"
+    textAlign: "center",
   },
   button: {
     justifyContent: "center",
-    width: 288,
-    height: 40,
-    backgroundColor: "#D9D9D9",
+    textAlignVertical: "center",
+    width: 280,
+    height: 38,
     borderRadius: 25,
-    marginTop: 40,
+    marginTop: 14,
     cursor: "pointer",
   },
   buttonText: {
     textAlign: "center",
-    color: "white",
     fontSize: 16,
+    fontWeight: "600",
+    color: "#666666",
   },
   textRecoverPassword: {
     marginHorizontal: 10,
     fontSize: 16,
-    color: "blue",
+    color: "#192B65",
+    fontWeight: "bold",
   },
 });
 

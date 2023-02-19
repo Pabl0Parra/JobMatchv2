@@ -1,18 +1,71 @@
 import { useState } from "react";
-import { StyleSheet, TextInput, Text } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  Text,
+  View,
+  TouchableOpacity,
+  showHide,
+} from "react-native";
+import { Entypo } from "@expo/vector-icons";
 
-const InputContainer = ({ styleContainer, styleError, touched, error, textErrorProp, showHidePassword, ...restOfProp }) => {
-  const styleC = [styles.container, styleContainer];
-  const styleE = [styles.errorMessage, styleError];
-  const [isPasswordSecure] = useState(showHidePassword)
+const InputContainer = ({
+  value,
+  placeholder,
+  styleContainer,
+  styleError,
+  touched,
+  error,
+  textErrorProp,
+  showHidePassword,
+  ...restOfProp
+}) => {
+  const [isPasswordSecure, setIsPasswordSecure] = useState(showHidePassword);
 
   return (
     <>
-      <TextInput style={styleC}
-        secureTextEntry={isPasswordSecure}
-        {...restOfProp} />
+      <View>
+        <TextInput
+          style={[
+            styles.container,
+            styleContainer,
+            {
+              borderWidth: value.length ? 1.8 : 1.2,
+              borderColor: value.length ? "#192B65" : "gray",
+              color: value.length ? "#192B65" : "gray",
+              fontWeight: value.length ? "600" : "300",
+            },
+          ]}
+          placeholder={placeholder}
+          autoCorrect={false}
+          secureTextEntry={isPasswordSecure}
+          value={value}
+          {...restOfProp}
+        />
+        {showHidePassword ? (
+          <>
+            <TouchableOpacity
+              style={styles.eyeBox}
+              onPress={() => setIsPasswordSecure(!isPasswordSecure)}
+            >
+              <Entypo
+                name={isPasswordSecure ? "eye" : "eye-with-line"}
+                size={26}
+                color={isPasswordSecure ? "#192B65" : "gray"}
+              />
+            </TouchableOpacity>
+          </>
+        ) : null}
+        {value.length ? (
+          <View style={styles.placeholder}>
+            <Text style={{ fontWeight: "600" }}>{placeholder}</Text>
+          </View>
+        ) : null}
+      </View>
       {error && touched ? (
-        <Text style={styleE} {...textErrorProp}>{error}</Text>
+        <Text style={[styles.errorMessage, styleError]} {...textErrorProp}>
+          {error}
+        </Text>
       ) : null}
     </>
   );
@@ -21,16 +74,26 @@ const InputContainer = ({ styleContainer, styleError, touched, error, textErrorP
 const styles = StyleSheet.create({
   container: {
     width: 300,
-    height: 40,
-    borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 6,
+    height: 50,
+    borderRadius: 5,
     margin: 10,
     padding: 10,
+    outline: "none",
+  },
+  placeholder: {
+    position: "absolute",
+    left: 20,
+    backgroundColor: "white",
+    paddingHorizontal: 4,
   },
   errorMessage: {
     color: "red",
     marginLeft: 10,
+  },
+  eyeBox: {
+    position: "absolute",
+    right: 20,
+    top: 22,
   },
 });
 
