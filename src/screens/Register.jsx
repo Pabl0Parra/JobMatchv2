@@ -76,8 +76,8 @@ const Register = () => {
               },
               {
                 label: "Verificar contraseña",
-                name: "password2",
-                type: "password",
+                name: "verifyPassword",
+                type: "verifyPassword",
               },
             ]}
             onSubmit={formSubmit}
