@@ -1,8 +1,9 @@
 import { Formik } from "formik";
 import { useNavigation } from "@react-navigation/native";
 import * as yup from "yup";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import InputContainer from "./InputContainer";
+import ReusableButton from "../components/ReusableButton";
 
 const InputForm = ({
   fields,
@@ -45,9 +46,9 @@ const InputForm = ({
           break;
         case "verifyPassword":
           yupVal = yup
-          .string()
-          .oneOf([yup.ref("password")], "Contraseña no coincide")
-          .required("Este campo es requerido")
+            .string()
+            .oneOf([yup.ref("password")], "Contraseña no coincide")
+            .required("Este campo es requerido");
           break;
         case "text":
           yupVal = yup.string().required("Este campo es requerido");
@@ -89,7 +90,9 @@ const InputForm = ({
                 onChangeText={handleChange(`${field.name}`)}
                 touched={touched[field.name]}
                 error={errors[field.name]}
-                showHidePassword={field.type === "password" || field.type === "verifyPassword"}
+                showHidePassword={
+                  field.type === "password" || field.type === "verifyPassword"
+                }
               />
               {field.recoverPassword ? (
                 <Text
@@ -102,7 +105,16 @@ const InputForm = ({
             </View>
           ))}
           <View>
-            <TouchableOpacity
+            <ReusableButton
+              innerText="Siguiente"
+              enabled={
+                (Object.entries(errors)?.length === 0 &&
+                fields.some((field) => values[field.name] !== ""))
+              }
+              styleContainer={{marginTop: 14}}
+              onPress={handleSubmit}
+            />
+            {/* <TouchableOpacity
               style={[
                 styles.button,
                 {
@@ -129,7 +141,7 @@ const InputForm = ({
               >
                 {buttonText}
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       )}
@@ -156,21 +168,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
-  },
-  button: {
-    justifyContent: "center",
-    textAlignVertical: "center",
-    width: 280,
-    height: 38,
-    borderRadius: 25,
-    marginTop: 14,
-    cursor: "pointer",
-  },
-  buttonText: {
-    textAlign: "center",
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#666666",
   },
   textRecoverPassword: {
     marginHorizontal: 10,
