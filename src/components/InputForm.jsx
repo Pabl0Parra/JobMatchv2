@@ -94,6 +94,7 @@ const InputForm = ({
               {
                 backgroundColor:
                 ((Object.entries(errors)?.length === 0) && (fields.some((field) => values[field.name] !== ""))) ? "#091D5C" : "#D9D9D9",
+
               },
             ]}
             onPress={handleSubmit}
