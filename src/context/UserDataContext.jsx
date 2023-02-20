@@ -12,7 +12,6 @@ export const UserDataContextProvider = ({ children }) => {
     userRole: "",
     userLastRole: "",
     userLastCompany: "",
-    company: "",
     sector: "",
     roleWanted: "",
     country: "",
