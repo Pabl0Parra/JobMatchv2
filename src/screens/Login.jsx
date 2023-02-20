@@ -62,7 +62,7 @@ const Login = ({ navigation }) => {
             <TouchableOpacity
               style={styles.buttonGoogle}
               onPress={(e) =>
-                /* loginWithGoogle() */ console.log("auth google")
+                loginWithGoogle()
               }
             >
               <Image
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 55,
     paddingHorizontal: 14,
-    paddingBottom: 15,
+    paddingVertical: 15,
     marginTop: 30,
     backgroundColor: "#ffffff",
     justifyContent: "center",
