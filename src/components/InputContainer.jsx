@@ -4,8 +4,7 @@ import {
   TextInput,
   Text,
   View,
-  TouchableOpacity,
-  showHide,
+  TouchableOpacity
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 

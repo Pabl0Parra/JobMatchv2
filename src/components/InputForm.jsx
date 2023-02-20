@@ -65,10 +65,10 @@ const InputForm = ({
     >
       {({ handleSubmit, handleChange, values, errors, touched }) => (
         <View style={styles.container}>
-          <Text style={[styles.questionText, styleText?.question]}>{questionText}</Text>
-          <Text style={[styles.requestText, styleText?.request]}>{requestText}</Text>
-          {fields.map((field) => (
-            <View key={`${field.name}Input`}>
+          {questionText && <Text style={[styles.questionText, styleText?.question]}>{questionText}</Text>}
+          {requestText && <Text style={[styles.requestText, styleText?.request]}>{requestText}</Text>}
+          {fields.map((field, i) => (
+            <View key={i}>
               <InputContainer
                 value={values[field.name]}
                 placeholder={field.label}
@@ -93,7 +93,7 @@ const InputForm = ({
               styles.button,
               {
                 backgroundColor:
-                ((Object.entries(errors).length === 0) && (fields.some((field) => values[field.name] !== ""))) ? "#091D5C" : "#D9D9D9",
+                ((Object.entries(errors)?.length === 0) && (fields.some((field) => values[field.name] !== ""))) ? "#091D5C" : "#D9D9D9",
               },
             ]}
             onPress={handleSubmit}
@@ -103,7 +103,7 @@ const InputForm = ({
                 styles.buttonText,
                 {
                   color:
-                  ((Object.entries(errors).length === 0) && (fields.some((field) => values[field.name] !== ""))) ? "#84FFFF" : "#666666",
+                  ((Object.entries(errors)?.length === 0) && (fields.some((field) => values[field.name] !== ""))) ? "#84FFFF" : "#666666",
                 },
               ]}
             >
