@@ -64,6 +64,7 @@ const ChooseProfilePicture = () => {
           setShowAlert(true);
           console.log(userData);
           // createUser devuelve el user.id que necesita Nico para el Home
+          // registerUser({ ...userData });
           // createUser({ ...userData});
         }}
       >
