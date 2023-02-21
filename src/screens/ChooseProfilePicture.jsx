@@ -4,6 +4,7 @@ import * as ImagePicker from "expo-image-picker";
 import AwesomeAlert from "react-native-awesome-alerts";
 import DisplayContainer from "../components/DisplayContainer";
 import { UserDataContext } from "../context/UserDataContext";
+import registerUser from "../firebase/functions/registerUser";
 
 const ChooseProfilePicture = () => {
   const [image, setImage] = useState(null);
@@ -64,7 +65,7 @@ const ChooseProfilePicture = () => {
           setShowAlert(true);
           console.log(userData);
           // createUser devuelve el user.id que necesita Nico para el Home
-          // registerUser({ ...userData });
+          registerUser(userData.email, userData.password, userData);
           // createUser({ ...userData});
         }}
       >

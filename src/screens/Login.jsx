@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { UserDataContext, UserDataContextProvider } from "../context/UserDataContext";
 import { Text, StyleSheet, View, TouchableOpacity, Image } from "react-native";
 import LogoForBlueBackround from "../svgs/LogoForBlueBackground";
 import DisplayContainer from "../components/DisplayContainer";
@@ -6,6 +8,7 @@ import loginWithGoogle from "../firebase/functions/loginWithGoogle";
 import InputForm from "../components/InputForm";
 
 const Login = ({ navigation }) => {
+  const { userData, setUserData } = useContext(UserDataContext);
   return (
     <DisplayContainer>
       <View
@@ -45,6 +48,7 @@ const Login = ({ navigation }) => {
             ]}
             onSubmit={(values) => {
               loginWithEmail(values[0], values[1]);
+              setUserData(...userData, {email:values[0], password: values[1]})
             }}
             requestText="Iniciar Sesión"
             buttonText="Iniciar Sesión"
