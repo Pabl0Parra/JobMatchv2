@@ -1,17 +1,36 @@
-import { AntDesign, Entypo, Fontisto } from "@expo/vector-icons";
+import { AntDesign, Entypo, FontAwesome, Fontisto } from "@expo/vector-icons";
+import { useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
-const ActionsButtons = ({pressed}) => {
+const ActionsButtons = ({ pressed, saved, active}) => {
+/*   const [active, setActive] = useState(false);
+  const handleTouch = () => {
+    setActive(!active);
+  }; */
   return (
     <View style={styles.buttonsContainer}>
-      <TouchableOpacity style={styles.button} onPress={()=>pressed.current.swipeLeft()}>
-        <Entypo name="cross" size={32} color="#091D5C" />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => pressed.current.swipeLeft()}
+      >
+        <Entypo name="cross" size={24} color="#84FFFF" />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={()=>pressed.current.swipeRight()}>
-      <Fontisto name="favorite" size={24} color="#091D5C" />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={saved
+        }
+      >
+        <FontAwesome
+          name={active ? "bookmark" : "bookmark-o"}
+          size={20}
+          color="#84FFFF"
+        />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={()=>pressed.current.swipeRight()}>
-        <AntDesign name="hearto" size={32} color="#091D5C" />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => pressed.current.swipeRight()}
+      >
+        <AntDesign name="hearto" size={20} color="#84FFFF" />
       </TouchableOpacity>
     </View>
   );
@@ -19,17 +38,20 @@ const ActionsButtons = ({pressed}) => {
 
 const styles = StyleSheet.create({
   buttonsContainer: {
-    width: "80%",
+    width: "70%",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 15,
-    marginTop:10,
+    marginBottom: 32,
+    marginTop: 16,
   },
   button: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: "#fafafa",
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "transparent",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderColor: "#84FFFF",
     justifyContent: "center",
     alignItems: "center",
   },
