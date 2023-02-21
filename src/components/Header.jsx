@@ -8,11 +8,11 @@ const Header = ({ screen }) => {
       <LogoHeader/>
       {screen === "Home" ? (
         <TouchableOpacity style={styles.notification}>
-          <FontAwesome name="bell-o" size={24} color="#091D5C" />
+          <FontAwesome name="bell-o" size={20} color="#091D5C" />
         </TouchableOpacity>
       ) : screen === "Profile" ? (
         <TouchableOpacity style={styles.notification}>
-          <Feather name="settings" size={24} color="#091D5C" />
+          <Feather name="settings" size={20} color="#091D5C" />
         </TouchableOpacity>
       ) : null}
     </View>

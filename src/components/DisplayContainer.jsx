@@ -1,7 +1,9 @@
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import Constants from "expo-constants";
+import theme from '../theme';
 
+const {colors} = theme;
 const DisplayContainer = ({ children, style, ...restOfProp }) => {
-
   const componentStyles = [
     styles.container,
     style
@@ -16,9 +18,11 @@ const DisplayContainer = ({ children, style, ...restOfProp }) => {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'relative',
+    height:"100%",
+    width:"100%", 
+    backgroundColor:`${colors.background}`,
+    position: "relative",
     flex: 1,
-    justifyContent: "flex-start",
     justifyContent: 'center',
     alignItems: 'center',
     margin: 0

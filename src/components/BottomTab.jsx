@@ -1,9 +1,10 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import theme from "../theme";
 
 //screens
 import Home from "../screens/Home";
-import Favorites from "../screens/Favorites";
+import Conexiones from "../screens/Conexiones";
 import Explore from "../screens/Explore";
 import Messages from "../screens/Messages";
 import Profile from "../screens/Profile";
@@ -14,13 +15,19 @@ import { MaterialIcons, Fontisto, FontAwesome5, MaterialCommunityIcons } from "@
 const Tab = createBottomTabNavigator();
 
 export default function BottomTab() {
+  const {colors}  =theme
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: "#091D5C",
+        tabBarActiveTintColor: `${colors.secondary}`,
         tabBarInactiveTintColor:"#C8CFCF",
         tabBarStyle:{
-          height:"10%",
+          height:"8%",
+          backgroundColor:"#fff",
+          borderStyle:"solid",
+          borderColor:"white",
+          
+
         },
         tabBarItemStyle:{
           paddingVertical: 10,
@@ -28,16 +35,17 @@ export default function BottomTab() {
       }}
     >
       <Tab.Screen
-        name="Home"
+        name="Inicio"
         component={Home}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="home-repair-service" size={32} color={color} />
           ),
+          
           headerShown: false
         }}
       />
-      <Tab.Screen
+{/*       <Tab.Screen
         name="Explore"
         component={Explore}
         options={{
@@ -46,10 +54,10 @@ export default function BottomTab() {
           ),
           headerShown: false
         }}
-      />
+      /> */}
       <Tab.Screen
-        name="Favorites"
-        component={Favorites}
+        name="Conexiones"
+        component={Conexiones}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="heart" size={32} color={color} />
@@ -58,18 +66,17 @@ export default function BottomTab() {
         }}
       />
       <Tab.Screen
-        name="Messages"
+        name="Mensajes"
         component={Messages}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="message" size={32} color={color} />
           ),
-          tabBarBadge:"2",
           headerShown: false
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name="Perfil"
         component={Profile}
         options={{
           tabBarIcon: ({ color }) => (
