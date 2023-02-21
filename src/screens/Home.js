@@ -23,27 +23,18 @@ import {
 } from "@firebase/firestore";
 import { db } from "../firebase/credentials";
 import generateId from "../utilities/generateId";
-import {
-  UserDataContext, UserLoginContex
-} from "../context/UserDataContext";
+import { SwipeContext, UserLoginContex } from "../context/UserDataContext";
+import { useNavigation } from "@react-navigation/core";
 
-const Home = ({ navigation }) => {
+const Home = () => {
   const { userData } = useContext(UserLoginContex);
   const swipeRef = useRef(null);
+  const navigation = useNavigation();
 
   const [profiles, setProfiles] = useState([]);
   const [empty, setEmpty] = useState(true);
-  
-  useEffect(() => {
-    if (userData !== null && userData !== undefined) {
-      fetchProfiles();
-    } else {
-      console.log("usuario no cargado");
-      console.log(userData);
-    }
-    return unsub;
-  }, [db, userData, empty]);
 
+  useEffect(() => {
   let unsub;
   const fetchProfiles = async () => {
     //Obtengos los usuarios que deslice a la izquierda y derecha
@@ -63,6 +54,8 @@ const Home = ({ navigation }) => {
       query(
         collection(db, "HomeTest"),
         where("employer", "==", true),
+        //TODO: falta filtrar por preferencias de busqueda
+        /* where("vacant", "==", "Desarrollador Java"), */ /* --> Para filtrar por puesto */
         where("id", "not-in", [...passesUsersId, ...likesUsersId])
       ),
       (snapshot) => {
@@ -74,10 +67,19 @@ const Home = ({ navigation }) => {
               ...doc.data(),
             }))
         );
-            //TODO: falta filtrar por preferencias de busqueda
       }
     );
+    return unsub
   };
+    if (userData !== null && userData !== undefined) {
+      fetchProfiles();
+    } else {
+      console.log("usuario no cargado");
+      console.log(userData);
+    }
+  }, [db, userData, empty]);
+
+  
 
   const swipeLeft = async (cardIndex) => {
     if (!profiles[cardIndex]) return;
@@ -121,7 +123,10 @@ const Home = ({ navigation }) => {
             usersMatched: [userData.id, userSwiped.id],
             timestamp: serverTimestamp(),
           });
-          setDoc(doc(db, "HomeTest", userData.id, "matches", userSwiped.id), userSwiped)
+          setDoc(
+            doc(db, "HomeTest", userData.id, "matches", userSwiped.id),
+            userSwiped
+          );
 
           navigation.navigate("MatchModal", {
             loggedInUser,
@@ -138,10 +143,11 @@ const Home = ({ navigation }) => {
     );
   };
 
-  const handleEnd = ()=> {
-    setProfiles([])
-    setEmpty(!empty)
-  }
+  const handleEnd = () => {
+    setProfiles([]);
+    setEmpty(!empty);
+  };
+  
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -158,67 +164,65 @@ const Home = ({ navigation }) => {
           </View>
         ) : (
           <>
-            <View style={styles.header}>
-              <Text style={styles.headerTitle}>Hola, {userData?.name}!</Text>
-              <Text style={{ fontSize: 16 }}>
-                Estas son algunas de las vanactes disponibles:
-              </Text>
-            </View>
-            <View style={{ flex: 1, width: "100%", position: "relative" }}>
-              <Swiper
-                ref={swipeRef}
-                containerStyle={{ backgroundColor: "#F2F3F4", flex: 1 }}
-                cardStyle={{ top: 20 }}
-                cardHorizontalMargin={16}
-                stackSize={3}
-                cardIndex={0}
-                verticalSwipe={false}
-                onSwipedLeft={(cardIndex) => swipeLeft(cardIndex)}
-                onSwipedRight={(cardIndex) => swipeRight(cardIndex)}
-                onSwipedAll={()=>handleEnd()}
-                animateCardOpacity
-                overlayLabels={{
-                  left: {
-                    title: "NO",
-                    style: {
-                      label: {
-                        textAlign: "right",
-                        color: "red",
+            <SwipeContext.Provider value={{ swipeRef }}>
+              <View style={styles.header}>
+                <Text style={styles.headerTitle}>Hola, {userData?.name}!</Text>
+                <Text style={{ fontSize: 16 }}>
+                  Estas son algunas de las vanactes disponibles:
+                </Text>
+              </View>
+              <View style={{ flex: 1, width: "100%", position: "relative" }}>
+                <Swiper
+                  ref={swipeRef}
+                  containerStyle={{ backgroundColor: "#F2F3F4", flex: 1 }}
+                  cardStyle={{ top: 20 }}
+                  cardHorizontalMargin={16}
+                  stackSize={3}
+                  cardIndex={0}
+                  verticalSwipe={false}
+                  onSwipedLeft={(cardIndex) => swipeLeft(cardIndex)}
+                  onSwipedRight={(cardIndex) => swipeRight(cardIndex)}
+                  onSwipedAll={() => handleEnd()}
+                  animateCardOpacity
+                  overlayLabels={{
+                    left: {
+                      title: "NO",
+                      style: {
+                        label: {
+                          textAlign: "right",
+                          color: "red",
+                        },
                       },
                     },
-                  },
-                  right: {
-                    title: "SI",
-                    style: {
-                      label: {
-                        textAlign: "left",
-                        color: "green",
+                    right: {
+                      title: "SI",
+                      style: {
+                        label: {
+                          textAlign: "left",
+                          color: "green",
+                        },
                       },
                     },
-                  },
-                }}
-                cards={profiles}
-                renderCard={(card) =>
-                  card ? (
-                    <Card
-                      navigation={navigation}
-                      card={card}
-                      action={swipeRef}
-                    />
-                  ) : (
-                    <View style={styles.noProfiles}>
-                      <Text>No hay más perfiles :c</Text>
-                      <Image
-                        style={{ width: 200, height: 200 }}
-                        source={{
-                          uri: "https://emojis.wiki/emoji-pics/google/neutral-face-google.png",
-                        }}
-                      />
-                    </View>
-                  )
-                }
-              />
-            </View>
+                  }}
+                  cards={profiles}
+                  renderCard={(card) =>
+                    card ? (
+                      <Card card={card} />
+                    ) : (
+                      <View style={styles.noProfiles}>
+                        <Text>No hay más perfiles :c</Text>
+                        <Image
+                          style={{ width: 200, height: 200 }}
+                          source={{
+                            uri: "https://emojis.wiki/emoji-pics/google/neutral-face-google.png",
+                          }}
+                        />
+                      </View>
+                    )
+                  }
+                />
+              </View>
+            </SwipeContext.Provider>
           </>
         )}
       </View>

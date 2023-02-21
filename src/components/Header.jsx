@@ -1,18 +1,28 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { FontAwesome, Feather } from "@expo/vector-icons";
+import { FontAwesome, Feather, Ionicons } from "@expo/vector-icons";
 import LogoHeader from "../svgs/LogoHeader";
+import theme from "../theme";
+import { useNavigation } from "@react-navigation/core";
 
+const { colors } = theme;
 const Header = ({ screen }) => {
+  const navigation = useNavigation()
+
   return (
     <View style={styles.container}>
-      <LogoHeader/>
+      <LogoHeader />
       {screen === "Home" ? (
-        <TouchableOpacity style={styles.notification}>
-          <FontAwesome name="bell-o" size={20} color="#091D5C" />
-        </TouchableOpacity>
+        <View style={{flexDirection:"row"}}>
+          <TouchableOpacity style={styles.notification} onPress={()=> navigation.navigate('Filters')}>
+            <Ionicons name="filter-sharp" size={24} color={colors.secondary} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.notification}>
+            <FontAwesome name="bell-o" size={20} color={colors.secondary} />
+          </TouchableOpacity>
+        </View>
       ) : screen === "Profile" ? (
         <TouchableOpacity style={styles.notification}>
-          <Feather name="settings" size={20} color="#091D5C" />
+          <Feather name="settings" size={20} color={colors.secondary} />
         </TouchableOpacity>
       ) : null}
     </View>
@@ -34,7 +44,7 @@ const styles = StyleSheet.create({
   notification: {
     width: 30,
     height: 30,
-    backgroundColor: "transparent",
+    marginHorizontal:4,
     justifyContent: "center",
     alignItems: "center",
   },

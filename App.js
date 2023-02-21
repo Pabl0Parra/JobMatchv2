@@ -25,6 +25,7 @@ import {
   UserDataContextProvider,
   UserLoginContex,
 } from "./src/context/UserDataContext";
+import Filters from "./src/screens/Filters";
 
 const Stack = createNativeStackNavigator();
 
@@ -101,14 +102,26 @@ export default function App() {
             ) : (
               <>
                 <Stack.Screen name="Main" component={BottomTab} />
-                <Stack.Screen
-                  name="Details"
-                  component={Details}
-                  options={{
-                    headerShown: true,
-                    headerTitle: "Detalles del perfil",
-                  }}
-                />
+                <Stack.Group screenOptions={{ presentation: "modal" }}>
+                  <Stack.Screen
+                    name="Details"
+                    component={Details}
+                    options={{
+                      headerShown: true,
+                      headerTitle: "Detalles del puesto",
+                      headerStyle: { backgroundColor: "#fff" },
+                    }}
+                  />
+                  <Stack.Screen
+                    name="Filters"
+                    component={Filters}
+                    options={{
+                      headerShown: true,
+                      headerTitle: "Filtrar Puestos",
+                      headerStyle: { backgroundColor: "#fff" },
+                    }}
+                  />
+                </Stack.Group>
                 <Stack.Group
                   screenOptions={{ presentation: "transparentModal" }}
                 >

@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/core";
 import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import {
@@ -6,19 +7,19 @@ import {
   StyleSheet,
   Image,
   ScrollView,
-  Button,
   ImageBackground,
   Pressable,
 } from "react-native";
-import { UserDataContext, UserLoginContex } from "../context/UserDataContext";
+import { UserLoginContex } from "../context/UserDataContext";
 import { db } from "../firebase/credentials";
 import Background from "../svgs/card_background.png";
 
 import ActionsButtons from "./ActionsButtons";
 
-const Card = ({ navigation, card, action }) => {
+const Card = ({ card }) => {
   const { userData } = useContext(UserLoginContex);
-  const [active, setActive] = useState(false);
+  const navigation = useNavigation();
+  /* const [active, setActive] = useState(false);
 
   useEffect(()=>{
     //Funciona bien, pero hay que ver si se puede obtener actualizaciones en tiempo real sin tener que volver a llamar al setSaved en handleSaved. 
@@ -47,7 +48,7 @@ const Card = ({ navigation, card, action }) => {
       }
     );
     return active;
-  };
+  }; */
   return (
     <View style={styles.container}>
       <View style={{ height: "45%", backgroundColor: "white", width: "100%" }}>
@@ -100,7 +101,11 @@ const Card = ({ navigation, card, action }) => {
 
             <Pressable
               onPress={() =>
-                navigation.navigate("Details", { name: "Detalles del perfil" })
+                navigation.navigate("Details", {
+                  //Agregar los datos necesarios para mostrar en pantalla
+                  vacant:card.vacant,
+                  image:card.image
+                })
               }
             >
               <Text
@@ -114,7 +119,7 @@ const Card = ({ navigation, card, action }) => {
             </Pressable>
           </View>
 
-          <ActionsButtons pressed={action} saved={() => handleSaved(card)} active={active} />
+          <ActionsButtons card={card} />
         </ImageBackground>
       </View>
     </View>

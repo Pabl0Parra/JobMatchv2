@@ -22,7 +22,7 @@ const MatchModal = () => {
       </View>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("Home");
+          navigation.goBack();
         }}
         style={styles.button}
       >
