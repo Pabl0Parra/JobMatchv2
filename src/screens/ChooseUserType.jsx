@@ -58,23 +58,16 @@ const ChooseUserType = () => {
         </View> /> */}
       </View>
       <ReusableButton innerText="Siguiente"
-      enabled={true}/>
-      {/* <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          const navigateTo = {
-            worker: "ChooseUserName",
-            employer: "ChooseCompanyName",
-            // "open to grow": "ChooseUserName",
-          };
+      enabled={selectedValue}
+      onPress={() => {
+        const navigateTo = {
+          worker: "ChooseUserName",
+          employer: "ChooseCompanyName",
+          // "open to grow": "ChooseUserName",
+        };
 
-          navigation.navigate(navigateTo[selectedValue] || "");
-        }}
-        disabled={!selectedValue}
-      >
-        <Text style={styles.buttonText}>Next</Text>
-      </TouchableOpacity> */}
-      
+        navigation.navigate(navigateTo[selectedValue] || "");
+      }}/>
     </DisplayContainer>
   );
 };

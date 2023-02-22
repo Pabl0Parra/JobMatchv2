@@ -106,7 +106,7 @@ const InputForm = ({
           ))}
           <View>
             <ReusableButton
-              innerText="Siguiente"
+              innerText={buttonText}
               enabled={
                 (Object.entries(errors)?.length === 0 &&
                 fields.some((field) => values[field.name] !== ""))
@@ -114,34 +114,6 @@ const InputForm = ({
               styleContainer={{marginTop: 14}}
               onPress={handleSubmit}
             />
-            {/* <TouchableOpacity
-              style={[
-                styles.button,
-                {
-                  backgroundColor:
-                    Object.entries(errors)?.length === 0 &&
-                    fields.some((field) => values[field.name] !== "")
-                      ? "#091D5C"
-                      : "#D9D9D9",
-                },
-              ]}
-              onPress={handleSubmit}
-            >
-              <Text
-                style={[
-                  styles.buttonText,
-                  {
-                    color:
-                      Object.entries(errors)?.length === 0 &&
-                      fields.some((field) => values[field.name] !== "")
-                        ? "#84FFFF"
-                        : "#666666",
-                  },
-                ]}
-              >
-                {buttonText}
-              </Text>
-            </TouchableOpacity> */}
           </View>
         </View>
       )}
@@ -152,10 +124,8 @@ const InputForm = ({
 const styles = StyleSheet.create({
   container: {
     position: "relative",
-    flex: 1,
     alignItems: "center",
-    justifyContent: "center",
-    gap: "20px",
+    justifyContent: "center"
   },
   questionText: {
     color: "#192B65",

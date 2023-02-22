@@ -21,6 +21,7 @@ const ChooseCountry = () => {
         }}
         questionText="Te damos la bienvenida,"
         requestText="Introduce los siguientes datos:"
+        buttonText="Siguiente"
       />
     </DisplayContainer>
   );

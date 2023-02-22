@@ -27,22 +27,12 @@ const Register = () => {
   return (
     <DisplayContainer>
       <View
-        style={[
-          styles.background,
-          {
-            marginBottom: 30,
-            width: "120%",
-            borderBottomLeftRadius: 90,
-            borderBottomRightRadius: 90,
-          },
-        ]}
-      >
+        style={styles.background}>
         <Image
           style={[styles.image]}
           source={require("../images/image4.png")}
         />
       </View>
-      <View style={[styles.background, { backgroundColor: "#ffffff" }]}></View>
       <View style={styles.group}>
         <View style={styles.boxReturn}>
           <TouchableOpacity
@@ -125,19 +115,21 @@ const Register = () => {
 
 const styles = StyleSheet.create({
   background: {
-    position: "relative",
-    flex: 1,
+    position: "absolute",
+    top: 0,
     alignItems: "center",
     backgroundColor: "#192B65",
+    width: "120%",
+    height: "50%",
+    borderBottomLeftRadius: 130,
+    borderBottomRightRadius: 130,
   },
   group: {
     position: "absolute",
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
   boxReturn: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
@@ -152,13 +144,12 @@ const styles = StyleSheet.create({
     fontSize: 32,
   },
   boxForm: {
-    flex: 1,
     borderRadius: 55,
     paddingHorizontal: 14,
-    paddingVertical: 15,
+    paddingVertical: 14,
     marginTop: 30,
     backgroundColor: "#ffffff",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     shadowColor: "gray",
     shadowOffset: { width: 0, height: 8 },

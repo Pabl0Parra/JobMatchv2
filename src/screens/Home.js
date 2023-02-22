@@ -17,11 +17,9 @@ import {
 } from "@firebase/firestore";
 import { db } from "../firebase/credentials";
 import generateId from "../utilities/generateId";
-import { CurrentUserData } from "../context/UserContext";
 import { async } from "@firebase/util";
 
 const Home = ({ navigation }) => {
-  /* const { user } = useContext(CurrentUserData); */
   const [user, setUser] = useState({
     id: "BcBIgbnZmVY5DHsRzNQOqzBnBMg1",
     email: "nicotest@hotmail.com",

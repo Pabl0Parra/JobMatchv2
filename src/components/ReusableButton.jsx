@@ -17,7 +17,6 @@ const ReusableButton = ({
         ,
         styleContainer,
       ]}
-      disabled={!enabled}
       {...restOfProp}
     >
       <Text
@@ -25,8 +24,6 @@ const ReusableButton = ({
           styles.buttonText,
           {
             color:
-              /* Object.entries(errors)?.length === 0 &&
-                      fields.some((field) => values[field.name] !== "") */
               enabled ? "#84FFFF" : "#666666",
           },
           styleText,
