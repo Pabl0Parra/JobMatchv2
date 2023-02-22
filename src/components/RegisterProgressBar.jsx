@@ -8,14 +8,21 @@ const RegisterProgressBar = ({ currentStep }) => {
         <View
           key={step}
           style={
-            step <= currentStep
-              ? [styles.activeStep, styles.stepWithBorder]
-              : [styles.inactiveStep, styles.stepWithBorder]
+            step <= currentStep ? [styles.activeStep] : [styles.inactiveStep]
           }
         >
-          <Text style={styles.stepText}>{step}</Text>
+          <Text
+            style={
+              step <= currentStep
+                ? [styles.stepText, { color: "#84FFFF" }]
+                : [styles.stepText, { color: "#091D5C" }]
+            }
+          >
+            {step}
+          </Text>
         </View>
       ))}
+      <View style={styles.line} />
     </View>
   );
 };
@@ -24,33 +31,41 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginHorizontal: 16,
-    marginTop: 16,
+    marginHorizontal: 38,
+    marginTop: 116,
+    position: "relative",
   },
   activeStep: {
-    backgroundColor: "#2979FF",
+    backgroundColor: "#091D5C",
+    color: "#84FFFF",
     borderRadius: 20,
-    width: 36,
-    height: 36,
+    width: 24,
+    height: 24,
     alignItems: "center",
     justifyContent: "center",
   },
   inactiveStep: {
-    backgroundColor: "#F3F3F3",
+    backgroundColor: "#FFFFFF",
     borderRadius: 20,
-    width: 36,
-    height: 36,
+    borderWidth: 1,
+    borderColor: "#091D5C",
+    width: 24,
+    height: 24,
     alignItems: "center",
     justifyContent: "center",
   },
-  stepWithBorder: {
-    borderRightWidth: 1,
-    borderRightColor: "#D9D9D9",
-  },
   stepText: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 16,
+    color: "#84FFFF",
+    fontSize: 14,
+  },
+  line: {
+    position: "absolute",
+    top: "50%",
+    left: 0,
+    right: 0,
+    height: 1,
+    backgroundColor: "#091D5C",
+    zIndex: -1,
   },
 });
 

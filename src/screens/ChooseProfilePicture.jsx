@@ -5,6 +5,8 @@ import AwesomeAlert from "react-native-awesome-alerts";
 import DisplayContainer from "../components/DisplayContainer";
 import { UserDataContext } from "../context/UserDataContext";
 import registerUser from "../firebase/functions/registerUser";
+import RegisterProgressBar from "../components/RegisterProgressBar";
+import BackButton from "../components/BackButton";
 
 const ChooseProfilePicture = () => {
   const [image, setImage] = useState(null);
@@ -38,52 +40,56 @@ const ChooseProfilePicture = () => {
   };
 
   return (
-    <DisplayContainer>
-      <Text style={styles.title}>Añadir foto</Text>
-      <Text style={styles.subTitle}>
-        Sabías que añadir una foto incrementa en un 70% tus opciones de match?
-      </Text>
-      {image ? (
-        <TouchableOpacity onPress={pickImage}>
-          <Image source={{ uri: image }} style={styles.image} />
+    <>
+      <BackButton text="Crear cuenta" />
+      <RegisterProgressBar currentStep={5} />
+      <DisplayContainer>
+        <Text style={styles.title}>Añadir foto</Text>
+        <Text style={styles.subTitle}>
+          Sabías que añadir una foto incrementa en un 70% tus opciones de match?
+        </Text>
+        {image ? (
+          <TouchableOpacity onPress={pickImage}>
+            <Image source={{ uri: image }} style={styles.image} />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity onPress={pickImage} style={styles.addImage}>
+            <Text style={styles.addImageText}>+</Text>
+          </TouchableOpacity>
+        )}
+        {image ? (
+          <TouchableOpacity style={styles.changeImage} onPress={changeImage}>
+            <Text style={styles.changeImageText}>Cambiar foto</Text>
+          </TouchableOpacity>
+        ) : null}
+        {/* hay que hacer que el botón de finalizar solo se active cuando se haya seleccionado una foto, 
+     hay que hacer que el proceso de createUser acabe aquí --> importar createUser() a este componente*/}
+        <TouchableOpacity
+          style={styles.finished}
+          onPress={() => {
+            setShowAlert(true);
+            console.log(userData);
+            // createUser devuelve el user.id que necesita Nico para el Home
+            registerUser(userData.email, userData.password, userData);
+            // createUser({ ...userData});
+          }}
+        >
+          <Text style={styles.finishedText}>Finalizar</Text>
         </TouchableOpacity>
-      ) : (
-        <TouchableOpacity onPress={pickImage} style={styles.addImage}>
-          <Text style={styles.addImageText}>+</Text>
-        </TouchableOpacity>
-      )}
-      {image ? (
-        <TouchableOpacity style={styles.changeImage} onPress={changeImage}>
-          <Text style={styles.changeImageText}>Cambiar foto</Text>
-        </TouchableOpacity>
-      ) : null}
-      {/* hay que hacer que el botón de finalizar solo se active cuando se haya seleccionado una foto, 
-       hay que hacer que el proceso de createUser acabe aquí --> importar createUser() a este componente*/}
-      <TouchableOpacity
-        style={styles.finished}
-        onPress={() => {
-          setShowAlert(true);
-          console.log(userData);
-          // createUser devuelve el user.id que necesita Nico para el Home
-          registerUser(userData.email, userData.password, userData);
-          // createUser({ ...userData});
-        }}
-      >
-        <Text style={styles.finishedText}>Finalizar</Text>
-      </TouchableOpacity>
-      <AwesomeAlert
-        show={showAlert}
-        showProgress={false}
-        title="Enhorabuena! 🎉"
-        message="Te hemos mandado un correo de confirmación. ¡Ahora solo falta que confirmes tu cuenta!"
-        closeOnTouchOutside={true}
-        closeOnHardwareBackPress={false}
-        showConfirmButton={true}
-        confirmText="OK"
-        confirmButtonColor="#DD6B55"
-        onConfirmPressed={hideAlert}
-      />
-    </DisplayContainer>
+        <AwesomeAlert
+          show={showAlert}
+          showProgress={false}
+          title="Enhorabuena! 🎉"
+          message="Te hemos mandado un correo de confirmación. ¡Ahora solo falta que confirmes tu cuenta!"
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="OK"
+          confirmButtonColor="#DD6B55"
+          onConfirmPressed={hideAlert}
+        />
+      </DisplayContainer>
+    </>
   );
 };
 
