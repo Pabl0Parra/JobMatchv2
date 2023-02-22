@@ -5,12 +5,14 @@ import AwesomeAlert from "react-native-awesome-alerts";
 import DisplayContainer from "../components/DisplayContainer";
 import { UserDataContext } from "../context/UserDataContext";
 import registerUser from "../firebase/functions/registerUser";
+import { useNavigation } from "@react-navigation/core";
 
 const ChooseProfilePicture = () => {
   const [image, setImage] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
 
   const { userData, setUserData } = useContext(UserDataContext);
+  const navigation = useNavigation()
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
