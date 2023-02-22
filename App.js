@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import theme from "./src/theme";
@@ -20,7 +20,12 @@ import Loading from "./src/screens/Loading";
 import LandingPage from "./src/screens/LandingPage";
 import MatchModal from "./src/screens/MatchModal";
 import { getDoc, doc } from "@firebase/firestore";
-import { UserDataContextProvider } from "./src/context/UserDataContext";
+import {
+  UserDataContext,
+  UserDataContextProvider,
+  UserLoginContex,
+} from "./src/context/UserDataContext";
+import Filters from "./src/screens/Filters";
 
 const Stack = createNativeStackNavigator();
 
@@ -48,7 +53,8 @@ const RegisterStackScreen = () => (
 );
 
 export default function App() {
-  const [user, setUser] = useState();
+  /* const {userData, setUserData} = useContext(UserDataContext) */
+  const [userData, setUserData] = useState();
   const [onLandingPage, setOnLandingPage] = useState(true);
 
   useEffect(() => {
@@ -63,26 +69,27 @@ export default function App() {
 
         if (docSnap.exists()) {
           console.log("Document data:", docSnap.data());
-          setUser(docSnap);
+          setUserData(docSnap.data());
         } else {
           // doc.data() will be undefined in this case
           console.log("No such document!");
         }
       } else {
-        setUser(null);
+        ("Error de login");
       }
     });
     return () => clearTimeout(timer);
   }, []);
 
+  console.log("APP:" + userData?.id);
   return (
-    <UserDataContextProvider>
-      <NavigationContainer theme={theme}>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {onLandingPage ? (
-            <Stack.Screen name="LandingPage" component={LandingPage} />
-          ) : user !== undefined ? (
-            user === null ? (
+    <UserLoginContex.Provider value={{ userData, setUserData }}>
+      <UserDataContextProvider>
+        <NavigationContainer theme={theme}>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            {onLandingPage ? (
+              <Stack.Screen name="LandingPage" component={LandingPage} />
+            ) : userData === null || userData === undefined ? (
               <>
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Register" component={Register} />
@@ -95,26 +102,36 @@ export default function App() {
             ) : (
               <>
                 <Stack.Screen name="Main" component={BottomTab} />
-                <Stack.Screen
-                  name="Details"
-                  component={Details}
-                  options={{
-                    headerShown: true,
-                    headerTitle: "Detalles del perfil",
-                  }}
-                />
+                <Stack.Group screenOptions={{ presentation: "modal" }}>
+                  <Stack.Screen
+                    name="Details"
+                    component={Details}
+                    options={{
+                      headerShown: true,
+                      headerTitle: "Detalles del puesto",
+                      headerStyle: { backgroundColor: "#fff" },
+                    }}
+                  />
+                  <Stack.Screen
+                    name="Filters"
+                    component={Filters}
+                    options={{
+                      headerShown: true,
+                      headerTitle: "Filtrar Puestos",
+                      headerStyle: { backgroundColor: "#fff" },
+                    }}
+                  />
+                </Stack.Group>
                 <Stack.Group
                   screenOptions={{ presentation: "transparentModal" }}
                 >
                   <Stack.Screen name="MatchModal" component={MatchModal} />
                 </Stack.Group>
               </>
-            )
-          ) : (
-            <Stack.Screen name="Loading" component={Loading} />
-          )}
-        </Stack.Navigator>
-      </NavigationContainer>
-    </UserDataContextProvider>
+            )}
+          </Stack.Navigator>
+        </NavigationContainer>
+      </UserDataContextProvider>
+    </UserLoginContex.Provider>
   );
 }
