@@ -6,7 +6,7 @@ const {text, colors} = theme
 
 const MiniCard = ({item, large}) => {
   return (
-    <View style={[styles.miniCard, large ? styles.large : styles.medium]}>
+    <View style={[styles.miniCard, large ? styles.large : styles.medium, large ? {marginHorizontal: 20} : {marginHorizontal: 10}]}>
       <Image
         source={{
           uri: `${item.image}`,
@@ -28,7 +28,7 @@ const MiniCard = ({item, large}) => {
 
 const styles = StyleSheet.create({
   miniCard: {
-    marginHorizontal: 20,
+    marginVertical:10,
     backgroundColor: `${colors.primary}`,
     borderRadius: 12,
     shadowColor: "#000",
