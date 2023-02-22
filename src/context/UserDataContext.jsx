@@ -8,7 +8,8 @@ export const UserDataContextProvider = ({ children }) => {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
-    type: "",
+    employer:false,
+    worker:false,
     userName: "",
     userLastName: "",
     userRole: "",
@@ -19,6 +20,10 @@ export const UserDataContextProvider = ({ children }) => {
     country: "",
     city: "",
     image: "",
+    filter:{
+      roleWanted:"",
+      seniority:""
+    }
   });
 
   return (

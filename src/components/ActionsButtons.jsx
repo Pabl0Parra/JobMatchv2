@@ -4,6 +4,9 @@ import { useContext, useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { SwipeContext, UserLoginContex } from "../context/UserDataContext";
 import { db } from "../firebase/credentials";
+import theme from "../theme";
+
+const {colors} = theme;
 
 const ActionsButtons = ({ card }) => {
   const {userData} = useContext(UserLoginContex)
@@ -29,9 +32,9 @@ const ActionsButtons = ({ card }) => {
         if (docsnapshot.exists()) {
           deleteDoc(doc(db, "HomeTest", userData.id, "saved", card.id));
           setActive(false)
-          console.log(`Quitaste de favorito a ${id}`);
+          console.log(`Quitaste de favorito a ${card.name}`);
         } else {
-          console.log(`Guardaste el perfil ${id}`);
+          console.log(`Guardaste el perfil ${card.name}`);
           setDoc(doc(db, "HomeTest", userData.id, "saved", card.id), card);
           setActive(true)
         }
@@ -47,24 +50,24 @@ const ActionsButtons = ({ card }) => {
         style={styles.button}
         onPress={() => swipeRef.current.swipeLeft()}
       >
-        <Entypo name="cross" size={24} color="#84FFFF" />
+        <Entypo name="cross" size={24} color={colors.details} />
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, {width:40, height:40}]}
         onPress={()=>{handleSaved(card)}
         }
       >
         <FontAwesome
           name={active ? "bookmark" : "bookmark-o"}
           size={20}
-          color="#84FFFF"
+          color={colors.details}
         />
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
         onPress={() => swipeRef.current.swipeRight()}
       >
-        <AntDesign name="hearto" size={20} color="#84FFFF" />
+        <AntDesign name="hearto" size={24} color={colors.details} />
       </TouchableOpacity>
     </View>
   );
@@ -75,17 +78,18 @@ const styles = StyleSheet.create({
     width: "70%",
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems:"baseline",
     marginBottom: 32,
     marginTop: 16,
   },
   button: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
     backgroundColor: "transparent",
     borderStyle: "solid",
     borderWidth: 1,
-    borderColor: "#84FFFF",
+    borderColor: `${colors.details}`,
     justifyContent: "center",
     alignItems: "center",
   },
