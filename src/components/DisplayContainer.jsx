@@ -10,22 +10,22 @@ const DisplayContainer = ({ children, style, ...restOfProp }) => {
   ]
 
   return (
-    <ScrollView contentContainerStyle={componentStyles} {...restOfProp}>
+    <View style={componentStyles} {...restOfProp}>
       {children}
-    </ScrollView>
+    </View>
   )
 };
 
 const styles = StyleSheet.create({
   container: {
-    height:"100%",
-    width:"100%", 
+    position: 'relative',
     backgroundColor:`${colors.background}`,
-    position: "relative",
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 0
+    height: '100%',
+    width:"100%",
+    margin: 0,
+    padding: 0
   },
 });
 
