@@ -24,6 +24,7 @@
     "react-native": "0.70.5",
     "react-native-awesome-alerts": "^2.0.0",
     "react-native-deck-swiper": "^2.0.12",
+    "react-native-dropdown-select-list": "^2.0.4",
     "react-native-gesture-handler": "~2.8.0",
     "react-native-paper": "^5.2.0",
     "react-native-safe-area-context": "4.4.1",
