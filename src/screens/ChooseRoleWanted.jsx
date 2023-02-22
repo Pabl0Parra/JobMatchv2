@@ -18,6 +18,7 @@ const ChooseRoleWanted = () => {
         }}
         questionText="¿Qué perfil buscas?"
         requestText="Por favor, introduce el rol deseado:"
+        buttonText="Siguiente"
       />
     </DisplayContainer>
   );

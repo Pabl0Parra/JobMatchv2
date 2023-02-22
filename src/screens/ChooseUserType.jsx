@@ -4,6 +4,8 @@ import { RadioButton } from "react-native-paper";
 import DisplayContainer from "../components/DisplayContainer";
 import { useNavigation } from "@react-navigation/native";
 import { UserDataContext } from "../context/UserDataContext";
+import ReusableButton from "../components/ReusableButton";
+
 
 const ChooseUserType = () => {
   const { userData, setUserData } = useContext(UserDataContext);
@@ -55,21 +57,17 @@ const ChooseUserType = () => {
           </View>
         </View> /> */}
       </View>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          const navigateTo = {
-            worker: "ChooseUserName",
-            employer: "ChooseCompanyName",
-            // "open to grow": "ChooseUserName",
-          };
+      <ReusableButton innerText="Siguiente"
+      enabled={selectedValue}
+      onPress={() => {
+        const navigateTo = {
+          worker: "ChooseUserName",
+          employer: "ChooseCompanyName",
+          // "open to grow": "ChooseUserName",
+        };
 
-          navigation.navigate(navigateTo[selectedValue] || "");
-        }}
-        disabled={!selectedValue}
-      >
-        <Text style={styles.buttonText}>Next</Text>
-      </TouchableOpacity>
+        navigation.navigate(navigateTo[selectedValue] || "");
+      }}/>
     </DisplayContainer>
   );
 };

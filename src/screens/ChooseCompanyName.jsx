@@ -21,6 +21,7 @@ const ChooseCompanyName = () => {
         }}
         questionText="¿Cómo se llama la empresa?"
         requestText="Introduce los siguientes datos:"
+        buttonText="Siguiente"
       />
     </DisplayContainer>
   );

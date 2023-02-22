@@ -23,6 +23,7 @@ const ChooseUserName = ({ navigation }) => {
         }}
         questionText="¿Cómo te llamas?"
         requestText="Introduce los siguientes datos:"
+        buttonText="Siguiente"
       />
     </DisplayContainer>
   );

@@ -25,6 +25,7 @@ const ChooseUserRole = ({ navigation }) => {
         }}
         questionText="Tu perfil te ayudará a encontrar el trabajo que buscas."
         requestText="Descubre nuevas oportunidades y personas"
+        buttonText="Siguiente"
       />
     </DisplayContainer>
   );
