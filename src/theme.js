@@ -2,18 +2,26 @@ const theme = {
   colors: {
     primary: "#fff",
     secondary: "#091D5C",
+    details: "#84FFFF",
     background: "#f2f3f4",
     text: "#525252",
   },
   text:{
-    title:{
+    headerTitle:{
       fontFamily:"Roboto",
       fontWeight:"400",
-      fontSize:34,
+      fontSize:28,
       letterSpacing:0.5,
       color: "#525252",
     },
-    subtitleMedium:{
+    cardTitle:{
+      fontFamily:"Roboto",
+      fontWeight:"400",
+      fontSize:32,
+      letterSpacing:0.5,
+      color: "#525252",
+    },
+    cardSubtitleMedium:{
       fontFamily:"Roboto",
       fontWeight:"500",
       fontSize:20,
