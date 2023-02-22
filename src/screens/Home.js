@@ -25,6 +25,9 @@ import { db } from "../firebase/credentials";
 import generateId from "../utilities/generateId";
 import { SwipeContext, UserLoginContex } from "../context/UserDataContext";
 import { useNavigation } from "@react-navigation/core";
+import theme from "../theme";
+
+const { colors, text } = theme;
 
 const Home = () => {
   const { userData } = useContext(UserLoginContex);
@@ -35,30 +38,41 @@ const Home = () => {
   const [empty, setEmpty] = useState(true);
 
   useEffect(() => {
-  let unsub;
-  const fetchProfiles = async () => {
-    //Obtengos los usuarios que deslice a la izquierda y derecha
-    const passes = await getDocs(
-      collection(db, "HomeTest", userData.id, "passes")
-    ).then((snapshot) => snapshot.docs.map((doc) => doc.id));
+    let unsub;
+    const fetchProfiles = async () => {
+      //Obtengos los usuarios que deslice a la izquierda y derecha
+      const passes = await getDocs(
+        collection(db, "HomeTest", userData.id, "passes")
+      ).then((snapshot) => snapshot.docs.map((doc) => doc.id));
 
-    const likes = await getDocs(
-      collection(db, "HomeTest", userData.id, "likes")
-    ).then((snapshot) => snapshot.docs.map((doc) => doc.id));
+      const likes = await getDocs(
+        collection(db, "HomeTest", userData.id, "likes")
+      ).then((snapshot) => snapshot.docs.map((doc) => doc.id));
 
-    //defino un array para poder hacer la consulta a la bd
-    const passesUsersId = passes.length > 0 ? passes : ["null"];
-    const likesUsersId = likes.length > 0 ? likes : ["null"];
+      //defino un array para poder hacer la consulta a la bd
+      const passesUsersId = passes.length > 0 ? passes : ["null"];
+      const likesUsersId = likes.length > 0 ? likes : ["null"];
 
-    unsub = onSnapshot(
-      query(
+      const usersToSearch = userData.worker ? "employer" : "worker";
+
+      /*       const allQuery = query(
         collection(db, "HomeTest"),
-        where("employer", "==", true),
-        //TODO: falta filtrar por preferencias de busqueda
-        /* where("vacant", "==", "Desarrollador Java"), */ /* --> Para filtrar por puesto */
+        where(usersToSearch, "==", true),
         where("id", "not-in", [...passesUsersId, ...likesUsersId])
-      ),
-      (snapshot) => {
+      );
+ */
+      const filterQuery = query(
+        collection(db, "HomeTest"),
+        where(usersToSearch, "==", true),
+        //If anidados para saber si está aplicado algún filtro
+        (userData.filter.roleWanted !== "" && userData.filter.roleWanted !== "Todos")
+          ? where("vacant", "==", userData.filter.roleWanted)
+          : (userData.filter.seniority !== "")
+          ? where("seniority", "==", userData.filter.seniority)
+          : where("id", "not-in", [...passesUsersId, ...likesUsersId]) //Sino devuelvo todo
+      );
+
+      unsub = onSnapshot(filterQuery, (snapshot) => {
         setProfiles(
           snapshot.docs
             .filter((doc) => doc.id !== userData.id)
@@ -67,19 +81,17 @@ const Home = () => {
               ...doc.data(),
             }))
         );
-      }
-    );
-    return unsub
-  };
+      });
+      return unsub;
+    };
     if (userData !== null && userData !== undefined) {
       fetchProfiles();
+      console.log(userData.filter.roleWanted);
     } else {
       console.log("usuario no cargado");
       console.log(userData);
     }
   }, [db, userData, empty]);
-
-  
 
   const swipeLeft = async (cardIndex) => {
     if (!profiles[cardIndex]) return;
@@ -108,10 +120,15 @@ const Home = () => {
         if (docSnapshot.exists()) {
           //hay match
           console.log(`Hiciste un match con ${userSwiped.name}`);
-          //guardo el like
+          //guardo el like dado
           setDoc(
             doc(db, "HomeTest", userData.id, "likes", userSwiped.id),
             userSwiped
+          );
+          //guardo el like recibido
+          setDoc(
+            doc(db, "HomeTest", userSwiped.id, "likedTo", userData.id),
+            userData
           );
 
           //Creo el match
@@ -138,6 +155,11 @@ const Home = () => {
             doc(db, "HomeTest", userData.id, "likes", userSwiped.id),
             userSwiped
           );
+          //guardo el like recibido en el otro perfil
+          setDoc(
+            doc(db, "HomeTest", userSwiped.id, "likedTo", userData.id),
+            userData
+          );
         }
       }
     );
@@ -147,7 +169,7 @@ const Home = () => {
     setProfiles([]);
     setEmpty(!empty);
   };
-  
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -166,9 +188,16 @@ const Home = () => {
           <>
             <SwipeContext.Provider value={{ swipeRef }}>
               <View style={styles.header}>
-                <Text style={styles.headerTitle}>Hola, {userData?.name}!</Text>
-                <Text style={{ fontSize: 16 }}>
-                  Estas son algunas de las vanactes disponibles:
+                <Text style={text.headerTitle}>
+                  Hola,{" "}
+                  <Text style={{ color: `${colors.secondary}` }}>
+                    {userData?.userName}!
+                  </Text>
+                </Text>
+                <Text style={[text[16]]}>
+                  {userData.worker
+                    ? "Estas son las vacantes disponibles"
+                    : "Estos son los perfiles disponibles"}
                 </Text>
               </View>
               <View style={{ flex: 1, width: "100%", position: "relative" }}>
@@ -255,7 +284,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     fontSize: 32,
-    backgroundColor: "#fafafa",
+    backgroundColor: `${colors.background}`,
   },
 });
 export default Home;
