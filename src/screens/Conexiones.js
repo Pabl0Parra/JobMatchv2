@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, Image } from "react-native";
+import Constants from "expo-constants";
 import Header from "../components/Header";
 import DisplayContainer from "../components/DisplayContainer";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -6,37 +7,51 @@ import theme from "../theme";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import MiniCard from "../components/MiniCard";
 import { useContext, useEffect, useState } from "react";
-import { collection, doc, onSnapshot } from "firebase/firestore";
+import { collection, doc, onSnapshot, query } from "firebase/firestore";
 import { db } from "../firebase/credentials";
-import { UserDataContext, UserLoginContex } from "../context/UserDataContext";
+import { UserLoginContex } from "../context/UserDataContext";
 
 const { text, colors } = theme;
+
 const Conexiones = () => {
   const { userData } = useContext(UserLoginContex);
   const [saved, setSaved] = useState([]);
   const [matches, setMatches] = useState([]);
+  const [likedTo, setLikedTo] = useState([]);
 
   useEffect(() => {
     const savedProfiles = onSnapshot(
       collection(db, "HomeTest", userData.id, "saved"),
       (snapshot) => {
-        let temp=[]
+        let temp = [];
         snapshot.forEach((doc) => temp.push(doc.data()));
-        console.log(temp)
+        console.log(temp);
         setSaved(temp);
       }
     );
-    const matchedProfiles = onSnapshot(
+
+    //TODO: Cómo puedo obtener los perfiles a los que le gustó mi perfil?
+    //Había hechoo que muestre los perfiles con los que hice match, no los que me dieron like
+/*     const matchedProfiles = onSnapshot(
       collection(db, "HomeTest", userData.id, "matches"),
       (snapshot) => {
-        let temp=[]
+        let temp = [];
         snapshot.forEach((doc) => temp.push(doc.data()));
-        console.log(temp)
+        console.log(temp);
         setMatches(temp);
       }
-    );
+    ); */
 
-    return matchedProfiles, savedProfiles;
+    const likedProfiles = onSnapshot(
+      collection(db, "HomeTest", userData.id, "likedTo"), 
+      (snapshot)=> {
+        let temp =[];
+        snapshot.forEach(doc => temp.push(doc.data()));
+        setLikedTo(temp);
+      }
+    )
+
+    return likedProfiles, savedProfiles;
   }, []);
 
   return (
@@ -55,29 +70,51 @@ const Conexiones = () => {
             profesional!
           </Text>
         </View>
-        <FlatList
-          style={{ marginVertical: 16 }}
-          horizontal
-          data={matches}
-          renderItem={({ item }) => <MiniCard item={item} large />}
-        />
+        <View style={{ minHeight: "40%" }}>
+          {matches.length > 0 ? (
+            <FlatList
+              style={{ marginVertical: 16 }}
+              horizontal
+              data={matches}
+              renderItem={({ item }) => <MiniCard item={item} large />}
+            />
+          ) : (
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                flex: 1,
+              }}
+            >
+              <Text style={text[14]}>Aún no recibiste me gusta</Text>
+            </View>
+          )}
+        </View>
         <View style={{ paddingTop: 16 }}>
-          <Text
-            style={[
-              text.subtitleMedium,
-              styles.textColor,
-              { paddingHorizontal: 20 },
-            ]}
-          >
+          <Text style={[text.cardSubtitleMedium, { paddingHorizontal: 20 }]}>
             Favoritos
           </Text>
         </View>
-        <FlatList
-          style={{ marginVertical: 16 }}
-          horizontal
-          data={saved}
-          renderItem={({ item }) => <MiniCard item={item} medium />}
-        />
+        <View style={{flex:1}}>
+          {saved.length > 0 ? (
+            <FlatList
+              style={{ marginVertical: 16 }}
+              horizontal
+              data={saved}
+              renderItem={({ item }) => <MiniCard item={item} medium />}
+            />
+          ) : (
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                flex: 1,
+              }}
+            >
+              <Text style={text[14]}>Aquí verás los perfiles que guardas</Text>
+            </View>
+          )}
+        </View>
       </ScrollView>
     </DisplayContainer>
   );
@@ -85,15 +122,12 @@ const Conexiones = () => {
 const styles = StyleSheet.create({
   container: {
     justifyContent: "flex-start",
+    marginTop: Constants.statusBarHeight,
   },
   header: {
     alignItems: "center",
     paddingHorizontal: 40,
     paddingVertical: 16,
-  },
-
-  center: {
-    textAlign: "center",
   },
 });
 
