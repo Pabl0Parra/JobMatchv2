@@ -1,5 +1,4 @@
 import { useNavigation } from "@react-navigation/core";
-import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import {
   View,
@@ -11,47 +10,18 @@ import {
   Pressable,
 } from "react-native";
 import { UserLoginContex } from "../context/UserDataContext";
-import { db } from "../firebase/credentials";
 import Background from "../svgs/card_background.png";
-
+import theme from "../theme";
 import ActionsButtons from "./ActionsButtons";
 
+const { colors, text } = theme;
+
 const Card = ({ card }) => {
-  const { userData } = useContext(UserLoginContex);
   const navigation = useNavigation();
-  /* const [active, setActive] = useState(false);
 
-  useEffect(()=>{
-    //Funciona bien, pero hay que ver si se puede obtener actualizaciones en tiempo real sin tener que volver a llamar al setSaved en handleSaved. 
-    const save = async ()=>{
-      await getDoc(doc(db, "HomeTest", userData.id, "saved", card.id)).then(
-        (docsnapshot) => {
-          if (docsnapshot.exists()) { setActive(true)}
-          else {setActive(false)}
-        })
-    }
-    save()
-  },[active])
-
-  const handleSaved = (card) => {
-    getDoc(doc(db, "HomeTest", userData.id, "saved", card.id)).then(
-      (docsnapshot) => {
-        if (docsnapshot.exists()) {
-          deleteDoc(doc(db, "HomeTest", userData.id, "saved", card.id));
-          setActive(false)
-          console.log(`Quitaste de favorito a ${card.name}`);
-        } else {
-          console.log(`Guardaste el perfil ${card.name}`);
-          setDoc(doc(db, "HomeTest", userData.id, "saved", card.id), card);
-          setActive(true)
-        }
-      }
-    );
-    return active;
-  }; */
   return (
     <View style={styles.container}>
-      <View style={{ height: "45%", backgroundColor: "white", width: "100%" }}>
+      <View style={{ height: "45%", backgroundColor: "#fff", width: "100%" }}>
         <View style={styles.header}>
           <Image
             source={{
@@ -89,13 +59,17 @@ const Card = ({ card }) => {
           >
             <View style={styles.footer}>
               <ScrollView>
-                <Text style={styles.footerSubtitle}>Hace 5 horas</Text>
-                <Text style={styles.footerTitle}>{card.vacant}</Text>
-                <Text style={styles.footerSubtitle}>Junior</Text>
-                <Text style={styles.footerName}>{card.name}</Text>
-                <Text style={styles.footerText}>Argentina</Text>
-                <Text style={styles.footerText}>Jornada completa</Text>
-                <Text></Text>
+              {/* //TODO: calcular hace cuanto fue publicado el empleo */}
+                <Text style={[text[12],{color:"#fff"}]}>Hace 5 horas</Text>
+                <Text style={[text.cardTitle,{color:"#fff"}]}>{card.vacant}</Text>
+                <Text style={[text[16],{color:`${colors.details}`, fontStyle:"italic"}]}>{card.seniority}</Text>
+                <View style={{marginVertical:16}}>
+                  <Text style={[text.cardSubtitleMedium,{color:"#fff"}]}>{card.name}</Text>
+                  {/* //TODO: colocar variable de pais y demás */}
+                  <Text style={[text[14],{color:"#fff"}]}>Argentina</Text>
+                  <Text style={[text[14],{color:"#fff"}]}>Jornada completa</Text>
+                  <Text></Text>
+                </View>
               </ScrollView>
             </View>
 
@@ -103,15 +77,15 @@ const Card = ({ card }) => {
               onPress={() =>
                 navigation.navigate("Details", {
                   //Agregar los datos necesarios para mostrar en pantalla
-                  vacant:card.vacant,
-                  image:card.image
+                  vacant: card.vacant,
+                  image: card.image,
                 })
               }
             >
               <Text
                 style={[
                   styles.footerText,
-                  { color: "#84FFFF", textDecorationLine: "underline" },
+                  { color: `${colors.details}`, textDecorationLine: "underline" },
                 ]}
               >
                 Ver más detalles
@@ -159,36 +133,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: "40%",
     left: 32,
-  },
-  footerTitle: {
-    fontSize: 32,
-    lineHeight: 32,
-    color: "#fff",
-    letterSpacing: 0.5,
-    textAlign: "justify",
-  },
-  footerSubtitle: {
-    fontSize: 14,
-    lineHeight: 18,
-    color: "#fff",
-    letterSpacing: 0.5,
-    textAlign: "justify",
-    margin: 5,
-  },
-  footerName: {
-    fontSize: 20,
-    lineHeight: 35,
-    color: "#fff",
-    letterSpacing: 0.5,
-    textAlign: "justify",
-    marginTop: 15,
-  },
-  footerText: {
-    fontSize: 14,
-    lineHeight: 18,
-    color: "#fff",
-    letterSpacing: 0.5,
-    textAlign: "justify",
   },
   moreDetails: {
     width: "100%",
