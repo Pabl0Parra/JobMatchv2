@@ -5,7 +5,8 @@ import DisplayContainer from "../components/DisplayContainer";
 import { useNavigation } from "@react-navigation/native";
 import { UserDataContext } from "../context/UserDataContext";
 import ReusableButton from "../components/ReusableButton";
-
+import RegisterProgressBar from "../components/RegisterProgressBar";
+import BackButton from "../components/BackButton";
 
 const ChooseUserType = () => {
   const { userData, setUserData } = useContext(UserDataContext);
@@ -14,36 +15,56 @@ const ChooseUserType = () => {
   const [selectedValue, setSelectedValue] = useState("");
 
   return (
-    <DisplayContainer>
-      <Text style={styles.title}>Elige un modo para empezar:</Text>
-      <View style={styles.optionsContainer}>
-        <View style={styles.optionBox}>
-          <View style={styles.radioContainer}>
-            <Text style={styles.radioText}>En busca de empleo</Text>
-            <RadioButton
-              value="worker"
-              status={selectedValue === "worker" ? "checked" : "unchecked"}
-              onPress={(type) => {
-                setUserData({ ...userData, [type]: "worker" }),
-                  setSelectedValue("worker");
-              }}
-            />
+    <>
+      <BackButton text="Crear cuenta" />
+      <RegisterProgressBar currentStep={1} />
+      <View
+        style={{
+          alignItems: "flex-start",
+          marginLeft: 19,
+          marginRight: 24,
+          marginTop: 20,
+        }}
+      >
+        <Text style={styles.title}>Elige un modo para empezar</Text>
+        <Text style={styles.subtitle}>
+          ¡Jobmatch te permite hacer buenas conexiones laborales! Una vez esté
+          listo tu perfil, podrás cambiar de un modo a otro.
+        </Text>
+        <View style={styles.optionsContainer}>
+          <View style={styles.optionBox}>
+            <View style={styles.radioContainer}>
+              <Text style={styles.radioText}>En busca de empleo</Text>
+              <Text style={styles.radioSubText}>
+                Impulsa tu vida profesional
+              </Text>
+              <RadioButton
+                value="worker"
+                status={selectedValue === "worker" ? "checked" : "unchecked"}
+                onPress={(type) => {
+                  setUserData({ ...userData, [type]: "worker" }),
+                    setSelectedValue("worker");
+                }}
+              />
+            </View>
           </View>
-        </View>
-        <View style={styles.optionBox}>
-          <View style={styles.radioContainer}>
-            <Text style={styles.radioText}>Buscando personal</Text>
-            <RadioButton
-              value="employer"
-              status={selectedValue === "employer" ? "checked" : "unchecked"}
-              onPress={(type) => {
-                setUserData({ ...userData, [type]: "employer" }),
-                  setSelectedValue("employer");
-              }}
-            />
+          <View style={styles.optionBox}>
+            <View style={styles.radioContainer}>
+              <Text style={styles.radioText}>Buscando personal</Text>
+              <Text style={styles.radioSubText}>
+                Consigue nuevos colaboradores
+              </Text>
+              <RadioButton
+                value="employer"
+                status={selectedValue === "employer" ? "checked" : "unchecked"}
+                onPress={(type) => {
+                  setUserData({ ...userData, [type]: "employer" }),
+                    setSelectedValue("employer");
+                }}
+              />
+            </View>
           </View>
-        </View>
-        {/* SE QUEDA AQUÍ POR SI DECIDIMOS IMPLEMENTAR EL TERCER TIPO DE USUARIO
+          {/* SE QUEDA AQUÍ POR SI DECIDIMOS IMPLEMENTAR EL TERCER TIPO DE USUARIO
          <View style={styles.optionBox}>
           <View style={styles.radioContainer}>
             <Text style={styles.radioText}>Abierto a crecer</Text>
@@ -56,19 +77,31 @@ const ChooseUserType = () => {
            
           </View>
         </View> /> */}
+        </View>
       </View>
-      <ReusableButton innerText="Siguiente"
-      enabled={selectedValue}
-      onPress={() => {
-        const navigateTo = {
-          worker: "ChooseUserName",
-          employer: "ChooseCompanyName",
-          // "open to grow": "ChooseUserName",
-        };
-
-        navigation.navigate(navigateTo[selectedValue] || "");
-      }}/>
-    </DisplayContainer>
+      <View
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            const navigateTo = {
+              worker: "ChooseUserName",
+              employer: "ChooseCompanyName",
+              // "open to grow": "ChooseUserName",
+            };
+            navigation.navigate(navigateTo[selectedValue] || "");
+          }}
+          disabled={!selectedValue}
+        >
+          <Text style={styles.buttonText}>Next</Text>
+        </TouchableOpacity>
+      </View>
+    </>
   );
 };
 
@@ -79,9 +112,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    fontSize: 24,
-    marginTop: 20,
-    marginBottom: 20,
+    fontSize: 20,
+    color: "#525252",
+    fontWeight: 500,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: "#525252",
   },
   optionsContainer: {
     flexDirection: "column",
@@ -95,7 +132,7 @@ const styles = StyleSheet.create({
   },
   radioContainer: {
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 16,
     borderColor: "gray",
     padding: 10,
     width: "100%",
@@ -107,13 +144,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginRight: 10,
   },
+  radioSubText: {
+    fontSize: 12,
+  },
   button: {
     justifyContent: "center",
     width: 288,
     height: 40,
     backgroundColor: "#D9D9D9",
     borderRadius: 25,
-    marginTop: 40,
+    marginTop: 89,
   },
   buttonText: {
     textAlign: "center",
