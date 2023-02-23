@@ -5,19 +5,20 @@ import AwesomeAlert from "react-native-awesome-alerts";
 import DisplayContainer from "../components/DisplayContainer";
 import { UserDataContext } from "../context/UserDataContext";
 import registerUser from "../firebase/functions/registerUser";
+import uploadProfilePicture from "../firebase/functions/uploadProfilePicture";
 
 import { useNavigation } from "@react-navigation/core";
 
 import RegisterProgressBar from "../components/RegisterProgressBar";
 import BackButton from "../components/BackButton";
-
+import { async } from "q";
 
 const ChooseProfilePicture = () => {
   const [image, setImage] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
 
   const { userData, setUserData } = useContext(UserDataContext);
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -26,11 +27,11 @@ const ChooseProfilePicture = () => {
       aspect: [1, 1],
     });
 
-    if (!result.canceled) {
+    if (result.assets) {
       // Research uri --> https://docs.expo.io/versions/latest/sdk/imagepicker/#imagepickerlaunchimagelibraryasync
       // access selected assets through the "assets" array instead (warning in console)
+
       setImage(result.uri);
-      setUserData({ ...userData, image: result.uri });
     }
   };
 
@@ -72,10 +73,18 @@ const ChooseProfilePicture = () => {
         <TouchableOpacity
           style={styles.finished}
           onPress={() => {
-            setShowAlert(true);
-            console.log(userData);
+            uploadProfilePicture(image, `profileImg${userData.email}`)
+            .then((res) => {
+                console.log(res);
+                setUserData({ ...userData, image: res });
+                console.log(res)
+                registerUser(userData.email, userData.password, userData);
+              })
+            .then(() => setShowAlert(true))
+            .catch((error) => console.log(error))
+            
+            /* console.log(userData); */
             // createUser devuelve el user.id que necesita Nico para el Home
-            registerUser(userData.email, userData.password, userData);
             // createUser({ ...userData});
           }}
         >

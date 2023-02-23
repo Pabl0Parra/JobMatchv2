@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     color: "#525252",
-    fontWeight: 500,
+    fontWeight: "500",
   },
   subtitle: {
     fontSize: 14,
