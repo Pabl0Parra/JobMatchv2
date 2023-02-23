@@ -5,68 +5,188 @@ import {
   Button,
   Image,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import Constants from "expo-constants";
 import Header from "../components/Header";
 import logOut from "../firebase/functions/logOut";
-import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { useState } from "react";
+import {
+  AntDesign,
+  Ionicons,
+  MaterialIcons,
+  Octicons,
+  EvilIcons,
+  FontAwesome5,
+  FontAwesome,
+  Feather,
+} from "@expo/vector-icons";
+import { useState, useContext } from "react";
 import { Switch } from "react-native-paper";
 import CircularProgress from "../components/CircularProgress";
+import { UserLoginContex } from "../context/UserDataContext";
+import DisplayContainer from "../components/DisplayContainer";
+import theme from "../theme";
+
+const { text, colors } = theme;
 
 const Profile = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const [percentage, setPercentage] = useState(60);
+  const { userData } = useContext(UserLoginContex);
 
   return (
-    <View style={styles.container}>
+    <DisplayContainer style={styles.container}>
       <Header screen="Profile" />
-      <View style={styles.profileHeader}>
-        <Text style={styles.profile}>Profile</Text>
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            position: "relative",
-          }}
-        >
-          <CircularProgress
-            percent={percentage}
-            radius={80}
-            bgRingWidth={16}
-            progressRingWidth={16}
-            ringColor={"red"}
-            ringBgColor={"#ccc"}
-          />
+      <ScrollView
+        contentContainerStyle={{ alignItems: "center", paddingBottom: 80 }}
+      >
+        <View style={styles.profileHeader}>
           <Image
-            source={{
-              uri: "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg",
-            }}
-            style={styles.image}
+            style={styles.blueBackground}
+            source={require("../images/profileBlueBG.png")}
           />
+          <View>
+            <Octicons
+              style={styles.editProfileButton}
+              name="pencil"
+              size={24}
+              color="#84FFFF"
+            />
+            <View
+              style={{
+                position: "relative",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <CircularProgress
+                percent={percentage}
+                radius={80}
+                bgRingWidth={38}
+                progressRingWidth={16}
+                ringColor={"#091D5C"}
+                ringBgColor={"#D7E0E9"}
+              />
+              <Image
+                source={{
+                  uri: "https://i.pinimg.com/originals/4d/da/aa/4ddaaa0463c649b9969c929638573593.png",
+                }}
+                style={styles.image}
+              />
+            </View>
+          </View>
+          <Text style={[styles.text, { marginVertical: 20 }]}>
+            {percentage}% completado
+          </Text>
+          <Text
+            style={[styles.text, { fontSize: 26, fontWeight: "600" }]}
+          >{`${userData.userName} ${userData.userLastName}`}</Text>
+          <Text style={[styles.text]}>{userData.userRole}</Text>
         </View>
-        <Text style={{marginVertical:10}}>Perfil {percentage}% completado</Text>
-      </View>
-      <View style={styles.profileUser}>
-        <Text style={styles.profileUserName}>Nombre</Text>
-        <Text style={styles.profileUserRol}>Profesion</Text>
-      </View>
-      <View style={styles.detailsSectionsContainer}>
-        <TouchableOpacity style={styles.detailsSection} onPress={() => {}}>
-          <AntDesign name="user" size={24} color="black" />
-          <Text>About</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.detailsSection} onPress={() => {}}>
-          <MaterialIcons name="work-outline" size={24} color="black" />
-          <Text>Experience</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.detailsSection} onPress={() => {}}>
-          <Ionicons name="school-outline" size={24} color="black" />
-          <Text>Education and courses</Text>
-        </TouchableOpacity>
-      </View>
-      <View
+        <View style={styles.detailsSectionsContainer}>
+          <TouchableOpacity style={styles.detailsSection} onPress={() => {}}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Feather name="bell" size={24} color={colors.secondary} />
+              <Text
+                style={[
+                  text.subtitleMedium,
+                  { color: colors.secondary, fontWeight: "900", marginLeft: 3 },
+                ]}
+              >
+                5
+              </Text>
+            </View>
+            <Text style={[text.descriptionItem, { color: colors.secondary }]}>
+              Notificaciones
+            </Text>
+          </TouchableOpacity>
+          <View style={styles.separatorDetails} />
+          <TouchableOpacity style={styles.detailsSection} onPress={() => {}}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Ionicons
+                name="md-eye-outline"
+                size={28}
+                color={colors.secondary}
+              />
+              <Text
+                style={[
+                  text.subtitleMedium,
+                  { color: colors.secondary, fontWeight: "900", marginLeft: 3 },
+                ]}
+              >
+                5
+              </Text>
+            </View>
+            <Text style={[text.descriptionItem, { color: colors.secondary }]}>
+              Vistas
+            </Text>
+          </TouchableOpacity>
+          <View style={styles.separatorDetails} />
+          <TouchableOpacity style={styles.detailsSection} onPress={() => {}}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Ionicons
+                name="md-bookmark-outline"
+                size={24}
+                color={colors.secondary}
+              />
+              <Text
+                style={[
+                  text.subtitleMedium,
+                  { color: colors.secondary, fontWeight: "900", marginLeft: 3 },
+                ]}
+              >
+                5
+              </Text>
+            </View>
+            <Text style={[text.descriptionItem, { color: colors.secondary }]}>
+              Guardados
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.aboutMe}>
+          <Text style={[text.descriptionSubtitle, { fontSize: 20 }]}>
+            Acerca de mi
+          </Text>
+          <Text style={[text.descriptionItem, { fontWeight: "300" }]}>
+            Yorem ipsum dolor sit amet, consectetur adipenaeos. Prae lorem.
+            Morbi convallis convallis diam sit amet lacinia. Aliquam in
+            elementum tellus.
+          </Text>
+        </View>
+        <View style={styles.containerSectionExperience}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <Text style={[text.descriptionSubtitle, { marginBottom: 10 }]}>
+              Experiencia
+            </Text>
+            <View style={{marginRight: 10, flexDirection: "row"}}>
+              <FontAwesome style={{marginRight: 10}} name="plus" size={28} color="black" />
+              <Octicons
+              name="pencil"
+              size={28}
+              color={colors.secondary}
+            />
+            </View>
+          </View>
+          <View style={styles.experienceCard}>
+            <View style={styles.experienceIcon}>
+              <FontAwesome5 name="building" size={24} color="white" />
+            </View>
+            <View style={styles.textCardExperience}>
+              <Text style={[text.descriptionSubtitle, { marginBottom: 2 }]}>
+                Líder talento Humano
+              </Text>
+              <Text>
+                Super de bebidas - Jornada completa Jun. 2013 - abr. 2022 - 8
+                años 11 meses Chile, Santiago{" "}
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        {/* <View
         style={{
           flexDirection: "row",
           gap: 20,
@@ -77,7 +197,9 @@ const Profile = () => {
         }}
       >
         <Text>En busca de empleo:</Text>
-        {/* switcher */}
+        {
+          // switcher
+        }
         <Switch
           trackColor={{ false: "#767577", true: "#81b0ff" }}
           thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
@@ -85,81 +207,101 @@ const Profile = () => {
           onValueChange={toggleSwitch}
           value={isEnabled}
         />
-        {/* end switcher */}
+        {
+          // end switcher
+        }
       </View>
-      <Button title="cerrar sesión" onPress={() => logOut()} />
-    </View>
+      <Button title="cerrar sesión" onPress={() => logOut()} /> */}
+      </ScrollView>
+    </DisplayContainer>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     marginTop: Constants.statusBarHeight,
     justifyContent: "flex-start",
-    alignItems: "center",
-    backgroundColor: "#ECF0F1",
+  },
+  blueBackground: {
+    position: "absolute",
+    top: 0,
+    width: "100%",
   },
   profileHeader: {
-    backgroundColor: "lightgreen",
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    padding: 10,
+    paddingTop: 45,
   },
   image: {
-    width: 150,
-    height: 150,
+    width: 160,
+    height: 160,
     borderRadius: 75,
     zIndex: 2,
     position: "absolute",
   },
-  profile: {
-    fontSize: 18,
-    fontWeight: "bold",
-    alignSelf: "flex-start",
-    margin: 15,
+  editProfileButton: {
+    position: "absolute",
+    zIndex: 3,
+    bottom: 0,
+    right: -15,
+    width: 48,
+    height: 48,
+    textAlign: "center",
+    textAlignVertical: "center",
+    borderRadius: 40,
+    backgroundColor: "#091D5C",
   },
-  profileUser: {
-    padding: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  profileUserName: {
-    marginVertical: 10,
-    fontSize: 24,
-    fontWeight: "bold",
-  },
-  profileUserRol: {
-    marginVertical: 10,
-    fontSize: 18,
+  text: {
+    fontSize: 16,
+    color: "#525252",
+    fontWeight: "400",
   },
   detailsSectionsContainer: {
     width: "100%",
-    height: 100,
+    height: 90,
+    marginVertical: 5,
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
   },
   detailsSection: {
-    width: 100,
-    height: 100,
-    borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "lightgreen",
+  },
+  separatorDetails: {
+    width: 1,
+    height: "70%",
+    backgroundColor: "gray",
+  },
+  aboutMe: {
+    paddingHorizontal: 26,
+  },
+  containerSectionExperience: {
+    position: "relative",
+    marginTop: 20,
+    width: "85%",
+    padding: 12,
+    borderRadius: 16,
+    borderWidth: 2,
+    borderColor: "#aaa",
+  },
+  experienceCard: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    padding: 4,
+  },
+  experienceIcon: {
     padding: 10,
+    borderRadius: 20,
+    marginRight: 8,
+    backgroundColor: "#091D5C",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  detailsDescription: {
-    width: "90%",
-    height: 100,
-    /* backgroundColor:"yellow", */
-    padding: 15,
-  },
-  descriptionTitle: {
-    fontWeight: "bold",
-    fontSize: 20,
-    marginVertical: 10,
+  textCardExperience: {
+    flex: 1,
   },
 });
 

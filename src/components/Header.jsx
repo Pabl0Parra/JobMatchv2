@@ -3,38 +3,48 @@ import { FontAwesome, Feather, Ionicons } from "@expo/vector-icons";
 import LogoHeader from "../svgs/LogoHeader";
 import theme from "../theme";
 import { useNavigation } from "@react-navigation/core";
+import { AntDesign } from "@expo/vector-icons";
 
 const { colors } = theme;
 const Header = ({ screen }) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
-      <LogoHeader />
       {screen === "Home" ? (
-        <View style={{flexDirection:"row"}}>
-          <TouchableOpacity style={styles.notification} onPress={()=> navigation.navigate('Filters')}>
-            <Ionicons name="filter-sharp" size={24} color={colors.secondary} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.notification}>
-            <FontAwesome name="bell-o" size={20} color={colors.secondary} />
-          </TouchableOpacity>
-        </View>
+        <>
+          <LogoHeader />
+          <View style={{ flexDirection: "row" }}>
+            <TouchableOpacity
+              style={styles.notification}
+              onPress={() => navigation.navigate("Filters")}
+            >
+              <Ionicons
+                name="filter-sharp"
+                size={24}
+                color={colors.secondary}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.notification}>
+              <FontAwesome name="bell-o" size={20} color={colors.secondary} />
+            </TouchableOpacity>
+          </View>
+        </>
       ) : screen === "Profile" ? (
-        <TouchableOpacity style={styles.notification}>
-          <Feather name="settings" size={20} color={colors.secondary} />
-        </TouchableOpacity>
+        <>
+          <Text style={{fontSize: 20}}>Perfil</Text>
+          <TouchableOpacity style={styles.notification}>
+            <Feather name="settings" size={20} color={colors.secondary} />
+          </TouchableOpacity>
+        </>
       ) : null}
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    /*     position:"absolute",*/
-    top: 0,
-    left: 0,
     width: "100%",
-    height: "8%",
+    height: "7%",
     backgroundColor: "#fff",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -44,7 +54,7 @@ const styles = StyleSheet.create({
   notification: {
     width: 30,
     height: 30,
-    marginHorizontal:4,
+    marginHorizontal: 4,
     justifyContent: "center",
     alignItems: "center",
   },
