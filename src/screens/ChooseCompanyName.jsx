@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
+import { StyleSheet, View } from "react-native";
 import InputForm from "../components/InputForm";
 import { useNavigation } from "@react-navigation/native";
 import DisplayContainer from "../components/DisplayContainer";
 import { UserDataContext } from "../context/UserDataContext";
 import RegisterProgressBar from "../components/RegisterProgressBar";
 import BackButton from "../components/BackButton";
+import Drawing from "../svgs/Drawing";
 
 const ChooseCompanyName = () => {
   const { userData, setUserData } = useContext(UserDataContext);
@@ -14,6 +16,9 @@ const ChooseCompanyName = () => {
     <>
       <BackButton text="Crear cuenta" />
       <RegisterProgressBar currentStep={2} />
+      <View style={styles.bgContainer}>
+        <Drawing />
+      </View>
       <DisplayContainer>
         <InputForm
           fields={[
@@ -35,5 +40,12 @@ const ChooseCompanyName = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  bgContainer: {
+    alignItems: "left",
+    marginTop: 20,
+  },
+});
 
 export default ChooseCompanyName;

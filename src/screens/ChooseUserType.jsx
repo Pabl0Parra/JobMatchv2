@@ -7,6 +7,7 @@ import { UserDataContext } from "../context/UserDataContext";
 import ReusableButton from "../components/ReusableButton";
 import RegisterProgressBar from "../components/RegisterProgressBar";
 import BackButton from "../components/BackButton";
+import ClickingHand from "../svgs/ClickingHand";
 
 const ChooseUserType = () => {
   const { userData, setUserData } = useContext(UserDataContext);
@@ -18,6 +19,7 @@ const ChooseUserType = () => {
     <>
       <BackButton text="Crear cuenta" />
       <RegisterProgressBar currentStep={1} />
+      <ClickingHand />
       <View
         style={{
           alignItems: "flex-start",
@@ -42,7 +44,7 @@ const ChooseUserType = () => {
                 value="worker"
                 status={selectedValue === "worker" ? "checked" : "unchecked"}
                 onPress={(type) => {
-                  setUserData({ ...userData, worker:true, employer: false }),
+                  setUserData({ ...userData, worker: true, employer: false }),
                     setSelectedValue("worker");
                 }}
               />
@@ -58,7 +60,7 @@ const ChooseUserType = () => {
                 value="employer"
                 status={selectedValue === "employer" ? "checked" : "unchecked"}
                 onPress={(type) => {
-                  setUserData({ ...userData, employer: true, worker:false, }),
+                  setUserData({ ...userData, employer: true, worker: false }),
                     setSelectedValue("employer");
                 }}
               />

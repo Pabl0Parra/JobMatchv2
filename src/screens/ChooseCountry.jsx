@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
+import { StyleSheet, View } from "react-native";
 import InputForm from "../components/InputForm";
 import { useNavigation } from "@react-navigation/native";
 import DisplayContainer from "../components/DisplayContainer";
 import { UserDataContext } from "../context/UserDataContext";
 import RegisterProgressBar from "../components/RegisterProgressBar";
 import BackButton from "../components/BackButton";
+import HandHeart from "../svgs/HandHeart";
 
 const ChooseCountry = () => {
   const { userData, setUserData } = useContext(UserDataContext);
@@ -14,6 +16,9 @@ const ChooseCountry = () => {
     <>
       <BackButton text="Crear cuenta" />
       <RegisterProgressBar currentStep={4} />
+      <View style={styles.bgContainer}>
+        <HandHeart />
+      </View>
       <DisplayContainer>
         <InputForm
           fields={[
@@ -31,5 +36,12 @@ const ChooseCountry = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  bgContainer: {
+    alignItems: "left",
+    marginTop: 20,
+  },
+});
 
 export default ChooseCountry;

@@ -1,23 +1,24 @@
 import React, { useState, useContext } from "react";
-import { Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import AwesomeAlert from "react-native-awesome-alerts";
 import DisplayContainer from "../components/DisplayContainer";
 import { UserDataContext } from "../context/UserDataContext";
 import registerUser from "../firebase/functions/registerUser";
+import { MaterialIcons } from "@expo/vector-icons";
+import ProfilePicture from "../svgs/ProfilePicture";
 
 import { useNavigation } from "@react-navigation/core";
 
 import RegisterProgressBar from "../components/RegisterProgressBar";
 import BackButton from "../components/BackButton";
 
-
 const ChooseProfilePicture = () => {
   const [image, setImage] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
 
   const { userData, setUserData } = useContext(UserDataContext);
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -48,20 +49,32 @@ const ChooseProfilePicture = () => {
     <>
       <BackButton text="Crear cuenta" />
       <RegisterProgressBar currentStep={5} />
+      <View style={styles.bgContainer}>
+        <ProfilePicture />
+      </View>
       <DisplayContainer>
         <Text style={styles.title}>Añadir foto</Text>
         <Text style={styles.subTitle}>
           Sabías que añadir una foto incrementa en un 70% tus opciones de match?
         </Text>
-        {image ? (
-          <TouchableOpacity onPress={pickImage}>
-            <Image source={{ uri: image }} style={styles.image} />
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity onPress={pickImage} style={styles.addImage}>
-            <Text style={styles.addImageText}>+</Text>
-          </TouchableOpacity>
-        )}
+        <View style={styles.imageContainer}>
+          <View style={styles.rectangle}>
+            {image ? (
+              <TouchableOpacity onPress={pickImage} style={styles.imageWrapper}>
+                <Image source={{ uri: image }} style={styles.image} />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={pickImage} style={styles.addImage}>
+                <Text style={styles.addImageText}>+</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+          <View style={styles.cameraButtonContainer}>
+            <TouchableOpacity style={styles.cameraButton}>
+              <MaterialIcons name="photo-camera" size={24} color="#FFF" />
+            </TouchableOpacity>
+          </View>
+        </View>
         {image ? (
           <TouchableOpacity style={styles.changeImage} onPress={changeImage}>
             <Text style={styles.changeImageText}>Cambiar foto</Text>
@@ -73,7 +86,7 @@ const ChooseProfilePicture = () => {
           style={styles.finished}
           onPress={() => {
             setShowAlert(true);
-            console.log(userData);
+            // console.log(userData);
             // createUser devuelve el user.id que necesita Nico para el Home
             registerUser(userData.email, userData.password, userData);
             // createUser({ ...userData});
@@ -99,6 +112,10 @@ const ChooseProfilePicture = () => {
 };
 
 const styles = StyleSheet.create({
+  bgContainer: {
+    alignItems: "left",
+    marginTop: 20,
+  },
   title: {
     fontSize: 20,
     marginBottom: 20,
