@@ -40,17 +40,17 @@ const ChooseCompanyName = () => {
             question: {
               alignSelf: "flex-start",
               marginLeft: 14,
-              fontWeight: 500,
+              fontWeight: "500",
               fontSize: 20,
             },
             request: {
               alignSelf: "flex-start",
               marginLeft: 14,
-              fontWeight: 400,
+              fontWeight: "400",
               fontSize: 14,
             },
           }}
-          buttonMarginTop={{ marginTop: 120 }}
+          buttonMarginTop={120}
         />
       </DisplayContainer>
     </>
@@ -59,7 +59,7 @@ const ChooseCompanyName = () => {
 
 const styles = StyleSheet.create({
   bgContainer: {
-    alignItems: "left",
+    alignItems: "flex-start",
     marginTop: 20,
   },
 });

@@ -42,11 +42,13 @@ const ChooseProfilePicture = () => {
   };
 
   const uploadImages = async () => {
+    console.log("pepe")
     try {
       const res = await uploadProfilePicture(
         image,
         `profileImg${userData.email}`
       );
+      console.log(res)
       registerUser(userData.email, userData.password, {
         ...userData,
         image: res,
@@ -100,7 +102,8 @@ const ChooseProfilePicture = () => {
         ) : null}
         <ReusableButton
           innerText="Finalizar"
-          onPress={() => {uploadImages}} />
+          onPress={uploadImages}
+          styleContainer={{marginTop: 50}} />
         <AwesomeAlert
           show={showAlert}
           showProgress={false}
@@ -120,7 +123,7 @@ const ChooseProfilePicture = () => {
 
 const styles = StyleSheet.create({
   bgContainer: {
-    alignItems: "left",
+    alignItems: "flex-start",
     marginTop: 20,
   },
   title: {

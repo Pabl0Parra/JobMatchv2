@@ -42,17 +42,17 @@ const ChooseUserName = ({ navigation }) => {
               question: {
                 alignSelf: "flex-start",
                 marginLeft: 20,
-                fontWeight: 500,
+                fontWeight: "500",
                 fontSize: 20,
               },
               request: {
                 alignSelf: "flex-start",
                 marginLeft: 20,
-                fontWeight: 400,
+                fontWeight: "400",
                 fontSize: 14,
               },
             }}
-            buttonMarginTop={{ marginTop: 120 }}
+            buttonMarginTop={120}
           />
         </View>
       </DisplayContainer>
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     backgroundColor: `${colors.background}`,
   },
   bgContainer: {
-    alignItems: "left",
+    alignItems: "flex-start",
     marginTop: 20,
   },
 });
