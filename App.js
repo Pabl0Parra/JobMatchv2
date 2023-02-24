@@ -19,7 +19,7 @@ import ResetPassword from "./src/screens/ResetPassword";
 import Loading from "./src/screens/Loading";
 import LandingPage from "./src/screens/LandingPage";
 import MatchModal from "./src/screens/MatchModal";
-import { getDoc, doc } from "@firebase/firestore";
+import getUserDataDB from "./src/firebase/functions/getUserDataDB";
 import {
   UserDataContext,
   UserDataContextProvider,
@@ -64,15 +64,13 @@ export default function App() {
 
     onAuthStateChanged(auth, async (userFirebase) => {
       if (userFirebase) {
-        const docRef = doc(db, "HomeTest", userFirebase.uid);
-        const docSnap = await getDoc(docRef);
 
-        if (docSnap.exists()) {
-          console.log("Document data:", docSnap.data());
-          setUserData(docSnap.data());
+        const res = await getUserDataDB(userFirebase.uid);
+
+        if (res) {
+          setUserData(res);
         } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
+          console.log("error al obtener los datos")
         }
       } else {
         ("Error de login");

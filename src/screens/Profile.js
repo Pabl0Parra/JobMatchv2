@@ -26,6 +26,10 @@ import CircularProgress from "../components/CircularProgress";
 import { UserLoginContex } from "../context/UserDataContext";
 import DisplayContainer from "../components/DisplayContainer";
 import theme from "../theme";
+import * as ImagePicker from "expo-image-picker";
+import uploadProfilePicture from "../firebase/functions/uploadProfilePicture";
+import changeURLProfilePictureDB from "../firebase/functions/changeURLProfilePictureDB";
+import getUserDataDB from "../firebase/functions/getUserDataDB";
 
 const { text, colors } = theme;
 
@@ -33,7 +37,36 @@ const Profile = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const [percentage, setPercentage] = useState(60);
-  const { userData } = useContext(UserLoginContex);
+  const { userData, setUserData } = useContext(UserLoginContex);
+
+  const changeProfilePicture = async () => {
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+      });
+
+      if (result.assets) {
+        const urlPicture = await uploadProfilePicture(
+          result.uri,
+          `profileImg${userData.email}`
+        );
+        await changeURLProfilePictureDB(userData.id, urlPicture);
+
+        const res = await getUserDataDB(userData.id)
+
+        if (res) {
+          setUserData(res);
+        } else {
+          console.log("error al obtener los datos")
+        }
+
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <DisplayContainer style={styles.container}>
@@ -47,12 +80,12 @@ const Profile = () => {
             source={require("../images/profileBlueBG.png")}
           />
           <View>
-            <Octicons
-              style={styles.editProfileButton}
-              name="pencil"
-              size={24}
-              color="#84FFFF"
-            />
+            <TouchableOpacity
+              style={styles.editProfilePictureButton}
+              onPress={changeProfilePicture}
+            >
+              <Octicons name="pencil" size={24} color="#84FFFF" />
+            </TouchableOpacity>
             <View
               style={{
                 position: "relative",
@@ -161,13 +194,14 @@ const Profile = () => {
             <Text style={[text.descriptionSubtitle, { marginBottom: 10 }]}>
               Experiencia
             </Text>
-            <View style={{marginRight: 10, flexDirection: "row"}}>
-              <FontAwesome style={{marginRight: 10}} name="plus" size={28} color="black" />
-              <Octicons
-              name="pencil"
-              size={28}
-              color={colors.secondary}
-            />
+            <View style={{ marginRight: 10, flexDirection: "row" }}>
+              <FontAwesome
+                style={{ marginRight: 10 }}
+                name="plus"
+                size={28}
+                color="black"
+              />
+              <Octicons name="pencil" size={28} color={colors.secondary} />
             </View>
           </View>
           <View style={styles.experienceCard}>
@@ -240,17 +274,17 @@ const styles = StyleSheet.create({
     zIndex: 2,
     position: "absolute",
   },
-  editProfileButton: {
+  editProfilePictureButton: {
     position: "absolute",
     zIndex: 3,
     bottom: 0,
     right: -15,
     width: 48,
     height: 48,
-    textAlign: "center",
-    textAlignVertical: "center",
-    borderRadius: 40,
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: "#091D5C",
+    borderRadius: 40,
   },
   text: {
     fontSize: 16,
