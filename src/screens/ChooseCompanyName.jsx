@@ -19,7 +19,7 @@ const ChooseCompanyName = () => {
       <View style={styles.bgContainer}>
         <Drawing />
       </View>
-      <DisplayContainer>
+      <DisplayContainer style={{ justifyContent: "flex-start", marginTop: 11 }}>
         <InputForm
           fields={[
             { label: "Nombre de la empresa", name: "userName", type: "text" },
@@ -35,6 +35,22 @@ const ChooseCompanyName = () => {
           }}
           questionText="¿Cómo se llama la empresa?"
           requestText="Introduce los siguientes datos:"
+          buttonText={"Siguiente"}
+          styleText={{
+            question: {
+              alignSelf: "flex-start",
+              marginLeft: 14,
+              fontWeight: 500,
+              fontSize: 20,
+            },
+            request: {
+              alignSelf: "flex-start",
+              marginLeft: 14,
+              fontWeight: 400,
+              fontSize: 14,
+            },
+          }}
+          buttonMarginTop={{ marginTop: 120 }}
         />
       </DisplayContainer>
     </>

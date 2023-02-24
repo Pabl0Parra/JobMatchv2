@@ -26,8 +26,7 @@ const Register = () => {
 
   return (
     <DisplayContainer>
-      <View
-        style={styles.background}>
+      <View style={styles.background}>
         <Image
           style={[styles.image]}
           source={require("../images/image4.png")}
@@ -42,7 +41,13 @@ const Register = () => {
             <AntDesign name="arrowleft" size={26} color="white" />
           </TouchableOpacity>
           <View style={{ width: 15 }} />
-          <Text style={[styles.text, styles.textTop, { fontSize: 26, marginBottom: 4 }]}>
+          <Text
+            style={[
+              styles.text,
+              styles.textTop,
+              { fontSize: 26, marginBottom: 4 },
+            ]}
+          >
             Crear Cuenta
           </Text>
         </View>
@@ -73,6 +78,7 @@ const Register = () => {
             onSubmit={formSubmit}
             requestText="Crear cuenta"
             buttonText="Crear cuenta"
+            buttonMarginTop={14}
           />
           <Text
             style={[

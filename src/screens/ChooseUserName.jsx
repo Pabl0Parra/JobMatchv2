@@ -20,8 +20,8 @@ const ChooseUserName = ({ navigation }) => {
       <View style={styles.bgContainer}>
         <Drawing />
       </View>
-      <DisplayContainer>
-        <View style={styles.inputFormContainer}>
+      <DisplayContainer style={{ justifyContent: "flex-start" }}>
+        <View>
           <InputForm
             fields={[
               { label: "Nombre de usuario", name: "name", type: "text" },
@@ -37,6 +37,22 @@ const ChooseUserName = ({ navigation }) => {
             }}
             questionText="¿Cómo te llamas?"
             requestText="Escribe tu nombre real ya que Jobmatch está enfocado en un ámbito laboral"
+            buttonText={"Siguiente"}
+            styleText={{
+              question: {
+                alignSelf: "flex-start",
+                marginLeft: 20,
+                fontWeight: 500,
+                fontSize: 20,
+              },
+              request: {
+                alignSelf: "flex-start",
+                marginLeft: 20,
+                fontWeight: 400,
+                fontSize: 14,
+              },
+            }}
+            buttonMarginTop={{ marginTop: 120 }}
           />
         </View>
       </DisplayContainer>
@@ -46,17 +62,11 @@ const ChooseUserName = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: `${colors.background}`,
   },
   bgContainer: {
     alignItems: "left",
     marginTop: 20,
-  },
-  inputFormContainer: {
-    marginTop: -510,
-    marginHorizontal: 20,
-    alignItems: "left",
   },
 });
 

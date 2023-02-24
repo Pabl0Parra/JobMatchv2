@@ -4,6 +4,9 @@ import * as yup from "yup";
 import { Text, View, StyleSheet } from "react-native";
 import InputContainer from "./InputContainer";
 import ReusableButton from "../components/ReusableButton";
+import theme from "../theme";
+
+const { colors } = theme;
 
 const InputForm = ({
   fields,
@@ -12,6 +15,7 @@ const InputForm = ({
   requestText,
   buttonText,
   styleText,
+  buttonMarginTop,
 }) => {
   const navigation = useNavigation();
 
@@ -108,10 +112,10 @@ const InputForm = ({
             <ReusableButton
               innerText={buttonText}
               enabled={
-                (Object.entries(errors)?.length === 0 &&
-                fields.some((field) => values[field.name] !== ""))
+                Object.entries(errors)?.length === 0 &&
+                fields.some((field) => values[field.name] !== "")
               }
-              styleContainer={{marginTop: 14}}
+              styleContainer={buttonMarginTop}
               onPress={handleSubmit}
             />
           </View>
@@ -125,19 +129,19 @@ const styles = StyleSheet.create({
   container: {
     position: "relative",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   questionText: {
-    color: "#192B65",
+    color: `${colors.text}`,
     fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 500,
+    marginBottom: 8,
   },
   requestText: {
-    color: "#192B65",
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
+    color: `${colors.text}`,
+    fontSize: 14,
+    fontWeight: 400,
+    marginBottom: 40,
   },
   textRecoverPassword: {
     marginHorizontal: 10,

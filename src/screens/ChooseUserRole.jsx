@@ -14,13 +14,13 @@ const ChooseUserRole = ({ navigation }) => {
   const { userData, setUserData } = useContext(UserDataContext);
 
   return (
-    <>
+    <View style={styles.container}>
       <BackButton text="Crear cuenta" />
       <RegisterProgressBar currentStep={3} />
       <View style={styles.bgContainer}>
         <FillingProfile />
       </View>
-      <DisplayContainer>
+      <DisplayContainer style={{ justifyContent: "flex-start", marginTop: 8 }}>
         <InputForm
           fields={[
             { label: "Profesión", name: "role", type: "text" },
@@ -37,17 +37,36 @@ const ChooseUserRole = ({ navigation }) => {
             navigation.navigate("ChooseCountry");
           }}
           questionText="Tu perfil te ayuda"
-          requestText="A encontrar nuevas oportunidades laborales"
+          requestText="Encuentra nuevas oportunidades laborales"
+          buttonText={"Siguiente"}
+          styleText={{
+            question: {
+              alignSelf: "flex-start",
+              marginLeft: 16,
+              fontWeight: 500,
+              fontSize: 20,
+            },
+            request: {
+              alignSelf: "flex-start",
+              marginLeft: 16,
+              fontWeight: 400,
+              fontSize: 14,
+            },
+          }}
+          buttonMarginTop={{ marginTop: 120 }}
         />
       </DisplayContainer>
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: `${colors.background}`,
+  },
   bgContainer: {
     alignItems: "left",
-    marginTop: 20,
+    marginTop: 8,
   },
 });
 

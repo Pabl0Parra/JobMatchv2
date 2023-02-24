@@ -19,7 +19,7 @@ const ChooseRoleWanted = () => {
       <View style={styles.bgContainer}>
         <FillingProfile />
       </View>
-      <DisplayContainer>
+      <DisplayContainer style={{ justifyContent: "flex-start", marginTop: 10 }}>
         <InputForm
           fields={[{ label: "Perfil", name: "role", type: "text" }]}
           onSubmit={(values) => {
@@ -28,6 +28,22 @@ const ChooseRoleWanted = () => {
           }}
           questionText="¿Qué perfil buscas?"
           requestText="Por favor, introduce el rol deseado:"
+          buttonText={"Siguiente"}
+          styleText={{
+            question: {
+              alignSelf: "flex-start",
+              marginLeft: 14,
+              fontWeight: 500,
+              fontSize: 20,
+            },
+            request: {
+              alignSelf: "flex-start",
+              marginLeft: 14,
+              fontWeight: 400,
+              fontSize: 14,
+            },
+          }}
+          buttonMarginTop={{ marginTop: 120 }}
         />
       </DisplayContainer>
     </>
