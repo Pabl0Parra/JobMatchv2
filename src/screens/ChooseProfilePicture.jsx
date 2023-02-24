@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/core";
 
 import RegisterProgressBar from "../components/RegisterProgressBar";
 import BackButton from "../components/BackButton";
+import ReusableButton from "../components/ReusableButton";
 
 const ChooseProfilePicture = () => {
   const [image, setImage] = useState(null);
@@ -52,7 +53,7 @@ const ChooseProfilePicture = () => {
       <View style={styles.bgContainer}>
         <ProfilePicture />
       </View>
-      <DisplayContainer>
+      <DisplayContainer style={{ justifyContent: "flex-start", marginTop: 4 }}>
         <Text style={styles.title}>Añadir foto</Text>
         <Text style={styles.subTitle}>
           Sabías que añadir una foto incrementa en un 70% tus opciones de match?
@@ -82,7 +83,17 @@ const ChooseProfilePicture = () => {
         ) : null}
         {/* hay que hacer que el botón de finalizar solo se active cuando se haya seleccionado una foto, 
      hay que hacer que el proceso de createUser acabe aquí --> importar createUser() a este componente*/}
-        <TouchableOpacity
+        <ReusableButton
+          innerText="Finalizar"
+          onPress={() => {
+            setShowAlert(true);
+            // console.log(userData);
+            // createUser devuelve el user.id que necesita Nico para el Home
+            registerUser(userData.email, userData.password, userData);
+            // createUser({ ...userData});
+          }}
+        />
+        {/* <TouchableOpacity
           style={styles.finished}
           onPress={() => {
             setShowAlert(true);
@@ -93,7 +104,7 @@ const ChooseProfilePicture = () => {
           }}
         >
           <Text style={styles.finishedText}>Finalizar</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <AwesomeAlert
           show={showAlert}
           showProgress={false}
