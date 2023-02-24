@@ -8,6 +8,7 @@ const registerUser = async (email, password, data) => {
         console.log(userAuth.user.uid);
         //Creo el usuario en la db con el mismo id proporcionado por auth
         setDoc(doc(db, "HomeTest", userAuth.user.uid), {...data,id:userAuth.user.uid, })
+        return true
     } catch (error) {
         console.log(error);
     }

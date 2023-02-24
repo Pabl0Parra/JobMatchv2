@@ -70,7 +70,7 @@ const Profile = () => {
               />
               <Image
                 source={{
-                  uri: "https://i.pinimg.com/originals/4d/da/aa/4ddaaa0463c649b9969c929638573593.png",
+                  uri: userData?.image,
                 }}
                 style={styles.image}
               />

@@ -1,7 +1,7 @@
 import { db } from "../credentials";
 import { collection, addDoc } from "firebase/firestore";
 
-export default createUser = async (data) => {
+const createUserDb = async (data) => {
   try {
     const collectionRef = collection(db, "users");
     const userId = await addDoc(collectionRef, data);
@@ -10,3 +10,5 @@ export default createUser = async (data) => {
     console.log(error);
   }
 };
+
+export default createUserDb;

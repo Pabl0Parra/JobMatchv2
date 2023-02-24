@@ -5,6 +5,7 @@ import AwesomeAlert from "react-native-awesome-alerts";
 import DisplayContainer from "../components/DisplayContainer";
 import { UserDataContext } from "../context/UserDataContext";
 import registerUser from "../firebase/functions/registerUser";
+import uploadProfilePicture from "../firebase/functions/uploadProfilePicture";
 import { MaterialIcons } from "@expo/vector-icons";
 import ProfilePicture from "../svgs/ProfilePicture";
 
@@ -28,16 +29,34 @@ const ChooseProfilePicture = () => {
       aspect: [1, 1],
     });
 
-    if (!result.canceled) {
+    if (result.assets) {
       // Research uri --> https://docs.expo.io/versions/latest/sdk/imagepicker/#imagepickerlaunchimagelibraryasync
       // access selected assets through the "assets" array instead (warning in console)
+
       setImage(result.uri);
-      setUserData({ ...userData, image: result.uri });
     }
   };
 
   const changeImage = async () => {
     pickImage();
+  };
+
+  const uploadImages = async () => {
+    try {
+      const res = await uploadProfilePicture(
+        image,
+        `profileImg${userData.email}`
+      );
+      console.log(res);
+      /* setUserData({ ...userData, image: res.toString() }); */
+      registerUser(userData.email, userData.password, {
+        ...userData,
+        image: res,
+      });
+      setShowAlert(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // aquí se cierra la alerta y se navega a Home
@@ -81,30 +100,9 @@ const ChooseProfilePicture = () => {
             <Text style={styles.changeImageText}>Cambiar foto</Text>
           </TouchableOpacity>
         ) : null}
-        {/* hay que hacer que el botón de finalizar solo se active cuando se haya seleccionado una foto, 
-     hay que hacer que el proceso de createUser acabe aquí --> importar createUser() a este componente*/}
         <ReusableButton
           innerText="Finalizar"
-          onPress={() => {
-            setShowAlert(true);
-            // console.log(userData);
-            // createUser devuelve el user.id que necesita Nico para el Home
-            registerUser(userData.email, userData.password, userData);
-            // createUser({ ...userData});
-          }}
-        />
-        {/* <TouchableOpacity
-          style={styles.finished}
-          onPress={() => {
-            setShowAlert(true);
-            // console.log(userData);
-            // createUser devuelve el user.id que necesita Nico para el Home
-            registerUser(userData.email, userData.password, userData);
-            // createUser({ ...userData});
-          }}
-        >
-          <Text style={styles.finishedText}>Finalizar</Text>
-        </TouchableOpacity> */}
+          onPress={() => {uploadImages}} />
         <AwesomeAlert
           show={showAlert}
           showProgress={false}
