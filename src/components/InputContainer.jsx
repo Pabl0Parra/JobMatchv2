@@ -72,7 +72,7 @@ const InputContainer = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: 340,
+    width: 300,
     height: 50,
     borderRadius: 5,
     margin: 10,

@@ -115,7 +115,7 @@ const InputForm = ({
                 Object.entries(errors)?.length === 0 &&
                 fields.some((field) => values[field.name] !== "")
               }
-              styleContainer={buttonMarginTop}
+              styleContainer={{marginTop: buttonMarginTop}}
               onPress={handleSubmit}
             />
           </View>
@@ -132,16 +132,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   questionText: {
-    color: `${colors.text}`,
+    color: "#192B65",
     fontSize: 20,
-    fontWeight: 500,
-    marginBottom: 8,
+    fontWeight: "bold",
+    textAlign: "center"
   },
   requestText: {
-    color: `${colors.text}`,
-    fontSize: 14,
-    fontWeight: 400,
-    marginBottom: 40,
+    color: "#192B65",
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 8,
   },
   textRecoverPassword: {
     marginHorizontal: 10,

@@ -47,8 +47,6 @@ const ChooseProfilePicture = () => {
         image,
         `profileImg${userData.email}`
       );
-      console.log(res);
-      /* setUserData({ ...userData, image: res.toString() }); */
       registerUser(userData.email, userData.password, {
         ...userData,
         image: res,
