@@ -39,6 +39,24 @@ const ChooseProfilePicture = () => {
     pickImage();
   };
 
+  const uploadImages = async () => {
+    try {
+      const res = await uploadProfilePicture(
+        image,
+        `profileImg${userData.email}`
+      );
+      console.log(res);
+      /* setUserData({ ...userData, image: res.toString() }); */
+      registerUser(userData.email, userData.password, {
+        ...userData,
+        image: res,
+      });
+      setShowAlert(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // aquí se cierra la alerta y se navega a Home
   const hideAlert = () => {
     setShowAlert(false);
@@ -70,24 +88,7 @@ const ChooseProfilePicture = () => {
         ) : null}
         {/* hay que hacer que el botón de finalizar solo se active cuando se haya seleccionado una foto, 
      hay que hacer que el proceso de createUser acabe aquí --> importar createUser() a este componente*/}
-        <TouchableOpacity
-          style={styles.finished}
-          onPress={() => {
-            uploadProfilePicture(image, `profileImg${userData.email}`)
-            .then((res) => {
-                console.log(res);
-                setUserData({ ...userData, image: res });
-                console.log(res)
-                registerUser(userData.email, userData.password, userData);
-              })
-            .then(() => setShowAlert(true))
-            .catch((error) => console.log(error))
-            
-            /* console.log(userData); */
-            // createUser devuelve el user.id que necesita Nico para el Home
-            // createUser({ ...userData});
-          }}
-        >
+        <TouchableOpacity style={styles.finished} onPress={uploadImages}>
           <Text style={styles.finishedText}>Finalizar</Text>
         </TouchableOpacity>
         <AwesomeAlert
