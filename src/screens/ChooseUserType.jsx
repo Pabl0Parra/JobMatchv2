@@ -7,6 +7,10 @@ import { UserDataContext } from "../context/UserDataContext";
 import ReusableButton from "../components/ReusableButton";
 import RegisterProgressBar from "../components/RegisterProgressBar";
 import BackButton from "../components/BackButton";
+import ClickingHand from "../svgs/ClickingHand";
+import theme from "../theme";
+
+const { colors } = theme;
 
 const ChooseUserType = () => {
   const { userData, setUserData } = useContext(UserDataContext);
@@ -18,6 +22,7 @@ const ChooseUserType = () => {
     <>
       <BackButton text="Crear cuenta" />
       <RegisterProgressBar currentStep={1} />
+      <ClickingHand />
       <View
         style={{
           alignItems: "flex-start",
@@ -42,7 +47,7 @@ const ChooseUserType = () => {
                 value="worker"
                 status={selectedValue === "worker" ? "checked" : "unchecked"}
                 onPress={(type) => {
-                  setUserData({ ...userData, worker:true, employer: false }),
+                  setUserData({ ...userData, worker: true, employer: false }),
                     setSelectedValue("worker");
                 }}
               />
@@ -58,7 +63,7 @@ const ChooseUserType = () => {
                 value="employer"
                 status={selectedValue === "employer" ? "checked" : "unchecked"}
                 onPress={(type) => {
-                  setUserData({ ...userData, employer: true, worker:false, }),
+                  setUserData({ ...userData, employer: true, worker: false }),
                     setSelectedValue("employer");
                 }}
               />
@@ -87,7 +92,14 @@ const ChooseUserType = () => {
         }}
       >
         <TouchableOpacity
-          style={styles.button}
+          style={[
+            styles.button,
+            {
+              backgroundColor: selectedValue
+                ? `${colors.secondary}`
+                : "#D9D9D9",
+            },
+          ]}
           onPress={() => {
             const navigateTo = {
               worker: "ChooseUserName",
@@ -98,7 +110,14 @@ const ChooseUserType = () => {
           }}
           disabled={!selectedValue}
         >
-          <Text style={styles.buttonText}>Next</Text>
+          <Text
+            style={[
+              styles.buttonText,
+              { color: selectedValue ? "#84FFFF" : "#666666" },
+            ]}
+          >
+            Siguiente
+          </Text>
         </TouchableOpacity>
       </View>
     </>
@@ -157,7 +176,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: "center",
-    color: "white",
     fontSize: 16,
   },
 });

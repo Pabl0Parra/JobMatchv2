@@ -1,18 +1,26 @@
 import React, { useContext } from "react";
+import { StyleSheet, View } from "react-native";
 import DisplayContainer from "../components/DisplayContainer";
 import InputForm from "../components/InputForm";
 import { UserDataContext } from "../context/UserDataContext";
 import RegisterProgressBar from "../components/RegisterProgressBar";
 import BackButton from "../components/BackButton";
+import FillingProfile from "../svgs/FillingProfile";
+import theme from "../theme";
+
+const { colors } = theme;
 
 const ChooseUserRole = ({ navigation }) => {
   const { userData, setUserData } = useContext(UserDataContext);
 
   return (
-    <>
+    <View style={styles.container}>
       <BackButton text="Crear cuenta" />
       <RegisterProgressBar currentStep={3} />
-      <DisplayContainer>
+      <View style={styles.bgContainer}>
+        <FillingProfile />
+      </View>
+      <DisplayContainer style={{ justifyContent: "flex-start", marginTop: 8 }}>
         <InputForm
           fields={[
             { label: "Profesión", name: "role", type: "text" },
@@ -28,12 +36,38 @@ const ChooseUserRole = ({ navigation }) => {
             });
             navigation.navigate("ChooseCountry");
           }}
-          questionText="Tu perfil te ayudará a encontrar el trabajo que buscas."
-          requestText="Descubre nuevas oportunidades y personas"
+          questionText="Tu perfil te ayuda"
+          requestText="Encuentra nuevas oportunidades laborales"
+          buttonText={"Siguiente"}
+          styleText={{
+            question: {
+              alignSelf: "flex-start",
+              marginLeft: 16,
+              fontWeight: 500,
+              fontSize: 20,
+            },
+            request: {
+              alignSelf: "flex-start",
+              marginLeft: 16,
+              fontWeight: 400,
+              fontSize: 14,
+            },
+          }}
+          buttonMarginTop={{ marginTop: 120 }}
         />
       </DisplayContainer>
-    </>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: `${colors.background}`,
+  },
+  bgContainer: {
+    alignItems: "left",
+    marginTop: 8,
+  },
+});
 
 export default ChooseUserRole;

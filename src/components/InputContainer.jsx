@@ -4,7 +4,7 @@ import {
   TextInput,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
@@ -72,11 +72,11 @@ const InputContainer = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: 300,
+    width: 340,
     height: 50,
     borderRadius: 5,
     margin: 10,
-    padding: 10
+    padding: 10,
   },
   placeholder: {
     position: "absolute",

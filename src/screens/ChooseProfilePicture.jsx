@@ -1,17 +1,19 @@
 import React, { useState, useContext } from "react";
-import { Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import AwesomeAlert from "react-native-awesome-alerts";
 import DisplayContainer from "../components/DisplayContainer";
 import { UserDataContext } from "../context/UserDataContext";
 import registerUser from "../firebase/functions/registerUser";
 import uploadProfilePicture from "../firebase/functions/uploadProfilePicture";
+import { MaterialIcons } from "@expo/vector-icons";
+import ProfilePicture from "../svgs/ProfilePicture";
 
 import { useNavigation } from "@react-navigation/core";
 
 import RegisterProgressBar from "../components/RegisterProgressBar";
 import BackButton from "../components/BackButton";
-import { async } from "q";
+import ReusableButton from "../components/ReusableButton";
 
 const ChooseProfilePicture = () => {
   const [image, setImage] = useState(null);
@@ -67,30 +69,40 @@ const ChooseProfilePicture = () => {
     <>
       <BackButton text="Crear cuenta" />
       <RegisterProgressBar currentStep={5} />
-      <DisplayContainer>
+      <View style={styles.bgContainer}>
+        <ProfilePicture />
+      </View>
+      <DisplayContainer style={{ justifyContent: "flex-start", marginTop: 4 }}>
         <Text style={styles.title}>Añadir foto</Text>
         <Text style={styles.subTitle}>
           Sabías que añadir una foto incrementa en un 70% tus opciones de match?
         </Text>
-        {image ? (
-          <TouchableOpacity onPress={pickImage}>
-            <Image source={{ uri: image }} style={styles.image} />
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity onPress={pickImage} style={styles.addImage}>
-            <Text style={styles.addImageText}>+</Text>
-          </TouchableOpacity>
-        )}
+        <View style={styles.imageContainer}>
+          <View style={styles.rectangle}>
+            {image ? (
+              <TouchableOpacity onPress={pickImage} style={styles.imageWrapper}>
+                <Image source={{ uri: image }} style={styles.image} />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={pickImage} style={styles.addImage}>
+                <Text style={styles.addImageText}>+</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+          <View style={styles.cameraButtonContainer}>
+            <TouchableOpacity style={styles.cameraButton}>
+              <MaterialIcons name="photo-camera" size={24} color="#FFF" />
+            </TouchableOpacity>
+          </View>
+        </View>
         {image ? (
           <TouchableOpacity style={styles.changeImage} onPress={changeImage}>
             <Text style={styles.changeImageText}>Cambiar foto</Text>
           </TouchableOpacity>
         ) : null}
-        {/* hay que hacer que el botón de finalizar solo se active cuando se haya seleccionado una foto, 
-     hay que hacer que el proceso de createUser acabe aquí --> importar createUser() a este componente*/}
-        <TouchableOpacity style={styles.finished} onPress={uploadImages}>
-          <Text style={styles.finishedText}>Finalizar</Text>
-        </TouchableOpacity>
+        <ReusableButton
+          innerText="Finalizar"
+          onPress={() => {uploadImages}} />
         <AwesomeAlert
           show={showAlert}
           showProgress={false}
@@ -109,6 +121,10 @@ const ChooseProfilePicture = () => {
 };
 
 const styles = StyleSheet.create({
+  bgContainer: {
+    alignItems: "left",
+    marginTop: 20,
+  },
   title: {
     fontSize: 20,
     marginBottom: 20,
