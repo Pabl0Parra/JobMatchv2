@@ -36,6 +36,56 @@ const ChooseUserType = () => {
           ¡Jobmatch te permite hacer buenas conexiones laborales! Una vez esté
           listo tu perfil, podrás cambiar de un modo a otro.
         </Text>
+        <View style={styles.workerContainer}>
+          <View style={styles.titleSubtitle}>
+            <Text style={styles.title}>En busca de empleo</Text>
+            <Text style={styles.subtitle}>Impulsa tu vida profesional</Text>
+          </View>
+          <View style={styles.radioContainer}>
+            <View style={styles.radioWrapper}>
+              <RadioButton
+                value="worker"
+                status={selectedValue === "worker" ? "checked" : "unchecked"}
+                onPress={(type) => {
+                  setUserData({ ...userData, worker: true, employer: false }),
+                    setSelectedValue("worker");
+                }}
+              />
+            </View>
+          </View>
+        </View>
+        <View style={styles.employerContainer}>
+          <View style={styles.titleSubtitle}>
+            <Text style={styles.title}>Buscando personal</Text>
+            <Text style={styles.subtitle}>Consigue nuevos colaboradores</Text>
+          </View>
+          <View style={styles.radioContainer}>
+            <View style={styles.radioWrapper}>
+              <RadioButton
+                value="employer"
+                status={selectedValue === "employer" ? "checked" : "unchecked"}
+                onPress={(type) => {
+                  setUserData({ ...userData, worker: false, employer: true }),
+                    setSelectedValue("employer");
+                }}
+              />
+            </View>
+          </View>
+        </View>
+      </View>
+      {/* <View
+        style={{
+          alignItems: "flex-start",
+          marginLeft: 19,
+          marginRight: 24,
+          marginTop: 20,
+        }}
+      >
+        <Text style={styles.title}>Elige un modo para empezar</Text>
+        <Text style={styles.subtitle}>
+          ¡Jobmatch te permite hacer buenas conexiones laborales! Una vez esté
+          listo tu perfil, podrás cambiar de un modo a otro.
+        </Text>
         <View style={styles.optionsContainer}>
           <View style={styles.optionBox}>
             <View style={styles.radioContainer}>
@@ -69,21 +119,8 @@ const ChooseUserType = () => {
               />
             </View>
           </View>
-          {/* SE QUEDA AQUÍ POR SI DECIDIMOS IMPLEMENTAR EL TERCER TIPO DE USUARIO
-         <View style={styles.optionBox}>
-          <View style={styles.radioContainer}>
-            <Text style={styles.radioText}>Abierto a crecer</Text>
-            <RadioButton
-              value="open to grow"
-              status={
-                selectedValue === "open to grow" ? "checked" : "unchecked"
-              }
-              onPress={() => setSelectedValue("open to grow")}
-           
-          </View>
-        </View> /> */}
         </View>
-      </View>
+      </View> */}
       <View
         style={{
           display: "flex",
@@ -139,6 +176,32 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#525252",
   },
+  workerContainer: {
+    marginTop: 30,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+    borderRadius: 16,
+    borderColor: "#ccc",
+    padding: 10,
+  },
+  titleSubtitle: {
+    flex: 1,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+  },
+  employerContainer: {
+    marginTop: 30,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+    borderRadius: 16,
+    borderColor: "#ccc",
+    padding: 10,
+  },
   optionsContainer: {
     flexDirection: "column",
     alignItems: "center",
@@ -150,14 +213,15 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   radioContainer: {
-    borderWidth: 1,
-    borderRadius: 16,
-    borderColor: "gray",
+    flex: 1,
+    alignItems: "flex-end",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+  },
+  radioWrapper: {
+    borderRadius: 20,
     padding: 10,
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    overflow: "hidden", // add this to hide the border
   },
   radioText: {
     fontSize: 16,

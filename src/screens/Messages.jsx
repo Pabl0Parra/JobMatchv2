@@ -55,7 +55,9 @@ const ChatScreen = () => {
           elevation: 5,
         }}
       >
-        <Text style={{ fontSize: 20, fontWeight: "500" }}>Mensajes</Text>
+        <Text style={{ fontSize: 20, fontWeight: "500", marginTop: 50 }}>
+          Mensajes
+        </Text>
       </View>
       <View
         style={{
@@ -72,7 +74,7 @@ const ChatScreen = () => {
             !Mira¡ Estos son los match que quieren conectar contigo
           </Text>
           {/* Dónde va esto? */}
-          <a
+          {/* <a
             href="https://www.google.com"
             style={{
               textDecorationLine: "none",
@@ -81,7 +83,7 @@ const ChatScreen = () => {
             }}
           >
             Ver
-          </a>
+          </a> */}
         </View>
         <View style={{ width: "40%", overflow: "hidden", paddingRight: 10 }}>
           <FlatList
