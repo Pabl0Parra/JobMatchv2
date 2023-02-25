@@ -42,13 +42,11 @@ const ChooseProfilePicture = () => {
   };
 
   const uploadImages = async () => {
-    console.log("pepe")
     try {
       const res = await uploadProfilePicture(
         image,
         `profileImg${userData.email}`
       );
-      console.log(res)
       registerUser(userData.email, userData.password, {
         ...userData,
         image: res,
