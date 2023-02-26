@@ -89,7 +89,7 @@ export default function BottomTab({navigation}) {
           headerShown: false,
         }}
         listeners={{
-          tabPress: (e) => {
+          blur: (e) => {
             navigation.dispatch(DrawerActions.closeDrawer());
           },
         }}
