@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import theme from "./src/theme";
 import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
-import { auth, db } from "./src/firebase/credentials";
+import { auth } from "./src/firebase/credentials";
 import { onAuthStateChanged } from "@firebase/auth";
 import BottomTab from "./src/components/BottomTab";
 import Details from "./src/screens/Details";
@@ -16,7 +16,6 @@ import ChooseUserRole from "./src/screens/ChooseUserRole";
 import ChooseProfilePicture from "./src/screens/ChooseProfilePicture";
 import ChooseRoleWanted from "./src/screens/ChooseRoleWanted";
 import ResetPassword from "./src/screens/ResetPassword";
-import Loading from "./src/screens/Loading";
 import LandingPage from "./src/screens/LandingPage";
 import MatchModal from "./src/screens/MatchModal";
 import getUserDataDB from "./src/firebase/functions/getUserDataDB";
@@ -26,6 +25,7 @@ import {
   UserLoginContex,
 } from "./src/context/UserDataContext";
 import Filters from "./src/screens/Filters";
+import 'react-native-gesture-handler';
 
 const Stack = createNativeStackNavigator();
 

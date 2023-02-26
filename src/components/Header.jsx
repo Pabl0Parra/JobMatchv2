@@ -33,7 +33,7 @@ const Header = ({ screen }) => {
       ) : screen === "Profile" ? (
         <>
           <Text style={{fontSize: 20}}>Perfil</Text>
-          <TouchableOpacity style={styles.notification}>
+          <TouchableOpacity style={styles.notification} onPress={() => navigation.openDrawer()}>
             <Feather name="settings" size={20} color={colors.secondary} />
           </TouchableOpacity>
         </>
