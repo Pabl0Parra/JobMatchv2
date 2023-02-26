@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import theme from "./src/theme";
 import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
-import { auth, db } from "./src/firebase/credentials";
+import { auth, db, mainCollection} from "./src/firebase/credentials";
 import { onAuthStateChanged } from "@firebase/auth";
 import BottomTab from "./src/components/BottomTab";
 import Details from "./src/screens/Details";
@@ -21,11 +21,11 @@ import LandingPage from "./src/screens/LandingPage";
 import MatchModal from "./src/screens/MatchModal";
 import getUserDataDB from "./src/firebase/functions/getUserDataDB";
 import {
-  UserDataContext,
   UserDataContextProvider,
   UserLoginContex,
 } from "./src/context/UserDataContext";
 import Filters from "./src/screens/Filters";
+import PostForm from "./src/screens/PostForm";
 
 const Stack = createNativeStackNavigator();
 
@@ -61,12 +61,10 @@ export default function App() {
     const timer = setTimeout(() => {
       setOnLandingPage(false);
     }, 3000);
-
+    
     onAuthStateChanged(auth, async (userFirebase) => {
       if (userFirebase) {
-
         const res = await getUserDataDB(userFirebase.uid);
-
         if (res) {
           setUserData(res);
         } else {
@@ -76,8 +74,10 @@ export default function App() {
         ("Error de login");
       }
     });
+
     return () => clearTimeout(timer);
   }, []);
+  
 
   console.log("APP:" + userData?.id);
   return (
@@ -106,7 +106,7 @@ export default function App() {
                     component={Details}
                     options={{
                       headerShown: true,
-                      headerTitle: "Detalles del puesto",
+                      headerTitle: "Detalles",
                       headerStyle: { backgroundColor: "#fff" },
                     }}
                   />
@@ -119,6 +119,13 @@ export default function App() {
                       headerStyle: { backgroundColor: "#fff" },
                     }}
                   />
+                    <Stack.Screen name="PostForm"
+                    component={PostForm}
+                    options={{
+                      headerShown: true,
+                      headerTitle: "Publicar un puesto",
+                      headerStyle: { backgroundColor: "#fff" },
+                    }}/>
                 </Stack.Group>
                 <Stack.Group
                   screenOptions={{ presentation: "transparentModal" }}

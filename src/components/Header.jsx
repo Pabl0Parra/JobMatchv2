@@ -15,6 +15,9 @@ const Header = ({ screen }) => {
         <>
           <LogoHeader />
           <View style={{ flexDirection: "row" }}>
+          {/* <TouchableOpacity style={styles.notification} onPress={()=> navigation.navigate('PostForm')}>
+            <Ionicons name="add" size={24} color={colors.secondary} />
+          </TouchableOpacity> */}
             <TouchableOpacity
               style={styles.notification}
               onPress={() => navigation.navigate("Filters")}
