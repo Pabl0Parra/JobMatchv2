@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     left: 0,
     padding: 10,
     backgroundColor: "transparent",
-    marginTop: 14,
+    marginTop: 40,
   },
   backArrow: {
     color: "#091D5C",
