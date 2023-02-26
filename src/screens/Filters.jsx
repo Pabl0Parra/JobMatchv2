@@ -13,11 +13,10 @@ import {
   query,
   where,
 } from "@firebase/firestore";
-import { db } from "../firebase/credentials";
+import { db, mainCollection } from "../firebase/credentials";
 
 const { text, colors } = theme;
 const defaultSelected = { seniority: "", roleWanted: "" };
-
 
 const Filters = () => {
   const [filterSettings, setFilterSettings] = useState({});
@@ -27,31 +26,40 @@ const Filters = () => {
   const { userData, setUserData } = useContext(UserLoginContex);
 
   const navigation = useNavigation();
+  let setOfVacant = new Set();
+  let vacant
+  let seniority = ["Todos", "Junior", "Semi-Senior", "Senior"];
+/*   let setOfSeniority = new Set()
+  let array */
 
   useEffect(() => {
-    let vacant = [{key:"Todos", value:"Todos"}];
-    let seniority = [{key:"Todos", value:"Todos"}];
     const getOptions = async () => {
       const vacantOptions = await getDocs(
-        query(collection(db, "HomeTest"), where("vacant", "!=", ""))
+        query(collection(db, mainCollection), where("vacant", "!=", ""))
       );
-      vacantOptions.forEach((doc) => vacant.push({key: doc.data().vacant, value: doc.data().vacant}));
-      const seniorityOptions = await getDocs(
-        query(collection(db, "HomeTest"), where("seniority", "!=", ""))
+      vacantOptions.forEach((doc) => setOfVacant.add(doc.data().vacant));
+      /*   console.log(vacant) */
+      vacant=Array.from(setOfVacant);
+      vacant.unshift("Todos")
+      setVacantList(vacant);
+
+/*       const seniorityOptions = await getDocs(
+        query(collection(db, mainCollection), where("seniority", "!=", ""))
       );
-      seniorityOptions.forEach((doc) => seniority.push({key: doc.data().seniority, value: doc.data().seniority}));
-      //TODO: Obtener lista sin items repetidos, ya sea con un set o crear alguna funcion que elimine los elementos repetidos
+      seniorityOptions.forEach((doc) => setOfSeniority.add(doc.data().seniority));
+
+      array=Array.from(setOfSeniority);
+      array.unshift("Todos") */
+      setSeniorityList(seniority);
     };
 
     getOptions();
-    setVacantList(vacant);
-    setSeniorityList(seniority);
   }, []);
 
   return (
     <DisplayContainer style={{ justifyContent: "flex-start", marginTop: 15 }}>
-      <View style={{ minHeight: "50%", position:"relative" }}>
-        <View style={{marginVertical:10}}>
+      <View style={{ minHeight: "50%", position: "relative" }}>
+        <View style={{ marginVertical: 10 }}>
           <Text style={text.descriptionItem}>Puesto</Text>
           <SelectList
             setSelected={(val) => setSelected({ ...selected, roleWanted: val })}
@@ -60,14 +68,14 @@ const Filters = () => {
             placeholder="Seleccione una opción"
             search={false}
             maxHeight={200}
-            boxStyles={{width:250, borderColor: `${colors.secondary}`,}}
-            inputStyles={{color:`${colors.text}`, fontWeight:"bold"}}
-            dropdownStyles={{borderColor: `${colors.secondary}`}}
-            dropdownTextStyles={{color:`${colors.text}`, }}
-            defaultOption={{key:"Todos", value:"Todos"}}
+            boxStyles={{ width: 250, borderColor: `${colors.secondary}` }}
+            inputStyles={{ color: `${colors.text}`, fontWeight: "bold" }}
+            dropdownStyles={{ borderColor: `${colors.secondary}` }}
+            dropdownTextStyles={{ color: `${colors.text}` }}
+            defaultOption={{ key: "Todos", value: "Todos" }}
           />
         </View>
-        <View style={{marginVertical:10}}>
+        <View style={{ marginVertical: 10 }}>
           <Text style={text.descriptionItem}>Seniority</Text>
           <SelectList
             setSelected={(val) => setSelected({ ...selected, seniority: val })}
@@ -76,11 +84,11 @@ const Filters = () => {
             placeholder="Seleccione una opción"
             search={false}
             maxHeight={200}
-            boxStyles={{width:250, borderColor: `${colors.secondary}`,}}
-            inputStyles={{color:`${colors.text}`, fontWeight:"bold"}}
-            dropdownStyles={{borderColor: `${colors.secondary}`}}
-            dropdownTextStyles={{color:`${colors.text}`, }}
-            defaultOption={{key:"Todos", value:"Todos"}}
+            boxStyles={{ width: 250, borderColor: `${colors.secondary}` }}
+            inputStyles={{ color: `${colors.text}`, fontWeight: "bold" }}
+            dropdownStyles={{ borderColor: `${colors.secondary}` }}
+            dropdownTextStyles={{ color: `${colors.text}` }}
+            defaultOption={{ key: "Todos", value: "Todos" }}
           />
         </View>
       </View>
@@ -103,12 +111,11 @@ const Filters = () => {
         style={styles.filterButton}
         onPress={() => {
           setUserData({
-            ...userData, filter:{
+            ...userData,
+            filter: {
               seniority: selected.seniority,
               roleWanted: selected.roleWanted,
-            }
-            
-            
+            },
           });
           navigation.goBack();
         }}
@@ -119,7 +126,9 @@ const Filters = () => {
         style={styles.noFilterButton}
         onPress={() => {
           setUserData({
-            ...userData,filter:defaultSelected })
+            ...userData,
+            filter: defaultSelected,
+          });
           setSelected(defaultSelected);
         }}
       >

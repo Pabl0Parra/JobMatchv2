@@ -3,7 +3,7 @@ import { deleteDoc, doc, getDoc, setDoc } from "@firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { SwipeContext, UserLoginContex } from "../context/UserDataContext";
-import { db } from "../firebase/credentials";
+import { db, mainCollection } from "../firebase/credentials";
 import theme from "../theme";
 
 const {colors} = theme;
@@ -17,7 +17,7 @@ const ActionsButtons = ({ card }) => {
   useEffect(()=>{
     //Funciona bien, pero hay que ver si se puede obtener actualizaciones en tiempo real sin tener que volver a llamar al setSaved en handleSaved. 
     const save = async ()=>{
-      await getDoc(doc(db, "HomeTest", userData.id, "saved", card.id)).then(
+      await getDoc(doc(db, mainCollection, userData.id, "saved", card.id)).then(
         (docsnapshot) => {
           if (docsnapshot.exists()) { setActive(true)}
           else {setActive(false)}
@@ -27,15 +27,15 @@ const ActionsButtons = ({ card }) => {
   },[active])
 
   const handleSaved = (card) => {
-    getDoc(doc(db, "HomeTest", userData.id, "saved", card.id)).then(
+    getDoc(doc(db, mainCollection, userData.id, "saved", card.id)).then(
       (docsnapshot) => {
         if (docsnapshot.exists()) {
-          deleteDoc(doc(db, "HomeTest", userData.id, "saved", card.id));
+          deleteDoc(doc(db, mainCollection, userData.id, "saved", card.id));
           setActive(false)
           console.log(`Quitaste de favorito a ${card.name}`);
         } else {
           console.log(`Guardaste el perfil ${card.name}`);
-          setDoc(doc(db, "HomeTest", userData.id, "saved", card.id), card);
+          setDoc(doc(db, mainCollection, userData.id, "saved", card.id), card);
           setActive(true)
         }
       }
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems:"baseline",
     marginBottom: 32,
-    marginTop: 16,
+    marginTop: 8,
   },
   button: {
     width: 50,
