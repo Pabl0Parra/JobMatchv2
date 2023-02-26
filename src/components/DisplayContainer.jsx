@@ -1,5 +1,4 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
-import Constants from "expo-constants";
+import { StyleSheet, View } from 'react-native';
 import theme from '../theme';
 
 const {colors} = theme;
