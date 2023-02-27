@@ -16,7 +16,6 @@ import ChooseUserRole from "./src/screens/ChooseUserRole";
 import ChooseProfilePicture from "./src/screens/ChooseProfilePicture";
 import ChooseRoleWanted from "./src/screens/ChooseRoleWanted";
 import ResetPassword from "./src/screens/ResetPassword";
-import Loading from "./src/screens/Loading";
 import LandingPage from "./src/screens/LandingPage";
 import MatchModal from "./src/screens/MatchModal";
 import getUserDataDB from "./src/firebase/functions/getUserDataDB";
@@ -26,6 +25,7 @@ import {
 } from "./src/context/UserDataContext";
 import Filters from "./src/screens/Filters";
 import PostForm from "./src/screens/PostForm";
+
 
 const Stack = createNativeStackNavigator();
 

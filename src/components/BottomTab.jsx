@@ -1,4 +1,3 @@
-import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import theme from "../theme";
 
@@ -7,31 +6,36 @@ import Home from "../screens/Home";
 import Conexiones from "../screens/Conexiones";
 import Explore from "../screens/Explore";
 import Messages from "../screens/Messages";
-import Profile from "../screens/Profile";
+import DrawerNavigatorProfile from "./DrawerNavigatorProfile";
+import { DrawerActions } from '@react-navigation/routers';
 
 //icons
-import { MaterialIcons, Fontisto, FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  MaterialIcons,
+  Fontisto,
+  FontAwesome5,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
-export default function BottomTab() {
-  const {colors}  =theme
+const { colors } = theme;
+
+export default function BottomTab({navigation}) {
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarActiveTintColor: `${colors.secondary}`,
-        tabBarInactiveTintColor:"#C8CFCF",
-        tabBarStyle:{
-          height:"8%",
-          backgroundColor:"#fff",
-          borderStyle:"solid",
-          borderColor:"white",
-          
-
+        tabBarInactiveTintColor: "#C8CFCF",
+        tabBarStyle: {
+          height: "8%",
+          backgroundColor: "#fff",
+          borderStyle: "solid",
+          borderColor: "white",
         },
-        tabBarItemStyle:{
+        tabBarItemStyle: {
           paddingVertical: 10,
-        }
+        },
       }}
     >
       <Tab.Screen
@@ -41,11 +45,11 @@ export default function BottomTab() {
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="home-repair-service" size={32} color={color} />
           ),
-          
-          headerShown: false
+
+          headerShown: false,
         }}
       />
-{/*       <Tab.Screen
+      {/*       <Tab.Screen
         name="Explore"
         component={Explore}
         options={{
@@ -62,7 +66,7 @@ export default function BottomTab() {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="heart" size={32} color={color} />
           ),
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Tab.Screen
@@ -72,17 +76,22 @@ export default function BottomTab() {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="message" size={32} color={color} />
           ),
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Tab.Screen
-        name="Perfil"
-        component={Profile}
+        name="DrawerNavigatorProfile"
+        component={DrawerNavigatorProfile}
         options={{
           tabBarIcon: ({ color }) => (
             <FontAwesome5 name="user-alt" size={32} color={color} />
           ),
-          headerShown: false
+          headerShown: false,
+        }}
+        listeners={{
+          blur: (e) => {
+            navigation.dispatch(DrawerActions.closeDrawer());
+          },
         }}
       />
     </Tab.Navigator>
