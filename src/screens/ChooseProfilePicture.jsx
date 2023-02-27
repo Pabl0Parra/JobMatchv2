@@ -47,10 +47,16 @@ const ChooseProfilePicture = () => {
         image,
         `profileImg${userData.email}`
       );
-      registerUser(userData.email, userData.password, {
+      console.log(res)
+      if(res) {
+        registerUser(userData.email, userData.password, {
         ...userData,
-        image: res,
-      });
+        image: res,})
+        } else {
+          registerUser(userData.email, userData.password, {
+            ...userData,
+            image: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",})
+        }
       setShowAlert(true);
     } catch (error) {
       console.log(error);
@@ -99,10 +105,10 @@ const ChooseProfilePicture = () => {
           </TouchableOpacity>
         ) : null}
         <ReusableButton
-          innerText="Finalizar"
-          onPress={uploadImages}
-          styleContainer={{ marginTop: 50 }}
-        />
+          innerText="Finalizar" 
+          onPress={()=>uploadImages()}
+          styleContainer={{marginTop: 50}} />
+
         <AwesomeAlert
           show={showAlert}
           showProgress={false}
@@ -113,7 +119,7 @@ const ChooseProfilePicture = () => {
           showConfirmButton={true}
           confirmText="OK"
           confirmButtonColor="#DD6B55"
-          onConfirmPressed={hideAlert}
+          onConfirmPressed={()=>hideAlert()}
         />
       </DisplayContainer>
     </>

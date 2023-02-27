@@ -8,22 +8,42 @@ import {
 } from "react-native";
 import Constants from "expo-constants";
 import ActionsButtons from "../components/ActionsButtons";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import theme from "../theme";
+import { UserLoginContex } from "../context/UserDataContext";
 
 const { colors, text } = theme;
 
 const Details = ({ route, navigation }) => {
+  const { userData } = useContext(UserLoginContex);
   /* const { id, name, title, image } = route.params; */
-  const { vacant, image  } = route.params;
+  const {
+    seniority,
+    country,
+    mode,
+    roleWanted,
+    image,
+    timeJob,
+    requirements,
+    education,
+    salary,
+    hourHand,
+    contract,
+    experience,
+    functions,
+    english,
+    name,
+    lastName,
+    about,
+  } = route.params;
 
   return (
     <View style={styles.container}>
       <View style={{ flex: 1, height: "50%" }}>
         <Image
           source={{
-            uri: image
+            uri: image,
           }}
           style={styles.image}
         />
@@ -31,68 +51,138 @@ const Details = ({ route, navigation }) => {
       <View style={styles.detailsContainer}>
         <View style={{ width: "90%", height: "100%", alignItems: "center" }}>
           <ScrollView style={styles.detailsDescription}>
-            <View>
-              <Text style={text.descriptionTitle}>
-                {vacant} {<Text style={text[14]}>Junior</Text>}
-              </Text>
-              <Text style={text[14]}>Argentina (remoto)</Text>
-              <Text style={text[14]}>Jornada completa</Text>
-            </View>
-            <View style={{ marginVertical: 20 }}>
-              <Text style={text.descriptionSubtitle}>
-                Descripción del empleo
-              </Text>
-              <Text style={text.descriptionItem}>
-                Formación:{" "}
-                {<Text style={text[14]}>Tecnicatura en desarrollo web</Text>}
-              </Text>
-              <Text style={text.descriptionItem}>
-                Experiencia:{" "}
-                {<Text style={text[14]}>1 año de experiencia profesional</Text>}
-              </Text>
-              <View>
-                <Text style={text.descriptionItem}>
-                  Requisitos {"\n"}
-                  {
-                    <>
-                      <Text style={text[14]}>
-                        {" "}
-                        • Lorem ipsum, dolor sit amet consectetur adipisicing
-                        elit. Dignissimos quos iste perferendis non, itaque
-                        cumque. Suscipit voluptates, quos sunt eius consequuntur
-                        placeat, earum error amet, possimus quae nemo omnis vel!
-                      </Text>
-                      {"\n"}
-                      <Text style={text[14]}>
-                        {" "}
-                        • Lorem ipsum, dolor sit amet consectetur adipisicing
-                        elit. Dignissimos quos iste perferendis non, itaque
-                        cumque. Suscipit voluptates, quos sunt eius consequuntur
-                        placeat, earum error amet, possimus quae nemo omnis vel!
-                      </Text>
-                      {"\n"}
-                      <Text style={text[14]}>
-                        {" "}
-                        • Lorem ipsum, dolor sit amet consectetur adipisicing
-                        elit. Dignissimos quos iste perferendis non, itaque
-                        cumque. Suscipit voluptates, quos sunt eius consequuntur
-                        placeat, earum error amet, possimus quae nemo omnis vel!
-                      </Text>
-                    </>
-                  }
-                </Text>
-              </View>
-            </View>
-            <View>
-              <Text style={text.descriptionItem}>
-                Condiciones contractuales{"\n"}
-                {<>
-                  <Text style={text.descriptionItem}>Horario: <Text style={text[14]}>Lunes a Viernes de 8hs a 17hs</Text></Text>{"\n"}
-                  <Text style={text.descriptionItem}>Tipo de contrato: <Text style={text[14]}>Contractor</Text></Text>{"\n"}
-                  <Text style={text.descriptionItem}>Salario estimado: <Text style={text[14]}>A convenir</Text></Text>{"\n"}
-                  </>}
-              </Text>
-            </View>
+            {userData.worker ? (
+              <>
+                <View>
+                  <Text style={text.descriptionTitle}>
+                    {roleWanted} {<Text style={text[16]}>{seniority}</Text>}
+                  </Text>
+                  <Text style={text[14]}>{country}</Text>
+                  <Text style={text[14]}>
+                    {timeJob} - ({mode ? mode : null})
+                  </Text>
+                </View>
+                <View style={{ marginVertical: 20 }}>
+                  <Text style={text.descriptionSubtitle}>
+                    Descripción del empleo
+                  </Text>
+
+                  <Text style={text.descriptionItem}>
+                    Formación:{" "}
+                    {education ? (
+                      <Text style={text[14]}>{education}</Text>
+                    ) : (
+                      <Text style={text[14]}>No especificado</Text>
+                    )}
+                  </Text>
+                  <Text style={text.descriptionItem}>
+                    Experiencia:{" "}
+                    {experience ? (
+                      <Text style={text[14]}>{experience}</Text>
+                    ) : (
+                      <Text style={text[14]}>No especificado</Text>
+                    )}
+                  </Text>
+                  <Text style={text.descriptionItem}>
+                    Funciones: {"\n"}
+                    {functions ? (
+                      <Text style={text[14]}>{functions}</Text>
+                    ) : (
+                      <Text style={text[14]}>No especificado</Text>
+                    )}
+                  </Text>
+
+                  <View style={{ marginVertical: 8 }}>
+                    <Text style={text.descriptionItem}>
+                      Condiciones contractuales{"\n"}
+                      {
+                        <>
+                          <Text style={text.descriptionItem}>
+                            Horario:{" "}
+                            {hourHand ? (
+                              <Text style={text[14]}>{hourHand}</Text>
+                            ) : (
+                              <Text style={text[14]}>No especificado</Text>
+                            )}
+                          </Text>
+                          {"\n"}
+                          <Text style={text.descriptionItem}>
+                            Tipo de contrato:{" "}
+                            {contract ? (
+                              <Text style={text[14]}>{contract}</Text>
+                            ) : (
+                              <Text style={text[14]}>No especificado</Text>
+                            )}
+                          </Text>
+                          {"\n"}
+                          <Text style={text.descriptionItem}>
+                            Salario estimado:{" "}
+                            {salary ? (
+                              <Text style={text[14]}>{salary}</Text>
+                            ) : (
+                              <Text style={text[14]}>No especificado</Text>
+                            )}
+                          </Text>
+                        </>
+                      }
+                    </Text>
+                  </View>
+
+                  <View style={{ marginVertical: 8 }}>
+                    <Text style={text.descriptionItem}>
+                      Requisitos{"\n"}
+                      {
+                        <>
+                          {requirements ? (
+                            <Text style={[text[14]]}>
+                              {requirements}
+                              {"\n"}
+                            </Text>
+                          ) : (
+                            <Text style={text[14]}>No especificado</Text>
+                          )}
+                          {english ? (
+                            <Text style={[text.descriptionItem]}>
+                              Inglés:{" "}
+                              {english ? (
+                                <Text style={text[14]}>Si</Text>
+                              ) : (
+                                <Text style={text[14]}>No</Text>
+                              )}
+                            </Text>
+                          ) : (
+                            <Text style={text[14]}>No especificado</Text>
+                          )}
+                        </>
+                      }
+                    </Text>
+                  </View>
+                </View>
+              </>
+            ) : (
+              <>
+                <View>
+                  <Text style={text.descriptionTitle}>
+                    {name}
+                    {""}
+                    {lastName ? lastName : ""}
+                  </Text>
+
+                  <Text style={text[16]}>{roleWanted}</Text>
+                  <Text style={text[14]}>{seniority}</Text>
+                  <Text style={text[14]}>{country}</Text>
+                </View>
+                <View style={{ marginVertical: 20 }}>
+                  <Text style={text.descriptionSubtitle}>
+                    Acerca de mi
+                  </Text>
+                  <Text style={text[16]}>
+                    {about}
+                  </Text>
+
+                </View>
+              </>
+            )}
           </ScrollView>
         </View>
         {/* Tendria que pasar el objeto de datos de card para que funcione */}
@@ -126,7 +216,7 @@ const styles = StyleSheet.create({
   },
   detailsDescription: {
     width: "100%",
-    height:"100%",
+    height: "100%",
     flex: 1,
     margin: 32,
     padding: 16,

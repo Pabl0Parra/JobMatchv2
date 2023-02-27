@@ -21,4 +21,9 @@ export const auth = initializeAuth(firebaseApp, {
 export const storage = getStorage(firebaseApp)
 export const db = getFirestore(firebaseApp);
 
+export const mainCollection = "HomeTest";
+export const matchCollection = "Matches";
+export const postCollection = "Posts";
+
+
 export default firebaseApp;
