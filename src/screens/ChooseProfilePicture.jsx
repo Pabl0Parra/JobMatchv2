@@ -66,7 +66,7 @@ const ChooseProfilePicture = () => {
   return (
     <>
       <BackButton text="Crear cuenta" />
-      <RegisterProgressBar currentStep={5} />
+      <RegisterProgressBar currentStep={5} numSteps={5} />
       <View style={styles.bgContainer}>
         <ProfilePicture />
       </View>
@@ -101,7 +101,8 @@ const ChooseProfilePicture = () => {
         <ReusableButton
           innerText="Finalizar"
           onPress={uploadImages}
-          styleContainer={{marginTop: 50}} />
+          styleContainer={{ marginTop: 50 }}
+        />
         <AwesomeAlert
           show={showAlert}
           showProgress={false}
