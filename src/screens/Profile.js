@@ -30,6 +30,7 @@ import * as ImagePicker from "expo-image-picker";
 import uploadProfilePicture from "../firebase/functions/uploadProfilePicture";
 import changeURLProfilePictureDB from "../firebase/functions/changeURLProfilePictureDB";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
+import AboutMe from "../components/AboutMe";
 
 const { text, colors } = theme;
 
@@ -72,7 +73,7 @@ const Profile = () => {
     <DisplayContainer style={styles.container}>
       <Header screen="Profile" />
       <ScrollView
-        contentContainerStyle={{ alignItems: "center", paddingBottom: 80 }}
+        contentContainerStyle={{ position: "relative", alignItems: "center", paddingBottom: 80 }}
       >
         <View style={styles.profileHeader}>
           <Image
@@ -177,16 +178,7 @@ const Profile = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.aboutMe}>
-          <Text style={[text.descriptionSubtitle, { fontSize: 20 }]}>
-            Acerca de mi
-          </Text>
-          <Text style={[text.descriptionItem, { fontWeight: "300" }]}>
-            Yorem ipsum dolor sit amet, consectetur adipenaeos. Prae lorem.
-            Morbi convallis convallis diam sit amet lacinia. Aliquam in
-            elementum tellus.
-          </Text>
-        </View>
+        <AboutMe />
         <View style={styles.containerSectionExperience}>
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
@@ -219,33 +211,6 @@ const Profile = () => {
             </View>
           </View>
         </View>
-
-        {/* <View
-        style={{
-          flexDirection: "row",
-          gap: 20,
-          alignItems: "center",
-          width: "80%",
-          justifyContent: "flex-start",
-          margin: 25,
-        }}
-      >
-        <Text>En busca de empleo:</Text>
-        {
-          // switcher
-        }
-        <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-          value={isEnabled}
-        />
-        {
-          // end switcher
-        }
-      </View>
-      <Button title="cerrar sesión" onPress={() => logOut()} /> */}
       </ScrollView>
     </DisplayContainer>
   );
@@ -307,9 +272,6 @@ const styles = StyleSheet.create({
     width: 1,
     height: "70%",
     backgroundColor: "gray",
-  },
-  aboutMe: {
-    paddingHorizontal: 26,
   },
   containerSectionExperience: {
     position: "relative",
