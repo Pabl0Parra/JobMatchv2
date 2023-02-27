@@ -15,7 +15,7 @@ const ChooseCompanyName = () => {
   return (
     <>
       <BackButton text="Crear cuenta" />
-      <RegisterProgressBar currentStep={2} />
+      <RegisterProgressBar currentStep={2} numSteps={5} />
       <View style={styles.bgContainer}>
         <Drawing />
       </View>

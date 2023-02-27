@@ -18,6 +18,10 @@ import ChooseRoleWanted from "./src/screens/ChooseRoleWanted";
 import ResetPassword from "./src/screens/ResetPassword";
 import LandingPage from "./src/screens/LandingPage";
 import MatchModal from "./src/screens/MatchModal";
+import Onboarding1 from "./src/screens/Onboarding1";
+import Onboarding2 from "./src/screens/Onboarding2";
+import Onboarding3 from "./src/screens/Onboarding3";
+import Onboarding4 from "./src/screens/Onboarding4";
 import getUserDataDB from "./src/firebase/functions/getUserDataDB";
 import {
   UserDataContext,
@@ -25,11 +29,13 @@ import {
   UserLoginContex,
 } from "./src/context/UserDataContext";
 import Filters from "./src/screens/Filters";
-import 'react-native-gesture-handler';
+import "react-native-gesture-handler";
 
 const Stack = createNativeStackNavigator();
 
 const RegisterStack = createNativeStackNavigator();
+
+const OnboardingStack = createNativeStackNavigator();
 
 const RegisterStackScreen = () => (
   <RegisterStack.Navigator screenOptions={{ headerShown: false }}>
@@ -52,6 +58,15 @@ const RegisterStackScreen = () => (
   </RegisterStack.Navigator>
 );
 
+const OnboardingStackScreen = () => (
+  <OnboardingStack.Navigator screenOptions={{ headerShown: false }}>
+    <OnboardingStack.Screen name="Onboarding1" component={Onboarding1} />
+    <OnboardingStack.Screen name="Onboarding2" component={Onboarding2} />
+    <OnboardingStack.Screen name="Onboarding3" component={Onboarding3} />
+    <OnboardingStack.Screen name="Onboarding4" component={Onboarding4} />
+  </OnboardingStack.Navigator>
+);
+
 export default function App() {
   /* const {userData, setUserData} = useContext(UserDataContext) */
   const [userData, setUserData] = useState();
@@ -64,13 +79,12 @@ export default function App() {
 
     onAuthStateChanged(auth, async (userFirebase) => {
       if (userFirebase) {
-
         const res = await getUserDataDB(userFirebase.uid);
 
         if (res) {
           setUserData(res);
         } else {
-          console.log("error al obtener los datos")
+          console.log("error al obtener los datos");
         }
       } else {
         ("Error de login");
@@ -95,6 +109,10 @@ export default function App() {
                 <Stack.Screen
                   name="RegisterStack"
                   component={RegisterStackScreen}
+                />
+                <Stack.Screen
+                  name="OnboardingStack"
+                  component={OnboardingStackScreen}
                 />
               </>
             ) : (
