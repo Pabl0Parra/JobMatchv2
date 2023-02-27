@@ -3,6 +3,10 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import RegisterProgressBar from "../components/RegisterProgressBar";
 import { useNavigation } from "@react-navigation/native";
 import ManCheckingProfile from "../svgs/ManCheckingProfile";
+import theme from "../theme";
+import Constants from "expo-constants";
+
+const colors = theme.colors;
 
 const Onboarding4 = () => {
   const navigation = useNavigation();
@@ -42,17 +46,15 @@ const Onboarding4 = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: "100%",
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "flex-start",
     paddingTop: 0,
   },
   imageContainer: {
+    marginTop: Constants.statusBarHeight,
     width: "100%",
-    height: "60%",
     position: "relative",
-    alignItems: "flex-end",
+    alignItems: "center",
     justifyContent: "flex-start",
   },
   image: {
@@ -63,28 +65,27 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 20,
     right: 20,
-    backgroundColor: "rgba(0,0,0,0.2)",
     borderRadius: 20,
     paddingHorizontal: 10,
     paddingVertical: 5,
+    zIndex: 1,
   },
   omitirText: {
     fontSize: 14,
     fontWeight: "bold",
-    color: "#84FFFF",
+    color: `${colors.details}`,
   },
   contentContainer: {
     flex: 1,
     width: "100%",
     padding: 20,
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "space-between",
   },
   titleContainer: {
-    alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
-    marginTop: 20,
+    lineHeight: 20,
   },
   title: {
     fontSize: 20,
@@ -105,15 +106,16 @@ const styles = StyleSheet.create({
     width: 280,
     height: 38,
     backgroundColor: "#fff",
-    padding: 16,
     borderRadius: 25,
     borderWidth: 1,
     borderColor: "#091D5C",
     justifyContent: "center",
     alignItems: "center",
+    alignSelf: "center",
   },
   buttonText: {
-    color: "#091D5C",
+    color: `${colors.secondary}`,
+
     fontSize: 14,
     fontWeight: "500",
   },
