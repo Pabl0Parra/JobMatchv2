@@ -32,9 +32,7 @@ const ActionsButtons = ({ card }) => {
         if (docsnapshot.exists()) {
           deleteDoc(doc(db, mainCollection, userData.id, "saved", card.id));
           setActive(false)
-          console.log(`Quitaste de favorito a ${card.name}`);
         } else {
-          console.log(`Guardaste el perfil ${card.name}`);
           setDoc(doc(db, mainCollection, userData.id, "saved", card.id), card);
           setActive(true)
         }

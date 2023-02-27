@@ -13,7 +13,7 @@ import {
   query,
   where,
 } from "@firebase/firestore";
-import { db, mainCollection } from "../firebase/credentials";
+import { db, mainCollection, postCollection } from "../firebase/credentials";
 
 const { text, colors } = theme;
 const defaultSelected = { seniority: "", roleWanted: "" };
@@ -35,9 +35,9 @@ const Filters = () => {
   useEffect(() => {
     const getOptions = async () => {
       const vacantOptions = await getDocs(
-        query(collection(db, mainCollection), where("vacant", "!=", ""))
+        query(collection(db, postCollection), where("roleWanted", "!=", ""))
       );
-      vacantOptions.forEach((doc) => setOfVacant.add(doc.data().vacant));
+      vacantOptions.forEach((doc) => setOfVacant.add(doc.data().roleWanted));
       /*   console.log(vacant) */
       vacant=Array.from(setOfVacant);
       vacant.unshift("Todos")

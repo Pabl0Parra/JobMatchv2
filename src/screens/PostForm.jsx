@@ -43,6 +43,7 @@ const PostForm = () => {
         ...values,
         userId: userData.id,
         userName: userData.userName,
+        image: userData.image,
       }
   /*     console.log(newPost) */
 

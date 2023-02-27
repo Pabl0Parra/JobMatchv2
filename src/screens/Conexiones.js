@@ -76,7 +76,7 @@ const Conexiones = () => {
               style={{ marginVertical: 16 }}
               horizontal
               data={likedTo}
-              renderItem={({ item }) => <MiniCard item={item} large />}
+              renderItem={({ item }) => <MiniCard item={item} large id={item.id}/>}
             />
           ) : (
             <View

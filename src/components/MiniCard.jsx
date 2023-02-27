@@ -1,16 +1,17 @@
 import { useNavigation } from "@react-navigation/core";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, Image, Text, Touchable, TouchableOpacity } from "react-native";
 import { UserLoginContex } from "../context/UserDataContext";
 import theme from "../theme";
 
 const {text, colors} = theme
 
-const MiniCard = ({item, large}) => {
+const MiniCard = ({item, large, id}) => {
   const {userData} = useContext(UserLoginContex)
   const navigation = useNavigation()
+
   return (
-    <View style={[styles.miniCard, large ? styles.large : styles.medium, large ? {marginHorizontal: 20} : {marginHorizontal: 10}]}>
+    <View style={[styles.miniCard, large ? styles.large : styles.medium, large ? {marginHorizontal: 20} : {marginHorizontal: 10}]} key={id}>
       <TouchableOpacity onPress={() =>
                 navigation.navigate("Details", userData.worker ? {
                   //Agregar los datos necesarios para mostrar en pantalla
@@ -45,7 +46,7 @@ const MiniCard = ({item, large}) => {
               }>
       <Image
         source={{
-          uri: `${item.image}`,
+          uri: item.image,
         }}
         style={{
           width: "100%",
