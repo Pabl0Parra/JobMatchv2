@@ -21,7 +21,7 @@ const ChooseUserType = () => {
   return (
     <>
       <BackButton text="Crear cuenta" />
-      <RegisterProgressBar currentStep={1} />
+      <RegisterProgressBar currentStep={1} numSteps={5} />
       <ClickingHand />
       <View
         style={{

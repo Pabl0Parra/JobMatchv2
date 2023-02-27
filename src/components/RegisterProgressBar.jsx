@@ -1,10 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const RegisterProgressBar = ({ currentStep }) => {
+const RegisterProgressBar = ({ currentStep, numSteps }) => {
+  const steps = Array.from({ length: numSteps }, (_, index) => index + 1);
+
   return (
     <View style={styles.container}>
-      {[1, 2, 3, 4, 5].map((step) => (
+      {steps.map((step) => (
         <View
           key={step}
           style={

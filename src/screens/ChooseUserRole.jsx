@@ -16,7 +16,7 @@ const ChooseUserRole = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <BackButton text="Crear cuenta" />
-      <RegisterProgressBar currentStep={3} />
+      <RegisterProgressBar currentStep={3} numSteps={5} />
       <View style={styles.bgContainer}>
         <FillingProfile />
       </View>
