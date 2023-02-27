@@ -28,7 +28,7 @@ const theme = {
       letterSpacing:0.5,
       color: "#525252",
     },
-    16:{
+    text16:{
       fontFamily:"Roboto",
       fontWeight:"400",
       fontSize:16,

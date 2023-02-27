@@ -31,6 +31,7 @@ import uploadProfilePicture from "../firebase/functions/uploadProfilePicture";
 import changeURLProfilePictureDB from "../firebase/functions/changeURLProfilePictureDB";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
 import AboutMe from "../components/AboutMe";
+import ProfileCards from "../components/ProfileCards";
 
 const { text, colors } = theme;
 
@@ -179,38 +180,7 @@ const Profile = () => {
           </TouchableOpacity>
         </View>
         <AboutMe />
-        <View style={styles.containerSectionExperience}>
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
-            <Text style={[text.descriptionSubtitle, { marginBottom: 10 }]}>
-              Experiencia
-            </Text>
-            <View style={{ marginRight: 10, flexDirection: "row" }}>
-              <FontAwesome
-                style={{ marginRight: 10 }}
-                name="plus"
-                size={28}
-                color="black"
-              />
-              <Octicons name="pencil" size={28} color={colors.secondary} />
-            </View>
-          </View>
-          <View style={styles.experienceCard}>
-            <View style={styles.experienceIcon}>
-              <FontAwesome5 name="building" size={24} color="white" />
-            </View>
-            <View style={styles.textCardExperience}>
-              <Text style={[text.descriptionSubtitle, { marginBottom: 2 }]}>
-                Líder talento Humano
-              </Text>
-              <Text>
-                Super de bebidas - Jornada completa Jun. 2013 - abr. 2022 - 8
-                años 11 meses Chile, Santiago{" "}
-              </Text>
-            </View>
-          </View>
-        </View>
+        <ProfileCards worker={userData.worker} />
       </ScrollView>
     </DisplayContainer>
   );
@@ -272,33 +242,7 @@ const styles = StyleSheet.create({
     width: 1,
     height: "70%",
     backgroundColor: "gray",
-  },
-  containerSectionExperience: {
-    position: "relative",
-    marginTop: 20,
-    width: "85%",
-    padding: 12,
-    borderRadius: 16,
-    borderWidth: 2,
-    borderColor: "#aaa",
-  },
-  experienceCard: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-    padding: 4,
-  },
-  experienceIcon: {
-    padding: 10,
-    borderRadius: 20,
-    marginRight: 8,
-    backgroundColor: "#091D5C",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  textCardExperience: {
-    flex: 1,
-  },
+  }
 });
 
 export default Profile;
