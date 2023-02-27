@@ -31,6 +31,8 @@ import * as ImagePicker from "expo-image-picker";
 import uploadProfilePicture from "../firebase/functions/uploadProfilePicture";
 import changeURLProfilePictureDB from "../firebase/functions/changeURLProfilePictureDB";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
+import AboutMe from "../components/AboutMe";
+import ProfileCards from "../components/ProfileCards";
 
 const { text, colors } = theme;
 
@@ -74,7 +76,7 @@ const Profile = () => {
     <DisplayContainer style={styles.container}>
       <Header screen="Profile" />
       <ScrollView
-        contentContainerStyle={{ alignItems: "center", paddingBottom: 80 }}
+        contentContainerStyle={{ position: "relative", alignItems: "center", paddingBottom: 80 }}
       >
         <View style={styles.profileHeader}>
           <Image
@@ -179,18 +181,10 @@ const Profile = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.aboutMe}>
-          <Text style={[text.descriptionSubtitle, { fontSize: 20 }]}>
-            Acerca de mi
-          </Text>
-          <Text style={[text.descriptionItem, { fontWeight: "300" }]}>
-            Yorem ipsum dolor sit amet, consectetur adipenaeos. Prae lorem.
-            Morbi convallis convallis diam sit amet lacinia. Aliquam in
-            elementum tellus.
-          </Text>
-        </View>
-
-        {/*EXPERIENCIA / PUESTOS  */}
+        <AboutMe />
+        <ProfileCards worker={userData.worker} />
+        
+        {/* EXPERIENCIA / PUESTOS
         <View style={styles.containerSectionExperience}>
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
@@ -205,7 +199,7 @@ const Profile = () => {
               </Text>
             )}
             <View style={{ marginRight: 10, flexDirection: "row" }}>
-              <TouchableOpacity onPress={()=> navigation.navigate(userData.worker ? "" : "PostForm")}>
+              <TouchableOpacity >
               <FontAwesome
                 style={{ marginRight: 10 }}
                 name="plus"
@@ -232,34 +226,7 @@ const Profile = () => {
             </View>
           </View>
         </View>
-
-        {/* <View
-        style={{
-          flexDirection: "row",
-          gap: 20,
-          alignItems: "center",
-          width: "80%",
-          justifyContent: "flex-start",
-          margin: 25,
-        }}
-      >
-        <Text>En busca de empleo:</Text>
-        {
-          // switcher
-        }
-        <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-          value={isEnabled}
-        />
-        {
-          // end switcher
-        }
-      </View>
-      */}
-        <Button title="cerrar sesión" onPress={() => logOut()} />
+        <Button title="cerrar sesión" onPress={() => logOut()} /> */}
       </ScrollView>
     </DisplayContainer>
   );
@@ -321,36 +288,7 @@ const styles = StyleSheet.create({
     width: 1,
     height: "70%",
     backgroundColor: "gray",
-  },
-  aboutMe: {
-    paddingHorizontal: 26,
-  },
-  containerSectionExperience: {
-    position: "relative",
-    marginTop: 20,
-    width: "85%",
-    padding: 12,
-    borderRadius: 16,
-    borderWidth: 2,
-    borderColor: "#aaa",
-  },
-  experienceCard: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-    padding: 4,
-  },
-  experienceIcon: {
-    padding: 10,
-    borderRadius: 20,
-    marginRight: 8,
-    backgroundColor: "#091D5C",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  textCardExperience: {
-    flex: 1,
-  },
+  }
 });
 
 export default Profile;

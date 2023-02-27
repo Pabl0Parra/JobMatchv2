@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Button } from "react-native";
 import DisplayContainer from "./DisplayContainer";
 import Constants from "expo-constants";
 import {
@@ -7,17 +7,22 @@ import {
   Feather,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import Modal from "react-native-modal";
+import { Switch } from "react-native-paper";
 
 import theme from "../theme";
 import ProfileDrawerItem from "./ProfileDrawerItem";
 import logOut from "../firebase/functions/logOut";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserLoginContex } from "../context/UserDataContext";
 
 const { colors, text } = theme;
 
 const DrawerMenu = ({ navigation }) => {
   const { userData, setUserData } = useContext(UserLoginContex);
+
+  const [showModeModal, setShowModeModal] = useState(false);
+  const [userMode, setUserMode] = useState(false)
 
   return (
     <DisplayContainer style={[styles.displayContainer]}>
@@ -42,13 +47,41 @@ const DrawerMenu = ({ navigation }) => {
           <FontAwesome5 name="bell" size={24} color={colors.secondary} />
         </ProfileDrawerItem>
         <View style={styles.divider} />
-        <ProfileDrawerItem textItem={"Cambiar modo"}>
+        <ProfileDrawerItem
+          textItem={"Cambiar modo"}
+          onPress={() => setShowModeModal(true)}
+        >
           <MaterialCommunityIcons
             name="head-cog-outline"
             size={24}
             color={colors.secondary}
           />
         </ProfileDrawerItem>
+        <Modal
+          isVisible={showModeModal}
+          animationIn="zoomIn"
+          animationOut="zoomOut"
+          onBackButtonPress={() => setShowModeModal(false)}
+          onBackdropPress={() => setShowModeModal(false)}
+          backdropOpacity={0}
+          style={{ alignItems: "center", justifyContent: "center" }}
+        >
+          <View style={styles.modeModalContainer}>
+            <Text>En busca de empleo:</Text>
+            {
+              // switcher
+            }
+            <Switch
+              trackColor={{ false: "#767577", true: "red" }}
+              thumbColor={userMode ? "#f5dd4b" : "#f4f3f4"}
+              onValueChange={() => setUserMode(!userMode)}
+              value={userMode}
+            />
+            {
+              // end switcher
+            }
+          </View>
+        </Modal>
         <View style={styles.divider} />
         <ProfileDrawerItem textItem={"Preferencias generales"}>
           <AntDesign name="profile" size={24} color={colors.secondary} />
@@ -105,6 +138,14 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 2,
     backgroundColor: "#D7D8D9",
+  },
+  modeModalContainer: {
+    position: "relative",
+    padding: 30,
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    borderRadius: 15,
   },
 });
 
