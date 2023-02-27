@@ -60,7 +60,7 @@ const ChooseProfilePicture = () => {
   // aquí se cierra la alerta y se navega a Home
   const hideAlert = () => {
     setShowAlert(false);
-    navigation.navigate("Home");
+    navigation.navigate("Main");
   };
 
   return (

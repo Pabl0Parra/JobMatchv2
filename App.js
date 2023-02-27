@@ -110,13 +110,15 @@ export default function App() {
                   name="RegisterStack"
                   component={RegisterStackScreen}
                 />
-                <Stack.Screen
-                  name="OnboardingStack"
-                  component={OnboardingStackScreen}
-                />
               </>
             ) : (
               <>
+                {userData.firstTime === true && (
+                  <Stack.Screen
+                    name="OnboardingStack"
+                    component={OnboardingStackScreen}
+                  />
+                )}
                 <Stack.Screen name="Main" component={BottomTab} />
                 <Stack.Group screenOptions={{ presentation: "modal" }}>
                   <Stack.Screen

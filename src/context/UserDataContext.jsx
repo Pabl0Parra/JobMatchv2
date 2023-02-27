@@ -1,15 +1,15 @@
 import { createContext, useState } from "react";
 
 export const UserDataContext = createContext();
-export const UserLoginContex = createContext()
-export const SwipeContext = createContext()
+export const UserLoginContex = createContext();
+export const SwipeContext = createContext();
 
 export const UserDataContextProvider = ({ children }) => {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
-    employer:false,
-    worker:false,
+    employer: false,
+    worker: false,
     userName: "",
     userLastName: "",
     userRole: "",
@@ -20,10 +20,11 @@ export const UserDataContextProvider = ({ children }) => {
     country: "",
     city: "",
     image: "",
-    filter:{
-      roleWanted:"",
-      seniority:""
-    }
+    filter: {
+      roleWanted: "",
+      seniority: "",
+    },
+    firstTime: true,
   });
 
   return (
