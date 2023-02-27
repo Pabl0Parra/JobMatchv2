@@ -21,11 +21,11 @@ import {
   setDoc,
   where,
 } from "@firebase/firestore";
-import { db } from "../firebase/credentials";
-import generateId from "../utilities/generateId";
+import { db, mainCollection, postCollection } from "../firebase/credentials";
 import { SwipeContext, UserLoginContex } from "../context/UserDataContext";
 import { useNavigation } from "@react-navigation/core";
 import theme from "../theme";
+import { generateId } from "../utilities/utilities";
 
 const { colors, text } = theme;
 
@@ -42,37 +42,41 @@ const Home = () => {
     const fetchProfiles = async () => {
       //Obtengos los usuarios que deslice a la izquierda y derecha
       const passes = await getDocs(
-        collection(db, "HomeTest", userData.id, "passes")
+        collection(db, mainCollection, userData.id, "passes")
       ).then((snapshot) => snapshot.docs.map((doc) => doc.id));
 
       const likes = await getDocs(
-        collection(db, "HomeTest", userData.id, "likes")
+        collection(db, mainCollection, userData.id, "likes")
       ).then((snapshot) => snapshot.docs.map((doc) => doc.id));
 
       //defino un array para poder hacer la consulta a la bd
       const passesUsersId = passes.length > 0 ? passes : ["null"];
       const likesUsersId = likes.length > 0 ? likes : ["null"];
 
-      const usersToSearch = userData.worker ? "employer" : "worker";
+      
 
-      /*       const allQuery = query(
-        collection(db, "HomeTest"),
-        where(usersToSearch, "==", true),
-        where("id", "not-in", [...passesUsersId, ...likesUsersId])
-      );
- */
-      const filterQuery = query(
-        collection(db, "HomeTest"),
-        where(usersToSearch, "==", true),
+      /* Query para buscar puestos */
+      const jobsQuery = query(
+        collection(db, postCollection),
         //If anidados para saber si está aplicado algún filtro
         (userData.filter.roleWanted !== "" && userData.filter.roleWanted !== "Todos")
-          ? where("vacant", "==", userData.filter.roleWanted)
+          ? where("roleWanted", "==", userData.filter.roleWanted)
           : (userData.filter.seniority !== "")
           ? where("seniority", "==", userData.filter.seniority)
           : where("id", "not-in", [...passesUsersId, ...likesUsersId]) //Sino devuelvo todo
       );
+    /* Query para buscar candidatos */
+      const profileQuery = query(
+        collection(db, mainCollection), where("worker", "==", true),
+        (userData.filter.roleWanted !== "" && userData.filter.roleWanted !== "Todos")
+          ? where("roleWanted", "==", userData.filter.roleWanted)
+          : (userData.filter.seniority !== "")
+          ? where("seniority", "==", userData.filter.seniority)
+          : where("id", "not-in", [...passesUsersId, ...likesUsersId])
+        )
 
-      unsub = onSnapshot(filterQuery, (snapshot) => {
+
+      unsub = onSnapshot(userData.worker ? jobsQuery : profileQuery, (snapshot) => {
         setProfiles(
           snapshot.docs
             .filter((doc) => doc.id !== userData.id)
@@ -99,7 +103,7 @@ const Home = () => {
     const userSwiped = profiles[cardIndex];
 
     setDoc(
-      doc(db, "HomeTest", userData.id, "passes", userSwiped.id),
+      doc(db, mainCollection, userData.id, "passes", userSwiped.id),
       userSwiped
     );
   };
@@ -110,25 +114,25 @@ const Home = () => {
     const userSwiped = profiles[cardIndex];
 
     //Para obtener todos los datos del usuario logueado
-    /* const loggedInUser = await( await getDoc(doc(db, "HomeTest", user.id)).data() ) */
+    /* const loggedInUser = await( await getDoc(doc(db, mainCollection, user.id)).data() ) */
     const loggedInUser = { ...userData };
 
     //Necesito chequear si el usuario al que le di like, me dio like previamente
     //Solo usar esto a modo demo (desarrollo), para produccion usar cloud functions (del lado del servidor)
-    getDoc(doc(db, "HomeTest", userSwiped.id, "likes", userData.id)).then(
+    getDoc(doc(db, mainCollection, userSwiped.id, "likes", userData.id)).then(
       (docSnapshot) => {
         if (docSnapshot.exists()) {
           //hay match
           console.log(`Hiciste un match con ${userSwiped.name}`);
           //guardo el like dado
           setDoc(
-            doc(db, "HomeTest", userData.id, "likes", userSwiped.id),
-            userSwiped
+            doc(db, mainCollection, userData.id, "likes", userSwiped.id),
+            {...userSwiped, timestamp: serverTimestamp()}
           );
           //guardo el like recibido
           setDoc(
-            doc(db, "HomeTest", userSwiped.id, "likedTo", userData.id),
-            userData
+            doc(db, mainCollection, userSwiped.id, "likedTo", userData.id),
+            {...userSwiped, timestamp: serverTimestamp()}
           );
 
           //Creo el match
@@ -141,8 +145,8 @@ const Home = () => {
             timestamp: serverTimestamp(),
           });
           setDoc(
-            doc(db, "HomeTest", userData.id, "matches", userSwiped.id),
-            userSwiped
+            doc(db, mainCollection, userData.id, "matches", userSwiped.id),
+            {...userSwiped, timestamp: serverTimestamp()}
           );
 
           navigation.navigate("MatchModal", {
@@ -152,13 +156,13 @@ const Home = () => {
         } else {
           //guardo el like
           setDoc(
-            doc(db, "HomeTest", userData.id, "likes", userSwiped.id),
-            userSwiped
+            doc(db, mainCollection, userData.id, "likes", userSwiped.id),
+            {...userSwiped, timestamp: serverTimestamp()}
           );
           //guardo el like recibido en el otro perfil
           setDoc(
-            doc(db, "HomeTest", userSwiped.id, "likedTo", userData.id),
-            userData
+            doc(db, mainCollection, userSwiped.id, "likedTo", userData.id),
+            {...userSwiped, timestamp: serverTimestamp()}
           );
         }
       }

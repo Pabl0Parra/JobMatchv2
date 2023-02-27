@@ -8,7 +8,7 @@ import { FlatList, ScrollView } from "react-native-gesture-handler";
 import MiniCard from "../components/MiniCard";
 import { useContext, useEffect, useState } from "react";
 import { collection, doc, onSnapshot, query } from "firebase/firestore";
-import { db } from "../firebase/credentials";
+import { db, mainCollection } from "../firebase/credentials";
 import { UserLoginContex } from "../context/UserDataContext";
 
 const { text, colors } = theme;
@@ -21,7 +21,7 @@ const Conexiones = () => {
 
   useEffect(() => {
     const savedProfiles = onSnapshot(
-      collection(db, "HomeTest", userData.id, "saved"),
+      collection(db, mainCollection, userData.id, "saved"),
       (snapshot) => {
         let temp = [];
         snapshot.forEach((doc) => temp.push(doc.data()));
@@ -43,7 +43,7 @@ const Conexiones = () => {
     ); */
 
     const likedProfiles = onSnapshot(
-      collection(db, "HomeTest", userData.id, "likedTo"), 
+      collection(db, mainCollection, userData.id, "likedTo"), 
       (snapshot)=> {
         let temp =[];
         snapshot.forEach(doc => temp.push(doc.data()));
@@ -71,12 +71,12 @@ const Conexiones = () => {
           </Text>
         </View>
         <View style={{ minHeight: "40%" }}>
-          {matches.length > 0 ? (
+          {likedTo.length > 0 ? (
             <FlatList
               style={{ marginVertical: 16 }}
               horizontal
-              data={matches}
-              renderItem={({ item }) => <MiniCard item={item} large />}
+              data={likedTo}
+              renderItem={({ item }) => <MiniCard item={item} large id={item.id}/>}
             />
           ) : (
             <View
@@ -95,7 +95,7 @@ const Conexiones = () => {
             Favoritos
           </Text>
         </View>
-        <View style={{flex:1}}>
+        <View style={{minHeight:"30%" }}>
           {saved.length > 0 ? (
             <FlatList
               style={{ marginVertical: 16 }}
@@ -111,7 +111,7 @@ const Conexiones = () => {
                 flex: 1,
               }}
             >
-              <Text style={text[14]}>Aquí verás los perfiles que guardas</Text>
+              <Text style={text[14]}>Aquí verás los perfiles que guardaste</Text>
             </View>
           )}
         </View>
