@@ -26,6 +26,7 @@ import CircularProgress from "../components/CircularProgress";
 import { UserLoginContex } from "../context/UserDataContext";
 import DisplayContainer from "../components/DisplayContainer";
 import theme from "../theme";
+import { useNavigation } from "@react-navigation/core";
 import * as ImagePicker from "expo-image-picker";
 import uploadProfilePicture from "../firebase/functions/uploadProfilePicture";
 import changeURLProfilePictureDB from "../firebase/functions/changeURLProfilePictureDB";
@@ -37,6 +38,7 @@ const { text, colors } = theme;
 
 const Profile = () => {
   const [isEnabled, setIsEnabled] = useState(false);
+  const navigation = useNavigation();
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const [percentage, setPercentage] = useState(60);
   const { userData, setUserData } = useContext(UserLoginContex);
@@ -116,7 +118,7 @@ const Profile = () => {
           </Text>
           <Text
             style={[styles.text, { fontSize: 26, fontWeight: "600" }]}
-          >{`${userData.userName} ${userData.userLastName}`}</Text>
+          >{`${userData.userName} ${userData.userLastName ? userData.userLastName : ""}`}</Text>
           <Text style={[styles.text]}>{userData.userRole}</Text>
         </View>
         <View style={styles.detailsSectionsContainer}>
@@ -181,6 +183,50 @@ const Profile = () => {
         </View>
         <AboutMe />
         <ProfileCards worker={userData.worker} />
+        
+        {/* EXPERIENCIA / PUESTOS
+        <View style={styles.containerSectionExperience}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            {userData.worker ? (
+              <Text style={[text.descriptionSubtitle, { marginBottom: 10 }]}>
+                Experiencia
+              </Text>
+            ) : (
+              <Text style={[text.descriptionSubtitle, { marginBottom: 10 }]}>
+                Puestos
+              </Text>
+            )}
+            <View style={{ marginRight: 10, flexDirection: "row" }}>
+              <TouchableOpacity >
+              <FontAwesome
+                style={{ marginRight: 10 }}
+                name="plus"
+                size={28}
+                color={colors.secondary}
+              />
+              </TouchableOpacity>
+              <Octicons name="pencil" size={28} color={colors.secondary} />
+            </View>
+          </View>
+
+          <View style={styles.experienceCard}>
+            <View style={styles.experienceIcon}>
+              <FontAwesome5 name="building" size={24} color="white" />
+            </View>
+            <View style={styles.textCardExperience}>
+              <Text style={[text.descriptionSubtitle, { marginBottom: 2 }]}>
+                Líder talento Humano
+              </Text>
+              <Text>
+                Super de bebidas - Jornada completa Jun. 2013 - abr. 2022 - 8
+                años 11 meses Chile, Santiago{" "}
+              </Text>
+            </View>
+          </View>
+        </View>
+        <Button title="cerrar sesión" onPress={() => logOut()} /> */}
       </ScrollView>
     </DisplayContainer>
   );

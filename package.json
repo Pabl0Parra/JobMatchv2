@@ -26,7 +26,7 @@
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
     "react-native-awesome-alerts": "^2.0.0",
-    "react-native-deck-swiper": "^2.0.12",
+    "react-native-deck-swiper": "^2.0.13",
     "react-native-dropdown-select-list": "^2.0.4",
     "react-native-gesture-handler": "~2.8.0",
     "react-native-gifted-chat": "^1.1.1",

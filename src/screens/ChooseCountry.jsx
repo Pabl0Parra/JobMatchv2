@@ -15,7 +15,7 @@ const ChooseCountry = () => {
   return (
     <>
       <BackButton text="Crear cuenta" />
-      <RegisterProgressBar currentStep={4} />
+      <RegisterProgressBar currentStep={4} numSteps={5} />
       <View style={styles.bgContainer}>
         <HandHeart />
       </View>

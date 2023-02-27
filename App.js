@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import theme from "./src/theme";
 import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
-import { auth } from "./src/firebase/credentials";
+import { auth, db, mainCollection} from "./src/firebase/credentials";
 import { onAuthStateChanged } from "@firebase/auth";
 import BottomTab from "./src/components/BottomTab";
 import Details from "./src/screens/Details";
@@ -18,18 +18,24 @@ import ChooseRoleWanted from "./src/screens/ChooseRoleWanted";
 import ResetPassword from "./src/screens/ResetPassword";
 import LandingPage from "./src/screens/LandingPage";
 import MatchModal from "./src/screens/MatchModal";
+import Onboarding1 from "./src/screens/Onboarding1";
+import Onboarding2 from "./src/screens/Onboarding2";
+import Onboarding3 from "./src/screens/Onboarding3";
+import Onboarding4 from "./src/screens/Onboarding4";
 import getUserDataDB from "./src/firebase/functions/getUserDataDB";
 import {
-  UserDataContext,
   UserDataContextProvider,
   UserLoginContex,
 } from "./src/context/UserDataContext";
 import Filters from "./src/screens/Filters";
-import 'react-native-gesture-handler';
+import "react-native-gesture-handler";
+import PostForm from "./src/screens/PostForm";
 
 const Stack = createNativeStackNavigator();
 
 const RegisterStack = createNativeStackNavigator();
+
+const OnboardingStack = createNativeStackNavigator();
 
 const RegisterStackScreen = () => (
   <RegisterStack.Navigator screenOptions={{ headerShown: false }}>
@@ -52,6 +58,15 @@ const RegisterStackScreen = () => (
   </RegisterStack.Navigator>
 );
 
+const OnboardingStackScreen = () => (
+  <OnboardingStack.Navigator screenOptions={{ headerShown: false }}>
+    <OnboardingStack.Screen name="Onboarding1" component={Onboarding1} />
+    <OnboardingStack.Screen name="Onboarding2" component={Onboarding2} />
+    <OnboardingStack.Screen name="Onboarding3" component={Onboarding3} />
+    <OnboardingStack.Screen name="Onboarding4" component={Onboarding4} />
+  </OnboardingStack.Navigator>
+);
+
 export default function App() {
   /* const {userData, setUserData} = useContext(UserDataContext) */
   const [userData, setUserData] = useState();
@@ -61,23 +76,23 @@ export default function App() {
     const timer = setTimeout(() => {
       setOnLandingPage(false);
     }, 3000);
-
+    
     onAuthStateChanged(auth, async (userFirebase) => {
       if (userFirebase) {
-
         const res = await getUserDataDB(userFirebase.uid);
-
         if (res) {
           setUserData(res);
         } else {
-          console.log("error al obtener los datos")
+          console.log("error al obtener los datos");
         }
       } else {
         ("Error de login");
       }
     });
+
     return () => clearTimeout(timer);
   }, []);
+  
 
   console.log("APP:" + userData?.id);
   return (
@@ -99,6 +114,12 @@ export default function App() {
               </>
             ) : (
               <>
+                {userData.firstTime === true && (
+                  <Stack.Screen
+                    name="OnboardingStack"
+                    component={OnboardingStackScreen}
+                  />
+                )}
                 <Stack.Screen name="Main" component={BottomTab} />
                 <Stack.Group screenOptions={{ presentation: "modal" }}>
                   <Stack.Screen
@@ -106,7 +127,7 @@ export default function App() {
                     component={Details}
                     options={{
                       headerShown: true,
-                      headerTitle: "Detalles del puesto",
+                      headerTitle: "Detalles",
                       headerStyle: { backgroundColor: "#fff" },
                     }}
                   />
@@ -119,6 +140,13 @@ export default function App() {
                       headerStyle: { backgroundColor: "#fff" },
                     }}
                   />
+                    <Stack.Screen name="PostForm"
+                    component={PostForm}
+                    options={{
+                      headerShown: true,
+                      headerTitle: "Publicar un puesto",
+                      headerStyle: { backgroundColor: "#fff" },
+                    }}/>
                 </Stack.Group>
                 <Stack.Group
                   screenOptions={{ presentation: "transparentModal" }}
