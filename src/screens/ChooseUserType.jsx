@@ -1,5 +1,11 @@
 import React, { useState, useContext } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { RadioButton } from "react-native-paper";
 import DisplayContainer from "../components/DisplayContainer";
 import { useNavigation } from "@react-navigation/native";
@@ -20,60 +26,63 @@ const ChooseUserType = () => {
 
   return (
     <>
-      <BackButton text="Crear cuenta" />
-      <RegisterProgressBar currentStep={1} numSteps={5} />
-      <ClickingHand />
-      <View
-        style={{
-          alignItems: "flex-start",
-          marginLeft: 19,
-          marginRight: 24,
-          marginTop: 20,
-        }}
-      >
-        <Text style={styles.title}>Elige un modo para empezar</Text>
-        <Text style={styles.subtitle}>
-          ¡Jobmatch te permite hacer buenas conexiones laborales! Una vez esté
-          listo tu perfil, podrás cambiar de un modo a otro.
-        </Text>
-        <View style={styles.workerContainer}>
-          <View style={styles.titleSubtitle}>
-            <Text style={styles.title}>En busca de empleo</Text>
-            <Text style={styles.subtitle}>Impulsa tu vida profesional</Text>
+      <SafeAreaView>
+        <BackButton text="Crear cuenta" />
+        <RegisterProgressBar currentStep={1} numSteps={5} />
+        <ClickingHand />
+        <View
+          style={{
+            alignItems: "flex-start",
+            marginLeft: 19,
+            marginRight: 24,
+            marginTop: 20,
+          }}
+        >
+          <Text style={styles.title}>Elige un modo para empezar</Text>
+          <Text style={styles.subtitle}>
+            ¡Jobmatch te permite hacer buenas conexiones laborales! Una vez esté
+            listo tu perfil, podrás cambiar de un modo a otro.
+          </Text>
+          <View style={styles.workerContainer}>
+            <View style={styles.titleSubtitle}>
+              <Text style={styles.title}>En busca de empleo</Text>
+              <Text style={styles.subtitle}>Impulsa tu vida profesional</Text>
+            </View>
+            <View style={styles.radioContainer}>
+              <View style={styles.radioWrapper}>
+                <RadioButton
+                  value="worker"
+                  status={selectedValue === "worker" ? "checked" : "unchecked"}
+                  onPress={(type) => {
+                    setUserData({ ...userData, worker: true, employer: false }),
+                      setSelectedValue("worker");
+                  }}
+                />
+              </View>
+            </View>
           </View>
-          <View style={styles.radioContainer}>
-            <View style={styles.radioWrapper}>
-              <RadioButton
-                value="worker"
-                status={selectedValue === "worker" ? "checked" : "unchecked"}
-                onPress={(type) => {
-                  setUserData({ ...userData, worker: true, employer: false }),
-                    setSelectedValue("worker");
-                }}
-              />
+          <View style={styles.employerContainer}>
+            <View style={styles.titleSubtitle}>
+              <Text style={styles.title}>Buscando personal</Text>
+              <Text style={styles.subtitle}>Consigue nuevos colaboradores</Text>
+            </View>
+            <View style={styles.radioContainer}>
+              <View style={styles.radioWrapper}>
+                <RadioButton
+                  value="employer"
+                  status={
+                    selectedValue === "employer" ? "checked" : "unchecked"
+                  }
+                  onPress={(type) => {
+                    setUserData({ ...userData, worker: false, employer: true }),
+                      setSelectedValue("employer");
+                  }}
+                />
+              </View>
             </View>
           </View>
         </View>
-        <View style={styles.employerContainer}>
-          <View style={styles.titleSubtitle}>
-            <Text style={styles.title}>Buscando personal</Text>
-            <Text style={styles.subtitle}>Consigue nuevos colaboradores</Text>
-          </View>
-          <View style={styles.radioContainer}>
-            <View style={styles.radioWrapper}>
-              <RadioButton
-                value="employer"
-                status={selectedValue === "employer" ? "checked" : "unchecked"}
-                onPress={(type) => {
-                  setUserData({ ...userData, worker: false, employer: true }),
-                    setSelectedValue("employer");
-                }}
-              />
-            </View>
-          </View>
-        </View>
-      </View>
-      {/* <View
+        {/* <View
         style={{
           alignItems: "flex-start",
           marginLeft: 19,
@@ -121,42 +130,43 @@ const ChooseUserType = () => {
           </View>
         </View>
       </View> */}
-      <View
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <TouchableOpacity
-          style={[
-            styles.button,
-            {
-              backgroundColor: selectedValue
-                ? `${colors.secondary}`
-                : "#D9D9D9",
-            },
-          ]}
-          onPress={() => {
-            const navigateTo = {
-              worker: "ChooseUserName",
-              employer: "ChooseCompanyName",
-              // "open to grow": "ChooseUserName",
-            };
-            navigation.navigate(navigateTo[selectedValue] || "");
+        <View
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
-          disabled={!selectedValue}
         >
-          <Text
+          <TouchableOpacity
             style={[
-              styles.buttonText,
-              { color: selectedValue ? "#84FFFF" : "#666666" },
+              styles.button,
+              {
+                backgroundColor: selectedValue
+                  ? `${colors.secondary}`
+                  : "#D9D9D9",
+              },
             ]}
+            onPress={() => {
+              const navigateTo = {
+                worker: "ChooseUserName",
+                employer: "ChooseCompanyName",
+                // "open to grow": "ChooseUserName",
+              };
+              navigation.navigate(navigateTo[selectedValue] || "");
+            }}
+            disabled={!selectedValue}
           >
-            Siguiente
-          </Text>
-        </TouchableOpacity>
-      </View>
+            <Text
+              style={[
+                styles.buttonText,
+                { color: selectedValue ? "#84FFFF" : "#666666" },
+              ]}
+            >
+              Siguiente
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
     </>
   );
 };

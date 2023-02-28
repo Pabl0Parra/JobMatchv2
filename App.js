@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import theme from "./src/theme";
 import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
-import { auth, db, mainCollection} from "./src/firebase/credentials";
+import { auth, db, mainCollection } from "./src/firebase/credentials";
 import { onAuthStateChanged } from "@firebase/auth";
 import BottomTab from "./src/components/BottomTab";
 import Details from "./src/screens/Details";
@@ -30,7 +30,10 @@ import {
 import Filters from "./src/screens/Filters";
 import "react-native-gesture-handler";
 import PostForm from "./src/screens/PostForm";
+import ChatScreen from "./src/screens/ChatScreen";
+import MessageScreen from "./src/screens/MessageScreen";
 import ExperiencieForm from "./src/screens/ExperiencieForm";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -77,7 +80,7 @@ export default function App() {
     const timer = setTimeout(() => {
       setOnLandingPage(false);
     }, 3000);
-    
+
     onAuthStateChanged(auth, async (userFirebase) => {
       if (userFirebase) {
         const res = await getUserDataDB(userFirebase.uid);
@@ -93,7 +96,6 @@ export default function App() {
 
     return () => clearTimeout(timer);
   }, []);
-  
 
   console.log("APP:" + userData?.id);
   return (
@@ -141,13 +143,17 @@ export default function App() {
                       headerStyle: { backgroundColor: "#fff" },
                     }}
                   />
-                    <Stack.Screen name="PostForm"
+                  <Stack.Screen
+                    name="PostForm"
                     component={PostForm}
                     options={{
                       headerShown: true,
                       headerTitle: "Publicar un puesto",
                       headerStyle: { backgroundColor: "#fff" },
-                    }}/>
+                    }}
+                  />
+                  <Stack.Screen name="ChatScreen" component={ChatScreen} />
+                  <Stack.Screen name="Message" component={MessageScreen} />                   
                     <Stack.Screen name="ExperiencieForm"
                     component={ExperiencieForm}
                     options={{
