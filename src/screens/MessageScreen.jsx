@@ -93,7 +93,7 @@ export default function MessageScreen() {
           <TextInput
             style={styles.input}
             placeholder="Manda tu mensaje..."
-            onChange={setInput}
+            onChangeText={setInput}
             onSubmitEditing={sendMessage}
             value={input}
           />
