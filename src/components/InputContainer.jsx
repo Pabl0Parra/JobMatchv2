@@ -7,12 +7,16 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
+import theme from "../theme";
+
+const {text, colors} = theme
 
 const InputContainer = ({
   value,
   placeholder,
   styleContainer,
   styleError,
+  stylePlaceholder,
   touched,
   error,
   textErrorProp,
@@ -27,13 +31,13 @@ const InputContainer = ({
         <TextInput
           style={[
             styles.container,
-            styleContainer,
             {
               borderWidth: value.length ? 1.8 : 1.2,
-              borderColor: value.length ? "#192B65" : "gray",
-              color: value.length ? "#192B65" : "gray",
+              borderColor: value.length ? colors.secondary : "gray",
+              color: value.length ? colors.secondary : "gray",
               fontWeight: value.length ? "600" : "300",
             },
+            styleContainer
           ]}
           placeholder={placeholder}
           autoCorrect={false}
@@ -56,7 +60,7 @@ const InputContainer = ({
           </>
         ) : null}
         {value.length ? (
-          <View style={styles.placeholder}>
+          <View style={[styles.placeholder, stylePlaceholder]}>
             <Text style={{ fontWeight: "600" }}>{placeholder}</Text>
           </View>
         ) : null}
