@@ -24,6 +24,7 @@ import HomeIcon from "../svgs/HomeIcon";
 import ConectionsIcon from "../svgs/ConectionsIcon";
 import MessagesIcon from "../svgs/MessagesIcon";
 import ProfileIcon from "../svgs/ProfileIcon";
+import ChatScreen from "../screens/Messages";
 
 const Tab = createBottomTabNavigator();
 const { colors } = theme;
@@ -58,7 +59,10 @@ export default function BottomTab({ navigation }) {
                 style={tab === 1 ? styles.activeBackTab : styles.inactiveTab}
               >
                 <View style={tab === 1 ? styles.activeTab : styles.inactiveTab}>
-                  <HomeIcon color={tab === 1 ? colors.details : "#C8CFCF"} active={tab === 1 ? true : false}/>
+                  <HomeIcon
+                    color={tab === 1 ? colors.details : "#C8CFCF"}
+                    active={tab === 1 ? true : false}
+                  />
                   {/* <MaterialIcons
                     name="home-repair-service"
                     size={24}
@@ -81,7 +85,10 @@ export default function BottomTab({ navigation }) {
                 style={tab === 2 ? styles.activeBackTab : styles.inactiveTab}
               >
                 <View style={tab === 2 ? styles.activeTab : styles.inactiveTab}>
-                <ConectionsIcon color={tab === 2 ? colors.details : "#C8CFCF"} active={tab === 2 ? true : false}/>
+                  <ConectionsIcon
+                    color={tab === 2 ? colors.details : "#C8CFCF"}
+                    active={tab === 2 ? true : false}
+                  />
                   {/* <MaterialCommunityIcons
                     name="heart"
                     size={24}
@@ -96,14 +103,17 @@ export default function BottomTab({ navigation }) {
 
         <Tab.Screen
           name="Mensajes"
-          component={Messages}
+          component={ChatScreen}
           options={{
             tabBarIcon: ({ color }) => (
               <View
                 style={tab === 3 ? styles.activeBackTab : styles.inactiveTab}
               >
                 <View style={tab === 3 ? styles.activeTab : styles.inactiveTab}>
-                <MessagesIcon color={tab === 3 ? colors.details : "#C8CFCF"} active={tab === 3 ? true : false}/>
+                  <MessagesIcon
+                    color={tab === 3 ? colors.details : "#C8CFCF"}
+                    active={tab === 3 ? true : false}
+                  />
                   {/* <MaterialCommunityIcons
                     name="message"
                     size={24}
@@ -120,9 +130,14 @@ export default function BottomTab({ navigation }) {
           component={DrawerNavigatorProfile}
           options={{
             tabBarIcon: ({ color }) => (
-              <View style={tab===4 ? styles.activeBackTab : styles.inactiveTab}>
+              <View
+                style={tab === 4 ? styles.activeBackTab : styles.inactiveTab}
+              >
                 <View style={tab === 4 ? styles.activeTab : styles.inactiveTab}>
-                <ProfileIcon color={tab === 4 ? colors.details : "#C8CFCF"} active={tab === 4 ? true : false}/>
+                  <ProfileIcon
+                    color={tab === 4 ? colors.details : "#C8CFCF"}
+                    active={tab === 4 ? true : false}
+                  />
                 </View>
               </View>
             ),

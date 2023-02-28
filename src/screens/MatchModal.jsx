@@ -1,4 +1,11 @@
-import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Button,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import { useNavigation, useRoute } from "@react-navigation/core";
 
@@ -23,10 +30,11 @@ const MatchModal = () => {
       <TouchableOpacity
         onPress={() => {
           navigation.goBack();
+          navigation.navigate("ChatScreen");
         }}
         style={styles.button}
       >
-        <Text style={{fontSize:20, color:"#091D5C"}}>Volver al Home</Text>
+        <Text style={{ fontSize: 20, color: "#091D5C" }}>Enviar mensaje</Text>
       </TouchableOpacity>
     </View>
   );
@@ -67,8 +75,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     color: "#091D5C",
     borderRadius: 15,
-    padding:10,
-    justifyContent:"center",
-    alignItems:"center"
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
