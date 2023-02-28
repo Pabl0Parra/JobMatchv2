@@ -20,7 +20,7 @@ const addExperience = async (obj, userId) => {
       timestamp: serverTimestamp(),
     });
   } catch (error) {
-    console.log(error);
+    console.log(null);
   }
 
 };

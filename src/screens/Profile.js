@@ -2,63 +2,37 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
   Image,
   TouchableOpacity,
   ScrollView,
 } from "react-native";
 import Constants from "expo-constants";
 import Header from "../components/Header";
-import logOut from "../firebase/functions/logOut";
 import {
-  AntDesign,
   Ionicons,
-  MaterialIcons,
   Octicons,
-  EvilIcons,
-  FontAwesome5,
-  FontAwesome,
   Feather,
 } from "@expo/vector-icons";
 import { useState, useContext, useEffect } from "react";
-import { Switch } from "react-native-paper";
 import CircularProgress from "../components/CircularProgress";
 import { FocusedTab, UserLoginContex } from "../context/UserDataContext";
 import DisplayContainer from "../components/DisplayContainer";
 import theme from "../theme";
-import { useIsFocused, useNavigation } from "@react-navigation/core";
+import { useIsFocused } from "@react-navigation/core";
 import * as ImagePicker from "expo-image-picker";
 import uploadProfilePicture from "../firebase/functions/uploadProfilePicture";
 import changeURLProfilePictureDB from "../firebase/functions/changeURLProfilePictureDB";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
 import AboutMe from "../components/AboutMe";
 import ProfileCards from "../components/ProfileCards";
-import getUserExperiencies from "../firebase/functions/getUserExperiencies";
 
 const { text, colors } = theme;
 
-const Profile = ({navigation}) => {
+const Profile = () => {
   const { userData, setUserData } = useContext(UserLoginContex);
   const [isEnabled, setIsEnabled] = useState(false);
-  const [loadingExperiencies, setLoadingExperiencies] = useState(false)
-  /* const navigation = useNavigation(); */
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const [percentage, setPercentage] = useState(60);
-
-  useEffect(() => {
-
-    if (userData.experiencies === undefined){
-
-      getUserExperiencies(userData.id)
-      .then( res =>
-        setUserData({...userData, experiencies: res })
-      ).then(
-        setLoadingExperiencies(true)
-      )
-
-    }
-    
-  }, [])
 
   const changeProfilePicture = async () => {
     try {
@@ -206,7 +180,7 @@ const Profile = ({navigation}) => {
           </TouchableOpacity>
         </View>
         <AboutMe />
-        {loadingExperiencies && <ProfileCards worker={userData.worker} dataCards={userData.experiencies}/>}
+        <ProfileCards />
         
         
         {/* EXPERIENCIA / PUESTOS
