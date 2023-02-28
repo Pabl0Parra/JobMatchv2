@@ -4,21 +4,21 @@ import theme from "../theme";
 import ExperienceCard from "./ExperienceCard";
 import JobCard from "./JobCard";
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useContext } from "react";
+import { useContext } from "react";
 import { UserLoginContex } from "../context/UserDataContext";
 
 const { text, colors } = theme;
 
-const ProfileCards = ({ worker, dataCards }) => {
+const ProfileCards = () => {
   const navigation = useNavigation();
-  const { userData, setUserData } = useContext(UserLoginContex);
+  const { userData } = useContext(UserLoginContex);
 
   const cardsMap = () => {
 
-    if (dataCards === undefined) {return null}
+    if ( userData.experiencies.length === 0) {return <Text>Agregar {userData.worker? "Experiencias" : "Puestos vacantes"}</Text>}
 
-    if (worker) {
-     return dataCards.map((exp) => (
+    if (userData.worker) {
+     return userData.experiencies.map((exp) => (
         <ExperienceCard
           key={exp.id}
           experienceData={{
@@ -49,7 +49,7 @@ const ProfileCards = ({ worker, dataCards }) => {
         }}
       >
         <Text style={[text.text16, { fontWeight: "bold" }]}>
-          {worker ? "Experiencia" : "Puestos Vacantes"}
+          {userData.worker ? "Experiencia" : "Puestos Vacantes"}
         </Text>
         <TouchableOpacity
           style={{
@@ -64,7 +64,7 @@ const ProfileCards = ({ worker, dataCards }) => {
             size={28}
             color="black"
             onPress={() =>
-              navigation.navigate(worker ? "ExperiencieForm" : "PostForm")
+              navigation.navigate(userData.worker ? "ExperiencieForm" : "PostForm")
             }
           />
         </TouchableOpacity>
