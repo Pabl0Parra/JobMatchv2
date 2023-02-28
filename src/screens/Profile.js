@@ -33,15 +33,32 @@ import changeURLProfilePictureDB from "../firebase/functions/changeURLProfilePic
 import getUserDataDB from "../firebase/functions/getUserDataDB";
 import AboutMe from "../components/AboutMe";
 import ProfileCards from "../components/ProfileCards";
+import getUserExperiencies from "../firebase/functions/getUserExperiencies";
 
 const { text, colors } = theme;
 
 const Profile = ({navigation}) => {
   const { userData, setUserData } = useContext(UserLoginContex);
   const [isEnabled, setIsEnabled] = useState(false);
+  const [loadingExperiencies, setLoadingExperiencies] = useState(false)
   /* const navigation = useNavigation(); */
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const [percentage, setPercentage] = useState(60);
+
+  useEffect(() => {
+
+    if (userData.experiencies === undefined){
+
+      getUserExperiencies(userData.id)
+      .then( res =>
+        setUserData({...userData, experiencies: res })
+      ).then(
+        setLoadingExperiencies(true)
+      )
+
+    }
+    
+  }, [])
 
   const changeProfilePicture = async () => {
     try {
@@ -189,7 +206,8 @@ const Profile = ({navigation}) => {
           </TouchableOpacity>
         </View>
         <AboutMe />
-        <ProfileCards worker={userData.worker} />
+        {loadingExperiencies && <ProfileCards worker={userData.worker} dataCards={userData.experiencies}/>}
+        
         
         {/* EXPERIENCIA / PUESTOS
         <View style={styles.containerSectionExperience}>

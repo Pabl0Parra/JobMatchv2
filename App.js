@@ -30,6 +30,7 @@ import {
 import Filters from "./src/screens/Filters";
 import "react-native-gesture-handler";
 import PostForm from "./src/screens/PostForm";
+import ExperiencieForm from "./src/screens/ExperiencieForm";
 
 const Stack = createNativeStackNavigator();
 
@@ -145,6 +146,13 @@ export default function App() {
                     options={{
                       headerShown: true,
                       headerTitle: "Publicar un puesto",
+                      headerStyle: { backgroundColor: "#fff" },
+                    }}/>
+                    <Stack.Screen name="ExperiencieForm"
+                    component={ExperiencieForm}
+                    options={{
+                      headerShown: true,
+                      headerTitle: "Publicar experiencia",
                       headerStyle: { backgroundColor: "#fff" },
                     }}/>
                 </Stack.Group>

@@ -3,10 +3,12 @@ import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { Menu, MenuItem } from "react-native-material-menu";
 import theme from "../theme";
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/core";
 
 const { text, colors } = theme;
 
-const ExperienceCard = ({experienceData}) => {
+const ExperienceCard = ({ experienceData }) => {
+  const navigation = useNavigation()
   const [visible, setVisible] = useState(false);
 
   const hideMenu = () => setVisible(false);
@@ -27,12 +29,14 @@ const ExperienceCard = ({experienceData}) => {
             alignItems: "flex-start",
           }}
         >
-          <Text style={[text.descriptionSubtitle, {flex: 1}]}>{experienceData.title}</Text>
+          <Text style={[text.descriptionSubtitle, { flex: 1 }]}>
+            {experienceData.title}
+          </Text>
           <Menu
             visible={visible}
             anchor={
               <Ionicons
-                style={{flex: 1}}
+                style={{ flex: 1 }}
                 name="md-ellipsis-horizontal-sharp"
                 size={24}
                 color="black"
@@ -41,13 +45,17 @@ const ExperienceCard = ({experienceData}) => {
             }
             onRequestClose={hideMenu}
           >
-            <MenuItem onPress={hideMenu}>Editar</MenuItem>
+            <MenuItem
+              onPress={() => {
+                hideMenu();
+              }}
+            >
+              Editar
+            </MenuItem>
             <MenuItem onPress={hideMenu}>Eliminar</MenuItem>
           </Menu>
         </View>
-        <Text>
-          {experienceData.description}
-        </Text>
+        <Text>{experienceData.description}</Text>
       </View>
     </View>
   );
