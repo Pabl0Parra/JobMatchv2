@@ -1,5 +1,7 @@
-import React from "react";
+import { useIsFocused } from "@react-navigation/native";
+import React, { useContext, useEffect } from "react";
 import { View, Text, Image, FlatList } from "react-native";
+import { FocusedTab } from "../context/UserDataContext";
 import theme from "../theme";
 
 const { colors } = theme;
@@ -39,7 +41,17 @@ const CHATS_DATA = [
   },
 ];
 
-const ChatScreen = () => {
+
+
+const ChatScreen = ({navigation}) => {
+  const {setTab}  =useContext(FocusedTab)
+  const isFocused = useIsFocused()
+  
+  useEffect(()=> {
+      isFocused && setTab(3)
+    
+  }, [isFocused]);
+
   return (
     <View style={{ flex: 1 }}>
       <View

@@ -3,6 +3,7 @@ import { createContext, useState } from "react";
 export const UserDataContext = createContext();
 export const UserLoginContex = createContext();
 export const SwipeContext = createContext();
+export const FocusedTab = createContext()
 
 export const UserDataContextProvider = ({ children }) => {
   const [userData, setUserData] = useState({

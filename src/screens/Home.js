@@ -22,8 +22,8 @@ import {
   where,
 } from "@firebase/firestore";
 import { db, mainCollection, postCollection } from "../firebase/credentials";
-import { SwipeContext, UserLoginContex } from "../context/UserDataContext";
-import { useNavigation } from "@react-navigation/core";
+import { FocusedTab, SwipeContext, UserLoginContex } from "../context/UserDataContext";
+import { useIsFocused, useNavigation } from "@react-navigation/core";
 import theme from "../theme";
 import { generateId } from "../utilities/utilities";
 
@@ -36,9 +36,14 @@ const Home = () => {
 
   const [profiles, setProfiles] = useState([]);
   const [empty, setEmpty] = useState(true);
+  const {setTab}  =useContext(FocusedTab)
+  const isFocused = useIsFocused()
 
   useEffect(() => {
     let unsub;
+    setTab(1)
+
+
     const fetchProfiles = async () => {
       //Obtengos los usuarios que deslice a la izquierda y derecha
       const passes = await getDocs(
@@ -95,7 +100,7 @@ const Home = () => {
       console.log("usuario no cargado");
       console.log(userData);
     }
-  }, [db, userData, empty]);
+  }, [db, userData, empty, isFocused]);
 
   const swipeLeft = async (cardIndex) => {
     if (!profiles[cardIndex]) return;
