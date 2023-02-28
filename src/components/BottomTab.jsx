@@ -1,11 +1,13 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import theme from "../theme";
+import { Animated } from "react-native";
 
 //screens
 import Home from "../screens/Home";
 import Conexiones from "../screens/Conexiones";
 import Explore from "../screens/Explore";
-import Messages from "../screens/Messages";
+import ChatScreen from "../screens/ChatScreen";
+
 import DrawerNavigatorProfile from "./DrawerNavigatorProfile";
 import { DrawerActions } from "@react-navigation/routers";
 
@@ -24,7 +26,6 @@ import HomeIcon from "../svgs/HomeIcon";
 import ConectionsIcon from "../svgs/ConectionsIcon";
 import MessagesIcon from "../svgs/MessagesIcon";
 import ProfileIcon from "../svgs/ProfileIcon";
-import ChatScreen from "../screens/Messages";
 
 const Tab = createBottomTabNavigator();
 const { colors } = theme;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import {
   SafeAreaView,
   View,
@@ -8,8 +8,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import theme from "../theme";
-import BackButton from "./BackButton";
-import ChatList from "./ChatList";
+import ChatList from "../components/ChatList";
+import { useIsFocused } from "@react-navigation/native";
+import { FocusedTab } from "../context/UserDataContext";
 
 const colors = theme.colors;
 
@@ -40,7 +41,7 @@ const CHATS_DATA = [
   },
   {
     id: "4",
-    name: "María González",
+    name: "Mario González",
     lastMessage: "Oye, ¿qué estás haciendo?",
     time: "7:30 PM",
     avatar: require("../images/google_buscador.png"),
@@ -49,6 +50,13 @@ const CHATS_DATA = [
 ];
 
 export default function ChatScreen() {
+  const { setTab } = useContext(FocusedTab);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    isFocused && setTab(3);
+  }, [isFocused]);
+
   return (
     <>
       <SafeAreaView
@@ -106,17 +114,6 @@ export default function ChatScreen() {
           >
             <Text>Ver</Text>
           </TouchableOpacity>
-          {/* Dónde va esto? */}
-          {/* <a
-        href="https://www.google.com"
-        style={{
-          textDecorationLine: "none",
-          fontSize: 14,
-          fontWeight: "500",
-        }}
-      >
-        Ver
-      </a> */}
         </View>
         <View style={{ width: "40%", overflow: "hidden", paddingRight: 10 }}>
           <FlatList

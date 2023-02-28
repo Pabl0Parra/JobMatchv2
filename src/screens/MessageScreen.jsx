@@ -8,8 +8,9 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   FlatList,
+  Button,
 } from "react-native";
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import BackButton from "../components/BackButton";
 import getMatchedUserInfo from "../firebase/functions/getMatchedUserInfo";
 import { UserLoginContex } from "../context/UserDataContext";
@@ -22,6 +23,7 @@ import {
   serverTimestamp,
   onSnapshot,
   orderBy,
+  query,
 } from "@firebase/firestore";
 import { db } from "../firebase/credentials";
 

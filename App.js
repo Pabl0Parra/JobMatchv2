@@ -30,7 +30,7 @@ import {
 import Filters from "./src/screens/Filters";
 import "react-native-gesture-handler";
 import PostForm from "./src/screens/PostForm";
-import ChatScreen from "./src/components/ChatScreen";
+import ChatScreen from "./src/screens/ChatScreen";
 import MessageScreen from "./src/screens/MessageScreen";
 
 const Stack = createNativeStackNavigator();

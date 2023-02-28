@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigation } from "@react-navigation/core";
 import { UserLoginContex } from "../context/UserDataContext";
 import getMatchedUserInfo from "../firebase/functions/getMatchedUserInfo";
