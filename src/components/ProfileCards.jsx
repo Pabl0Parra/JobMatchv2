@@ -34,7 +34,7 @@ const ProfileCards = ({worker, dataCards}) => {
             name="plus"
             size={28}
             color="black"
-            onPress={() => navigation.navigate(worker ? "PostForm" : "PostForm")}
+            onPress={() => navigation.navigate(worker ? "ExperiencieForm" : "PostForm")}
           />
         </TouchableOpacity>
       </View>
