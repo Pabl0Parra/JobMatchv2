@@ -3,10 +3,14 @@ import { FontAwesome } from "@expo/vector-icons";
 import theme from "../theme";
 import ExperienceCard from "./ExperienceCard";
 import JobCard from "./JobCard";
+import { useNavigation } from "@react-navigation/native";
 
 const { text, colors } = theme;
 
 const ProfileCards = ({worker, dataCards}) => {
+
+  const navigation = useNavigation()
+
   return (
     <View style={styles.containerSectionExperience}>
       <View
@@ -30,6 +34,7 @@ const ProfileCards = ({worker, dataCards}) => {
             name="plus"
             size={28}
             color="black"
+            onPress={() => navigation.navigate(worker ? "PostForm" : "PostForm")}
           />
         </TouchableOpacity>
       </View>
