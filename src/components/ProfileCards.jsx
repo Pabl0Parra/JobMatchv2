@@ -4,12 +4,39 @@ import theme from "../theme";
 import ExperienceCard from "./ExperienceCard";
 import JobCard from "./JobCard";
 import { useNavigation } from "@react-navigation/native";
+import { useEffect, useContext } from "react";
+import { UserLoginContex } from "../context/UserDataContext";
 
 const { text, colors } = theme;
 
-const ProfileCards = ({worker, dataCards}) => {
+const ProfileCards = ({ worker, dataCards }) => {
+  const navigation = useNavigation();
+  const { userData, setUserData } = useContext(UserLoginContex);
 
-  const navigation = useNavigation()
+  const cardsMap = () => {
+
+    if (dataCards === undefined) {return null}
+
+    if (worker) {
+     return dataCards.map((exp) => (
+        <ExperienceCard
+          key={exp.id}
+          experienceData={{
+            title: exp.position,
+            description: exp.description,
+          }}
+        />
+      ))
+         } else {
+      return (<JobCard
+        jobData={{
+          rol: "Desarrollador web",
+          position: "front-end developer",
+          seniority: "senior",
+          country: "Argentina",
+        }}
+      />)
+    }}
 
   return (
     <View style={styles.containerSectionExperience}>
@@ -21,7 +48,9 @@ const ProfileCards = ({worker, dataCards}) => {
           alignItems: "flex-start",
         }}
       >
-        <Text style={[text.text16, { fontWeight: "bold" }]}>{worker? "Experiencia" : "Puestos Vacantes"}</Text>
+        <Text style={[text.text16, { fontWeight: "bold" }]}>
+          {worker ? "Experiencia" : "Puestos Vacantes"}
+        </Text>
         <TouchableOpacity
           style={{
             position: "relative",
@@ -34,26 +63,13 @@ const ProfileCards = ({worker, dataCards}) => {
             name="plus"
             size={28}
             color="black"
-            onPress={() => navigation.navigate(worker ? "ExperiencieForm" : "PostForm")}
+            onPress={() =>
+              navigation.navigate(worker ? "ExperiencieForm" : "PostForm")
+            }
           />
         </TouchableOpacity>
       </View>
-      {worker? (
-        <ExperienceCard
-          experienceData={{
-            title: "probandos",
-            description: "esto es una description",
-          }}
-        />
-      ) : 
-      (<JobCard
-        jobData={{
-          rol: "Desarrollador web",
-          position: "front-end developer",
-          seniority: "senior",
-          country: "Argentina",
-        }}
-      />)}
+      {cardsMap()}
     </View>
   );
 };
