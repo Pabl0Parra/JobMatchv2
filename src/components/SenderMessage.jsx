@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "purple",
     borderRadius: 8,
-    borderTopRightRadius: "none",
+    borderTopRightRadius: 0,
     paddingHorizontal: 10,
     paddingVertical: 5,
     marginHorizontal: 6,

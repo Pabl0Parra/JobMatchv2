@@ -28,9 +28,9 @@ import {
 import { db } from "../firebase/credentials";
 
 export default function MessageScreen() {
-  const { userData } = useContext(UserLoginContex); //userData or user?
+  const { userData } = useContext(UserLoginContex);
   const { params } = useRoute();
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState("HELLO");
   const [messages, setMessages] = useState([]);
 
   const { matchDetails } = params;
@@ -57,11 +57,10 @@ export default function MessageScreen() {
     addDoc(collection(db, "Matches", matchDetails.id, "Messages"), {
       timestamp: serverTimestamp(),
       userId: userData.id,
-      name: userData.name,
-      image: matchDetails.users[userData.id].image,
+      name: userData.userName,
+      image: userData.image,
       message: input,
     });
-
     setInput("");
   };
 
@@ -90,7 +89,6 @@ export default function MessageScreen() {
             }
           />
         </TouchableWithoutFeedback>
-
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}

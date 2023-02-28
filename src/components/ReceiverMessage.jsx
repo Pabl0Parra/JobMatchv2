@@ -5,7 +5,7 @@ export default function ReceiverMessage({ message }) {
   return (
     <View style={styles.container}>
       <Image source={{ uri: message.image }} style={styles.image} />
-      <Text style={styles.message}>ReceiverMessage</Text>
+      <Text style={styles.message}>{message.message}</Text>
     </View>
   );
 }
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "red",
     borderRadius: 8,
-    borderTopRightRadius: "none",
+    borderTopRightRadius: 0,
     paddingHorizontal: 10,
     paddingVertical: 5,
     marginHorizontal: 6,
