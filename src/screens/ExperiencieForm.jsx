@@ -9,20 +9,24 @@ import addExperience from "../firebase/functions/addExperience";
 import { useContext } from "react";
 import { UserLoginContex } from "../context/UserDataContext";
 import { useNavigation } from "@react-navigation/core";
-import { async } from "@firebase/util";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
+import { useRoute } from '@react-navigation/native';
+import Constants from "expo-constants";
 
 const { text, colors } = theme;
 
-const ExperiencieForm = ({ dataForm }) => {
+const ExperiencieForm = () => {
   const { userData, setUserData } = useContext(UserLoginContex);
   const navigation = useNavigation();
+  const route = useRoute();
+
+  console.log(route.params)
 
   const inicialValue = {
-    position: dataForm ? "" : "",
-    description: dataForm ? "" : "",
-    period: dataForm ? "" : "",
-    country: dataForm ? "" : "",
+    position: route.params ? route.params.position : "",
+    description: route.params ? route.params.description : "",
+    period: route.params ? route.params.period : "",
+    country: route.params ? route.params.country : "",
   };
 
   const yupText = yup.string().required("Este campo es requerido");
@@ -119,6 +123,7 @@ export default ExperiencieForm;
 const styles = StyleSheet.create({
   displayContainer: {
     justifyContent: "flex-start",
+    marginTop: Constants.statusBarHeight + 15
   },
   textMultiline: {
     height: 130,

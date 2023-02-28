@@ -21,10 +21,7 @@ const ProfileCards = () => {
      return userData.experiencies.map((exp) => (
         <ExperienceCard
           key={exp.id}
-          experienceData={{
-            title: exp.position,
-            description: exp.description,
-          }}
+          experienceData={exp}
         />
       ))
          } else {

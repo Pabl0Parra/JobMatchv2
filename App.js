@@ -151,9 +151,7 @@ export default function App() {
                     <Stack.Screen name="ExperiencieForm"
                     component={ExperiencieForm}
                     options={{
-                      headerShown: true,
-                      headerTitle: "Publicar experiencia",
-                      headerStyle: { backgroundColor: "#fff" },
+                      headerShown: false,
                     }}/>
                 </Stack.Group>
                 <Stack.Group

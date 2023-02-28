@@ -8,7 +8,7 @@ import { useNavigation } from "@react-navigation/core";
 const { text, colors } = theme;
 
 const ExperienceCard = ({ experienceData }) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
 
   const hideMenu = () => setVisible(false);
@@ -30,7 +30,7 @@ const ExperienceCard = ({ experienceData }) => {
           }}
         >
           <Text style={[text.descriptionSubtitle, { flex: 1 }]}>
-            {experienceData.title}
+            {experienceData.position}
           </Text>
           <Menu
             visible={visible}
@@ -48,6 +48,8 @@ const ExperienceCard = ({ experienceData }) => {
             <MenuItem
               onPress={() => {
                 hideMenu();
+                navigation.navigate("ExperiencieForm", experienceData
+                );
               }}
             >
               Editar
