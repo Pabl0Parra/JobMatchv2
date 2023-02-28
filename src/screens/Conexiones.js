@@ -9,30 +9,35 @@ import MiniCard from "../components/MiniCard";
 import { useContext, useEffect, useState } from "react";
 import { collection, doc, onSnapshot, query } from "firebase/firestore";
 import { db, mainCollection } from "../firebase/credentials";
-import { UserLoginContex } from "../context/UserDataContext";
+import { FocusedTab, UserLoginContex } from "../context/UserDataContext";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 
 const { text, colors } = theme;
 
-const Conexiones = () => {
+const Conexiones = ({ navigation }) => {
   const { userData } = useContext(UserLoginContex);
   const [saved, setSaved] = useState([]);
   const [matches, setMatches] = useState([]);
   const [likedTo, setLikedTo] = useState([]);
+  const { setTab } = useContext(FocusedTab);
+  /* const navigation = useNavigation() */
+  const isFocused = useIsFocused();
 
   useEffect(() => {
+    isFocused && setTab(2);
+
     const savedProfiles = onSnapshot(
       collection(db, mainCollection, userData.id, "saved"),
       (snapshot) => {
         let temp = [];
         snapshot.forEach((doc) => temp.push(doc.data()));
-        console.log(temp);
         setSaved(temp);
       }
     );
 
     //TODO: Cómo puedo obtener los perfiles a los que le gustó mi perfil?
     //Había hechoo que muestre los perfiles con los que hice match, no los que me dieron like
-/*     const matchedProfiles = onSnapshot(
+    /*     const matchedProfiles = onSnapshot(
       collection(db, "HomeTest", userData.id, "matches"),
       (snapshot) => {
         let temp = [];
@@ -43,16 +48,16 @@ const Conexiones = () => {
     ); */
 
     const likedProfiles = onSnapshot(
-      collection(db, mainCollection, userData.id, "likedTo"), 
-      (snapshot)=> {
-        let temp =[];
-        snapshot.forEach(doc => temp.push(doc.data()));
+      collection(db, mainCollection, userData.id, "likedTo"),
+      (snapshot) => {
+        let temp = [];
+        snapshot.forEach((doc) => temp.push(doc.data()));
         setLikedTo(temp);
       }
-    )
+    );
 
     return likedProfiles, savedProfiles;
-  }, []);
+  }, [isFocused]);
 
   return (
     <DisplayContainer style={styles.container}>
@@ -76,7 +81,9 @@ const Conexiones = () => {
               style={{ marginVertical: 16 }}
               horizontal
               data={likedTo}
-              renderItem={({ item }) => <MiniCard item={item} large id={item.id}/>}
+              renderItem={({ item }) => (
+                <MiniCard item={item} large id={item.id} />
+              )}
             />
           ) : (
             <View
@@ -95,7 +102,7 @@ const Conexiones = () => {
             Favoritos
           </Text>
         </View>
-        <View style={{minHeight:"30%" }}>
+        <View style={{ minHeight: "30%" }}>
           {saved.length > 0 ? (
             <FlatList
               style={{ marginVertical: 16 }}
@@ -111,7 +118,9 @@ const Conexiones = () => {
                 flex: 1,
               }}
             >
-              <Text style={text[14]}>Aquí verás los perfiles que guardaste</Text>
+              <Text style={text[14]}>
+                Aquí verás los perfiles que guardaste
+              </Text>
             </View>
           )}
         </View>

@@ -20,13 +20,13 @@ import {
   FontAwesome,
   Feather,
 } from "@expo/vector-icons";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Switch } from "react-native-paper";
 import CircularProgress from "../components/CircularProgress";
-import { UserLoginContex } from "../context/UserDataContext";
+import { FocusedTab, UserLoginContex } from "../context/UserDataContext";
 import DisplayContainer from "../components/DisplayContainer";
 import theme from "../theme";
-import { useNavigation } from "@react-navigation/core";
+import { useIsFocused, useNavigation } from "@react-navigation/core";
 import * as ImagePicker from "expo-image-picker";
 import uploadProfilePicture from "../firebase/functions/uploadProfilePicture";
 import changeURLProfilePictureDB from "../firebase/functions/changeURLProfilePictureDB";
@@ -36,12 +36,12 @@ import ProfileCards from "../components/ProfileCards";
 
 const { text, colors } = theme;
 
-const Profile = () => {
+const Profile = ({navigation}) => {
+  const { userData, setUserData } = useContext(UserLoginContex);
   const [isEnabled, setIsEnabled] = useState(false);
-  const navigation = useNavigation();
+  /* const navigation = useNavigation(); */
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const [percentage, setPercentage] = useState(60);
-  const { userData, setUserData } = useContext(UserLoginContex);
 
   const changeProfilePicture = async () => {
     try {
@@ -71,6 +71,13 @@ const Profile = () => {
       console.log(error);
     }
   };
+  const {setTab}  =useContext(FocusedTab)
+  const isFocused = useIsFocused()
+  
+  useEffect(()=> {
+      isFocused && setTab(4)
+    
+  }, [isFocused]);
 
   return (
     <DisplayContainer style={styles.container}>
