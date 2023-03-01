@@ -32,7 +32,7 @@ import "react-native-gesture-handler";
 import PostForm from "./src/screens/PostForm";
 import ChatScreen from "./src/screens/ChatScreen";
 import MessageScreen from "./src/screens/MessageScreen";
-import ExperiencieForm from "./src/screens/ExperiencieForm";
+import ExperienceForm from "./src/screens/ExperienceForm";
 
 
 const Stack = createNativeStackNavigator();
@@ -154,12 +154,10 @@ export default function App() {
                   />
                   <Stack.Screen name="ChatScreen" component={ChatScreen} />
                   <Stack.Screen name="Message" component={MessageScreen} />                   
-                    <Stack.Screen name="ExperiencieForm"
-                    component={ExperiencieForm}
+                    <Stack.Screen name="ExperienceForm"
+                    component={ExperienceForm}
                     options={{
-                      headerShown: true,
-                      headerTitle: "Publicar experiencia",
-                      headerStyle: { backgroundColor: "#fff" },
+                      headerShown: false,
                     }}/>
                 </Stack.Group>
                 <Stack.Group

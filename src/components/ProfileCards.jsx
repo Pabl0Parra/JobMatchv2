@@ -4,39 +4,52 @@ import theme from "../theme";
 import ExperienceCard from "./ExperienceCard";
 import JobCard from "./JobCard";
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useContext } from "react";
+import { useContext } from "react";
 import { UserLoginContex } from "../context/UserDataContext";
 
 const { text, colors } = theme;
 
-const ProfileCards = ({ worker, dataCards }) => {
+const ProfileCards = () => {
   const navigation = useNavigation();
-  const { userData, setUserData } = useContext(UserLoginContex);
+  const { userData } = useContext(UserLoginContex);
 
   const cardsMap = () => {
+    if (userData.experiences.length === 0) {
+      return (
+        <Text
+          style={[
+            text.text16,
+            {
+              textAlign: "center",
+              fontWeight: "700",
+              color: colors.secondary,
+              padding: 3,
+            },
+          ]}
+          onPress={() => navigation.navigate("ExperienceForm")}
+        >
+          Agregar {userData.worker ? "Experiencias" : "Puestos vacantes"}
+        </Text>
+      );
+    }
 
-    if (dataCards === undefined) {return null}
-
-    if (worker) {
-     return dataCards.map((exp) => (
-        <ExperienceCard
-          key={exp.id}
-          experienceData={{
-            title: exp.position,
-            description: exp.description,
+    if (userData.worker) {
+      return userData.experiences.map((exp) => (
+        <ExperienceCard key={exp.id} experienceData={exp} />
+      ));
+    } else {
+      return (
+        <JobCard
+          jobData={{
+            rol: "Desarrollador web",
+            position: "front-end developer",
+            seniority: "senior",
+            country: "Argentina",
           }}
         />
-      ))
-         } else {
-      return (<JobCard
-        jobData={{
-          rol: "Desarrollador web",
-          position: "front-end developer",
-          seniority: "senior",
-          country: "Argentina",
-        }}
-      />)
-    }}
+      );
+    }
+  };
 
   return (
     <View style={styles.containerSectionExperience}>
@@ -49,7 +62,7 @@ const ProfileCards = ({ worker, dataCards }) => {
         }}
       >
         <Text style={[text.text16, { fontWeight: "bold" }]}>
-          {worker ? "Experiencia" : "Puestos Vacantes"}
+          {userData.worker ? "Experiencia" : "Puestos Vacantes"}
         </Text>
         <TouchableOpacity
           style={{
@@ -64,7 +77,9 @@ const ProfileCards = ({ worker, dataCards }) => {
             size={28}
             color="black"
             onPress={() =>
-              navigation.navigate(worker ? "ExperiencieForm" : "PostForm")
+              navigation.navigate(
+                userData.worker ? "ExperienceForm" : "PostForm"
+              )
             }
           />
         </TouchableOpacity>

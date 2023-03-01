@@ -2,14 +2,18 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { Menu, MenuItem } from "react-native-material-menu";
 import theme from "../theme";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/core";
+import deleteExperence from "../firebase/functions/deleteExperence";
+import getUserDataDB from "../firebase/functions/getUserDataDB";
+import { UserLoginContex } from "../context/UserDataContext";
 
 const { text, colors } = theme;
 
 const ExperienceCard = ({ experienceData }) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
+  const { setUserData } = useContext(UserLoginContex);
 
   const hideMenu = () => setVisible(false);
 
@@ -29,8 +33,13 @@ const ExperienceCard = ({ experienceData }) => {
             alignItems: "flex-start",
           }}
         >
-          <Text style={[text.descriptionSubtitle, { flex: 1 }]}>
-            {experienceData.title}
+          <Text
+            style={[
+              text.descriptionTitle,
+              { flex: 1, fontSize: 18, marginBottom: 0 },
+            ]}
+          >
+            {experienceData.position}
           </Text>
           <Menu
             visible={visible}
@@ -48,14 +57,44 @@ const ExperienceCard = ({ experienceData }) => {
             <MenuItem
               onPress={() => {
                 hideMenu();
+                navigation.navigate("ExperienceForm", experienceData);
               }}
             >
               Editar
             </MenuItem>
-            <MenuItem onPress={hideMenu}>Eliminar</MenuItem>
+            <MenuItem
+              onPress={async () => {
+                hideMenu();
+                try {
+                  await deleteExperence(
+                    experienceData.userId,
+                    experienceData.id
+                  );
+                  const res = await getUserDataDB(experienceData.userId);
+
+                  if (res) {
+                    setUserData(res);
+                  } else {
+                    console.log("error al obtener los datos");
+                  }
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            >
+              Eliminar
+            </MenuItem>
           </Menu>
         </View>
-        <Text>{experienceData.description}</Text>
+        <Text style={[text.text14, { flex: 1, fontStyle: "italic", fontWeight: "600", color: colors.text, marginBottom: 4 }]}>
+          {experienceData.country}
+        </Text>
+        <Text style={[text.text14, { flex: 1, fontStyle: "italic", fontWeight: "400", color: colors.text, marginBottom: 4 }]}>
+          {experienceData.period}
+        </Text>
+        <Text style={[text.text14, { flex: 1, fontWeight: "600" }]}>
+          {experienceData.description}
+        </Text>
       </View>
     </View>
   );

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from "react-native";
 import { Formik } from "formik";
 import DisplayContainer from "../components/DisplayContainer";
 import InputContainer from "../components/InputContainer";
@@ -9,18 +9,24 @@ import addExperience from "../firebase/functions/addExperience";
 import { useContext } from "react";
 import { UserLoginContex } from "../context/UserDataContext";
 import { useNavigation } from "@react-navigation/core";
+import getUserDataDB from "../firebase/functions/getUserDataDB";
+import { useRoute } from "@react-navigation/native";
+import Constants from "expo-constants";
+import updateExperience from "../firebase/functions/updateExperience";
+import { AntDesign } from "@expo/vector-icons";
 
 const { text, colors } = theme;
 
-const ExperiencieForm = ({ dataForm }) => {
+const ExperienceForm = () => {
   const { userData, setUserData } = useContext(UserLoginContex);
   const navigation = useNavigation();
+  const route = useRoute();
 
   const inicialValue = {
-    position: dataForm? "" : "",
-    description: dataForm? "" : "",
-    period: dataForm? "" : "",
-    country: dataForm? "" : "",
+    position: route.params ? route.params.position : "",
+    description: route.params ? route.params.description : "",
+    period: route.params ? route.params.period : "",
+    country: route.params ? route.params.country : "",
   };
 
   const yupText = yup.string().required("Este campo es requerido");
@@ -34,12 +40,34 @@ const ExperiencieForm = ({ dataForm }) => {
 
   return (
     <DisplayContainer style={styles.displayContainer}>
+      <View style={styles.boxReturn}>
+        <TouchableOpacity
+          style={styles.arrowLeft}
+          onPress={(e) => navigation.navigate("Perfil")}
+        >
+          <AntDesign name="arrowleft" size={36} color={colors.secondary} />
+        </TouchableOpacity>
+        <Text style={[text.headerTitle , styles.headerText]}>{route.params ? "Editar experiencia" : "Crear experiancia"}</Text>
+      </View>
       <Formik
         initialValues={inicialValue}
         validationSchema={yup.object().shape(validationSchema)}
-        onSubmit={(obj) => {
-          addExperience(obj, userData.id);
-          navigation.navigate("Perfil");
+        onSubmit={async (obj) => {
+          try {
+            route.params
+              ? await updateExperience(obj, userData.id, route.params.id)
+              : await addExperience(obj, userData.id);
+            const res = await getUserDataDB(userData.id);
+
+            if (res) {
+              setUserData(res);
+              navigation.navigate("DrawerNavigatorProfile");
+            } else {
+              console.log("error al obtener los datos");
+            }
+          } catch (error) {
+            console.log(error);
+          }
         }}
       >
         {({ handleSubmit, handleChange, values, errors, touched }) => (
@@ -83,10 +111,15 @@ const ExperiencieForm = ({ dataForm }) => {
             </View>
             <ReusableButton
               styleContainer={{ marginVertical: 10 }}
-              innerText={"siguiente"}
+              innerText={"Aceptar"}
               onPress={handleSubmit}
             />
-            <ReusableButton innerText={"cancelar"} />
+            <ReusableButton
+              innerText={"Cancelar"}
+              onPress={() => navigation.navigate("DrawerNavigatorProfile")}
+              styleContainer={{ backgroundColor: "#888" }}
+              styleText={{ color: "#ddd" }}
+            />
           </ScrollView>
         )}
       </Formik>
@@ -94,15 +127,29 @@ const ExperiencieForm = ({ dataForm }) => {
   );
 };
 
-export default ExperiencieForm;
+export default ExperienceForm;
 
 const styles = StyleSheet.create({
   displayContainer: {
     justifyContent: "flex-start",
+    marginTop: Constants.statusBarHeight + 15,
   },
   textMultiline: {
     height: 130,
     textAlign: "justify",
     textAlignVertical: "top",
   },
+  boxReturn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    alignSelf: "flex-start",
+    marginLeft: 28,
+    marginBottom: 15,
+  },
+  headerText: {
+  },
+  arrowLeft: {
+    marginHorizontal: 15
+  }
 });

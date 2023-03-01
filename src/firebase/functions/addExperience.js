@@ -1,11 +1,11 @@
 import { collection, doc, serverTimestamp, setDoc } from "@firebase/firestore";
-import { db, mainCollection, experiencieCollection } from "../credentials";
+import { db, mainCollection } from "../credentials";
 
 const addExperience = async (obj, userId) => {
     
   try {
-    const newExp = doc(collection(db, mainCollection, userId, "experiencies"));
-    const expToCollection = doc(collection(db, experiencieCollection));
+    const newExp = doc(collection(db, mainCollection, userId, "experiences"));
+    const expToCollection = doc(collection(db, "Experiences"));
 
     await setDoc(expToCollection, {
       ...obj,
@@ -20,7 +20,7 @@ const addExperience = async (obj, userId) => {
       timestamp: serverTimestamp(),
     });
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
 
 };
