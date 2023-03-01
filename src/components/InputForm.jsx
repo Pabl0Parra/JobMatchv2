@@ -46,7 +46,7 @@ const InputForm = ({
           yupVal = yup
             .string()
             .required("Este campo es requerido")
-            .min(6, `Contraseña debe tener al menos 6 caracteres`);
+            .min(8, `Contraseña debe tener al menos 8 caracteres`);
           break;
         case "verifyPassword":
           yupVal = yup
@@ -55,7 +55,10 @@ const InputForm = ({
             .required("Este campo es requerido");
           break;
         case "text":
-          yupVal = yup.string().required("Este campo es requerido");
+          yupVal = yup
+            .string()
+            .required("Este campo es requerido")
+            .matches(/^[a-zA-Z\s]*$/, "Solo se permiten letras y espacios");
           break;
       }
 
@@ -115,7 +118,7 @@ const InputForm = ({
                 Object.entries(errors)?.length === 0 &&
                 fields.some((field) => values[field.name] !== "")
               }
-              styleContainer={{marginTop: buttonMarginTop}}
+              styleContainer={{ marginTop: buttonMarginTop }}
               onPress={handleSubmit}
             />
           </View>
@@ -135,7 +138,7 @@ const styles = StyleSheet.create({
     color: "#192B65",
     fontSize: 20,
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
   },
   requestText: {
     color: "#192B65",
