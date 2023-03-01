@@ -127,7 +127,7 @@ export default function BottomTab({ navigation }) {
           }}
         />
         <Tab.Screen
-          name="Profile"
+          name="Perfil"
           component={DrawerNavigatorProfile}
           options={{
             tabBarIcon: ({ color }) => (
