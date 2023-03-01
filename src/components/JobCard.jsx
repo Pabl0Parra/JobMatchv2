@@ -6,7 +6,7 @@ import { useState } from "react";
 
 const { text, colors } = theme;
 
-const JobCard = ({jobData}) => {
+const JobCard = ({postData}) => {
   const [visible, setVisible] = useState(false);
 
   const hideMenu = () => setVisible(false);
@@ -27,7 +27,7 @@ const JobCard = ({jobData}) => {
             alignItems: "flex-start",
           }}
         >
-          <Text style={[text.descriptionSubtitle, {flex: 1}]}>{jobData.country}</Text>
+          <Text style={[text.descriptionSubtitle, {flex: 1}]}>{postData.roleWanted}</Text>
           <Menu
             visible={visible}
             anchor={
@@ -46,7 +46,7 @@ const JobCard = ({jobData}) => {
           </Menu>
         </View>
         <Text>
-          {jobData.position}
+          {postData.experience}
         </Text>
       </View>
     </View>
