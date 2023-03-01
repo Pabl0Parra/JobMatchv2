@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/core";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
 import { useRoute } from '@react-navigation/native';
 import Constants from "expo-constants";
+import updateExperience from '../firebase/functions/updateExperience'
 
 const { text, colors } = theme;
 
@@ -45,8 +46,8 @@ const ExperienceForm = () => {
         validationSchema={yup.object().shape(validationSchema)}
         onSubmit={async (obj) => {
           try {
-            const exp = await addExperience(obj, userData.id);
-            console.log(exp)
+
+            (route.params) ? await updateExperience(obj, userData.id, route.params.id) : await addExperience(obj, userData.id);
             const res = await getUserDataDB(userData.id);
 
             if (res) {
