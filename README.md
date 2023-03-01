@@ -88,7 +88,7 @@
 - Frontend Devs:
   - [@PabloParra](https://linkedin.com/in/pablo-parra-bcn)
   - [@NicolásSepertino]()
-  - [](NicolásRadin)()
+  - [@NicolásRadín](https://www.linkedin.com/in/nico-radin/)
 - QA Tester: [TatianaMontoya](https://www.linkedin.com/in/tatiana-montoya-8b9b99234/)
 
 > **Note**
