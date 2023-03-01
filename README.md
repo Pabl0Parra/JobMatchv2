@@ -87,9 +87,9 @@
 - Diseño: [Yesenia]()
 - Frontend Devs:
   - [@PabloParra](https://linkedin.com/in/pablo-parra-bcn)
-  - [@NicolásSepertino]()
-  - [@NicolásRadín](https://www.linkedin.com/in/nico-radin/)
-- QA Tester: [TatianaMontoya](https://www.linkedin.com/in/tatiana-montoya-8b9b99234/)
+  - [@NicolásSepertino](https://www.linkedin.com/in/nicolassepertino/)
+  - [](NicolásRadin)()
+- QA Tester: [TatianaMontoya](https://www.linkedin.com/in/tatiana-montoya-73593654/)
 
 > **Note**
 > ***Este proyecto ha sido creado sin ningún conocimiento previo de React Native.
