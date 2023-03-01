@@ -35,14 +35,14 @@ const theme = {
       letterSpacing:0.5,
       color: "#525252",
     },
-    14:{
+    text14:{
       fontFamily:"Roboto",
       fontWeight:"400",
       fontSize:14,
       letterSpacing:0.5,
       color: "#525252",
     },
-    12:{
+    text12:{
       fontFamily:"Roboto",
       fontWeight:"400",
       fontSize:12,

@@ -14,26 +14,42 @@ const ProfileCards = () => {
   const { userData } = useContext(UserLoginContex);
 
   const cardsMap = () => {
-
-    if ( userData.experiencies.length === 0) {return <Text>Agregar {userData.worker? "Experiencias" : "Puestos vacantes"}</Text>}
+    if (userData.experiences.length === 0) {
+      return (
+        <Text
+          style={[
+            text.text16,
+            {
+              textAlign: "center",
+              fontWeight: "700",
+              color: colors.secondary,
+              padding: 3,
+            },
+          ]}
+          onPress={() => navigation.navigate("ExperienceForm")}
+        >
+          Agregar {userData.worker ? "Experiencias" : "Puestos vacantes"}
+        </Text>
+      );
+    }
 
     if (userData.worker) {
-     return userData.experiencies.map((exp) => (
-        <ExperienceCard
-          key={exp.id}
-          experienceData={exp}
+      return userData.experiences.map((exp) => (
+        <ExperienceCard key={exp.id} experienceData={exp} />
+      ));
+    } else {
+      return (
+        <JobCard
+          jobData={{
+            rol: "Desarrollador web",
+            position: "front-end developer",
+            seniority: "senior",
+            country: "Argentina",
+          }}
         />
-      ))
-         } else {
-      return (<JobCard
-        jobData={{
-          rol: "Desarrollador web",
-          position: "front-end developer",
-          seniority: "senior",
-          country: "Argentina",
-        }}
-      />)
-    }}
+      );
+    }
+  };
 
   return (
     <View style={styles.containerSectionExperience}>
@@ -61,7 +77,9 @@ const ProfileCards = () => {
             size={28}
             color="black"
             onPress={() =>
-              navigation.navigate(userData.worker ? "ExperienceForm" : "PostForm")
+              navigation.navigate(
+                userData.worker ? "ExperienceForm" : "PostForm"
+              )
             }
           />
         </TouchableOpacity>

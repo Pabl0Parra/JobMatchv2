@@ -24,7 +24,6 @@ export const db = getFirestore(firebaseApp);
 export const mainCollection = "HomeTest";
 export const matchCollection = "Matches";
 export const postCollection = "Posts";
-export const experiencieCollection = "Experiencies"
 
 
 export default firebaseApp;

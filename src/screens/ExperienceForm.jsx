@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from "react-native";
 import { Formik } from "formik";
 import DisplayContainer from "../components/DisplayContainer";
 import InputContainer from "../components/InputContainer";
@@ -10,9 +10,10 @@ import { useContext } from "react";
 import { UserLoginContex } from "../context/UserDataContext";
 import { useNavigation } from "@react-navigation/core";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
-import { useRoute } from '@react-navigation/native';
+import { useRoute } from "@react-navigation/native";
 import Constants from "expo-constants";
-import updateExperience from '../firebase/functions/updateExperience'
+import updateExperience from "../firebase/functions/updateExperience";
+import { AntDesign } from "@expo/vector-icons";
 
 const { text, colors } = theme;
 
@@ -20,8 +21,6 @@ const ExperienceForm = () => {
   const { userData, setUserData } = useContext(UserLoginContex);
   const navigation = useNavigation();
   const route = useRoute();
-
-  console.log(route.params)
 
   const inicialValue = {
     position: route.params ? route.params.position : "",
@@ -41,24 +40,33 @@ const ExperienceForm = () => {
 
   return (
     <DisplayContainer style={styles.displayContainer}>
+      <View style={styles.boxReturn}>
+        <TouchableOpacity
+          style={styles.arrowLeft}
+          onPress={(e) => navigation.navigate("Perfil")}
+        >
+          <AntDesign name="arrowleft" size={36} color={colors.secondary} />
+        </TouchableOpacity>
+        <Text style={[text.headerTitle , styles.headerText]}>{route.params ? "Editar experiencia" : "Crear experiancia"}</Text>
+      </View>
       <Formik
         initialValues={inicialValue}
         validationSchema={yup.object().shape(validationSchema)}
         onSubmit={async (obj) => {
           try {
-
-            (route.params) ? await updateExperience(obj, userData.id, route.params.id) : await addExperience(obj, userData.id);
+            route.params
+              ? await updateExperience(obj, userData.id, route.params.id)
+              : await addExperience(obj, userData.id);
             const res = await getUserDataDB(userData.id);
 
             if (res) {
-              setUserData(res); 
+              setUserData(res);
               navigation.navigate("DrawerNavigatorProfile");
             } else {
-              console.log("error al obtener los datos")
+              console.log("error al obtener los datos");
             }
-
           } catch (error) {
-            console.log(error)
+            console.log(error);
           }
         }}
       >
@@ -103,11 +111,11 @@ const ExperienceForm = () => {
             </View>
             <ReusableButton
               styleContainer={{ marginVertical: 10 }}
-              innerText={"siguiente"}
+              innerText={"Aceptar"}
               onPress={handleSubmit}
             />
             <ReusableButton
-              innerText={"cancelar"}
+              innerText={"Cancelar"}
               onPress={() => navigation.navigate("DrawerNavigatorProfile")}
               styleContainer={{ backgroundColor: "#888" }}
               styleText={{ color: "#ddd" }}
@@ -124,11 +132,24 @@ export default ExperienceForm;
 const styles = StyleSheet.create({
   displayContainer: {
     justifyContent: "flex-start",
-    marginTop: Constants.statusBarHeight + 15
+    marginTop: Constants.statusBarHeight + 15,
   },
   textMultiline: {
     height: 130,
     textAlign: "justify",
     textAlignVertical: "top",
   },
+  boxReturn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    alignSelf: "flex-start",
+    marginLeft: 28,
+    marginBottom: 15,
+  },
+  headerText: {
+  },
+  arrowLeft: {
+    marginHorizontal: 15
+  }
 });
