@@ -63,6 +63,14 @@ const Profile = () => {
     }
   };
 
+  const {setTab}  =useContext(FocusedTab)
+  const isFocused = useIsFocused()
+  
+  useEffect(()=> {
+      isFocused && setTab(4)
+    
+  }, [isFocused, userData]);
+
 
   return (
     <DisplayContainer style={styles.container}>
