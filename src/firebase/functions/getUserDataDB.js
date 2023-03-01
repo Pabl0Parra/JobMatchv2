@@ -8,15 +8,15 @@ const getUserDataDB = async (userId) => {
 
     if (docSnap.exists()) {
       
-      const collectionExpRef = collection(db, "HomeTest", userId, "experiences");
+      const collectionRef = collection(db, "HomeTest", userId, docSnap.data().worker? "experiences" : "posts");
      /*  const queryExp = query(collectionExpRef, orderBy("timestamp", "des")) */
-      const querySnaps = await getDocs(collectionExpRef);
+      const querySnaps = await getDocs(collectionRef);
 
-      const arrExp = [];
+      const arr = [];
 
-      querySnaps.docs.forEach((doc) => arrExp.push({ ...doc.data() }));
+      querySnaps.docs.forEach((doc) => arr.push({ ...doc.data() }));
 
-      return {...docSnap.data(), experiences: arrExp}
+      return {...docSnap.data(), [`${docSnap.data().worker? "experiences" : "posts"}`] : arr}
     } else {
       // doc.data() will be undefined in this case
       return null;

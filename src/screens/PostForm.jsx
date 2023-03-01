@@ -1,5 +1,6 @@
 import { collection, doc, serverTimestamp, setDoc } from "@firebase/firestore";
-import { useNavigation } from "@react-navigation/core";
+import { async } from "@firebase/util";
+import { useNavigation, useRoute } from "@react-navigation/core";
 import { useFormik } from "formik";
 import React, { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
@@ -14,61 +15,91 @@ import DisplayContainer from "../components/DisplayContainer";
 import ReusableButton from "../components/ReusableButton";
 import { UserLoginContex } from "../context/UserDataContext";
 import { db, mainCollection, postCollection } from "../firebase/credentials";
+import getUserDataDB from "../firebase/functions/getUserDataDB";
+import updateExperienceOrPost from "../firebase/functions/updateExperienceOrPost";
 import theme from "../theme";
 
 const { text, colors } = theme;
 
 const PostForm = () => {
-  const navigation = useNavigation()
-  const { userData } = useContext(UserLoginContex);
-  /* const [post, setPost] = useState({}); */
+  const navigation = useNavigation();
+  const { userData, setUserData } = useContext(UserLoginContex);
+  const route = useRoute();
+
   const formik = useFormik({
     initialValues: {
-      timeJob: "",
-      mode: "",
-      roleWanted: "",
-      country: "",
-      seniority: "",
-      english: "",
-      education:"",
-      experience:"",
-      requirements:"",
-      functions:"",
-      hourHand:"",
-      contract:"",
-      salary:"",
+      timeJob: route.params ? route.params.timeJob : "",
+      mode: route.params ? route.params.mode : "",
+      roleWanted: route.params ? route.params.roleWanted : "",
+      country: route.params ? route.params.country : "",
+      seniority: route.params ? route.params.seniority : "",
+      english: route.params ? route.params.english : "",
+      education: route.params ? route.params.education : "",
+      experience: route.params ? route.params.experience : "",
+      requirements: route.params ? route.params.requirements : "",
+      functions: route.params ? route.params.functions : "",
+      hourHand: route.params ? route.params.hourHand : "",
+      contract: route.params ? route.params.contract : "",
+      salary: route.params ? route.params.salary : "",
     },
-    onSubmit: (values) => {
-      const newPost = {
+    onSubmit: async (values) => {
+      const post = {
         ...values,
         userId: userData.id,
         userName: userData.userName,
         image: userData.image,
-      }
-  /*     console.log(newPost) */
+      };
+      try {
+        route.params
+          ? await updateExperienceOrPost(
+              post,
+              userData.id,
+              route.params.id,
+              false
+            )
+          : await setPostToDb(post);
+        const res = await getUserDataDB(userData.id);
 
-      setPostToDb(newPost);
+        if (res) {
+          setUserData(res);
+          navigation.navigate("DrawerNavigatorProfile");
+        } else {
+          console.log(
+            "ocurrio un error al crear el puesto, intentelo de nuevo"
+          );
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
-  async function setPostToDb(post) {
-    const newPost = doc(collection(db, mainCollection, userData.id, "posts"));
-    const postToCollection = doc(collection(db, postCollection))
 
-    await setDoc(postToCollection, {
-      ...post,
-      id: postToCollection.id,
-      timestamp: serverTimestamp(),
-    });
-    await setDoc(newPost, {
-      ...post,
-      id: newPost.id,
-      timestamp: serverTimestamp(),
-    });
+  async function setPostToDb(post) {
+    try {
+      const newPost = doc(collection(db, mainCollection, userData.id, "posts"));
+      const postToCollection = doc(collection(db, postCollection));
+
+      await setDoc(postToCollection, {
+        ...post,
+        id: postToCollection.id,
+        timestamp: serverTimestamp(),
+      });
+      await setDoc(newPost, {
+        ...post,
+        id: newPost.id,
+        timestamp: serverTimestamp(),
+      });
+
+      return true;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   }
 
   return (
     <DisplayContainer style={{ justifyContent: "flex-start", padding: 16 }}>
-      <ScrollView style={{ width: "100%", }}>
+      <ScrollView style={{ width: "100%" }}>
         <View
           style={{
             width: "100%",
@@ -214,7 +245,7 @@ const PostForm = () => {
             <TextInput
               mode="outlined"
               label="Formación - Título"
-              style={{ height: 75, width:"100%",backgroundColor:"#fff" }}
+              style={{ height: 75, width: "100%", backgroundColor: "#fff" }}
               multiline={true}
               numberOfLines={3}
               value={formik.values.education}
@@ -229,7 +260,7 @@ const PostForm = () => {
             <TextInput
               mode="outlined"
               label="Experiencia"
-              style={{ height: 75, width:"100%",backgroundColor:"#fff" }}
+              style={{ height: 75, width: "100%", backgroundColor: "#fff" }}
               multiline={true}
               numberOfLines={3}
               value={formik.values.experience}
@@ -244,7 +275,7 @@ const PostForm = () => {
             <TextInput
               mode="outlined"
               label="Requisitos"
-              style={{ height: 150, width:"100%",backgroundColor:"#fff" }}
+              style={{ height: 150, width: "100%", backgroundColor: "#fff" }}
               multiline={true}
               numberOfLines={6}
               value={formik.values.requirements}
@@ -259,7 +290,7 @@ const PostForm = () => {
             <TextInput
               mode="outlined"
               label="Funciones"
-              style={{ height: 150, width:"100%",backgroundColor:"#fff" }}
+              style={{ height: 150, width: "100%", backgroundColor: "#fff" }}
               multiline={true}
               numberOfLines={6}
               value={formik.values.functions}
@@ -274,7 +305,7 @@ const PostForm = () => {
             <TextInput
               mode="outlined"
               label="Horario"
-              style={{ height: 75, width:"100%",backgroundColor:"#fff" }}
+              style={{ height: 75, width: "100%", backgroundColor: "#fff" }}
               multiline={true}
               numberOfLines={3}
               value={formik.values.hourHand}
@@ -289,7 +320,7 @@ const PostForm = () => {
             <TextInput
               mode="outlined"
               label="Contrato"
-              style={{ height: 50, width:"100%",backgroundColor:"#fff" }}
+              style={{ height: 50, width: "100%", backgroundColor: "#fff" }}
               value={formik.values.contract}
               onChangeText={formik.handleChange("contract")}
               activeOutlineColor={`${colors.secondary}`}
@@ -302,7 +333,7 @@ const PostForm = () => {
             <TextInput
               mode="outlined"
               label="Rango salarial"
-              style={{ height: 50, width:"100%", backgroundColor:"#fff"}}
+              style={{ height: 50, width: "100%", backgroundColor: "#fff" }}
               value={formik.values.salary}
               onChangeText={formik.handleChange("salary")}
               activeOutlineColor={`${colors.secondary}`}
@@ -310,10 +341,19 @@ const PostForm = () => {
           </View>
         </View>
       </ScrollView>
-      <View style={{paddingVertical:16}}>
-      <ReusableButton innerText="Publicar empleo" onPress={formik.handleSubmit} styleContainer={{height:50}}/>
+      <View style={{ paddingVertical: 16 }}>
+        <ReusableButton
+          innerText="Publicar empleo"
+          onPress={formik.handleSubmit}
+          styleContainer={{ height: 50 }}
+        />
       </View>
-      <Button mode="text" title="submit" textColor={`${colors.secondary}`} onPress={()=>navigation.goBack()}>
+      <Button
+        mode="text"
+        title="submit"
+        textColor={`${colors.secondary}`}
+        onPress={() => navigation.goBack()}
+      >
         Cancelar
       </Button>
     </DisplayContainer>
@@ -329,7 +369,7 @@ const styles = StyleSheet.create({
   textInput: {
     height: 50,
     width: "100%",
-    backgroundColor:"#fff"
+    backgroundColor: "#fff",
   },
 });
 

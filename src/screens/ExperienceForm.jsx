@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/core";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
 import { useRoute } from "@react-navigation/native";
 import Constants from "expo-constants";
-import updateExperience from "../firebase/functions/updateExperience";
+import updateExperienceOrPost from "../firebase/functions/updateExperienceOrPost";
 import { AntDesign } from "@expo/vector-icons";
 
 const { text, colors } = theme;
@@ -55,7 +55,7 @@ const ExperienceForm = () => {
         onSubmit={async (obj) => {
           try {
             route.params
-              ? await updateExperience(obj, userData.id, route.params.id)
+              ? await updateExperienceOrPost(obj, userData.id, route.params.id, userData.worker)
               : await addExperience(obj, userData.id);
             const res = await getUserDataDB(userData.id);
 
