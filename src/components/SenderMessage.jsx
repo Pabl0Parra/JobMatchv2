@@ -11,7 +11,7 @@ export default function SenderMessage({ message }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "purple",
+    backgroundColor: "#D4E5F",
     borderRadius: 8,
     borderTopRightRadius: 0,
     paddingHorizontal: 10,
@@ -22,6 +22,6 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
   },
   message: {
-    color: "#fff",
+    color: "#000",
   },
 });

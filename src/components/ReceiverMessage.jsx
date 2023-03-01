@@ -12,25 +12,25 @@ export default function ReceiverMessage({ message }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "red",
+    backgroundColor: "#A3D2FE",
     borderRadius: 8,
     borderTopRightRadius: 0,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
     paddingVertical: 5,
-    marginHorizontal: 6,
-    marginVertical: 4,
+    marginHorizontal: 30,
+    marginVertical: 8,
     alignSelf: "flex-start",
-    marginLeft: 14,
+    marginLeft: 50,
   },
   image: {
-    width: 50,
-    height: 50,
+    width: 30,
+    height: 30,
     borderRadius: 50,
     position: "absolute",
     top: 0,
-    left: -56,
+    left: -36,
   },
   message: {
-    color: "#fff",
+    color: "#000",
   },
 });

@@ -8,10 +8,10 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   FlatList,
-  Button,
+  TouchableOpacity,
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
-import BackButton from "../components/BackButton";
+import { useNavigation } from "@react-navigation/native";
 import getMatchedUserInfo from "../firebase/functions/getMatchedUserInfo";
 import { UserLoginContex } from "../context/UserDataContext";
 import { useRoute } from "@react-navigation/core";
@@ -26,11 +26,14 @@ import {
   query,
 } from "@firebase/firestore";
 import { db } from "../firebase/credentials";
+import { AntDesign } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 
 export default function MessageScreen() {
+  const navigation = useNavigation();
   const { userData } = useContext(UserLoginContex);
   const { params } = useRoute();
-  const [input, setInput] = useState("HELLO");
+  const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
 
   const { matchDetails } = params;
@@ -54,6 +57,9 @@ export default function MessageScreen() {
   );
 
   const sendMessage = () => {
+    if (!input.trim()) {
+      return;
+    }
     addDoc(collection(db, "Matches", matchDetails.id, "Messages"), {
       timestamp: serverTimestamp(),
       userId: userData.id,
@@ -66,40 +72,69 @@ export default function MessageScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <BackButton
-        text={getMatchedUserInfo(matchDetails.users, userData.id).name}
-      />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
-        keyboardVerticalOffset={10}
-      >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <FlatList
-            data={messages}
-            inverted={-1}
-            styles={{ paddingLeft: 6 }}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item: message }) =>
-              messages.userId === userData.id ? (
-                <SenderMessage key={messages.id} message={message} />
-              ) : (
-                <ReceiverMessage key={messages.id} message={message} />
-              )
-            }
-          />
-        </TouchableWithoutFeedback>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Manda tu mensaje..."
-            onChangeText={setInput}
-            onSubmitEditing={sendMessage}
-            value={input}
-          />
-          <Button onPress={sendMessage} title="Enviar" color="#841584" />
+      <View style={{ flex: 1 }}>
+        <View style={{ height: 80 }}>
+          <TouchableOpacity
+            style={{
+              flexDirection: "row",
+              marginTop: 40,
+              marginLeft: 20,
+              alignItems: "center",
+            }}
+            onPress={() => navigation.goBack()}
+          >
+            <AntDesign name="arrowleft" size={24} color="black" />
+            <Text style={{ marginLeft: 10, fontSize: 20, color: "#091D5C" }}>
+              {getMatchedUserInfo(matchDetails.users, userData.id).userName}
+            </Text>
+          </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={{ flex: 1 }}
+          keyboardVerticalOffset={10}
+        >
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <FlatList
+              data={messages}
+              inverted={-1}
+              styles={{
+                paddingLeft: 6,
+                paddingBottom: 50,
+              }}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item: message }) =>
+                messages.userId === userData.id ? (
+                  <SenderMessage key={messages.id} message={message} />
+                ) : (
+                  <ReceiverMessage key={messages.id} message={message} />
+                )
+              }
+            />
+          </TouchableWithoutFeedback>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Manda tu mensaje..."
+              onChangeText={setInput}
+              onSubmitEditing={sendMessage}
+              value={input}
+            />
+            <TouchableOpacity
+              style={[
+                styles.sendButton,
+                input.length === 0
+                  ? styles.disabledSendButton
+                  : styles.enabledSendButton,
+              ]}
+              onPress={sendMessage}
+              disabled={input.length === 0}
+            >
+              <Feather name="send" size={24} color="white" />
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </View>
     </SafeAreaView>
   );
 }
@@ -109,13 +144,29 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderTopWidth: 4,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
   },
   input: {
+    flex: 1,
     height: 40,
-    fontSize: 20,
-    margin: 12,
+    backgroundColor: "white",
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  sendButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "gray",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  enabledSendButton: {
+    backgroundColor: "#091D5C",
+  },
+  disabledSendButton: {
+    backgroundColor: "gray",
   },
 });

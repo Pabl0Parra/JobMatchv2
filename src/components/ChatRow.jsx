@@ -13,7 +13,7 @@ export default function ChatRow({ matchDetails }) {
   const [lastMessage, setLastMessage] = useState("");
 
   useEffect(() => {
-    setMatchedUserInfo(getMatchedUserInfo(matchDetails.userData, userData.id)); //users or userData?
+    setMatchedUserInfo(getMatchedUserInfo(matchDetails.users, userData.id));
   }, [matchDetails, userData]);
 
   useEffect(
@@ -38,7 +38,7 @@ export default function ChatRow({ matchDetails }) {
         source={{ uri: matchedUserInfo?.image }}
       />
       <View>
-        <Text style={styles.name}>{matchedUserInfo?.name}</Text>
+        <Text style={styles.name}>{matchedUserInfo?.userName}</Text>
         <Text>{lastMessage || "Say hi!"}</Text>
       </View>
     </TouchableOpacity>
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     padding: 10,
     margin: 10,
     backgroundColor: "#fff",
