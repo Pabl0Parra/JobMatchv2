@@ -8,12 +8,13 @@ import registerUser from "../firebase/functions/registerUser";
 import uploadProfilePicture from "../firebase/functions/uploadProfilePicture";
 import { MaterialIcons } from "@expo/vector-icons";
 import ProfilePicture from "../svgs/ProfilePicture";
-
 import { useNavigation } from "@react-navigation/core";
-
 import RegisterProgressBar from "../components/RegisterProgressBar";
 import BackButton from "../components/BackButton";
 import ReusableButton from "../components/ReusableButton";
+import theme from "../theme";
+
+const colors = theme.colors;
 
 const ChooseProfilePicture = () => {
   const [image, setImage] = useState(null);
@@ -47,16 +48,19 @@ const ChooseProfilePicture = () => {
         image,
         `profileImg${userData.email}`
       );
-      console.log(res)
-      if(res) {
+      console.log(res);
+      if (res) {
         registerUser(userData.email, userData.password, {
-        ...userData,
-        image: res,})
-        } else {
-          registerUser(userData.email, userData.password, {
-            ...userData,
-            image: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",})
-        }
+          ...userData,
+          image: res,
+        });
+      } else {
+        registerUser(userData.email, userData.password, {
+          ...userData,
+          image:
+            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
+        });
+      }
       setShowAlert(true);
     } catch (error) {
       console.log(error);
@@ -105,9 +109,10 @@ const ChooseProfilePicture = () => {
           </TouchableOpacity>
         ) : null}
         <ReusableButton
-          innerText="Finalizar" 
-          onPress={()=>uploadImages()}
-          styleContainer={{marginTop: 50}} />
+          innerText="Finalizar"
+          onPress={() => uploadImages()}
+          styleContainer={{ marginTop: 50 }}
+        />
 
         <AwesomeAlert
           show={showAlert}
@@ -118,8 +123,8 @@ const ChooseProfilePicture = () => {
           closeOnHardwareBackPress={false}
           showConfirmButton={true}
           confirmText="OK"
-          confirmButtonColor="#DD6B55"
-          onConfirmPressed={()=>hideAlert()}
+          confirmButtonColor={colors.secondary}
+          onConfirmPressed={() => hideAlert()}
         />
       </DisplayContainer>
     </>

@@ -104,7 +104,7 @@ export default function MessageScreen() {
               }}
               keyExtractor={(item) => item.id}
               renderItem={({ item: message }) =>
-                messages.userId === userData.id ? (
+                message.userId === userData.id ? (
                   <SenderMessage key={messages.id} message={message} />
                 ) : (
                   <ReceiverMessage key={messages.id} message={message} />

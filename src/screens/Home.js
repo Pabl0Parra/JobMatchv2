@@ -170,7 +170,6 @@ const Home = () => {
     }
   }, [db, userData, empty, isFocused]);
 
-  
   const swipeLeft = async (cardIndex) => {
     if (!profiles[cardIndex]) return;
 
@@ -361,7 +360,7 @@ const Home = () => {
           </View>
         ) : (
           <>
-            <SwipeContext.Provider value={swipeRef}>
+            <SwipeContext.Provider value={{ swipeRef }}>
               <View style={styles.header}>
                 <Text style={text.headerTitle}>
                   Hola,{" "}
@@ -394,7 +393,7 @@ const Home = () => {
                       style: {
                         label: {
                           textAlign: "right",
-                          color:`${colors.text}`,
+                          color: `${colors.text}`,
                         },
                       },
                     },
@@ -409,8 +408,8 @@ const Home = () => {
                     },
                   }}
                   overlayLabelStyle={{
-                    fontSize:24,
-                    padding:16,                    
+                    fontSize: 24,
+                    padding: 16,
                   }}
                   cards={profiles}
                   renderCard={(card) =>
