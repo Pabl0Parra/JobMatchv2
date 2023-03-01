@@ -2,14 +2,18 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { Menu, MenuItem } from "react-native-material-menu";
 import theme from "../theme";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import getUserDataDB from "../firebase/functions/getUserDataDB";
+import deleteExperienceOrPost from '../firebase/functions/deleteExperienceOrPost'
+import { UserLoginContex } from "../context/UserDataContext";
 
 const { text, colors } = theme;
 
 const JobCard = ({ postData }) => {
   const [visible, setVisible] = useState(false);
   const navigation = useNavigation();
+  const { setUserData } = useContext(UserLoginContex);
 
   const hideMenu = () => setVisible(false);
 
@@ -53,7 +57,29 @@ const JobCard = ({ postData }) => {
             >
               Editar
             </MenuItem>
-            <MenuItem onPress={hideMenu}>Eliminar</MenuItem>
+            <MenuItem
+              onPress={async () => {
+                hideMenu();
+                try {
+                  await deleteExperienceOrPost(
+                    postData.userId,
+                    postData.id,
+                    false
+                  );
+                  const res = await getUserDataDB(postData.userId);
+
+                  if (res) {
+                    setUserData(res);
+                  } else {
+                    console.log("error al obtener los datos");
+                  }
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            >
+              Eliminar
+            </MenuItem>
           </Menu>
         </View>
         <Text>{postData.experience}</Text>
