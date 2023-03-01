@@ -4,7 +4,7 @@ import { Menu, MenuItem } from "react-native-material-menu";
 import theme from "../theme";
 import { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/core";
-import deleteExperence from "../firebase/functions/deleteExperence";
+import deleteExperienceOrPost from "../firebase/functions/deleteExperienceOrPost";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
 import { UserLoginContex } from "../context/UserDataContext";
 
@@ -66,9 +66,10 @@ const ExperienceCard = ({ experienceData }) => {
               onPress={async () => {
                 hideMenu();
                 try {
-                  await deleteExperence(
+                  await deleteExperienceOrPost(
                     experienceData.userId,
-                    experienceData.id
+                    experienceData.id,
+                    true
                   );
                   const res = await getUserDataDB(experienceData.userId);
 

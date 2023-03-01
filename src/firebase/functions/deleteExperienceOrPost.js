@@ -1,10 +1,10 @@
 import { collection, doc , deleteDoc } from "@firebase/firestore";
 import { db } from "../credentials";
 
-const deleteExperence = async (userId, experienceId) => {
+const deleteExperienceOrPost = async (userId, experienceId, worker) => {
     
     try {
-        const deletExp = doc(collection(db, "HomeTest", userId, "experiences"), experienceId);
+        const deletExp = doc(collection(db, "HomeTest", userId, worker? "experiences" : "posts"), experienceId);
     
         await deleteDoc(deletExp);
     
@@ -16,4 +16,4 @@ const deleteExperence = async (userId, experienceId) => {
 
 };
 
-export default deleteExperence;
+export default deleteExperienceOrPost;

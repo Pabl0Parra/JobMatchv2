@@ -82,54 +82,6 @@ const ChooseUserType = () => {
             </View>
           </View>
         </View>
-        {/* <View
-        style={{
-          alignItems: "flex-start",
-          marginLeft: 19,
-          marginRight: 24,
-          marginTop: 20,
-        }}
-      >
-        <Text style={styles.title}>Elige un modo para empezar</Text>
-        <Text style={styles.subtitle}>
-          ¡Jobmatch te permite hacer buenas conexiones laborales! Una vez esté
-          listo tu perfil, podrás cambiar de un modo a otro.
-        </Text>
-        <View style={styles.optionsContainer}>
-          <View style={styles.optionBox}>
-            <View style={styles.radioContainer}>
-              <Text style={styles.radioText}>En busca de empleo</Text>
-              <Text style={styles.radioSubText}>
-                Impulsa tu vida profesional
-              </Text>
-              <RadioButton
-                value="worker"
-                status={selectedValue === "worker" ? "checked" : "unchecked"}
-                onPress={(type) => {
-                  setUserData({ ...userData, worker: true, employer: false }),
-                    setSelectedValue("worker");
-                }}
-              />
-            </View>
-          </View>
-          <View style={styles.optionBox}>
-            <View style={styles.radioContainer}>
-              <Text style={styles.radioText}>Buscando personal</Text>
-              <Text style={styles.radioSubText}>
-                Consigue nuevos colaboradores
-              </Text>
-              <RadioButton
-                value="employer"
-                status={selectedValue === "employer" ? "checked" : "unchecked"}
-                onPress={(type) => {
-                  setUserData({ ...userData, employer: true, worker: false }),
-                    setSelectedValue("employer");
-                }}
-              />
-            </View>
-          </View>
-        </View>
-      </View> */}
         <View
           style={{
             display: "flex",
@@ -150,7 +102,6 @@ const ChooseUserType = () => {
               const navigateTo = {
                 worker: "ChooseUserName",
                 employer: "ChooseCompanyName",
-                // "open to grow": "ChooseUserName",
               };
               navigation.navigate(navigateTo[selectedValue] || "");
             }}

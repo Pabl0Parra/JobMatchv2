@@ -2,12 +2,18 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { Menu, MenuItem } from "react-native-material-menu";
 import theme from "../theme";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import getUserDataDB from "../firebase/functions/getUserDataDB";
+import deleteExperienceOrPost from '../firebase/functions/deleteExperienceOrPost'
+import { UserLoginContex } from "../context/UserDataContext";
 
 const { text, colors } = theme;
 
-const JobCard = ({jobData}) => {
+const JobCard = ({ postData }) => {
   const [visible, setVisible] = useState(false);
+  const navigation = useNavigation();
+  const { setUserData } = useContext(UserLoginContex);
 
   const hideMenu = () => setVisible(false);
 
@@ -27,12 +33,14 @@ const JobCard = ({jobData}) => {
             alignItems: "flex-start",
           }}
         >
-          <Text style={[text.descriptionSubtitle, {flex: 1}]}>{jobData.country}</Text>
+          <Text style={[text.descriptionSubtitle, { flex: 1 }]}>
+            {postData.roleWanted}
+          </Text>
           <Menu
             visible={visible}
             anchor={
               <Ionicons
-                style={{flex: 1}}
+                style={{ flex: 1 }}
                 name="md-ellipsis-horizontal-sharp"
                 size={24}
                 color="black"
@@ -41,13 +49,40 @@ const JobCard = ({jobData}) => {
             }
             onRequestClose={hideMenu}
           >
-            <MenuItem onPress={hideMenu}>Editar</MenuItem>
-            <MenuItem onPress={hideMenu}>Eliminar</MenuItem>
+            <MenuItem
+              onPress={() => {
+                hideMenu();
+                navigation.navigate("PostForm", postData);
+              }}
+            >
+              Editar
+            </MenuItem>
+            <MenuItem
+              onPress={async () => {
+                hideMenu();
+                try {
+                  await deleteExperienceOrPost(
+                    postData.userId,
+                    postData.id,
+                    false
+                  );
+                  const res = await getUserDataDB(postData.userId);
+
+                  if (res) {
+                    setUserData(res);
+                  } else {
+                    console.log("error al obtener los datos");
+                  }
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            >
+              Eliminar
+            </MenuItem>
           </Menu>
         </View>
-        <Text>
-          {jobData.position}
-        </Text>
+        <Text>{postData.experience}</Text>
       </View>
     </View>
   );
@@ -56,7 +91,7 @@ const JobCard = ({jobData}) => {
 export default JobCard;
 
 const styles = StyleSheet.create({
-    jobCard: {
+  jobCard: {
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "flex-start",
