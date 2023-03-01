@@ -1,10 +1,10 @@
 import { collection, doc, updateDoc } from "@firebase/firestore";
 import { db } from "../credentials";
 
-const updateExperience = async (obj, userId, idExperience) => {
+const updateExperienceOrPost = async (obj, userId, idExperience, worker) => {
     
   try {
-    const newExp = doc(collection(db, "HomeTest", userId, "experiences"), idExperience);
+    const newExp = doc(collection(db, "HomeTest", userId, worker? "experiences" : "posts"), idExperience);
    /*  const expToCollection = doc(collection(db, "Experiences"), idExperience);  */
 
     await updateDoc(newExp, obj);
@@ -18,4 +18,4 @@ const updateExperience = async (obj, userId, idExperience) => {
 
 };
 
-export default updateExperience;
+export default updateExperienceOrPost;

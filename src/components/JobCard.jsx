@@ -3,11 +3,13 @@ import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { Menu, MenuItem } from "react-native-material-menu";
 import theme from "../theme";
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 const { text, colors } = theme;
 
-const JobCard = ({postData}) => {
+const JobCard = ({ postData }) => {
   const [visible, setVisible] = useState(false);
+  const navigation = useNavigation();
 
   const hideMenu = () => setVisible(false);
 
@@ -27,12 +29,14 @@ const JobCard = ({postData}) => {
             alignItems: "flex-start",
           }}
         >
-          <Text style={[text.descriptionSubtitle, {flex: 1}]}>{postData.roleWanted}</Text>
+          <Text style={[text.descriptionSubtitle, { flex: 1 }]}>
+            {postData.roleWanted}
+          </Text>
           <Menu
             visible={visible}
             anchor={
               <Ionicons
-                style={{flex: 1}}
+                style={{ flex: 1 }}
                 name="md-ellipsis-horizontal-sharp"
                 size={24}
                 color="black"
@@ -41,13 +45,18 @@ const JobCard = ({postData}) => {
             }
             onRequestClose={hideMenu}
           >
-            <MenuItem onPress={hideMenu}>Editar</MenuItem>
+            <MenuItem
+              onPress={() => {
+                hideMenu();
+                navigation.navigate("PostForm", postData);
+              }}
+            >
+              Editar
+            </MenuItem>
             <MenuItem onPress={hideMenu}>Eliminar</MenuItem>
           </Menu>
         </View>
-        <Text>
-          {postData.experience}
-        </Text>
+        <Text>{postData.experience}</Text>
       </View>
     </View>
   );
@@ -56,7 +65,7 @@ const JobCard = ({postData}) => {
 export default JobCard;
 
 const styles = StyleSheet.create({
-    jobCard: {
+  jobCard: {
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "flex-start",

@@ -1,6 +1,6 @@
 import { collection, doc, serverTimestamp, setDoc } from "@firebase/firestore";
 import { async } from "@firebase/util";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation, useRoute } from "@react-navigation/core";
 import { useFormik } from "formik";
 import React, { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
@@ -16,6 +16,7 @@ import ReusableButton from "../components/ReusableButton";
 import { UserLoginContex } from "../context/UserDataContext";
 import { db, mainCollection, postCollection } from "../firebase/credentials";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
+import updateExperienceOrPost from "../firebase/functions/updateExperienceOrPost";
 import theme from "../theme";
 
 const { text, colors } = theme;
@@ -23,40 +24,52 @@ const { text, colors } = theme;
 const PostForm = () => {
   const navigation = useNavigation();
   const { userData, setUserData } = useContext(UserLoginContex);
-  /* const [post, setPost] = useState({}); */
+  const route = useRoute();
+
   const formik = useFormik({
     initialValues: {
-      timeJob: "",
-      mode: "",
-      roleWanted: "",
-      country: "",
-      seniority: "",
-      english: "",
-      education: "",
-      experience: "",
-      requirements: "",
-      functions: "",
-      hourHand: "",
-      contract: "",
-      salary: "",
+      timeJob: route.params ? route.params.timeJob : "",
+      mode: route.params ? route.params.mode : "",
+      roleWanted: route.params ? route.params.roleWanted : "",
+      country: route.params ? route.params.country : "",
+      seniority: route.params ? route.params.seniority : "",
+      english: route.params ? route.params.english : "",
+      education: route.params ? route.params.education : "",
+      experience: route.params ? route.params.experience : "",
+      requirements: route.params ? route.params.requirements : "",
+      functions: route.params ? route.params.functions : "",
+      hourHand: route.params ? route.params.hourHand : "",
+      contract: route.params ? route.params.contract : "",
+      salary: route.params ? route.params.salary : "",
     },
     onSubmit: async (values) => {
-      const newPost = {
+      const post = {
         ...values,
         userId: userData.id,
         userName: userData.userName,
         image: userData.image,
       };
-      /*     console.log(newPost) */
+      try {
+        route.params
+          ? await updateExperienceOrPost(
+              post,
+              userData.id,
+              route.params.id,
+              false
+            )
+          : await setPostToDb(post);
+        const res = await getUserDataDB(userData.id);
 
-      await setPostToDb(newPost);
-      const res = await getUserDataDB(userData.id);
-
-      if (res) {
-        setUserData(res);
-        navigation.navigate("DrawerNavigatorProfile");
-      } else {
-        console.log("ocurrio un error al crear el puesto, intentelo de nuevo");
+        if (res) {
+          setUserData(res);
+          navigation.navigate("DrawerNavigatorProfile");
+        } else {
+          console.log(
+            "ocurrio un error al crear el puesto, intentelo de nuevo"
+          );
+        }
+      } catch (error) {
+        console.log(error);
       }
     },
   });
