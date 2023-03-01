@@ -17,7 +17,6 @@ const { colors, text } = theme;
 
 const Details = ({ route, navigation }) => {
   const { userData } = useContext(UserLoginContex);
-  /* const { id, name, title, image } = route.params; */
   const {
     seniority,
     country,
@@ -55,10 +54,10 @@ const Details = ({ route, navigation }) => {
               <>
                 <View>
                   <Text style={text.descriptionTitle}>
-                    {roleWanted} {<Text style={text[16]}>{seniority}</Text>}
+                    {roleWanted} {<Text style={text.text16}>{seniority}</Text>}
                   </Text>
-                  <Text style={text[14]}>{country}</Text>
-                  <Text style={text[14]}>
+                  <Text style={text.text14}>{country}</Text>
+                  <Text style={text.text14}>
                     {timeJob} - ({mode ? mode : null})
                   </Text>
                 </View>
@@ -176,7 +175,7 @@ const Details = ({ route, navigation }) => {
                   <Text style={text.descriptionSubtitle}>
                     Acerca de mi
                   </Text>
-                  <Text style={text[16]}>
+                  <Text style={text.text16}>
                     {about}
                   </Text>
 

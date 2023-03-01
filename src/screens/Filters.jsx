@@ -34,14 +34,25 @@ const Filters = () => {
 
   useEffect(() => {
     const getOptions = async () => {
-      const vacantOptions = await getDocs(
-        query(collection(db, postCollection), where("roleWanted", "!=", ""))
-      );
-      vacantOptions.forEach((doc) => setOfVacant.add(doc.data().roleWanted));
-      /*   console.log(vacant) */
-      vacant=Array.from(setOfVacant);
-      vacant.unshift("Todos")
-      setVacantList(vacant);
+      if (userData.worker){
+        const vacantOptions = await getDocs(
+          query(collection(db, postCollection), where("roleWanted", "!=", ""))
+        );
+        vacantOptions.forEach((doc) => setOfVacant.add(doc.data().roleWanted));
+        /*   console.log(vacant) */
+        vacant=Array.from(setOfVacant);
+        vacant.unshift("Todos")
+        setVacantList(vacant);
+      } else {
+        const vacantOptions = await getDocs(
+          query(collection(db, mainCollection), where("roleWanted", "!=", ""))
+        );
+        vacantOptions.forEach((doc) => setOfVacant.add(doc.data().roleWanted));
+        /*   console.log(vacant) */
+        vacant=Array.from(setOfVacant);
+        vacant.unshift("Todos")
+        setVacantList(vacant);
+      }
 
 /*       const seniorityOptions = await getDocs(
         query(collection(db, mainCollection), where("seniority", "!=", ""))

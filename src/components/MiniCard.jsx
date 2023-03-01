@@ -11,12 +11,19 @@ import {
 import { UserLoginContex } from "../context/UserDataContext";
 import TextTicker from "react-native-text-ticker";
 import theme from "../theme";
+import { getTimeLapsed } from "../utilities/utilities";
 
 const { text, colors } = theme;
 
 const MiniCard = ({ item, large, id }) => {
   const { userData } = useContext(UserLoginContex);
   const navigation = useNavigation();
+  const [time, setTime] = useState();
+
+  useEffect(() => {
+    const fireBaseTime = new Date(item?.timestamp?.seconds * 1000);
+    setTime(getTimeLapsed(fireBaseTime));
+  }, []);
 
   return (
     <View
@@ -53,7 +60,7 @@ const MiniCard = ({ item, large, id }) => {
               : {
                   //Datos de perfil
                   image: item.image,
-                  roleWanted: item.roleWanted,
+                  roleWanted: item.filter.roleWanted,
                   seniority: item.seniority,
                   country: item.country,
                   education: item.education,
@@ -85,9 +92,9 @@ const MiniCard = ({ item, large, id }) => {
             bounce
             repeatSpacer={30}
             marqueeDelay={1000}
-            style={[text[16], styles.textColor]}
+            style={[text.text16, styles.textColor]}
           >
-            {item.userName} {""} {item.userLastName ? item.userLastName : ""}
+            {item?.userName} {""} {item?.userLastName ? item.userLastName : ""}
           </TextTicker>
           <TextTicker
             duration={4000}
@@ -95,12 +102,12 @@ const MiniCard = ({ item, large, id }) => {
             bounce
             repeatSpacer={30}
             marqueeDelay={1000}
-            style={[text[14], styles.textColor]}
+            style={[text.text14, styles.textColor]}
           >
-            {item.roleWanted}
+            {large ? item?.filter?.roleWanted : item?.roleWanted}
           </TextTicker>
           {large ? (
-            <Text style={[text[12], styles.textColor]}>Hace 1 hora</Text>
+            <Text style={[text.text12, styles.textColor]}>Hace {time}</Text>
           ) : null}
         </View>
       </TouchableOpacity>

@@ -69,8 +69,8 @@ const Conexiones = ({ navigation }) => {
             size={20}
             color={colors.secondary}
           />
-          <Text style={text[16]}>Les gustas!</Text>
-          <Text style={[text[14], { textAlign: "center" }]}>
+          <Text style={text.text16}>Les gustas!</Text>
+          <Text style={[text.text14, { textAlign: "center" }]}>
             Les gustas ¡Aquí podrás ver a quién le ha gustado tu perfil
             profesional!
           </Text>
@@ -93,7 +93,7 @@ const Conexiones = ({ navigation }) => {
                 flex: 1,
               }}
             >
-              <Text style={text[14]}>Aún no recibiste me gusta</Text>
+              <Text style={text.text14}>Aún no recibiste me gusta</Text>
             </View>
           )}
         </View>
@@ -118,7 +118,7 @@ const Conexiones = ({ navigation }) => {
                 flex: 1,
               }}
             >
-              <Text style={text[14]}>
+              <Text style={text.text14}>
                 Aquí verás los perfiles que guardaste
               </Text>
             </View>

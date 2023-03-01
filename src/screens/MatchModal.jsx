@@ -13,19 +13,19 @@ const MatchModal = () => {
   const navigation = useNavigation();
   const { params } = useRoute();
 
-  const { loggedInUser, userSwiped } = params;
+  const { loggedInUser, postSwiped } = params;
 
   return (
     <View style={styles.contanier}>
       <Text style={styles.text}>Tienes un match!</Text>
       <View>
         <Text>
-          {loggedInUser.name} y {userSwiped.name}
+          {loggedInUser.userName} y {postSwiped.userName}
         </Text>
       </View>
       <View style={styles.imageContainer}>
         <Image source={loggedInUser.image} style={styles.image} />
-        <Image source={userSwiped.image} style={styles.image} />
+        <Image source={postSwiped.image} style={styles.image} />
       </View>
       <TouchableOpacity
         onPress={() => {

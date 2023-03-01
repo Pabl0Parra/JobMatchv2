@@ -50,7 +50,7 @@ const Card = ({ card }) => {
             "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
           );
     }
-  }, []);
+  }, [card]);
 
   return (
     <View style={styles.container}>
@@ -94,7 +94,7 @@ const Card = ({ card }) => {
               <ScrollView>
                 {userData.worker ? (
                   <>
-                    <Text style={[text[12], { color: "#fff" }]}>
+                    <Text style={[text.text12, { color: "#fff" }]}>
                       Hace {time}
                     </Text>
                     <Text style={[text.cardTitle, { color: "#fff" }]}>
@@ -110,7 +110,7 @@ const Card = ({ card }) => {
                     </Text>
                     <Text
                         style={[
-                          text[16],
+                          text.text16,
                           { color: `${colors.details}`, fontStyle: "italic" },
                         ]}
                       >
@@ -133,10 +133,10 @@ const Card = ({ card }) => {
                         {card.userName +
                           (card.userLastName ? card.userLastName : "")}
                       </Text>
-                      <Text style={[text[14], { color: "#fff" }]}>
+                      <Text style={[text.text14, { color: "#fff" }]}>
                         {card.country + (card.city ? ` - ${card.city}` : "")}
                       </Text>
-                      <Text style={[text[14], { color: "#fff" }]}>
+                      <Text style={[text.text14, { color: "#fff" }]}>
                         {card.timeJob} - {card.mode}
                         {"\n"}
                       </Text>
@@ -149,12 +149,12 @@ const Card = ({ card }) => {
                       {card.userName +
                         (card.userLastName ? card.userLastName : "")}
                     </Text>
-                    <Text style={[text[16], { color: "#fff", fontSize: 18 }]}>
+                    <Text style={[text.text16, { color: "#fff", fontSize: 18 }]}>
                       {card.roleWanted}{" "}
                       {card.seniority ? (
                         <Text
                           style={[
-                            text[14],
+                            text.text14,
                             { color: `${colors.details}`, fontStyle: "normal" },
                           ]}
                         >
@@ -172,7 +172,7 @@ const Card = ({ card }) => {
                         {card.city ? (
                           <Text
                             style={[
-                              text[14],
+                              text.text14,
                               {
                                 color: `${colors.primary}`,
                                 fontStyle: "italic",
@@ -186,10 +186,10 @@ const Card = ({ card }) => {
                         )}
                       </Text>
 
-                      {card.userLastRole ? <Text style={[text[14], { color: `${colors.primary}` }]}>
+                      {card.userLastRole ? <Text style={[text.text14, { color: `${colors.primary}` }]}>
                       {"\n"}
                         Último trabajo:{"\n"}
-                        <Text style={[text[14], { color: `${colors.primary}`}]}>
+                        <Text style={[text.text14, { color: `${colors.primary}`}]}>
                           {"  "}{card.userLastRole} en {card.userLastCompany}
                         </Text>
 

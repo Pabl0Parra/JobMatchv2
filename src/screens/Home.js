@@ -22,7 +22,11 @@ import {
   where,
 } from "@firebase/firestore";
 import { db, mainCollection, postCollection } from "../firebase/credentials";
-import { FocusedTab, SwipeContext, UserLoginContex } from "../context/UserDataContext";
+import {
+  FocusedTab,
+  SwipeContext,
+  UserLoginContex,
+} from "../context/UserDataContext";
 import { useIsFocused, useNavigation } from "@react-navigation/core";
 import theme from "../theme";
 import { generateId } from "../utilities/utilities";
@@ -36,78 +40,144 @@ const Home = () => {
 
   const [profiles, setProfiles] = useState([]);
   const [empty, setEmpty] = useState(true);
-  const {setTab}  =useContext(FocusedTab)
-  const isFocused = useIsFocused()
+  const { setTab } = useContext(FocusedTab);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
+    setTab(1);
     let unsub;
-    setTab(1)
-
 
     const fetchProfiles = async () => {
       //Obtengos los usuarios que deslice a la izquierda y derecha
-      const passes = await getDocs(
+      const postPasses = await getDocs(
         collection(db, mainCollection, userData.id, "passes")
       ).then((snapshot) => snapshot.docs.map((doc) => doc.id));
 
-      const likes = await getDocs(
+      const postLikes = await getDocs(
         collection(db, mainCollection, userData.id, "likes")
       ).then((snapshot) => snapshot.docs.map((doc) => doc.id));
 
       //defino un array para poder hacer la consulta a la bd
-      const passesUsersId = passes.length > 0 ? passes : ["null"];
-      const likesUsersId = likes.length > 0 ? likes : ["null"];
-
-      
+      const passesId = postPasses.length > 0 ? postPasses : ["null"];
+      const likesId = postLikes.length > 0 ? postLikes : ["null"];
 
       /* Query para buscar puestos */
-      const jobsQuery = query(
-        collection(db, postCollection),
-        //If anidados para saber si está aplicado algún filtro
-        (userData.filter.roleWanted !== "" && userData.filter.roleWanted !== "Todos")
-          ? where("roleWanted", "==", userData.filter.roleWanted)
-          : (userData.filter.seniority !== "")
-          ? where("seniority", "==", userData.filter.seniority)
-          : where("id", "not-in", [...passesUsersId, ...likesUsersId]) //Sino devuelvo todo
-      );
-    /* Query para buscar candidatos */
-      const profileQuery = query(
-        collection(db, mainCollection), where("worker", "==", true),
-        (userData.filter.roleWanted !== "" && userData.filter.roleWanted !== "Todos")
-          ? where("roleWanted", "==", userData.filter.roleWanted)
-          : (userData.filter.seniority !== "")
-          ? where("seniority", "==", userData.filter.seniority)
-          : where("id", "not-in", [...passesUsersId, ...likesUsersId])
-        )
-
-
-      unsub = onSnapshot(userData.worker ? jobsQuery : profileQuery, (snapshot) => {
-        setProfiles(
-          snapshot.docs
-            .filter((doc) => doc.id !== userData.id)
-            .map((doc) => ({
-              id: doc.id,
-              ...doc.data(),
-            }))
+      let jobsQuery;
+      if (
+        userData.filter.roleWanted !== "" &&
+        userData.filter.roleWanted !== "Todos"
+      ) {
+        jobsQuery = query(
+          collection(db, postCollection),
+          //excluyo los que ya me aparecieron
+          where("id", "not-in", [...passesId, ...likesId]),
+          where("roleWanted", "==", userData.filter.roleWanted)
         );
-      });
+      } else if (
+        userData.filter.seniority !== "" &&
+        userData.filter.seniority !== "Todos"
+      ) {
+        jobsQuery = query(
+          collection(db, postCollection),
+          //excluyo los que ya me aparecieron
+          where("id", "not-in", [...passesId, ...likesId]),
+          where("seniority", "==", userData.filter.seniority)
+        );
+      } else if (
+        userData.filter.roleWanted !== "" &&
+        userData.filter.roleWanted !== "Todos" &&
+        userData.filter.seniority !== "" &&
+        userData.filter.seniority !== "Todos"
+      ) {
+        jobsQuery = query(
+          collection(db, postCollection),
+          //excluyo los que ya me aparecieron
+          where("id", "not-in", [...passesId, ...likesId]),
+          where("roleWanted", "==", userData.filter.roleWanted),
+          where("seniority", "==", userData.filter.seniority)
+        );
+      } else {
+        jobsQuery = query(
+          collection(db, postCollection),
+          //excluyo los que ya me aparecieron
+          where("id", "not-in", [...passesId, ...likesId])
+        );
+      }
+
+      /* Query para buscar candidatos */
+      let profileQuery;
+      if (
+        userData.filter.roleWanted !== "" &&
+        userData.filter.roleWanted !== "Todos"
+      ) {
+        profileQuery = query(
+          collection(db, mainCollection),
+          //excluyo los que ya me aparecieron
+          where("id", "not-in", [...passesId, ...likesId]),
+          where("roleWanted", "==", userData.filter.roleWanted)
+        );
+      } else if (
+        userData.filter.seniority !== "" &&
+        userData.filter.seniority !== "Todos"
+      ) {
+        profileQuery = query(
+          collection(db, mainCollection),
+          //excluyo los que ya me aparecieron
+          where("id", "not-in", [...passesId, ...likesId]),
+          where("seniority", "==", userData.filter.seniority)
+        );
+      } else if (
+        userData.filter.roleWanted !== "" &&
+        userData.filter.roleWanted !== "Todos" &&
+        userData.filter.seniority !== "" &&
+        userData.filter.seniority !== "Todos"
+      ) {
+        profileQuery = query(
+          collection(db, mainCollection),
+          //excluyo los que ya me aparecieron
+          where("id", "not-in", [...passesId, ...likesId]),
+          where("roleWanted", "==", userData.filter.roleWanted),
+          where("seniority", "==", userData.filter.seniority)
+        );
+      } else {
+        profileQuery = query(
+          collection(db, mainCollection),
+          //excluyo los que ya me aparecieron
+          where("id", "not-in", [...passesId, ...likesId])
+        );
+      }
+
+      //Traigo los perfiles
+      unsub = onSnapshot(
+        userData.worker ? jobsQuery : profileQuery,
+        (snapshot) => {
+          setProfiles(
+            snapshot.docs
+              .filter((doc) => doc.id !== userData.id)
+              .map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+              }))
+          );
+        }
+      );
       return unsub;
     };
     if (userData !== null && userData !== undefined) {
       fetchProfiles();
-      console.log(userData.filter.roleWanted);
     } else {
       console.log("usuario no cargado");
-      console.log(userData);
     }
   }, [db, userData, empty, isFocused]);
 
+  
   const swipeLeft = async (cardIndex) => {
     if (!profiles[cardIndex]) return;
 
     const userSwiped = profiles[cardIndex];
-
+    //como usuario estoy viendo un post
     setDoc(
+      //agrego a passes el id del post
       doc(db, mainCollection, userData.id, "passes", userSwiped.id),
       userSwiped
     );
@@ -116,62 +186,158 @@ const Home = () => {
   const swipeRight = (cardIndex) => {
     if (!profiles[cardIndex]) return;
 
-    const userSwiped = profiles[cardIndex];
+    const postSwiped = profiles[cardIndex];
 
     //Para obtener todos los datos del usuario logueado
-    /* const loggedInUser = await( await getDoc(doc(db, mainCollection, user.id)).data() ) */
     const loggedInUser = { ...userData };
 
-    //Necesito chequear si el usuario al que le di like, me dio like previamente
-    //Solo usar esto a modo demo (desarrollo), para produccion usar cloud functions (del lado del servidor)
-    getDoc(doc(db, mainCollection, userSwiped.id, "likes", userData.id)).then(
-      (docSnapshot) => {
+    if (userData.worker) {
+      //Necesito chequear si el usuario al que le di like, me dio like previamente
+      //Solo usar esto a modo demo (desarrollo), para produccion usar cloud functions (del lado del servidor)
+      getDoc(
+        doc(db, mainCollection, postSwiped.userId, "likes", userData.id)
+      ).then((docSnapshot) => {
         if (docSnapshot.exists()) {
           //hay match
-          console.log(`Hiciste un match con ${userSwiped.name}`);
-          //guardo el like dado
+          console.log(`Hiciste un match con ${postSwiped.userName}`);
+
+          //guardo el like dado - necesito guardar el id del post, sino me vuelve a aparecer
+          setDoc(doc(db, mainCollection, userData.id, "likes", postSwiped.id), {
+            ...postSwiped,
+            timestamp: serverTimestamp(),
+          });
+          //guardo el like recibido en el perfil empresa
           setDoc(
-            doc(db, mainCollection, userData.id, "likes", userSwiped.id),
-            {...userSwiped, timestamp: serverTimestamp()}
+            doc(db, mainCollection, postSwiped.userId, "likedTo", userData.id),
+            { ...userData, timestamp: serverTimestamp(), postId: postSwiped.id }
           );
-          //guardo el like recibido
           setDoc(
-            doc(db, mainCollection, userSwiped.id, "likedTo", userData.id),
-            {...userSwiped, timestamp: serverTimestamp()}
+            doc(db, postCollection, postSwiped.id, "likedTo", userData.id),
+            {
+              ...userData,
+              timestamp: serverTimestamp(),
+            }
           );
 
           //Creo el match
-          setDoc(doc(db, "Matches", generateId(userData.id, userSwiped.id)), {
+          setDoc(doc(db, "Matches", generateId(userData.id, postSwiped.id)), {
             users: {
               [userData.id]: loggedInUser,
-              [userSwiped.id]: userSwiped,
+              [postSwiped.UserId]: postSwiped,
             },
-            usersMatched: [userData.id, userSwiped.id],
+            usersMatched: [userData.id, postSwiped.userId],
+            postMatched: [postSwiped.id],
+            role: [postSwiped.roleWanted],
             timestamp: serverTimestamp(),
           });
+
           setDoc(
-            doc(db, mainCollection, userData.id, "matches", userSwiped.id),
-            {...userSwiped, timestamp: serverTimestamp()}
+            doc(db, mainCollection, userData.id, "matches", postSwiped.id),
+            {
+              ...postSwiped,
+              usersMatched: [userData.id, postSwiped.userId],
+              users: {
+                [userData.id]: loggedInUser,
+                [postSwiped.UserId]: postSwiped,
+              },
+              timestamp: serverTimestamp(),
+            }
           );
 
           navigation.navigate("MatchModal", {
             loggedInUser,
-            userSwiped,
+            postSwiped,
           });
         } else {
-          //guardo el like
+          //solo guardo el like
+          setDoc(doc(db, mainCollection, userData.id, "likes", postSwiped.id), {
+            ...postSwiped,
+            timestamp: serverTimestamp(),
+          });
+          //guardo el like recibido en el post
           setDoc(
-            doc(db, mainCollection, userData.id, "likes", userSwiped.id),
-            {...userSwiped, timestamp: serverTimestamp()}
+            doc(db, postCollection, postSwiped.id, "likedTo", userData.id),
+            {
+              ...userData,
+              timestamp: serverTimestamp(),
+            }
           );
-          //guardo el like recibido en el otro perfil
           setDoc(
-            doc(db, mainCollection, userSwiped.id, "likedTo", userData.id),
-            {...userSwiped, timestamp: serverTimestamp()}
+            doc(db, mainCollection, postSwiped.userId, "likedTo", userData.id),
+            {
+              ...userData,
+              timestamp: serverTimestamp(),
+            }
           );
         }
-      }
-    );
+      });
+    } else {
+      //Si soy empresa:
+
+      //Necesito chequear si el usuario al que le di like, me dio like previamente
+      //Solo usar esto a modo demo (desarrollo), para produccion usar cloud functions (del lado del servidor)
+      getDoc(doc(db, mainCollection, postSwiped.id, "likes", userData.id)).then(
+        (docSnapshot) => {
+          if (docSnapshot.exists()) {
+            //hay match
+            console.log(`Hiciste un match con ${postSwiped.userName}`);
+            //guardo el like dado
+            setDoc(
+              doc(db, mainCollection, userData.id, "likes", postSwiped.id),
+              {
+                ...postSwiped,
+                timestamp: serverTimestamp(),
+              }
+            );
+            //guardo el like recibido en el perfil recibido
+            setDoc(
+              doc(db, mainCollection, postSwiped.id, "likedTo", userData.id),
+              { ...userData, timestamp: serverTimestamp() }
+            );
+
+            //Creo el match
+            setDoc(doc(db, "Matches", generateId(userData.id, postSwiped.id)), {
+              users: {
+                [userData.id]: loggedInUser,
+                [postSwiped.id]: postSwiped,
+              },
+              usersMatched: [userData.id, postSwiped.id],
+              timestamp: serverTimestamp(),
+            });
+
+            setDoc(
+              doc(db, mainCollection, userData.id, "matches", postSwiped.id),
+              {
+                ...postSwiped,
+                timestamp: serverTimestamp(),
+              }
+            );
+
+            navigation.navigate("MatchModal", {
+              loggedInUser,
+              postSwiped,
+            });
+          } else {
+            //guardo el like
+            setDoc(
+              doc(db, mainCollection, userData.id, "likes", postSwiped.id),
+              {
+                ...postSwiped,
+                timestamp: serverTimestamp(),
+              }
+            );
+            //guardo el like recibido en el otro perfil
+            setDoc(
+              doc(db, mainCollection, postSwiped.id, "likedTo", userData.id),
+              {
+                ...userData,
+                timestamp: serverTimestamp(),
+              }
+            );
+          }
+        }
+      );
+    }
   };
 
   const handleEnd = () => {
@@ -195,7 +361,7 @@ const Home = () => {
           </View>
         ) : (
           <>
-            <SwipeContext.Provider value={{ swipeRef }}>
+            <SwipeContext.Provider value={swipeRef}>
               <View style={styles.header}>
                 <Text style={text.headerTitle}>
                   Hola,{" "}
@@ -203,7 +369,7 @@ const Home = () => {
                     {userData?.userName}!
                   </Text>
                 </Text>
-                <Text style={[text[16]]}>
+                <Text style={[text.text16]}>
                   {userData.worker
                     ? "Estas son las vacantes disponibles"
                     : "Estos son los perfiles disponibles"}
@@ -224,23 +390,27 @@ const Home = () => {
                   animateCardOpacity
                   overlayLabels={{
                     left: {
-                      title: "NO",
+                      title: "No me interesa",
                       style: {
                         label: {
                           textAlign: "right",
-                          color: "red",
+                          color:`${colors.text}`,
                         },
                       },
                     },
                     right: {
-                      title: "SI",
+                      title: "Me interesa",
                       style: {
                         label: {
                           textAlign: "left",
-                          color: "green",
+                          color: `${colors.text}`,
                         },
                       },
                     },
+                  }}
+                  overlayLabelStyle={{
+                    fontSize:24,
+                    padding:16,                    
                   }}
                   cards={profiles}
                   renderCard={(card) =>
