@@ -28,7 +28,6 @@ export default function ChatList() {
     []
   );
 
-  // console.log(userData);
   return matches.length > 0 ? (
     <FlatList
       data={matches}
