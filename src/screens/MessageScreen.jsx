@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   enabledSendButton: {
-    backgroundColor: "#841584",
+    backgroundColor: "#091D5C",
   },
   disabledSendButton: {
     backgroundColor: "gray",
