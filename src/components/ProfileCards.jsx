@@ -61,7 +61,7 @@ const ProfileCards = () => {
             size={28}
             color="black"
             onPress={() =>
-              navigation.navigate(userData.worker ? "ExperiencieForm" : "PostForm")
+              navigation.navigate(userData.worker ? "ExperienceForm" : "PostForm")
             }
           />
         </TouchableOpacity>

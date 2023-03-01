@@ -15,7 +15,7 @@ import Constants from "expo-constants";
 
 const { text, colors } = theme;
 
-const ExperiencieForm = () => {
+const ExperienceForm = () => {
   const { userData, setUserData } = useContext(UserLoginContex);
   const navigation = useNavigation();
   const route = useRoute();
@@ -118,7 +118,7 @@ const ExperiencieForm = () => {
   );
 };
 
-export default ExperiencieForm;
+export default ExperienceForm;
 
 const styles = StyleSheet.create({
   displayContainer: {

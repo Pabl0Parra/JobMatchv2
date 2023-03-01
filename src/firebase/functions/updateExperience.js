@@ -7,8 +7,8 @@ const addExperience = async (obj, userId, idExperience) => {
     const newExp = doc(collection(db, "HomeTest", userId, "experiencies", idExperience));
     const expToCollection = doc(collection(db, "Experiencies", idExperience));
 
-    await updateDoc(expToCollection, obj);
     await updateDoc(newExp, obj);
+    await updateDoc(expToCollection, obj);
 
     return true
 

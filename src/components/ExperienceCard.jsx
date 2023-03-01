@@ -48,7 +48,7 @@ const ExperienceCard = ({ experienceData }) => {
             <MenuItem
               onPress={() => {
                 hideMenu();
-                navigation.navigate("ExperiencieForm", experienceData
+                navigation.navigate("ExperienceForm", experienceData
                 );
               }}
             >
