@@ -61,7 +61,7 @@ const ExperienceForm = () => {
 
             if (res) {
               setUserData(res);
-              navigation.navigate("DrawerNavigatorProfile");
+              navigation.navigate("Perfil");
             } else {
               console.log("error al obtener los datos");
             }
@@ -116,7 +116,7 @@ const ExperienceForm = () => {
             />
             <ReusableButton
               innerText={"Cancelar"}
-              onPress={() => navigation.navigate("DrawerNavigatorProfile")}
+              onPress={() => navigation.navigate("Perfil")}
               styleContainer={{ backgroundColor: "#888" }}
               styleText={{ color: "#ddd" }}
             />

@@ -62,7 +62,7 @@ const PostForm = () => {
 
         if (res) {
           setUserData(res);
-          navigation.navigate("DrawerNavigatorProfile");
+          navigation.navigate("Perfil");
         } else {
           console.log(
             "ocurrio un error al crear el puesto, intentelo de nuevo"

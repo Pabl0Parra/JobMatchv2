@@ -31,7 +31,7 @@ const Tab = createBottomTabNavigator();
 const { colors } = theme;
 
 export default function BottomTab({ navigation }) {
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useState();
 
   return (
     <FocusedTab.Provider value={{ tab, setTab }}>

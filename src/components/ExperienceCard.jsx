@@ -2,11 +2,11 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { Menu, MenuItem } from "react-native-material-menu";
 import theme from "../theme";
-import { useContext, useState } from "react";
-import { useNavigation } from "@react-navigation/core";
+import { useContext, useEffect, useState } from "react";
+import { useIsFocused, useNavigation } from "@react-navigation/core";
 import deleteExperienceOrPost from "../firebase/functions/deleteExperienceOrPost";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
-import { UserLoginContex } from "../context/UserDataContext";
+import { FocusedTab, UserLoginContex } from "../context/UserDataContext";
 
 const { text, colors } = theme;
 
@@ -14,10 +14,16 @@ const ExperienceCard = ({ experienceData }) => {
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
   const { setUserData } = useContext(UserLoginContex);
+  const {setTab}  =useContext(FocusedTab)
+  const isFocused = useIsFocused()
 
   const hideMenu = () => setVisible(false);
 
   const showMenu = () => setVisible(true);
+  useEffect(()=> {
+    isFocused && setTab(4)
+  
+}, [isFocused]);
 
   return (
     <View style={styles.experienceCard}>
