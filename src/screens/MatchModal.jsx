@@ -1,13 +1,15 @@
 import {
-  Button,
   Image,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import React from "react";
 import { useNavigation, useRoute } from "@react-navigation/core";
+import theme from "../theme";
+import ReusableButton from "../components/ReusableButton";
+
+const { colors, text } = theme;
 
 const MatchModal = () => {
   const navigation = useNavigation();
@@ -17,25 +19,100 @@ const MatchModal = () => {
 
   return (
     <View style={styles.contanier}>
-      <Text style={styles.text}>Tienes un match!</Text>
-      <View>
-        <Text>
-          {loggedInUser.userName} y {postSwiped.userName}
+      <Text style={[text.cardSubtitleMedium, { fontWeight: "400" }]}>
+        ¡Felicitaciones!
+      </Text>
+      <Text
+        style={[text.cardTitle, { color: colors.secondary, fontWeight: "800" }]}
+      >
+        Hiciste Match
+      </Text>
+      <View style={styles.imageContainer}>
+        <View
+          style={[
+            styles.image,
+            {
+              position: "absolute",
+              backgroundColor: colors.details,
+              width: 140,
+              height: 140,
+              right: 40,
+            },
+          ]}
+        >
+          <View
+            style={[
+              styles.image,
+              {
+                backgroundColor: "white",
+                width: 130,
+                height: 130,
+              },
+            ]}
+          >
+            <Image
+              source={{
+                uri: loggedInUser.image,
+              }}
+              style={styles.image}
+            />
+          </View>
+        </View>
+        <View
+          style={[
+            styles.image,
+            {
+              position: "absolute",
+              backgroundColor: colors.details,
+              width: 140,
+              height: 140,
+              left: 40,
+            },
+          ]}
+        >
+          <View
+            style={[
+              styles.image,
+              {
+                backgroundColor: "white",
+                width: 130,
+                height: 130,
+              },
+            ]}
+          >
+            <Image
+              source={{
+                uri: postSwiped.image,
+              }}
+              style={styles.image}
+            />
+          </View>
+        </View>
+      </View>
+      <View style={[{ paddingHorizontal: 50 }]}>
+        <Text style={[text.text16, { textAlign: "center" }]}>
+          Has hecho match con:
+        </Text>
+        <Text
+          style={[
+            text.cardTitle,
+            { textAlign: "center", color: colors.secondary },
+          ]}
+        >
+          {postSwiped.userName}
+        </Text>
+        <Text style={[text.text16, { textAlign: "center" }]}>
+          Animate a dar el primer paso.
         </Text>
       </View>
-      <View style={styles.imageContainer}>
-        <Image source={loggedInUser.image} style={styles.image} />
-        <Image source={postSwiped.image} style={styles.image} />
-      </View>
-      <TouchableOpacity
+      <ReusableButton
+        innerText={"Enviar mensaje"}
         onPress={() => {
           navigation.goBack();
           navigation.navigate("ChatScreen");
         }}
-        style={styles.button}
-      >
-        <Text style={{ fontSize: 20, color: "#091D5C" }}>Enviar mensaje</Text>
-      </TouchableOpacity>
+        styleContainer={{marginTop: 19}}
+      />
     </View>
   );
 };
@@ -46,28 +123,29 @@ const styles = StyleSheet.create({
   contanier: {
     height: "100%",
     width: "100%",
-    padding: 30,
-    backgroundColor: "#091D5C",
+    padding: 5,
     opacity: 0.95,
     alignItems: "center",
     justifyContent: "center",
   },
-  text: {
+  title: {
     fontSize: 32,
     fontWeight: "bold",
-    color: "#fff",
+    color: "#888",
   },
   imageContainer: {
     width: "90%",
     flexDirection: "row",
     height: 250,
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "center",
   },
   image: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 120,
+    height: 120,
+    borderRadius: 200,
+    justifyContent: "center",
+    alignItems: "center",
   },
   button: {
     width: 250,
@@ -80,3 +158,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
+
+/* postSwiped.userName */
