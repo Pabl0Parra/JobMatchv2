@@ -87,6 +87,7 @@ const PostForm = () => {
       await setDoc(newPost, {
         ...post,
         id: newPost.id,
+        idPost: postToCollection.id,
         timestamp: serverTimestamp(),
       });
 

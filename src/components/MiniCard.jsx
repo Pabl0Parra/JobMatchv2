@@ -104,7 +104,7 @@ const MiniCard = ({ item, large, id }) => {
             marqueeDelay={1000}
             style={[text.text14, styles.textColor]}
           >
-            {large ? item?.filter?.roleWanted : item?.roleWanted}
+            {large ? item?.filter?.roleWanted : item?.userRole  }
           </TextTicker>
           {large ? (
             <Text style={[text.text12, styles.textColor]}>Hace {time}</Text>

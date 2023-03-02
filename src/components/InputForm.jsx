@@ -58,10 +58,7 @@ const InputForm = ({
           yupVal = yup
             .string()
             .required("Este campo es requerido")
-            .matches(
-              /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]*$/,
-              "Solo se permiten letras y espacios"
-            );
+            .matches(/^[a-zA-Z\s\/-\ñ\u00C0-\u00FF]*$/, "Solo se permiten letras y espacios");
           break;
       }
 

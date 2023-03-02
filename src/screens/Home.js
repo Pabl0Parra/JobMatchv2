@@ -41,6 +41,7 @@ const Home = () => {
 
   const [profiles, setProfiles] = useState([]);
   const [empty, setEmpty] = useState(true);
+  const [visits, setVisits] = useState(0);
   /* const { setTab } = useContext(FocusedTab); */
   const isFocused = useIsFocused();
 
@@ -113,9 +114,10 @@ const Home = () => {
       ) {
         profileQuery = query(
           collection(db, mainCollection),
+          where("worker", "==", true),
           //excluyo los que ya me aparecieron
           where("id", "not-in", [...passesId, ...likesId]),
-          where("roleWanted", "==", userData.filter.roleWanted)
+          where("userRole", "==", userData.filter.roleWanted)
         );
       } else if (
         userData.filter.seniority !== "" &&
@@ -123,6 +125,7 @@ const Home = () => {
       ) {
         profileQuery = query(
           collection(db, mainCollection),
+          where("worker", "==", true),
           //excluyo los que ya me aparecieron
           where("id", "not-in", [...passesId, ...likesId]),
           where("seniority", "==", userData.filter.seniority)
@@ -135,14 +138,16 @@ const Home = () => {
       ) {
         profileQuery = query(
           collection(db, mainCollection),
+          where("worker", "==", true),
           //excluyo los que ya me aparecieron
           where("id", "not-in", [...passesId, ...likesId]),
-          where("roleWanted", "==", userData.filter.roleWanted),
+          where("userRole", "==", userData.filter.roleWanted),
           where("seniority", "==", userData.filter.seniority)
         );
       } else {
         profileQuery = query(
           collection(db, mainCollection),
+          where("worker", "==", true),
           //excluyo los que ya me aparecieron
           where("id", "not-in", [...passesId, ...likesId])
         );
@@ -175,29 +180,34 @@ const Home = () => {
     if (!profiles[cardIndex]) return;
 
     const userSwiped = profiles[cardIndex];
-    //como usuario estoy viendo un post
-    setDoc(
-      //agrego a passes el id del post
-      doc(db, mainCollection, userData.id, "passes", userSwiped.id),
-      userSwiped
-    );
-    updateDoc(doc(db, mainCollection, userSwiped.id), {
-      ...userSwiped,
-      visits : Number(userSwiped.visits + 1),
-    })
+      setDoc(
+        //agrego a passes el id del post
+        doc(db, mainCollection, userData.id, "passes", userSwiped.id),
+        userSwiped
+      );
+
+    /* if (userData.worker){
+      console.log(visits)
+      updateDoc(doc(db, mainCollection, userSwiped.userId), {
+        visits: visits + 1,
+      })
+    } else {
+      setVisits(userSwiped.id.visits)
+      console.log(visits)
+      updateDoc(doc(db, mainCollection, userSwiped.id), {
+        visits: visits+1,
+      });
+    } */
+      
   };
 
   const swipeRight = (cardIndex) => {
     if (!profiles[cardIndex]) return;
 
     const postSwiped = profiles[cardIndex];
-    updateDoc(doc(db, mainCollection, postSwiped.userId), {
-      ...postSwiped,
-      visits : Number(postSwiped.visits + 1),
-    })
-
     //Para obtener todos los datos del usuario logueado
     const loggedInUser = { ...userData };
+
 
     if (userData.worker) {
       //Necesito chequear si el usuario al que le di like, me dio like previamente
@@ -210,10 +220,16 @@ const Home = () => {
           console.log(`Hiciste un match con ${postSwiped.userName}`);
 
           //guardo el like dado - necesito guardar el id del post, sino me vuelve a aparecer
-          setDoc(doc(db, mainCollection, userData.id, "likes", postSwiped.id), {
+          setDoc(doc(db, mainCollection, userData.id, "likes", postSwiped.userId), {
             ...postSwiped,
             timestamp: serverTimestamp(),
           });
+          
+/*           updateDoc(doc(db, mainCollection, postSwiped.userId), {
+            visits: +1,
+          }) */
+
+
           //guardo el like recibido en el perfil empresa
           setDoc(
             doc(db, mainCollection, postSwiped.userId, "likedTo", userData.id),
@@ -231,7 +247,7 @@ const Home = () => {
           setDoc(doc(db, "Matches", generateId(userData.id, postSwiped.id)), {
             users: {
               [userData.id]: loggedInUser,
-              [postSwiped.UserId]: postSwiped,
+              [postSwiped.userId]: postSwiped,
             },
             usersMatched: [userData.id, postSwiped.userId],
             postMatched: [postSwiped.id],
@@ -257,6 +273,9 @@ const Home = () => {
             postSwiped,
           });
         } else {
+/*           updateDoc(doc(db, mainCollection, postSwiped.userId), {
+            visits: +1 ,
+          }) */
           //solo guardo el like
           setDoc(doc(db, mainCollection, userData.id, "likes", postSwiped.id), {
             ...postSwiped,
@@ -289,6 +308,9 @@ const Home = () => {
           if (docSnapshot.exists()) {
             //hay match
             console.log(`Hiciste un match con ${postSwiped.userName}`);
+/*             updateDoc(doc(db, mainCollection, postSwiped.id), {
+              visits: +1,
+            }); */
             //guardo el like dado
             setDoc(
               doc(db, mainCollection, userData.id, "likes", postSwiped.id),
@@ -297,6 +319,7 @@ const Home = () => {
                 timestamp: serverTimestamp(),
               }
             );
+
             //guardo el like recibido en el perfil recibido
             setDoc(
               doc(db, mainCollection, postSwiped.id, "likedTo", userData.id),
@@ -327,6 +350,7 @@ const Home = () => {
             });
           } else {
             //guardo el like
+
             setDoc(
               doc(db, mainCollection, userData.id, "likes", postSwiped.id),
               {
@@ -334,6 +358,9 @@ const Home = () => {
                 timestamp: serverTimestamp(),
               }
             );
+/*             updateDoc(doc(db, mainCollection, postSwiped.id), {
+              visits: +1,
+            }); */
             //guardo el like recibido en el otro perfil
             setDoc(
               doc(db, mainCollection, postSwiped.id, "likedTo", userData.id),
@@ -423,7 +450,7 @@ const Home = () => {
                   cards={profiles}
                   renderCard={(card) =>
                     card ? (
-                      <Card card={card} refe={useRef}/>
+                      <Card card={card} refe={useRef} />
                     ) : (
                       <View style={styles.noProfiles}>
                         <Text>No hay más perfiles :c</Text>

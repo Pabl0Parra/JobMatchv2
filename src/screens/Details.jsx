@@ -15,6 +15,8 @@ import { UserLoginContex } from "../context/UserDataContext";
 import ExperienceCard from "../components/ExperienceCard";
 import {
   collection,
+  doc,
+  getDocs,
   onSnapshot,
 } from "firebase/firestore";
 import { db, mainCollection } from "../firebase/credentials";
@@ -43,24 +45,30 @@ const Details = ({ route, navigation }) => {
     lastName,
     aboutme,
     id,
+    userRole
   } = route.params;
 
   useEffect(() => {
-    /*     let exp;
-    getDocs(doc(db, "Experiences", id)).then((snapshot) => {
+/*     userData.employer &&
+    getDocs(doc(db, mainCollection, id, "experiences")).then((snapshot) => {
       if (snapshot.exists()) {
+        let exp=[];
         snapshot.forEach((doc) => exp.push(doc));
+        setExperiences(exp)
       }
     }); */
-    const exp = onSnapshot(
-      collection(db, mainCollection, id, "experiences"),
-      (snapshot) => {
-        let temp = [];
-        snapshot.forEach((doc) => temp.push(doc.data()));
-        setExperiences(temp);
+    if(userData.employer){
+
+      const exp = onSnapshot(
+        collection(db, mainCollection, id, "experiences"),
+        (snapshot) => {
+          let temp = [];
+          snapshot.forEach((doc) => temp.push(doc.data()));
+          setExperiences(temp);
+        }
+        );
+        return exp;
       }
-    );
-    return exp;
   }, []);
 
   return (
@@ -159,7 +167,7 @@ const Details = ({ route, navigation }) => {
                       {
                         <>
                           {requirements ? (
-                            <Text style={[text[14]]}>
+                            <Text style={[text.text14]}>
                               {requirements}
                               {"\n"}
                             </Text>
@@ -193,7 +201,7 @@ const Details = ({ route, navigation }) => {
                     {name} {lastName ? lastName : ""}
                   </Text>
 
-                  <Text style={text.text16}>{roleWanted}</Text>
+                  <Text style={text.text16}>{userRole}</Text>
                   <Text style={text.text14}>{seniority}</Text>
                   <Text style={text.text14}>{country}</Text>
                 </View>
@@ -203,14 +211,14 @@ const Details = ({ route, navigation }) => {
                 </View>
                 <View style={{ marginVertical: 20 }}>
                   <Text style={text.descriptionSubtitle}>Experiencia</Text>
-                  {experiences &&
+                  {experiences ?
                     experiences.map((exp) => (
                       <ExperienceCard
                         key={exp.id}
                         experienceData={exp}
                         details={true}
                       />
-                    ))}
+                    )): <Text></Text>}
                 </View>
               </>
             )}

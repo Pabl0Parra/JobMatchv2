@@ -146,11 +146,10 @@ const Card = ({ card }) => {
                   <>
                     <Text>{"\n"}</Text>
                     <Text style={[text.cardTitle, { color: "#fff" }]}>
-                      {card.userName +
-                        (card.userLastName ? card.userLastName : "")}
+                      {card.userName}{" "}{card.userLastName ? card.userLastName : ""}
                     </Text>
                     <Text style={[text.text16, { color: "#fff", fontSize: 18 }]}>
-                      {card.roleWanted}{" "}
+                      {card.userRole}{" "}
                       {card.seniority ? (
                         <Text
                           style={[
@@ -222,7 +221,7 @@ const Card = ({ card }) => {
                   //Datos de perfil
                   id:card.id,
                   image:image, 
-                  roleWanted: card.roleWanted,
+                  userRole: card.userRole,
                   seniority: card.seniority,
                   country: card.country,
                   education: card.education,

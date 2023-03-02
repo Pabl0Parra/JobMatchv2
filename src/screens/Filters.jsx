@@ -45,9 +45,9 @@ const Filters = () => {
         setVacantList(vacant);
       } else {
         const vacantOptions = await getDocs(
-          query(collection(db, mainCollection), where("roleWanted", "!=", ""))
+          query(collection(db, mainCollection), where("userRole", "!=", ""))
         );
-        vacantOptions.forEach((doc) => setOfVacant.add(doc.data().roleWanted));
+        vacantOptions.forEach((doc) => setOfVacant.add(doc.data().userRole));
         /*   console.log(vacant) */
         vacant=Array.from(setOfVacant);
         vacant.unshift("Todos")
