@@ -26,6 +26,7 @@ import { FocusedTab, SwipeContext, UserLoginContex } from "../context/UserDataCo
 import { useIsFocused, useNavigation } from "@react-navigation/core";
 import theme from "../theme";
 import { generateId } from "../utilities/utilities";
+import ImageOfNoResults from '../svgs/ImageOfNoResults'
 
 const { colors, text } = theme;
 
@@ -183,15 +184,13 @@ const Home = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <Header screen="Home" />
-        {profiles.length === 0 ? (
+        {profiles.length === 0? (
           <View style={styles.noProfiles}>
-            <Text>No hay más perfiles :c</Text>
-            <Image
-              style={{ width: 200, height: 200 }}
-              source={{
-                uri: "https://emojis.wiki/emoji-pics/google/neutral-face-google.png",
-              }}
-            />
+            <ImageOfNoResults />
+            <Text style={[text.text14, { textAlign: "center", paddingHorizontal: 28, marginTop: 20}]} >
+              No tienes más vacantes por ver.
+              Pronto apareceran las nuevas solicitudes.
+            </Text>
           </View>
         ) : (
           <>
@@ -272,7 +271,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: Constants.statusBarHeight,
     flex: 1,
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     gap: 10,
     alignItems: "center",
     backgroundColor: "#FFF",
@@ -288,7 +287,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
   },
   noProfiles: {
-    height: "80%",
+    height: "100%",
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
