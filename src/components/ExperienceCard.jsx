@@ -10,11 +10,11 @@ import { FocusedTab, UserLoginContex } from "../context/UserDataContext";
 
 const { text, colors } = theme;
 
-const ExperienceCard = ({ experienceData }) => {
+const ExperienceCard = ({ experienceData, details }) => {
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
-  const { setUserData } = useContext(UserLoginContex);
-  const {setTab}  =useContext(FocusedTab)
+  const { setUserData, setTab } = useContext(UserLoginContex);
+  /* const {setTab}  =useContext(FocusedTab) */
   const isFocused = useIsFocused()
 
   const hideMenu = () => setVisible(false);
@@ -47,6 +47,7 @@ const ExperienceCard = ({ experienceData }) => {
           >
             {experienceData.position}
           </Text>
+          {!details ? 
           <Menu
             visible={visible}
             anchor={
@@ -91,7 +92,8 @@ const ExperienceCard = ({ experienceData }) => {
             >
               Eliminar
             </MenuItem>
-          </Menu>
+          </Menu> : 
+          null}
         </View>
         <Text style={[text.text14, { flex: 1, fontStyle: "italic", fontWeight: "600", color: colors.text, marginBottom: 4 }]}>
           {experienceData.country}

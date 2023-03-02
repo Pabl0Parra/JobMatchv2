@@ -18,7 +18,7 @@ const JobCard = ({ postData }) => {
   const hideMenu = () => setVisible(false);
 
   const showMenu = () => setVisible(true);
-  console.log(postData);
+
   return (
     <View style={styles.jobCard}>
       <View style={styles.experienceIcon}>
@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
     padding: 4,
+    marginTop:8,
   },
   experienceIcon: {
     padding: 10,

@@ -12,11 +12,18 @@ import { useContext, useEffect, useState } from "react";
 import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import theme from "../theme";
 import { UserLoginContex } from "../context/UserDataContext";
+import ExperienceCard from "../components/ExperienceCard";
+import {
+  collection,
+  onSnapshot,
+} from "firebase/firestore";
+import { db, mainCollection } from "../firebase/credentials";
 
 const { colors, text } = theme;
 
 const Details = ({ route, navigation }) => {
   const { userData } = useContext(UserLoginContex);
+  const [experiences, setExperiences] = useState();
   const {
     seniority,
     country,
@@ -34,8 +41,27 @@ const Details = ({ route, navigation }) => {
     english,
     name,
     lastName,
-    about,
+    aboutme,
+    id,
   } = route.params;
+
+  useEffect(() => {
+    /*     let exp;
+    getDocs(doc(db, "Experiences", id)).then((snapshot) => {
+      if (snapshot.exists()) {
+        snapshot.forEach((doc) => exp.push(doc));
+      }
+    }); */
+    const exp = onSnapshot(
+      collection(db, mainCollection, id, "experiences"),
+      (snapshot) => {
+        let temp = [];
+        snapshot.forEach((doc) => temp.push(doc.data()));
+        setExperiences(temp);
+      }
+    );
+    return exp;
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -69,25 +95,25 @@ const Details = ({ route, navigation }) => {
                   <Text style={text.descriptionItem}>
                     Formación:{" "}
                     {education ? (
-                      <Text style={text[14]}>{education}</Text>
+                      <Text style={text.text14}>{education}</Text>
                     ) : (
-                      <Text style={text[14]}>No especificado</Text>
+                      <Text style={text.text14}>No especificado</Text>
                     )}
                   </Text>
                   <Text style={text.descriptionItem}>
                     Experiencia:{" "}
                     {experience ? (
-                      <Text style={text[14]}>{experience}</Text>
+                      <Text style={text.text14}>{experience}</Text>
                     ) : (
-                      <Text style={text[14]}>No especificado</Text>
+                      <Text style={text.text14}>No especificado</Text>
                     )}
                   </Text>
                   <Text style={text.descriptionItem}>
                     Funciones: {"\n"}
                     {functions ? (
-                      <Text style={text[14]}>{functions}</Text>
+                      <Text style={text.text14}>{functions}</Text>
                     ) : (
-                      <Text style={text[14]}>No especificado</Text>
+                      <Text style={text.text14}>No especificado</Text>
                     )}
                   </Text>
 
@@ -99,27 +125,27 @@ const Details = ({ route, navigation }) => {
                           <Text style={text.descriptionItem}>
                             Horario:{" "}
                             {hourHand ? (
-                              <Text style={text[14]}>{hourHand}</Text>
+                              <Text style={text.text14}>{hourHand}</Text>
                             ) : (
-                              <Text style={text[14]}>No especificado</Text>
+                              <Text style={text.text14}>No especificado</Text>
                             )}
                           </Text>
                           {"\n"}
                           <Text style={text.descriptionItem}>
                             Tipo de contrato:{" "}
                             {contract ? (
-                              <Text style={text[14]}>{contract}</Text>
+                              <Text style={text.text14}>{contract}</Text>
                             ) : (
-                              <Text style={text[14]}>No especificado</Text>
+                              <Text style={text.text14}>No especificado</Text>
                             )}
                           </Text>
                           {"\n"}
                           <Text style={text.descriptionItem}>
                             Salario estimado:{" "}
                             {salary ? (
-                              <Text style={text[14]}>{salary}</Text>
+                              <Text style={text.text14}>{salary}</Text>
                             ) : (
-                              <Text style={text[14]}>No especificado</Text>
+                              <Text style={text.text14}>No especificado</Text>
                             )}
                           </Text>
                         </>
@@ -138,19 +164,21 @@ const Details = ({ route, navigation }) => {
                               {"\n"}
                             </Text>
                           ) : (
-                            <Text style={text[14]}>No especificado</Text>
+                            <Text style={text.text14}>
+                              No especificado{"\n"}
+                            </Text>
                           )}
                           {english ? (
                             <Text style={[text.descriptionItem]}>
                               Inglés:{" "}
                               {english ? (
-                                <Text style={text[14]}>Si</Text>
+                                <Text style={text.text14}>Si</Text>
                               ) : (
-                                <Text style={text[14]}>No</Text>
+                                <Text style={text.text14}>No</Text>
                               )}
                             </Text>
                           ) : (
-                            <Text style={text[14]}>No especificado</Text>
+                            <Text style={text.text14}>No especificado</Text>
                           )}
                         </>
                       }
@@ -162,23 +190,27 @@ const Details = ({ route, navigation }) => {
               <>
                 <View>
                   <Text style={text.descriptionTitle}>
-                    {name}
-                    {""}
-                    {lastName ? lastName : ""}
+                    {name} {lastName ? lastName : ""}
                   </Text>
 
-                  <Text style={text[16]}>{roleWanted}</Text>
-                  <Text style={text[14]}>{seniority}</Text>
-                  <Text style={text[14]}>{country}</Text>
+                  <Text style={text.text16}>{roleWanted}</Text>
+                  <Text style={text.text14}>{seniority}</Text>
+                  <Text style={text.text14}>{country}</Text>
                 </View>
                 <View style={{ marginVertical: 20 }}>
-                  <Text style={text.descriptionSubtitle}>
-                    Acerca de mi
-                  </Text>
-                  <Text style={text.text16}>
-                    {about}
-                  </Text>
-
+                  <Text style={text.descriptionSubtitle}>Acerca de mi</Text>
+                  <Text style={text.text16}>{aboutme}</Text>
+                </View>
+                <View style={{ marginVertical: 20 }}>
+                  <Text style={text.descriptionSubtitle}>Experiencia</Text>
+                  {experiences &&
+                    experiences.map((exp) => (
+                      <ExperienceCard
+                        key={exp.id}
+                        experienceData={exp}
+                        details={true}
+                      />
+                    ))}
                 </View>
               </>
             )}

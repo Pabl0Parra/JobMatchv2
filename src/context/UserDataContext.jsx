@@ -27,6 +27,8 @@ export const UserDataContextProvider = ({ children }) => {
     },
     firstTime: true,
     visits:0,
+    available: true,
+    aboutme:""
   });
 
   return (
