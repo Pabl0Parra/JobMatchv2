@@ -75,6 +75,7 @@ const OnboardingStackScreen = () => (
 export default function App() {
   /* const {userData, setUserData} = useContext(UserDataContext) */
   const [userData, setUserData] = useState();
+  const [tab, setTab] = useState();
   const [onLandingPage, setOnLandingPage] = useState(true);
 
   useEffect(() => {
@@ -100,7 +101,7 @@ export default function App() {
 
   console.log("APP:" + userData?.id);
   return (
-    <UserLoginContex.Provider value={{ userData, setUserData }}>
+    <UserLoginContex.Provider value={{ userData, setUserData, tab, setTab }}>
       <UserDataContextProvider>
         <NavigationContainer theme={theme}>
           <Stack.Navigator screenOptions={{ headerShown: false }}>

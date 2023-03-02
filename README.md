@@ -2,20 +2,23 @@
   <a href="" target="_blank">
     <img src="https://res.cloudinary.com/dcwx2biey/image/upload/v1677685463/logoJobMatch_jrqgd2.jpg" alt="Logo" width="250" height="80">
   </a>
-  
+
 
   <p align="center">
-    <a href="https://pabl0parra-netflix-clone.netlify.app/">Ver demo</a>
+    <a href="">Ver demo</a>
     ·
-    <a href="https://github.com/Pabl0Parra/Netflix-clone-React-Typescript/issues">Reportar error</a>
+    <a href="https://github.com/No-Country/C9-47-ft-ReactNative/issues">Reportar error</a>
     ·
-    <a href="https://github.com/Pabl0Parra/Netflix-clone-React-Typescript/issues">Solicitar nueva funcionalidad</a>
+    <a href="https://github.com/No-Country/C9-47-ft-ReactNative/issues">Solicitar nueva funcionalidad</a>
   </p>
 </div>
 
 <details>
   <summary>Tabla de contenidos</summary>
   <ol>
+    <li>
+      <a href="#introducción">Introducción</a>
+    </li>       
     <li>
       <a href="#diseño">Diseño</a>
     </li>   
@@ -37,19 +40,26 @@
   <p align="center">Página de login</p>  
 </div>
 
+## Introducción
+
+- JobMatch es una aplicación que permite crear nuevas relaciones laborales al estilo Tinder. Te puedes registrar como candidato o como empresa que busca nuevos empleados.
+- Una vez creado tu perfil puedes ver ofertas de trabajo (si estás en búsqueda de empleo) o ver candidatos que cumplan los requisitos que tu empresa necesita.
+- Al hacer match, se crea un chat, dando así la oportunidad de conocerse y ver si cabe la posibilidad de entablar una relación laboral.
+
 ## Diseño
-- El diseño de la app ha sido creada por nuestra UI/UX designer Yes, se encuentra en [Figma](https://www.figma.com/file/7LXyAnXTSPlwpIZfNyhl9T/JobMatch*?node-id=3%3A271&t=LuAB7656ZLoEoyh2-0).
+
+- El diseño de la app ha sido creada por nuestra UI/UX designer [Yesenia Morero](https://www.linkedin.com/in/yesenia-moreno-bernal/), se puede ver en [Figma](https://www.figma.com/file/7LXyAnXTSPlwpIZfNyhl9T/JobMatch*?node-id=3%3A271&t=LuAB7656ZLoEoyh2-0).
 
 ## Prerequisitos
+
 - Necesitarás [Git](https://git-scm.com).
 - Instala [Node.js](https://nodejs.org/en/download/) (que viene con [npm](http://npmjs.com)) en tu computadora.
 - También necesitaras tener instalado [Expo CLI](https://docs.expo.dev/workflow/expo-cli/).
-- Ejecuta ```npx create-expo-app my-app && cd my-app```
+- Ejecuta `npx create-expo-app my-app && cd my-app`
 - Crea una cuenta en [Firebase](https://firebase.google.com/).
 - Sigue la [documentación](https://firebase.google.com/docs/web/setup?hl=es-419) para crear tus credenciales e importarlas a tu proyecto.
 - Crea un archivo llamado `.env`, añade tus credenciales de Firebase en ese archivo, agregalo el archivo .env a .gitignore (para evitar que se suba a Github).
-- Para arrancar el proyecto haz ```npm i``` para crear los node_modules, luego ```npm start``` para lanzar el proyecto.
-
+- Para arrancar el proyecto haz `npm i` para crear los node_modules, luego `npm start` para lanzar el proyecto.
 
 ## Librerías externas
 
@@ -69,29 +79,27 @@
 - [React-native-safe-area-context](https://github.com/th3rdwave/react-native-safe-area-context)
 - [React-native-dropdown-select-list](https://www.npmjs.com/package/react-native-dropdown-select-list)
 
-
-
 ## Funcionalidades
 
 - [x] Registrarse con email y password.
 - [x] Registrarse con cuenta de Google.
-- [x] Crear perfil como buscador de trabajo o empresa.
+- [x] Crear perfil como candidato o empresa.
 - [x] Editar perfiles después de haber sido creados.
-- [x] Ver perfiles de trabajadores o de empresas.
+- [x] Ver perfiles de candidadtos o de puestos de trabajo disponibles.
 - [x] Filtrar perfiles por puestos de trabajo, años de experiencia, etc...
 - [x] Añadir perfil a tus favoritos.
-- [x] Darle a gustar o no gustar, así como deslizar a la derecha o izquierda un perfil para conseguir lo mismo.
+- [x] Darle a gustar o no gustar para hacer match, así como deslizar a la derecha o izquierda un perfil para conseguir lo mismo.
 - [x] Una vez existe un match, se puede empezar a hablar por el chat de la app.
 
 ## Contacto
-- Diseño: [Yesenia]()
+
+- Diseño: [@YeseniaMorero](https://www.linkedin.com/in/yesenia-moreno-bernal/)
 - Frontend Devs:
   - [@PabloParra](https://linkedin.com/in/pablo-parra-bcn)
   - [@NicolásSepertino](https://www.linkedin.com/in/nicolassepertino/)
   - [@NicolásRadín](https://www.linkedin.com/in/nico-radin/)
-- QA Tester: [TatianaMontoya](https://www.linkedin.com/in/tatiana-montoya-73593654/)
+- QA Tester: [@TatianaMontoya](https://www.linkedin.com/in/tatiana-montoya-73593654/)
 
-> **Note**
-> ***Este proyecto ha sido creado sin ningún conocimiento previo de React Native.
+> **Note** > **_Este proyecto ha sido creado sin ningún conocimiento previo de React Native.
 > Se ha desarrollado durante cinco semanas para el Cohorte 9 de [NoCountry](https://www.nocountry.tech/perfilesit).
-> Se aceptan pull requests para mejoras, así como nuevas funcionalidades o para avisar de posibles bugs encontrados durante su uso.***
+> Se aceptan pull requests para mejoras, así como nuevas funcionalidades o para avisar de posibles bugs encontrados durante su uso._**

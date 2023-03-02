@@ -16,7 +16,7 @@ const Onboarding1 = () => {
       <View style={styles.imageContainer}>
         <TouchableOpacity
           style={styles.omitirButton}
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => navigation.navigate("Main")}
         >
           <Text style={styles.omitirText}>Omitir</Text>
         </TouchableOpacity>
@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
   },
   omitirText: {
     fontSize: 14,
-    fontWeight: "bold",
-    color: `${colors.details}`,
+    fontWeight: "500",
+    color: "#84FFFF",
   },
   contentContainer: {
     flex: 1,

@@ -43,7 +43,7 @@ const ChooseRoleWanted = () => {
               fontSize: 14,
             },
           }}
-          buttonMarginTop={120}
+          buttonMarginTop={30}
         />
       </DisplayContainer>
     </>

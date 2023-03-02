@@ -16,7 +16,7 @@ const Onboarding3 = () => {
       <View style={styles.imageContainer}>
         <TouchableOpacity
           style={styles.omitirButton}
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => navigation.navigate("Main")}
         >
           <Text style={styles.omitirText}>Omitir</Text>
         </TouchableOpacity>

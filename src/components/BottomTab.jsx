@@ -20,8 +20,8 @@ import { DrawerActions } from "@react-navigation/routers";
 } from "@expo/vector-icons"; */
 
 import { TouchableOpacity, View, StyleSheet } from "react-native";
-import { useEffect, useState } from "react";
-import { FocusedTab } from "../context/UserDataContext";
+import { useContext, useEffect, useState } from "react";
+import { FocusedTab, UserLoginContex } from "../context/UserDataContext";
 import HomeIcon from "../svgs/HomeIcon";
 import ConectionsIcon from "../svgs/ConectionsIcon";
 import MessagesIcon from "../svgs/MessagesIcon";
@@ -31,10 +31,10 @@ const Tab = createBottomTabNavigator();
 const { colors } = theme;
 
 export default function BottomTab({ navigation }) {
-  const [tab, setTab] = useState();
+  const {tab} = useContext(UserLoginContex)
+  /* const [tab, setTab] = useState(); */
 
   return (
-    <FocusedTab.Provider value={{ tab, setTab }}>
       <Tab.Navigator
         screenOptions={{
           tabBarActiveTintColor: `${colors.details}`,
@@ -151,7 +151,6 @@ export default function BottomTab({ navigation }) {
           }}
         />
       </Tab.Navigator>
-    </FocusedTab.Provider>
   );
 }
 

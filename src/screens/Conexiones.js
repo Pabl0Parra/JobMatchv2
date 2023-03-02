@@ -7,7 +7,7 @@ import theme from "../theme";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import MiniCard from "../components/MiniCard";
 import { useContext, useEffect, useState } from "react";
-import { collection, doc, onSnapshot, query } from "firebase/firestore";
+import { collection, doc, onSnapshot, query, setDoc } from "firebase/firestore";
 import { db, mainCollection } from "../firebase/credentials";
 import { FocusedTab, UserLoginContex } from "../context/UserDataContext";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
@@ -15,23 +15,25 @@ import { useIsFocused, useNavigation } from "@react-navigation/native";
 const { text, colors } = theme;
 
 const Conexiones = ({ navigation }) => {
-  const { userData } = useContext(UserLoginContex);
+  const { userData, setUserData, setTab } = useContext(UserLoginContex);
   const [saved, setSaved] = useState([]);
   const [matches, setMatches] = useState([]);
   const [likedTo, setLikedTo] = useState([]);
-  const { setTab } = useContext(FocusedTab);
+  /* const { setTab } = useContext(FocusedTab); */
   /* const navigation = useNavigation() */
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    isFocused && setTab(2);
-
     const savedProfiles = onSnapshot(
       collection(db, mainCollection, userData.id, "saved"),
       (snapshot) => {
         let temp = [];
         snapshot.forEach((doc) => temp.push(doc.data()));
         setSaved(temp);
+        setUserData({
+          ...userData,
+          savedCount: `${saved?.length}`,
+        });
       }
     );
 
@@ -55,7 +57,7 @@ const Conexiones = ({ navigation }) => {
         setLikedTo(temp);
       }
     );
-
+    isFocused && setTab(2);
     return likedProfiles, savedProfiles;
   }, [isFocused]);
 

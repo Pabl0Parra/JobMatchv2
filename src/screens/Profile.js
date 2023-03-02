@@ -29,10 +29,14 @@ import ProfileCards from "../components/ProfileCards";
 const { text, colors } = theme;
 
 const Profile = () => {
-  const { userData, setUserData } = useContext(UserLoginContex);
+  const { userData, setUserData, setTab } = useContext(UserLoginContex);
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const [percentage, setPercentage] = useState(60);
+  /* const {setTab}  =useContext(FocusedTab) */
+  const isFocused = useIsFocused()
+  const [savedCount, setSavedCount] = useState(0);
+  const [visitsCount, setVisitsCount] = useState(0);
 
   const changeProfilePicture = async () => {
     try {
@@ -63,13 +67,14 @@ const Profile = () => {
     }
   };
 
-  const {setTab}  =useContext(FocusedTab)
-  const isFocused = useIsFocused()
-  
+
   useEffect(()=> {
+    setSavedCount(userData.savedCount)
+    setVisitsCount(userData.visits)
       isFocused && setTab(4)
+
     
-  }, [isFocused, userData]);
+  }, [isFocused, savedCount, visitsCount]);
 
 
   return (
@@ -122,7 +127,7 @@ const Profile = () => {
           <Text style={[styles.text]}>{userData.worker? userData.userRole : userData.sector}</Text>
         </View>
         <View style={styles.detailsSectionsContainer}>
-          <TouchableOpacity style={styles.detailsSection} onPress={() => {}}>
+{/*           <TouchableOpacity style={styles.detailsSection} onPress={() => {}}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Feather name="bell" size={24} color={colors.secondary} />
               <Text
@@ -137,7 +142,7 @@ const Profile = () => {
             <Text style={[text.descriptionItem, { color: colors.secondary }]}>
               Notificaciones
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <View style={styles.separatorDetails} />
           <TouchableOpacity style={styles.detailsSection} onPress={() => {}}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -148,11 +153,11 @@ const Profile = () => {
               />
               <Text
                 style={[
-                  text.subtitleMedium,
+                  text.cardSubtitleMedium,
                   { color: colors.secondary, fontWeight: "900", marginLeft: 3 },
                 ]}
               >
-                5
+                {visitsCount}
               </Text>
             </View>
             <Text style={[text.descriptionItem, { color: colors.secondary }]}>
@@ -169,11 +174,11 @@ const Profile = () => {
               />
               <Text
                 style={[
-                  text.subtitleMedium,
+                  text.cardSubtitleMedium,
                   { color: colors.secondary, fontWeight: "900", marginLeft: 3 },
                 ]}
               >
-                5
+                {savedCount}
               </Text>
             </View>
             <Text style={[text.descriptionItem, { color: colors.secondary }]}>

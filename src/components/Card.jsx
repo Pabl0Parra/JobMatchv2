@@ -220,6 +220,7 @@ const Card = ({ card }) => {
                   functions: card.functions,
                 } : {
                   //Datos de perfil
+                  id:card.id,
                   image:image, 
                   roleWanted: card.roleWanted,
                   seniority: card.seniority,
@@ -229,7 +230,7 @@ const Card = ({ card }) => {
                   english: card.english,
                   name: card.userName,
                   lastName: card.userLastName,
-                  about: card.about,
+                  aboutme: card.aboutme,
                 })
               }
             >

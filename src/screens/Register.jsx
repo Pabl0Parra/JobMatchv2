@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Text, Image, View, TouchableOpacity, StyleSheet } from "react-native";
 import DisplayContainer from "../components/DisplayContainer";
 import checkRegisteredEmail from "../firebase/functions/checkRegisteredEmail";
@@ -7,16 +7,21 @@ import { UserDataContext } from "../context/UserDataContext";
 import InputForm from "../components/InputForm";
 import LogoForBlueBackround from "../svgs/LogoForBlueBackground";
 import { AntDesign } from "@expo/vector-icons";
+import AwesomeAlert from "react-native-awesome-alerts";
+import theme from "../theme";
+
+const colors = theme.colors;
 
 const Register = () => {
   const navigation = useNavigation();
   const { userData, setUserData } = useContext(UserDataContext);
+  const [showAlert, setShowAlert] = useState(false);
 
   const formSubmit = async (values) => {
     const registeredUser = await checkRegisteredEmail(values[0]);
 
     if (registeredUser) {
-      // implementar un mensaje de error con AwesomeAlert
+      setShowAlert(true);
       console.log("ya hay un usuario registrado con el email proporcionado");
     } else {
       setUserData({ ...userData, email: values[0], password: values[1] });
@@ -26,6 +31,17 @@ const Register = () => {
 
   return (
     <DisplayContainer>
+      <AwesomeAlert
+        show={showAlert}
+        title="Email ya registrado 🔒"
+        message="Ya hay un usuario registrado con el email proporcionado"
+        closeOnTouchOutside={true}
+        onDismiss={() => setShowAlert(false)}
+        onConfirmPressed={() => setShowAlert(false)}
+        showConfirmButton={true}
+        confirmText="OK"
+        confirmButtonColor={colors.secondary}
+      />
       <View style={styles.background}>
         <Image
           style={[styles.image]}

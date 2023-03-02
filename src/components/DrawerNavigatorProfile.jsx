@@ -3,14 +3,14 @@ import {
 } from "@react-navigation/drawer";
 import { useIsFocused } from "@react-navigation/native";
 import { useContext, useEffect } from "react";
-import { FocusedTab } from "../context/UserDataContext";
+import { FocusedTab, UserLoginContex } from "../context/UserDataContext";
 import Profile from "../screens/Profile";
 import DrawerMenu from "./DrawerMenu";
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigatorProfile = () => {
-  const {setTab}  =useContext(FocusedTab)
+  const {setTab}  =useContext(UserLoginContex)
   const isFocused = useIsFocused()
   
   useEffect(()=> {

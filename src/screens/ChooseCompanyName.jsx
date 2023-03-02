@@ -50,7 +50,7 @@ const ChooseCompanyName = () => {
               fontSize: 14,
             },
           }}
-          buttonMarginTop={120}
+          buttonMarginTop={40}
         />
       </DisplayContainer>
     </>
