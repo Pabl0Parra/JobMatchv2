@@ -26,6 +26,7 @@ export const UserDataContextProvider = ({ children }) => {
       seniority: "",
     },
     firstTime: true,
+    visits:0,
   });
 
   return (

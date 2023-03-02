@@ -19,6 +19,7 @@ import {
   query,
   serverTimestamp,
   setDoc,
+  updateDoc,
   where,
 } from "@firebase/firestore";
 import { db, mainCollection, postCollection } from "../firebase/credentials";
@@ -34,17 +35,17 @@ import { generateId } from "../utilities/utilities";
 const { colors, text } = theme;
 
 const Home = () => {
-  const { userData } = useContext(UserLoginContex);
   const swipeRef = useRef(null);
+  const { userData, setTab } = useContext(UserLoginContex);
   const navigation = useNavigation();
 
   const [profiles, setProfiles] = useState([]);
   const [empty, setEmpty] = useState(true);
-  const { setTab } = useContext(FocusedTab);
+  /* const { setTab } = useContext(FocusedTab); */
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    setTab(1);
+    isFocused && setTab(1);
     let unsub;
 
     const fetchProfiles = async () => {
@@ -180,12 +181,20 @@ const Home = () => {
       doc(db, mainCollection, userData.id, "passes", userSwiped.id),
       userSwiped
     );
+    updateDoc(doc(db, mainCollection, userSwiped.id), {
+      ...userSwiped,
+      visits : Number(userSwiped.visits + 1),
+    })
   };
 
   const swipeRight = (cardIndex) => {
     if (!profiles[cardIndex]) return;
 
     const postSwiped = profiles[cardIndex];
+    updateDoc(doc(db, mainCollection, postSwiped.userId), {
+      ...postSwiped,
+      visits : Number(postSwiped.visits + 1),
+    })
 
     //Para obtener todos los datos del usuario logueado
     const loggedInUser = { ...userData };
@@ -414,7 +423,7 @@ const Home = () => {
                   cards={profiles}
                   renderCard={(card) =>
                     card ? (
-                      <Card card={card} />
+                      <Card card={card} refe={useRef}/>
                     ) : (
                       <View style={styles.noProfiles}>
                         <Text>No hay más perfiles :c</Text>

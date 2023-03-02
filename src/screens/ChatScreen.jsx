@@ -10,12 +10,12 @@ import {
 import theme from "../theme";
 import ChatList from "../components/ChatList";
 import { useIsFocused } from "@react-navigation/native";
-import { FocusedTab } from "../context/UserDataContext";
+import { FocusedTab, UserLoginContex } from "../context/UserDataContext";
 
 const colors = theme.colors;
 
 export default function ChatScreen() {
-  const { setTab } = useContext(FocusedTab);
+  const { setTab } = useContext(UserLoginContex);
   const isFocused = useIsFocused();
 
   useEffect(() => {
