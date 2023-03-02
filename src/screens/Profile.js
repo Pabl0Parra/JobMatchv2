@@ -143,7 +143,7 @@ const Profile = () => {
               Notificaciones
             </Text>
           </TouchableOpacity> */}
-          <View style={styles.separatorDetails} />
+          {/* <View style={styles.separatorDetails} /> */}
           <TouchableOpacity style={styles.detailsSection} onPress={() => {}}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Ionicons
