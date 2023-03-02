@@ -1,19 +1,49 @@
-import { useContext } from "react";
-import {
-  UserDataContext,
-  UserDataContextProvider,
-} from "../context/UserDataContext";
+import { useState, useContext } from "react";
+import { UserDataContext } from "../context/UserDataContext";
 import { Text, StyleSheet, View, TouchableOpacity, Image } from "react-native";
 import LogoForBlueBackround from "../svgs/LogoForBlueBackground";
 import DisplayContainer from "../components/DisplayContainer";
 import loginWithEmail from "../firebase/functions/loginWithEmailPassword";
 import loginWithGoogle from "../firebase/functions/loginWithGoogle";
 import InputForm from "../components/InputForm";
+import checkRegisteredEmail from "../firebase/functions/checkRegisteredEmail";
+import AwesomeAlert from "react-native-awesome-alerts";
+import theme from "../theme";
+
+const colors = theme.colors;
 
 const Login = ({ navigation }) => {
   const { userData, setUserData } = useContext(UserDataContext);
+  const [showAlert, setShowAlert] = useState(false);
+
+  const formSubmit = async (values) => {
+    const registeredUser = await checkRegisteredEmail(values[0]);
+
+    if (!registeredUser) {
+      setShowAlert(true);
+      console.log("No hay un usuario registrado con el email proporcionado");
+    } else {
+      loginWithEmail(values[0], values[1]);
+      setUserData(...userData, {
+        email: values[0],
+        password: values[1],
+      });
+    }
+  };
+
   return (
     <DisplayContainer>
+      <AwesomeAlert
+        show={showAlert}
+        title="Email no registrado 🔒"
+        message="No hay un usuario registrado con el email proporcionado"
+        closeOnTouchOutside={true}
+        onDismiss={() => setShowAlert(false)}
+        onConfirmPressed={() => setShowAlert(false)}
+        showConfirmButton={true}
+        confirmText="OK"
+        confirmButtonColor={colors.secondary}
+      />
       <View style={styles.background}>
         <Image style={styles.image} source={require("../images/image4.png")} />
       </View>
@@ -38,13 +68,7 @@ const Login = ({ navigation }) => {
                 recoverPassword: true,
               },
             ]}
-            onSubmit={(values) => {
-              loginWithEmail(values[0], values[1]);
-              setUserData(...userData, {
-                email: values[0],
-                password: values[1],
-              });
-            }}
+            onSubmit={formSubmit}
             requestText="Iniciar Sesión"
             buttonText="Iniciar Sesión"
             buttonMarginTop={14}
