@@ -1,15 +1,17 @@
 <div align="center">
+  <p align="center">C9-47-ft-ReactNative</p>
+    
   <a href="" target="_blank">
-    <img src="https://res.cloudinary.com/dcwx2biey/image/upload/v1677685463/logoJobMatch_jrqgd2.jpg" alt="Logo" width="250" height="80">
+    <img src="https://res.cloudinary.com/dcwx2biey/image/upload/v1677685463/logoJobMatch_jrqgd2.jpg" alt="Logo" width="500" height="200">
   </a>
 
 
   <p align="center">
-    <a href="">Ver demo</a>
+    <a href="" target="_blank">Ver demo</a>
     ·
-    <a href="https://github.com/No-Country/C9-47-ft-ReactNative/issues">Reportar error</a>
+    <a href="https://github.com/No-Country/C9-47-ft-ReactNative/issues" target="_blank">Reportar error</a>
     ·
-    <a href="https://github.com/No-Country/C9-47-ft-ReactNative/issues">Solicitar nueva funcionalidad</a>
+    <a href="https://github.com/No-Country/C9-47-ft-ReactNative/issues" target="_blank">Solicitar nueva funcionalidad</a>
   </p>
 </div>
 
