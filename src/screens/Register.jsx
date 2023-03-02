@@ -33,7 +33,7 @@ const Register = () => {
     <DisplayContainer>
       <AwesomeAlert
         show={showAlert}
-        title="Email ya registrado"
+        title="Email ya registrado 🔒"
         message="Ya hay un usuario registrado con el email proporcionado"
         closeOnTouchOutside={true}
         onDismiss={() => setShowAlert(false)}
