@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import DisplayContainer from "../components/DisplayContainer";
 import InputForm from "../components/InputForm";
 import { UserDataContext } from "../context/UserDataContext";

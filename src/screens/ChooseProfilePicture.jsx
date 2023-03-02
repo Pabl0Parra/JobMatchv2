@@ -31,9 +31,6 @@ const ChooseProfilePicture = () => {
     });
 
     if (result.assets) {
-      // Research uri --> https://docs.expo.io/versions/latest/sdk/imagepicker/#imagepickerlaunchimagelibraryasync
-      // access selected assets through the "assets" array instead (warning in console)
-
       setImage(result.uri);
     }
   };
@@ -67,7 +64,6 @@ const ChooseProfilePicture = () => {
     }
   };
 
-  // aquí se cierra la alerta y se navega a Home
   const hideAlert = () => {
     setShowAlert(false);
     navigation.navigate("Main");
@@ -85,7 +81,7 @@ const ChooseProfilePicture = () => {
         <Text style={styles.subTitle}>
           Sabías que añadir una foto incrementa en un 70% tus opciones de match?
         </Text>
-        <View style={styles.imageContainer}>
+        <View>
           <View style={styles.rectangle}>
             {image ? (
               <TouchableOpacity onPress={pickImage} style={styles.imageWrapper}>
