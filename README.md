@@ -18,8 +18,7 @@
   <ol>
     <li>
       <a href="#introducción">Introducción</a>
-    </li>   
-    <li>
+    </li>       
     <li>
       <a href="#diseño">Diseño</a>
     </li>   
