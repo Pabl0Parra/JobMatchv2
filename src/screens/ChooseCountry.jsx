@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, KeyboardAvoidingView, Platform } from "react-native"; // import KeyboardAvoidingView and Platform
 import InputForm from "../components/InputForm";
 import { useNavigation } from "@react-navigation/native";
 import DisplayContainer from "../components/DisplayContainer";
@@ -20,34 +20,40 @@ const ChooseCountry = () => {
         <HandHeart />
       </View>
       <DisplayContainer style={{ justifyContent: "flex-start", marginTop: 4 }}>
-        <InputForm
-          fields={[
-            { label: "País", name: "country", type: "text" },
-            { label: "Ciudad", name: "city", type: "text" },
-          ]}
-          onSubmit={(values) => {
-            setUserData({ ...userData, country: values[0], city: values[1] });
-            navigation.navigate("ChooseProfilePicture");
-          }}
-          questionText="Introduce tu país y ciudad"
-          requestText="Te ayudará a encontrar personas cercanas a ti"
-          buttonText={"Siguiente"}
-          styleText={{
-            question: {
-              alignSelf: "flex-start",
-              marginLeft: 14,
-              fontWeight: "500",
-              fontSize: 20,
-            },
-            request: {
-              alignSelf: "flex-start",
-              marginLeft: 14,
-              fontWeight: "400",
-              fontSize: 14,
-            },
-          }}
-          buttonMarginTop={120}
-        />
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={{ flex: 1 }}
+          keyboardVerticalOffset={10}
+        >
+          <InputForm
+            fields={[
+              { label: "País", name: "country", type: "text" },
+              { label: "Ciudad", name: "city", type: "text" },
+            ]}
+            onSubmit={(values) => {
+              setUserData({ ...userData, country: values[0], city: values[1] });
+              navigation.navigate("ChooseProfilePicture");
+            }}
+            questionText="Introduce tu país y ciudad"
+            requestText="Te ayudará a encontrar personas cercanas a ti"
+            buttonText={"Siguiente"}
+            styleText={{
+              question: {
+                alignSelf: "flex-start",
+                marginLeft: 14,
+                fontWeight: "500",
+                fontSize: 20,
+              },
+              request: {
+                alignSelf: "flex-start",
+                marginLeft: 14,
+                fontWeight: "400",
+                fontSize: 14,
+              },
+            }}
+            buttonMarginTop={40}
+          />
+        </KeyboardAvoidingView>
       </DisplayContainer>
     </>
   );

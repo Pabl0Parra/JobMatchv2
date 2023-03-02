@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
   },
   omitirText: {
     fontSize: 14,
-    fontWeight: "bold",
-    color: `${colors.details}`,
+    fontWeight: "500",
+    color: "#84FFFF",
   },
   contentContainer: {
     flex: 1,
