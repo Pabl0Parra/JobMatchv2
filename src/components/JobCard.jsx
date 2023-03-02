@@ -5,7 +5,7 @@ import theme from "../theme";
 import { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
-import deleteExperienceOrPost from '../firebase/functions/deleteExperienceOrPost'
+import deleteExperienceOrPost from "../firebase/functions/deleteExperienceOrPost";
 import { UserLoginContex } from "../context/UserDataContext";
 
 const { text, colors } = theme;
@@ -18,7 +18,7 @@ const JobCard = ({ postData }) => {
   const hideMenu = () => setVisible(false);
 
   const showMenu = () => setVisible(true);
-
+  console.log(postData);
   return (
     <View style={styles.jobCard}>
       <View style={styles.experienceIcon}>
@@ -33,7 +33,7 @@ const JobCard = ({ postData }) => {
             alignItems: "flex-start",
           }}
         >
-          <Text style={[text.descriptionSubtitle, { flex: 1 }]}>
+          <Text style={[text.descriptionSubtitle, { flex: 1, fontSize: 18 }]}>
             {postData.roleWanted}
           </Text>
           <Menu
@@ -43,7 +43,7 @@ const JobCard = ({ postData }) => {
                 style={{ flex: 1 }}
                 name="md-ellipsis-horizontal-sharp"
                 size={24}
-                color="black"
+                color={colors.secondary}
                 onPress={showMenu}
               />
             }
@@ -82,7 +82,37 @@ const JobCard = ({ postData }) => {
             </MenuItem>
           </Menu>
         </View>
-        <Text>{postData.experience}</Text>
+        <Text
+          style={[
+            text.text14,
+            {
+              flex: 1,
+              fontStyle: "italic",
+              fontWeight: "600",
+              color: colors.text,
+              marginBottom: 4,
+            },
+          ]}
+        >
+          {postData.country}
+        </Text>
+        <Text
+          style={[
+            text.text14,
+            {
+              flex: 1,
+              fontStyle: "italic",
+              fontWeight: "400",
+              color: colors.text,
+              marginBottom: 4,
+            },
+          ]}
+        >
+          {postData.seniority + " " + postData.timeJob}
+        </Text>
+        <Text style={[text.text16, { flex: 1, fontWeight: "600" }]}>
+          {postData.requirements}
+        </Text>
       </View>
     </View>
   );

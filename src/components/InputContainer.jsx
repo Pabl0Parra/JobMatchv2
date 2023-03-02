@@ -29,13 +29,14 @@ const InputContainer = ({
     <>
       <View>
         <TextInput
+          onKeyPress={(e) => console.log(e)}
           style={[
             styles.container,
             {
-              borderWidth: value.length ? 1.8 : 1.2,
-              borderColor: value.length ? colors.secondary : "gray",
-              color: value.length ? colors.secondary : "gray",
-              fontWeight: value.length ? "600" : "300",
+              borderWidth: value?.length ? 1.8 : 1.2,
+              borderColor: value?.length ? colors.secondary : "gray",
+              color: value?.length ? colors.secondary : "gray",
+              fontWeight: value?.length ? "600" : "300",
             },
             styleContainer
           ]}
@@ -59,7 +60,7 @@ const InputContainer = ({
             </TouchableOpacity>
           </>
         ) : null}
-        {value.length ? (
+        {value?.length ? (
           <View style={[styles.placeholder, stylePlaceholder]}>
             <Text style={{ fontWeight: "600" }}>{placeholder}</Text>
           </View>
