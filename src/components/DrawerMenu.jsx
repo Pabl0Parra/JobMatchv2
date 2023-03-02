@@ -15,14 +15,15 @@ import ProfileDrawerItem from "./ProfileDrawerItem";
 import logOut from "../firebase/functions/logOut";
 import { useContext, useState } from "react";
 import { UserLoginContex } from "../context/UserDataContext";
+import MainDataEditingForm from "./MainDataEditingForm";
 
 const { colors, text } = theme;
 
 const DrawerMenu = ({ navigation }) => {
   const { userData, setUserData } = useContext(UserLoginContex);
-
   const [showModeModal, setShowModeModal] = useState(false);
-  const [userMode, setUserMode] = useState(false)
+  const [showModalPresentation, setShowModalPresentation] = useState(false);
+  const [userMode, setUserMode] = useState(false);
 
   return (
     <DisplayContainer style={[styles.displayContainer]}>
@@ -43,10 +44,6 @@ const DrawerMenu = ({ navigation }) => {
         </Text>
       </View>
       <View style={styles.itemsContainer}>
-        <ProfileDrawerItem textItem={"Notificaciones"}>
-          <FontAwesome5 name="bell" size={24} color={colors.secondary} />
-        </ProfileDrawerItem>
-        <View style={styles.divider} />
         <ProfileDrawerItem
           textItem={"Cambiar modo"}
           onPress={() => setShowModeModal(true)}
@@ -83,15 +80,40 @@ const DrawerMenu = ({ navigation }) => {
           </View>
         </Modal>
         <View style={styles.divider} />
-        <ProfileDrawerItem textItem={"Preferencias generales"}>
-          <AntDesign name="profile" size={24} color={colors.secondary} />
-        </ProfileDrawerItem>
-        <View style={styles.divider} />
-        <ProfileDrawerItem textItem={"Editar presentación"}>
+        <ProfileDrawerItem
+          textItem={"Editar presentación"}
+          onPress={(e) => {
+            setShowModalPresentation(true);
+          }}
+        >
           <AntDesign name="form" size={24} color={colors.secondary} />
         </ProfileDrawerItem>
+        <MainDataEditingForm
+          setShowModal={setShowModalPresentation}
+          showModal={showModalPresentation}
+          inputArray={
+            !userData.worker
+              ? [
+                  { name: "userName", title: "Nombre" },
+                  { name: "roleWanted", title: "Rol" },
+                  { name: "sector", title: "Sector" },
+                  { name: "country", title: "Pais" },
+                  { name: "city", title: "Ciudad" },
+                ]
+              : [
+                  { name: "userName", title: "Nombre" },
+                  { name: "userLastName", title: "Apellido" },
+                  { name: "userRole", title: "Rol" },
+                  { name: "country", title: "Pais" },
+                  { name: "city", title: "Ciudad" },
+                ]
+          }
+        />
         <View style={styles.divider} />
-        <ProfileDrawerItem textItem={"Ayuda y soporte técnico"}>
+        <ProfileDrawerItem
+          textItem={"Ayuda y soporte técnico"}
+          onPress={() => navigation.navigate("HelpAndSupport")}
+        >
           <AntDesign
             name="questioncircleo"
             size={24}
