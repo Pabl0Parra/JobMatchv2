@@ -76,10 +76,16 @@ const ChooseProfilePicture = () => {
       <View style={styles.bgContainer}>
         <ProfilePicture />
       </View>
-      <DisplayContainer style={{ justifyContent: "flex-start", marginTop: 4 }}>
+      <DisplayContainer
+        style={{
+          justifyContent: "flex-start",
+          marginTop: 4,
+          alignContents: "flex-start",
+        }}
+      >
         <Text style={styles.title}>Añadir foto</Text>
         <Text style={styles.subTitle}>
-          Sabías que añadir una foto incrementa en un 70% tus opciones de match?
+          Causa una buena impresión, sube una foto de plano medio.
         </Text>
         <View>
           <View style={styles.rectangle}>
@@ -93,11 +99,11 @@ const ChooseProfilePicture = () => {
               </TouchableOpacity>
             )}
           </View>
-          <View style={styles.cameraButtonContainer}>
+          {/* <View style={styles.cameraButtonContainer}>
             <TouchableOpacity style={styles.cameraButton}>
               <MaterialIcons name="photo-camera" size={24} color="#FFF" />
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
         {image ? (
           <TouchableOpacity style={styles.changeImage} onPress={changeImage}>
@@ -133,14 +139,17 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   title: {
-    fontSize: 20,
+    fontSize: 24,
+    fontWeight: "500",
     marginBottom: 20,
-    textAlign: "left",
+    color: `${colors.text}`,
   },
   subTitle: {
     fontSize: 14,
+    fontWeight: "400",
     fontStyle: "italic",
     marginBottom: 20,
+    color: `${colors.text}`,
   },
   image: {
     width: 200,
@@ -162,14 +171,15 @@ const styles = StyleSheet.create({
   },
   changeImage: {
     width: 144,
-    height: 40,
-    backgroundColor: "#D9D9D9",
+    height: 30,
+    backgroundColor: `${colors.secondary}`,
     borderRadius: 25,
     alignItems: "center",
     justifyContent: "center",
   },
   changeImageText: {
-    fontSize: 14,
+    fontSize: 12,
+    color: `${colors.details}`,
   },
   finished: {
     width: 288,
