@@ -38,7 +38,7 @@ const InputForm = ({
             .string()
             .required("Este campo es requerido")
             .matches(
-              /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              /^[a-zA-Z0-9._%+-ñÑáéíóúÁÉÍÓÚ]+@[a-zA-Z0-9.-ñÑáéíóúÁÉÍÓÚ]+.[a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,}$/,
               "Formato de correo inválido"
             );
           break;
@@ -58,7 +58,10 @@ const InputForm = ({
           yupVal = yup
             .string()
             .required("Este campo es requerido")
-            .matches(/^[a-zA-Z\s]*$/, "Solo se permiten letras y espacios");
+            .matches(
+              /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]*$/,
+              "Solo se permiten letras y espacios"
+            );
           break;
       }
 
