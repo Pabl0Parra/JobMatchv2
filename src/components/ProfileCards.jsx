@@ -70,7 +70,7 @@ const ProfileCards = () => {
             style={{ marginRight: 10 }}
             name="plus"
             size={28}
-            color="black"
+            color={colors.secondary}
             onPress={() =>
               navigation.navigate(
                 userData.worker ? "ExperienceForm" : "PostForm"
@@ -94,6 +94,6 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 16,
     borderWidth: 2,
-    borderColor: "#aaa",
+    borderColor: colors.secondary
   },
 });

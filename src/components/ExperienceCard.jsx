@@ -54,7 +54,7 @@ const ExperienceCard = ({ experienceData }) => {
                 style={{ flex: 1 }}
                 name="md-ellipsis-horizontal-sharp"
                 size={24}
-                color="black"
+                color={colors.secondary}
                 onPress={showMenu}
               />
             }
