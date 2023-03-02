@@ -10,7 +10,6 @@ import { RadioButton } from "react-native-paper";
 import DisplayContainer from "../components/DisplayContainer";
 import { useNavigation } from "@react-navigation/native";
 import { UserDataContext } from "../context/UserDataContext";
-import ReusableButton from "../components/ReusableButton";
 import RegisterProgressBar from "../components/RegisterProgressBar";
 import BackButton from "../components/BackButton";
 import ClickingHand from "../svgs/ClickingHand";
@@ -182,7 +181,7 @@ const styles = StyleSheet.create({
   radioWrapper: {
     borderRadius: 20,
     padding: 10,
-    overflow: "hidden", // add this to hide the border
+    overflow: "hidden",
   },
   radioText: {
     fontSize: 16,
