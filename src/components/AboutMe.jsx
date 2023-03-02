@@ -3,7 +3,7 @@ import theme from "../theme";
 import { Octicons, MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { useContext, useState } from "react";
 import { useFormik } from "formik";
-import updateAboutMe from "../firebase/functions/updateAboutMe";
+import updateDataUser from "../firebase/functions/updateDataUser";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
 import { UserLoginContex } from "../context/UserDataContext";
 import InputContainer from "./InputContainer";
@@ -19,7 +19,7 @@ const AboutMe = () => {
       description: userData?.aboutme ? userData?.aboutme : "",
     },
     onSubmit: async (values) => {
-      await updateAboutMe(values.description, userData.id);
+      await updateDataUser({aboutme: values.description}, userData.id);
 
       const res = await getUserDataDB(userData.id);
 

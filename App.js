@@ -33,6 +33,7 @@ import PostForm from "./src/screens/PostForm";
 import ChatScreen from "./src/screens/ChatScreen";
 import MessageScreen from "./src/screens/MessageScreen";
 import ExperienceForm from "./src/screens/ExperienceForm";
+import HelpAndSupport from "./src/screens/HelpAndSupport";
 
 
 const Stack = createNativeStackNavigator();
@@ -159,6 +160,8 @@ export default function App() {
                     options={{
                       headerShown: false,
                     }}/>
+                    <Stack.Screen name="HelpAndSupport" component={HelpAndSupport} 
+                    />
                 </Stack.Group>
                 <Stack.Group
                   screenOptions={{ presentation: "transparentModal" }}

@@ -18,7 +18,7 @@ const JobCard = ({ postData }) => {
   const hideMenu = () => setVisible(false);
 
   const showMenu = () => setVisible(true);
-  console.log(postData);
+  
   return (
     <View style={styles.jobCard}>
       <View style={styles.experienceIcon}>

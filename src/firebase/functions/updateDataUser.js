@@ -1,15 +1,13 @@
 import { collection, doc, updateDoc } from "@firebase/firestore";
 import { db, mainCollection } from "../credentials";
 
-const updateAboutMe = async (description, userId) => {
+const updateDataUser = async (obj, userId) => {
     
   try {
     const collectionRef = collection(db, mainCollection)
     const userDoc = doc(collectionRef, userId)
 
-    await updateDoc(userDoc, {
-        aboutme: description
-    });
+    await updateDoc(userDoc, obj);
 
     return true
 
@@ -19,4 +17,4 @@ const updateAboutMe = async (description, userId) => {
 
 };
 
-export default updateAboutMe;
+export default updateDataUser;
