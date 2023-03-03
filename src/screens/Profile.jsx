@@ -29,7 +29,11 @@ const Profile = () => {
   const { userData, setUserData, setTab } = useContext(UserLoginContex);
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+<<<<<<< Updated upstream
   const [percentage, setPercentage] = useState(50);
+=======
+/*   const [percentage, setPercentage] = useState(60); */
+>>>>>>> Stashed changes
   /* const {setTab}  =useContext(FocusedTab) */
   const isFocused = useIsFocused();
   const [savedCount, setSavedCount] = useState(0);

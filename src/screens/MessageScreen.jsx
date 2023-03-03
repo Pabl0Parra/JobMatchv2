@@ -71,7 +71,6 @@ export default function MessageScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
         <View style={{ height: 80 }}>
           <TouchableOpacity
@@ -135,7 +134,6 @@ export default function MessageScreen() {
           </View>
         </KeyboardAvoidingView>
       </View>
-    </SafeAreaView>
   );
 }
 

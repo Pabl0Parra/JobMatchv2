@@ -99,9 +99,10 @@ const Login = ({ navigation }) => {
             onSubmit={formSubmit}
             requestText="Iniciar Sesión"
             buttonText="Iniciar Sesión"
-            buttonMarginTop={14}
+            buttonMarginTop={24}
           />
-          {/* <Text
+          
+          {/*  <Text
             style={[
               styles.text,
               styles.textButton,
@@ -121,7 +122,9 @@ const Login = ({ navigation }) => {
               />
             </TouchableOpacity>
           </View> */}
-          <Text style={[styles.text, { paddingVertical: 8 }]}>
+
+          
+          <Text style={[styles.text, { paddingVertical: 24 }]}>
             ¿Aún no tienes una cuenta?{" "}
             <Text
               style={{

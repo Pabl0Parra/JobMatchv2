@@ -89,6 +89,7 @@ const DrawerMenu = ({ navigation }) => {
                   { name: "userName", title: "Nombre" },
                   { name: "userLastName", title: "Apellido" },
                   { name: "userRole", title: "Rol" },
+                  { name: "seniority", title: "Seniority" },
                   { name: "country", title: "Pais" },
                   { name: "city", title: "Ciudad" },
                 ]

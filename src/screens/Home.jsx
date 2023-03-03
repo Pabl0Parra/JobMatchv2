@@ -41,7 +41,7 @@ const Home = () => {
   const swipeRef = useRef(null);
   const { userData, setTab } = useContext(UserLoginContex);
   const navigation = useNavigation();
-
+  
   const [profiles, setProfiles] = useState([]);
   const [empty, setEmpty] = useState(true);
   const isFocused = useIsFocused();
@@ -117,6 +117,7 @@ const Home = () => {
           where("worker", "==", true),
           //excluyo los que ya me aparecieron
           where("id", "not-in", [...passesId, ...likesId]),
+          where("available", "==", true),
           where("userRole", "==", userData.filter.roleWanted)
         );
       } else if (
@@ -128,6 +129,7 @@ const Home = () => {
           where("worker", "==", true),
           //excluyo los que ya me aparecieron
           where("id", "not-in", [...passesId, ...likesId]),
+          where("available", "==", true),
           where("seniority", "==", userData.filter.seniority)
         );
       } else if (
@@ -141,6 +143,7 @@ const Home = () => {
           where("worker", "==", true),
           //excluyo los que ya me aparecieron
           where("id", "not-in", [...passesId, ...likesId]),
+          where("available", "==", true),
           where("userRole", "==", userData.filter.roleWanted),
           where("seniority", "==", userData.filter.seniority)
         );
@@ -149,7 +152,8 @@ const Home = () => {
           collection(db, mainCollection),
           where("worker", "==", true),
           //excluyo los que ya me aparecieron
-          where("id", "not-in", [...passesId, ...likesId])
+          where("id", "not-in", [...passesId, ...likesId]),
+          where("available", "==", true)
         );
       }
 
@@ -364,7 +368,6 @@ const Home = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <Header screen="Home" />
         {profiles.length === 0 ? (
@@ -471,7 +474,6 @@ const Home = () => {
           </>
         )}
       </View>
-    </SafeAreaView>
   );
 };
 

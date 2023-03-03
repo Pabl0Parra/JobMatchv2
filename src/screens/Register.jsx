@@ -98,7 +98,7 @@ const Register = () => {
             onSubmit={formSubmit}
             requestText="Crear cuenta"
             buttonText="Crear cuenta"
-            buttonMarginTop={14}
+            buttonMarginTop={24}
           />
           {/* <Text
             style={[
