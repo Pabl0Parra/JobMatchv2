@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from "react-native";
 import theme from "../theme";
 import { Octicons, MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { useContext, useState } from "react";
@@ -13,13 +13,18 @@ const { colors, text } = theme;
 const AboutMe = () => {
   const { userData, setUserData } = useContext(UserLoginContex);
   const [showInput, setShowInput] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
       description: userData?.aboutme ? userData?.aboutme : "",
     },
     onSubmit: async (values) => {
-      await updateDataUser({aboutme: values.description}, userData.id);
+      if (values.description === userData?.aboutme) {
+       return setShowInput(!showInput);
+      }
+      setLoading(true)
+      await updateDataUser({ aboutme: values.description }, userData.id);
 
       const res = await getUserDataDB(userData.id);
 
@@ -29,6 +34,7 @@ const AboutMe = () => {
       } else {
         console.log("error al obtener los datos");
       }
+      setLoading(false)
     },
   });
 
@@ -80,13 +86,15 @@ const AboutMe = () => {
         )}
       </View>
       {showInput ? (
-        <InputContainer
-          stylePlaceholder={{ backgroundColor: "rgba(255,255,255,1" }}
-          styleContainer={styles.input}
-          value={formik.values.description}
-          onChangeText={formik.handleChange("description")}
-          multiline={true}
-        />
+        loading ? <ActivityIndicator size={35}/> : (
+          <InputContainer
+            stylePlaceholder={{ backgroundColor: "rgba(255,255,255,1" }}
+            styleContainer={styles.input}
+            value={formik.values.description}
+            onChangeText={formik.handleChange("description")}
+            multiline={true}
+          />
+        )
       ) : (
         <View style={{ alignItems: "center" }}>
           {userData?.aboutme && userData.aboutme !== "" ? (

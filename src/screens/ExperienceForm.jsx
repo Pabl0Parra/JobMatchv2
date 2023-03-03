@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ActivityIndicator } from "react-native";
 import { Formik } from "formik";
 import DisplayContainer from "../components/DisplayContainer";
 import InputContainer from "../components/InputContainer";
@@ -6,7 +6,7 @@ import ReusableButton from "../components/ReusableButton";
 import theme from "../theme";
 import * as yup from "yup";
 import addExperience from "../firebase/functions/addExperience";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserLoginContex } from "../context/UserDataContext";
 import { useNavigation } from "@react-navigation/core";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
@@ -21,6 +21,7 @@ const ExperienceForm = () => {
   const { userData, setUserData } = useContext(UserLoginContex);
   const navigation = useNavigation();
   const route = useRoute();
+  const [loading, setLoading] = useState(false);
 
   const inicialValue = {
     position: route.params ? route.params.position : "",
@@ -53,6 +54,7 @@ const ExperienceForm = () => {
         initialValues={inicialValue}
         validationSchema={yup.object().shape(validationSchema)}
         onSubmit={async (obj) => {
+          setLoading(true)
           try {
             route.params
               ? await updateExperienceOrPost(obj, userData.id, route.params.id, userData.worker)
@@ -65,6 +67,7 @@ const ExperienceForm = () => {
             } else {
               console.log("error al obtener los datos");
             }
+            setLoading(false)
           } catch (error) {
             console.log(error);
           }
@@ -123,6 +126,11 @@ const ExperienceForm = () => {
           </ScrollView>
         )}
       </Formik>
+      {loading ? (
+        <View style={styles.loading}>
+          <ActivityIndicator color={colors.secondary} size={130} />
+        </View>
+      ) : null}
     </DisplayContainer>
   );
 };
@@ -151,5 +159,14 @@ const styles = StyleSheet.create({
   },
   arrowLeft: {
     marginHorizontal: 15
-  }
+  },
+  loading: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    backgroundColor: "rgba(20, 20, 20, .4)",
+    alignItems: "center",
+    zIndex: 2,
+  },
 });
