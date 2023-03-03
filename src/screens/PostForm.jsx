@@ -2,7 +2,7 @@ import { collection, doc, serverTimestamp, setDoc } from "@firebase/firestore";
 import { async } from "@firebase/util";
 import { useNavigation, useRoute } from "@react-navigation/core";
 import { useFormik } from "formik";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import {
@@ -10,6 +10,7 @@ import {
   RadioButton,
   SegmentedButtons,
   TextInput,
+  ActivityIndicator
 } from "react-native-paper";
 import DisplayContainer from "../components/DisplayContainer";
 import ReusableButton from "../components/ReusableButton";
@@ -25,6 +26,7 @@ const PostForm = () => {
   const navigation = useNavigation();
   const { userData, setUserData } = useContext(UserLoginContex);
   const route = useRoute();
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -43,6 +45,7 @@ const PostForm = () => {
       salary: route.params ? route.params.salary : "",
     },
     onSubmit: async (values) => {
+      setLoading(true)
       const post = {
         ...values,
         userId: userData.id,
@@ -64,10 +67,12 @@ const PostForm = () => {
           setUserData(res);
           navigation.navigate("Perfil");
         } else {
+          
           console.log(
             "ocurrio un error al crear el puesto, intentelo de nuevo"
           );
         }
+        setLoading(false)
       } catch (error) {
         console.log(error);
       }
@@ -99,7 +104,7 @@ const PostForm = () => {
   }
 
   return (
-    <DisplayContainer style={{ justifyContent: "flex-start", padding: 16 }}>
+    <DisplayContainer style={{ justifyContent: "flex-start" }}>
       <ScrollView style={{ width: "100%" }}>
         <View
           style={{
@@ -357,6 +362,11 @@ const PostForm = () => {
       >
         Cancelar
       </Button>
+      {loading ? (
+        <View style={styles.loading}>
+          <ActivityIndicator color={colors.secondary} size={130} />
+        </View>
+      ) : null}
     </DisplayContainer>
   );
 };
@@ -371,6 +381,15 @@ const styles = StyleSheet.create({
     height: 50,
     width: "100%",
     backgroundColor: "#fff",
+  },
+  loading: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    backgroundColor: "rgba(20, 20, 20, .4)",
+    alignItems: "center",
+    zIndex: 2,
   },
 });
 

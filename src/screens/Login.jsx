@@ -101,7 +101,7 @@ const Login = ({ navigation }) => {
             buttonText="Iniciar Sesión"
             buttonMarginTop={14}
           />
-          <Text
+          {/* <Text
             style={[
               styles.text,
               styles.textButton,
@@ -120,7 +120,7 @@ const Login = ({ navigation }) => {
                 source={require("../images/google_buscador.png")}
               />
             </TouchableOpacity>
-          </View>
+          </View> */}
           <Text style={[styles.text, { paddingVertical: 8 }]}>
             ¿Aún no tienes una cuenta?{" "}
             <Text

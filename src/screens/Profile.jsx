@@ -5,14 +5,11 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import Constants from "expo-constants";
 import Header from "../components/Header";
-import {
-  Ionicons,
-  Octicons,
-  Feather,
-} from "@expo/vector-icons";
+import { Ionicons, Octicons, Feather } from "@expo/vector-icons";
 import { useState, useContext, useEffect } from "react";
 import CircularProgress from "../components/CircularProgress";
 import { FocusedTab, UserLoginContex } from "../context/UserDataContext";
@@ -32,11 +29,31 @@ const Profile = () => {
   const { userData, setUserData, setTab } = useContext(UserLoginContex);
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-  const [percentage, setPercentage] = useState(60);
+  const [percentage, setPercentage] = useState(50);
   /* const {setTab}  =useContext(FocusedTab) */
-  const isFocused = useIsFocused()
+  const isFocused = useIsFocused();
   const [savedCount, setSavedCount] = useState(0);
   const [visitsCount, setVisitsCount] = useState(0);
+  const [loading, setLoading] = useState({
+    image: false,
+  });
+
+  useEffect(() => {
+
+
+    let porc = 50
+
+    userData.aboutme !== undefined && userData.aboutme !== "" && userData.aboutme !== null &&  (porc = porc + 20);
+    userData.image !== "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" && (porc = porc + 20);
+    if (userData.worker) {
+      (userData.experiences?.length) && (porc = porc + 10)
+    } else {
+      (userData.posts?.length) && (porc = porc + 10);
+    }
+
+    setPercentage(porc)
+      
+  }, [userData])
 
   const changeProfilePicture = async () => {
     try {
@@ -47,41 +64,42 @@ const Profile = () => {
       });
 
       if (result.assets) {
+        setLoading({ ...loading, image: true });
         const urlPicture = await uploadProfilePicture(
           result.uri,
           `profileImg${userData.email}`
         );
         await changeURLProfilePictureDB(userData.id, urlPicture);
 
-        const res = await getUserDataDB(userData.id)
-
+        const res = await getUserDataDB(userData.id);
         if (res) {
           setUserData(res);
         } else {
-          console.log("error al obtener los datos")
+          console.log("error al obtener los datos");
         }
-
       }
+      setLoading({ ...loading, image: false });
     } catch (error) {
       console.log(error);
     }
   };
 
-
-  useEffect(()=> {
-    setSavedCount(userData.savedCount)
-    setVisitsCount(userData.visits)
-      isFocused && setTab(4)
-
-    
+  useEffect(() => {
+    setSavedCount(userData.savedCount);
+    setVisitsCount(userData.visits);
+    isFocused && setTab(4);
   }, [isFocused, savedCount, visitsCount]);
-
 
   return (
     <DisplayContainer style={[styles.container]}>
       <Header screen="Profile" />
-      <ScrollView keyboardDismissMode={true}
-        contentContainerStyle={{ position: "relative", alignItems: "center", paddingBottom: 80}}
+      <ScrollView
+        keyboardDismissMode={true}
+        contentContainerStyle={{
+          position: "relative",
+          alignItems: "center",
+          paddingBottom: 80,
+        }}
       >
         <View style={styles.profileHeader}>
           <Image
@@ -103,31 +121,51 @@ const Profile = () => {
               }}
             >
               <CircularProgress
-                percent={percentage}
+                percent={0.9}
                 radius={80}
                 bgRingWidth={38}
-                progressRingWidth={16}
+                progressRingWidth={20}
                 ringColor={"#091D5C"}
                 ringBgColor={"#D7E0E9"}
+                startDegrees={0}
+                clockwise={10}
+                textFontSize={0}
               />
-              <Image
-                source={{
-                  uri: userData?.image,
+              <View
+                style={{
+                  position: "absolute",
+                  width: 180,
+                  height: 180,
+                  backgroundColor: "#D7E0E9",
+                  borderRadius: 200
                 }}
-                style={styles.image}
               />
+              {loading.image? (
+                <View style={[styles.image, {alignItems: "center", justifyContent: "center"}]}>
+                  <ActivityIndicator size={90} />
+                </View>
+              ) : (
+                <Image
+                  source={{
+                    uri: userData?.image,
+                  }}
+                  style={[styles.image]}
+                />
+              )}
             </View>
           </View>
           <Text style={[styles.text, { marginVertical: 20 }]}>
             {percentage}% completado
           </Text>
-          <Text
-            style={[styles.text, { fontSize: 26, fontWeight: "600" }]}
-          >{`${userData.userName} ${userData.userLastName ? userData.userLastName : ""}`}</Text>
-          <Text style={[styles.text]}>{userData.worker? userData.userRole : userData.sector}</Text>
+          <Text style={[styles.text, { fontSize: 26, fontWeight: "600" }]}>{`${
+            userData.userName
+          } ${userData.userLastName ? userData.userLastName : ""}`}</Text>
+          <Text style={[styles.text]}>
+            {userData.worker ? userData.userRole : userData.sector}
+          </Text>
         </View>
         <View style={styles.detailsSectionsContainer}>
-{/*           <TouchableOpacity style={styles.detailsSection} onPress={() => {}}>
+          {/*           <TouchableOpacity style={styles.detailsSection} onPress={() => {}}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Feather name="bell" size={24} color={colors.secondary} />
               <Text
@@ -196,7 +234,7 @@ const Profile = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: Constants.statusBarHeight,
-    justifyContent: "flex-start",
+    justifyContent: "center",
   },
   blueBackground: {
     position: "absolute",
@@ -249,7 +287,7 @@ const styles = StyleSheet.create({
     width: 1,
     height: "70%",
     backgroundColor: "gray",
-  }
+  },
 });
 
 export default Profile;
