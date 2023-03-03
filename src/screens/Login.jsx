@@ -1,6 +1,13 @@
 import { useState, useContext } from "react";
 import { UserDataContext } from "../context/UserDataContext";
-import { Text, StyleSheet, View, TouchableOpacity, Image } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+} from "react-native";
 import LogoForBlueBackround from "../svgs/LogoForBlueBackground";
 import DisplayContainer from "../components/DisplayContainer";
 import loginWithEmail from "../firebase/functions/loginWithEmailPassword";
@@ -19,21 +26,26 @@ const Login = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const formSubmit = async (values) => {
-    try {
+    setLoading(true);
+   
       const registeredUser = await checkRegisteredEmail(values[0]);
       if (!registeredUser) {
+        setLoading(false);
         setShowAlert(true);
         console.log("No hay un usuario registrado con el email proporcionado");
       } else {
-        await loginWithEmail(values[0], values[1]);
-        setUserData(...userData, {
-              email: values[0],
-              password: values[1],
-            })
+        const res = await loginWithEmail(values[0], values[1]);
+        
+        if (res) {
+          setUserData(...userData, {
+            email: values[0],
+            password: values[1],
+          });
+        } else {
+          setLoading(false);
+          setIncorrectPassword(true);
+        }
       }
-    } catch (error) {
-      setIncorrectPassword(true)
-    }
   };
 
   return (
@@ -124,6 +136,11 @@ const Login = ({ navigation }) => {
           </Text>
         </View>
       </View>
+      {loading ? (
+        <View style={styles.loading}>
+          <ActivityIndicator size={130} />
+        </View>
+      ) : null}
     </DisplayContainer>
   );
 };
@@ -196,6 +213,14 @@ const styles = StyleSheet.create({
   imageGoogle: {
     width: 70,
     height: 70,
+  },
+  loading: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(20, 20, 20, .4)",
+    zIndex: 2,
   },
 });
 

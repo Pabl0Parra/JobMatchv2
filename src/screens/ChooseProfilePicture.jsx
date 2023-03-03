@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import AwesomeAlert from "react-native-awesome-alerts";
 import DisplayContainer from "../components/DisplayContainer";
@@ -19,11 +19,14 @@ const colors = theme.colors;
 const ChooseProfilePicture = () => {
   const [image, setImage] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
+  const [loadingImage, setLoadingImage] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { userData, setUserData } = useContext(UserDataContext);
   const navigation = useNavigation();
 
   const pickImage = async () => {
+    setLoadingImage(true)
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -32,7 +35,9 @@ const ChooseProfilePicture = () => {
 
     if (result.assets) {
       setImage(result.uri);
+      
     }
+    setLoadingImage(false)
   };
 
   const changeImage = async () => {
@@ -40,26 +45,28 @@ const ChooseProfilePicture = () => {
   };
 
   const uploadImages = async () => {
-    try {
+    try {setLoading(true)
       const res = await uploadProfilePicture(
         image,
         `profileImg${userData.email}`
       );
       console.log(res);
       if (res) {
-        registerUser(userData.email, userData.password, {
+        await registerUser(userData.email, userData.password, {
           ...userData,
           image: res,
         });
       } else {
-        registerUser(userData.email, userData.password, {
+        await registerUser(userData.email, userData.password, {
           ...userData,
           image:
             "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
         });
       }
+      setLoading(false)
       setShowAlert(true);
     } catch (error) {
+      setLoading(false)
       console.log(error);
     }
   };
@@ -70,7 +77,12 @@ const ChooseProfilePicture = () => {
   };
 
   return (
-    <>
+    <View>
+      {loading ? (
+      <View style={styles.loading}>
+        <ActivityIndicator size={130} />
+      </View>
+    ) : null}
       <BackButton text="Crear cuenta" />
       <RegisterProgressBar currentStep={5} numSteps={5} />
       <View style={styles.bgContainer}>
@@ -96,9 +108,12 @@ const ChooseProfilePicture = () => {
                 <Image source={{ uri: image }} style={styles.image} />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity onPress={pickImage}>
-                <Text style={styles.addImageText}>+</Text>
-              </TouchableOpacity>
+              loadingImage? 
+                <ActivityIndicator size={50}/> 
+                :
+                <TouchableOpacity onPress={pickImage}>
+                 <Text style={styles.addImageText}>+</Text>
+                </TouchableOpacity>
             )}
           </View>
           <View style={styles.cameraButtonContainer}>
@@ -130,7 +145,7 @@ const ChooseProfilePicture = () => {
           onConfirmPressed={() => hideAlert()}
         />
       </DisplayContainer>
-    </>
+    </View>
   );
 };
 
@@ -190,6 +205,15 @@ const styles = StyleSheet.create({
   addImageText: {
     fontSize: 50,
     color: "#727272",
+  },
+  loading: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(20, 20, 20, .7)",
+    zIndex: 2,
   },
 });
 

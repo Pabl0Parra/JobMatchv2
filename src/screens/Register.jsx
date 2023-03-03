@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Text, Image, View, TouchableOpacity, StyleSheet } from "react-native";
+import { Text, Image, View, TouchableOpacity, StyleSheet, ActivityIndicator } from "react-native";
 import DisplayContainer from "../components/DisplayContainer";
 import checkRegisteredEmail from "../firebase/functions/checkRegisteredEmail";
 import { useNavigation } from "@react-navigation/native";
@@ -16,15 +16,19 @@ const Register = () => {
   const navigation = useNavigation();
   const { userData, setUserData } = useContext(UserDataContext);
   const [showAlert, setShowAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const formSubmit = async (values) => {
+    setLoading(true)
     const registeredUser = await checkRegisteredEmail(values[0]);
 
     if (registeredUser) {
+      setLoading(false)
       setShowAlert(true);
       console.log("ya hay un usuario registrado con el email proporcionado");
     } else {
       setUserData({ ...userData, email: values[0], password: values[1] });
+      setLoading(false)
       navigation.navigate("RegisterStack");
     }
   };
@@ -131,6 +135,11 @@ const Register = () => {
           </Text>
         </View>
       </View>
+      {loading ? (
+        <View style={styles.loading}>
+          <ActivityIndicator size={130} />
+        </View>
+      ) : null}
     </DisplayContainer>
   );
 };
@@ -210,6 +219,14 @@ const styles = StyleSheet.create({
   imageGoogle: {
     width: 70,
     height: 70,
+  },
+  loading: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(20, 20, 20, .4)",
+    zIndex: 2,
   },
 });
 
