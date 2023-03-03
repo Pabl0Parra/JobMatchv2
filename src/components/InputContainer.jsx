@@ -29,7 +29,6 @@ const InputContainer = ({
     <>
       <View>
         <TextInput
-          onKeyPress={(e) => console.log(e)}
           style={[
             styles.container,
             {
