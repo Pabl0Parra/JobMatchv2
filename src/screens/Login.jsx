@@ -15,19 +15,24 @@ const colors = theme.colors;
 const Login = ({ navigation }) => {
   const { userData, setUserData } = useContext(UserDataContext);
   const [showAlert, setShowAlert] = useState(false);
+  const [incorrectPassword, setIncorrectPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const formSubmit = async (values) => {
-    const registeredUser = await checkRegisteredEmail(values[0]);
-
-    if (!registeredUser) {
-      setShowAlert(true);
-      console.log("No hay un usuario registrado con el email proporcionado");
-    } else {
-      loginWithEmail(values[0], values[1]);
-      setUserData(...userData, {
-        email: values[0],
-        password: values[1],
-      });
+    try {
+      const registeredUser = await checkRegisteredEmail(values[0]);
+      if (!registeredUser) {
+        setShowAlert(true);
+        console.log("No hay un usuario registrado con el email proporcionado");
+      } else {
+        await loginWithEmail(values[0], values[1]);
+        setUserData(...userData, {
+              email: values[0],
+              password: values[1],
+            })
+      }
+    } catch (error) {
+      setIncorrectPassword(true)
     }
   };
 
@@ -40,6 +45,17 @@ const Login = ({ navigation }) => {
         closeOnTouchOutside={true}
         onDismiss={() => setShowAlert(false)}
         onConfirmPressed={() => setShowAlert(false)}
+        showConfirmButton={true}
+        confirmText="OK"
+        confirmButtonColor={colors.secondary}
+      />
+      <AwesomeAlert
+        show={incorrectPassword}
+        title="Contraseña incorrecto 🔒"
+        message="La contraseña que ingreso no es correcta, inténtelo de nuevo."
+        closeOnTouchOutside={true}
+        onDismiss={() => setIncorrectPassword(false)}
+        onConfirmPressed={() => setIncorrectPassword(false)}
         showConfirmButton={true}
         confirmText="OK"
         confirmButtonColor={colors.secondary}
