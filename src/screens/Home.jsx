@@ -32,8 +32,8 @@ import { useIsFocused, useNavigation } from "@react-navigation/core";
 import theme from "../theme";
 import { generateId } from "../utilities/utilities";
 import ImageOfNoResults from "../svgs/ImageOfNoResults";
-import updateVisits from "../firebase/functions/updateVisits";
-import { ActivityIndicator } from 'react-native-paper';
+import { ActivityIndicator } from "react-native-paper";
+import { updateVisits } from "../firebase/functions/updateFunctions";
 
 const { colors, text } = theme;
 
@@ -360,7 +360,7 @@ const Home = () => {
 
   const handleEnd = () => {
     setProfiles([]);
-    setEmpty(!empty);
+    setEmpty(false);
   };
 
   return (
@@ -368,15 +368,22 @@ const Home = () => {
       <View style={styles.container}>
         <Header screen="Home" />
         {profiles.length === 0 ? (
-          <View style={styles.noProfiles}>
-            <ActivityIndicator animating={true} color={colors.secondary} size="large" />
+          <View style={[styles.noProfiles, { height: "95%" }]}>
+            <ImageOfNoResults />
+
             <Text
               style={[
                 text.text14,
-                { textAlign: "center", paddingHorizontal: 28, marginTop: 20 },
+                {
+                  textAlign: "center",
+                  paddingHorizontal: 28,
+                  marginTop: 20,
+                },
               ]}
             >
-              Cargando perfiles...
+              No tienes más {userData.worker ? "puestos" : "perfiles"} por ver
+              :/ {"\n"}
+              Pronto aparecerán las nuevas oportunidades!
             </Text>
           </View>
         ) : (
@@ -437,7 +444,7 @@ const Home = () => {
                     card ? (
                       <Card card={card} refe={useRef} />
                     ) : (
-                      <View style={[styles.noProfiles, {height:"80%"}]}>
+                      <View style={[styles.noProfiles, { height: "80%" }]}>
                         <ImageOfNoResults />
 
                         <Text
@@ -450,8 +457,10 @@ const Home = () => {
                             },
                           ]}
                         >
-                          No tienes más vacantes por ver :/ {"\n"}
-                          Pronto apareceran las nuevas oportunidades!
+                          No tienes más{" "}
+                          {userData.worker ? "puestos" : "perfiles"} por ver :/{" "}
+                          {"\n"}
+                          Pronto aparecerán las nuevas oportunidades!
                         </Text>
                       </View>
                     )

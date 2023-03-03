@@ -46,13 +46,18 @@ const InputForm = ({
           yupVal = yup
             .string()
             .required("Este campo es requerido")
-            .min(8, `Contraseña debe tener al menos 8 caracteres`);
+            .min(8, `Contraseña debe tener al menos 8 caracteres`)
+            .max(16,`Contraseña debe tener como máximo 16 caracteres`)
+            .matches(/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/, 
+            "Debe contener al menos una mayúscula,\n una minúscula, un dígito");
           break;
         case "verifyPassword":
           yupVal = yup
             .string()
             .oneOf([yup.ref("password")], "Contraseña no coincide")
-            .required("Este campo es requerido");
+            .required("Este campo es requerido")
+            .matches(/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/, 
+            "Debe contener al menos una mayúscula,\n una minúscula, un dígito");
           break;
         case "text":
           yupVal = yup

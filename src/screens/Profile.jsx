@@ -20,11 +20,11 @@ import DisplayContainer from "../components/DisplayContainer";
 import theme from "../theme";
 import { useIsFocused } from "@react-navigation/core";
 import * as ImagePicker from "expo-image-picker";
-import uploadProfilePicture from "../firebase/functions/uploadProfilePicture";
 import changeURLProfilePictureDB from "../firebase/functions/changeURLProfilePictureDB";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
 import AboutMe from "../components/AboutMe";
 import ProfileCards from "../components/ProfileCards";
+import { uploadProfilePicture } from "../firebase/functions/updateFunctions";
 
 const { text, colors } = theme;
 

@@ -1,22 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import RegisterProgressBar from "../components/RegisterProgressBar";
 import { useNavigation } from "@react-navigation/native";
 import WomanManChat from "../svgs/WomaManChat";
 import theme from "../theme";
 import Constants from "expo-constants";
+import { updateFisrTime } from "../firebase/functions/updateFunctions";
+import { UserLoginContex } from "../context/UserDataContext";
 
 const colors = theme.colors;
 
 const Onboarding3 = () => {
   const navigation = useNavigation();
+  const {userData} = useContext(UserLoginContex)
 
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <TouchableOpacity
           style={styles.omitirButton}
-          onPress={() => navigation.navigate("Main")}
+          onPress={() => {navigation.navigate("Main")
+          updateFisrTime(userData.id)}}
         >
           <Text style={styles.omitirText}>Omitir</Text>
         </TouchableOpacity>

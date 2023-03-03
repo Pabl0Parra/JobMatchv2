@@ -3,10 +3,10 @@ import theme from "../theme";
 import { Octicons, MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { useContext, useState } from "react";
 import { useFormik } from "formik";
-import updateDataUser from "../firebase/functions/updateDataUser";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
 import { UserLoginContex } from "../context/UserDataContext";
 import InputContainer from "./InputContainer";
+import { updateDataUser } from "../firebase/functions/updateFunctions";
 
 const { colors, text } = theme;
 

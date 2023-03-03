@@ -5,9 +5,7 @@ import { Animated } from "react-native";
 //screens
 import Home from "../screens/Home";
 import Conexiones from "../screens/Conexiones";
-import Explore from "../screens/Explore";
 import ChatScreen from "../screens/ChatScreen";
-
 import DrawerNavigatorProfile from "./DrawerNavigatorProfile";
 import { DrawerActions } from "@react-navigation/routers";
 
@@ -19,9 +17,9 @@ import { DrawerActions } from "@react-navigation/routers";
   MaterialCommunityIcons,
 } from "@expo/vector-icons"; */
 
-import { TouchableOpacity, View, StyleSheet } from "react-native";
+import {  View, StyleSheet } from "react-native";
 import { useContext, useEffect, useState } from "react";
-import { FocusedTab, UserLoginContex } from "../context/UserDataContext";
+import {  UserLoginContex } from "../context/UserDataContext";
 import HomeIcon from "../svgs/HomeIcon";
 import ConectionsIcon from "../svgs/ConectionsIcon";
 import MessagesIcon from "../svgs/MessagesIcon";

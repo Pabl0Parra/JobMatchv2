@@ -16,7 +16,7 @@ import ReusableButton from "../components/ReusableButton";
 import { UserLoginContex } from "../context/UserDataContext";
 import { db, mainCollection, postCollection } from "../firebase/credentials";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
-import updateExperienceOrPost from "../firebase/functions/updateExperienceOrPost";
+import { updateExperienceOrPost } from "../firebase/functions/updateFunctions";
 import theme from "../theme";
 
 const { text, colors } = theme;

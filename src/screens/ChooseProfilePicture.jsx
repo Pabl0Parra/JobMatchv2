@@ -5,7 +5,6 @@ import AwesomeAlert from "react-native-awesome-alerts";
 import DisplayContainer from "../components/DisplayContainer";
 import { UserDataContext } from "../context/UserDataContext";
 import registerUser from "../firebase/functions/registerUser";
-import uploadProfilePicture from "../firebase/functions/uploadProfilePicture";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ProfilePicture from "../svgs/ProfilePicture";
 import { useNavigation } from "@react-navigation/core";
@@ -13,6 +12,7 @@ import RegisterProgressBar from "../components/RegisterProgressBar";
 import BackButton from "../components/BackButton";
 import ReusableButton from "../components/ReusableButton";
 import theme from "../theme";
+import { uploadProfilePicture } from "../firebase/functions/updateFunctions";
 
 const colors = theme.colors;
 

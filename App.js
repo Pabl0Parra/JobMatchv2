@@ -35,7 +35,6 @@ import MessageScreen from "./src/screens/MessageScreen";
 import ExperienceForm from "./src/screens/ExperienceForm";
 import HelpAndSupport from "./src/screens/HelpAndSupport";
 
-
 const Stack = createNativeStackNavigator();
 
 const RegisterStack = createNativeStackNavigator();
@@ -125,8 +124,8 @@ export default function App() {
                     component={OnboardingStackScreen}
                   />
                 )}
-                <Stack.Screen name="Main" component={BottomTab} />
                 <Stack.Group screenOptions={{ presentation: "modal" }}>
+                  <Stack.Screen name="Main" component={BottomTab} />
                   <Stack.Screen
                     name="Details"
                     component={Details}
@@ -155,14 +154,18 @@ export default function App() {
                     }}
                   />
                   <Stack.Screen name="ChatScreen" component={ChatScreen} />
-                  <Stack.Screen name="Message" component={MessageScreen} />                   
-                    <Stack.Screen name="ExperienceForm"
+                  <Stack.Screen name="Message" component={MessageScreen} />
+                  <Stack.Screen
+                    name="ExperienceForm"
                     component={ExperienceForm}
                     options={{
                       headerShown: false,
-                    }}/>
-                    <Stack.Screen name="HelpAndSupport" component={HelpAndSupport} 
-                    />
+                    }}
+                  />
+                  <Stack.Screen
+                    name="HelpAndSupport"
+                    component={HelpAndSupport}
+                  />
                 </Stack.Group>
                 <Stack.Group
                   screenOptions={{ presentation: "transparentModal" }}

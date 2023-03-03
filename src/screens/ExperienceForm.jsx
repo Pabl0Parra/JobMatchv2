@@ -12,8 +12,8 @@ import { useNavigation } from "@react-navigation/core";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
 import { useRoute } from "@react-navigation/native";
 import Constants from "expo-constants";
-import updateExperienceOrPost from "../firebase/functions/updateExperienceOrPost";
 import { AntDesign } from "@expo/vector-icons";
+import { updateExperienceOrPost } from "../firebase/functions/updateFunctions";
 
 const { text, colors } = theme;
 

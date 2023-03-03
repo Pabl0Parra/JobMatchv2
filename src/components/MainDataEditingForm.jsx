@@ -3,12 +3,12 @@ import { useContext } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import Modal from "react-native-modal";
 import { UserLoginContex } from "../context/UserDataContext";
-import updateDataUser from "../firebase/functions/updateDataUser";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
 import theme from "../theme";
 import InputContainer from "./InputContainer";
 import ReusableButton from "./ReusableButton";
 import * as yup from "yup";
+import { updateDataUser } from "../firebase/functions/updateFunctions";
 
 const { colors, text } = theme;
 

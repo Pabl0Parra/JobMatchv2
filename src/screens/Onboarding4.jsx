@@ -5,22 +5,14 @@ import RegisterProgressBar from "../components/RegisterProgressBar";
 import ManCheckingProfile from "../svgs/ManCheckingProfile";
 import theme from "../theme";
 import { useNavigation } from "@react-navigation/native";
-import { doc, updateDoc } from "firebase/firestore";
-import { db, mainCollection } from "../firebase/credentials";
 import {UserLoginContex } from '../context/UserDataContext'
+import { updateFisrTime } from "../firebase/functions/updateFunctions";
 
 const colors = theme.colors;
 
 const Onboarding4 = () => {
   const navigation = useNavigation();
   const { userData } = useContext(UserLoginContex);
-
-  const updateFisrTime = async () => {
-    await updateDoc(doc(db, mainCollection, userData.id), {
-      ...userData,
-      firstTime: false,
-    });
-  };
 
   return (
     <View style={styles.container}>
@@ -49,7 +41,7 @@ const Onboarding4 = () => {
           style={styles.button}
           onPress={() => {
             navigation.navigate("Main");
-            updateFisrTime();
+            updateFisrTime(userData.id);
           }}
         >
           <Text style={styles.buttonText}>Comenzar</Text>

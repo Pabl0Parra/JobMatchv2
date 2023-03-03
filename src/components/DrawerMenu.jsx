@@ -12,8 +12,8 @@ import { useContext, useState } from "react";
 import { UserLoginContex } from "../context/UserDataContext";
 import MainDataEditingForm from "./MainDataEditingForm";
 import ReusableButton from "./ReusableButton";
-import updateDataUser from "../firebase/functions/updateDataUser";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
+import { updateDataUser } from "../firebase/functions/updateFunctions";
 
 const { colors, text } = theme;
 
