@@ -81,7 +81,7 @@
 - :white_check_mark: Registrarse con cuenta de Google.
 - :white_check_mark: Crear perfil como candidato o empresa.
 - :white_check_mark: Editar perfiles después de haber sido creados.
-- :white_check_mark: Ver perfiles de candidadtos o de puestos de trabajo disponibles.
+- :white_check_mark: Ver perfiles de candidatos o de puestos de trabajo disponibles.
 - :white_check_mark: Filtrar perfiles por puestos de trabajo, años de experiencia, etc...
 - :white_check_mark: Añadir perfil a tus favoritos.
 - :white_check_mark: Darle a gustar o no gustar para hacer match, así como deslizar a la derecha o izquierda un perfil para conseguir lo mismo.
@@ -105,6 +105,7 @@
 
 - Diseño: [@YeseniaMorero](https://www.linkedin.com/in/yesenia-moreno-bernal/)
 - Frontend Devs:
+  
   - [@PabloParra](https://linkedin.com/in/pablo-parra-bcn)
   - [@NicolásSepertino](https://www.linkedin.com/in/nicolassepertino/)
   - [@NicolásRadín](https://www.linkedin.com/in/nico-radin/)
