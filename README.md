@@ -24,29 +24,17 @@
 <details>
   <summary>Tabla de contenidos</summary>
   <ol>
-    <li>
-      <a href="#introducción">Introducción</a>
-    </li>       
-    <li>
-      <a href="#diseño">Diseño</a>
-    </li>   
-    <li>
-      <a href="#prerequisitos">Prerequisitos</a>
-    </li>    
+    <li><a href="#introducción">Introducción</a></li>       
+    <li><a href="#diseño">Diseño</a></li>   
+    <li><a href="#prerequisitos">Prerequisitos</a></li>    
     <li><a href="#librerías-externas">Librerias externas</a></li>
     <li><a href="#funcionalidades">Funcionalidades</a></li>
-    <li>
-      <a href="#contacto">Contacto</a>
-    </li>
+    <li><a href="#qa-testing">QA Testing</a></li>
+    <li><a href="#contacto">Contacto</a></li>
   </ol>
 </details>
 
 <br />
-
-<div align="center">
-  <img src="https://res.cloudinary.com/dcwx2biey/image/upload/v1677687347/login_ccir9u.jpg" alt="Login" width="20%" height="30%">
-  <p align="center">Página de login</p>  
-</div>
 
 ## Introducción
 
@@ -98,6 +86,20 @@
 - [x] Añadir perfil a tus favoritos.
 - [x] Darle a gustar o no gustar para hacer match, así como deslizar a la derecha o izquierda un perfil para conseguir lo mismo.
 - [x] Una vez existe un match, se puede empezar a hablar por el chat de la app.
+
+
+## QA Testing
+**_Pulsa sobre cada imagen para expandirla_**
+<p align="center">
+<img src="https://user-images.githubusercontent.com/98957023/222697406-0bb22d1b-6043-4a45-a59c-242f0125f619.png" alt="image" width="300" height="200" style="display:inline-block">
+<img src="https://user-images.githubusercontent.com/98957023/222697646-82d6361c-0c67-4059-9392-8f5af16b6294.png" alt="image" width="300" height="200" style="display:inline-block">
+<br />
+<img src="https://user-images.githubusercontent.com/98957023/222697793-3c7fa65c-3a61-4343-9b9b-db03ebd9443c.png" alt="image" width="300" height="200" style="display:inline-block">
+<img src="https://user-images.githubusercontent.com/98957023/222697915-a42296cb-7f74-4609-b39c-f56b82b1c10b.png" alt="image" width="300" height="200" style="display:inline-block">
+<img src="https://user-images.githubusercontent.com/98957023/222697985-19974495-f79a-42e0-8021-89e4b6e7ab60.png" alt="image" width="300" height="200" style="display:inline-block">
+</p>
+
+
 
 ## Contacto
 
