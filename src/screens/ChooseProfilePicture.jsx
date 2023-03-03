@@ -1,5 +1,12 @@
 import React, { useState, useContext } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+} from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import AwesomeAlert from "react-native-awesome-alerts";
 import DisplayContainer from "../components/DisplayContainer";
@@ -26,7 +33,7 @@ const ChooseProfilePicture = () => {
   const navigation = useNavigation();
 
   const pickImage = async () => {
-    setLoadingImage(true)
+    setLoadingImage(true);
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -35,9 +42,8 @@ const ChooseProfilePicture = () => {
 
     if (result.assets) {
       setImage(result.uri);
-      
     }
-    setLoadingImage(false)
+    setLoadingImage(false);
   };
 
   const changeImage = async () => {
@@ -45,7 +51,8 @@ const ChooseProfilePicture = () => {
   };
 
   const uploadImages = async () => {
-    try {setLoading(true)
+    try {
+      setLoading(true);
       const res = await uploadProfilePicture(
         image,
         `profileImg${userData.email}`
@@ -63,10 +70,10 @@ const ChooseProfilePicture = () => {
             "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
         });
       }
-      setLoading(false)
+      setLoading(false);
       setShowAlert(true);
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
       console.log(error);
     }
   };
@@ -79,10 +86,10 @@ const ChooseProfilePicture = () => {
   return (
     <View>
       {loading ? (
-      <View style={styles.loading}>
-        <ActivityIndicator size={130} />
-      </View>
-    ) : null}
+        <View style={styles.loading}>
+          <ActivityIndicator size={130} />
+        </View>
+      ) : null}
       <BackButton text="Crear cuenta" />
       <RegisterProgressBar currentStep={5} numSteps={5} />
       <View style={styles.bgContainer}>
@@ -107,13 +114,12 @@ const ChooseProfilePicture = () => {
               <TouchableOpacity onPress={pickImage}>
                 <Image source={{ uri: image }} style={styles.image} />
               </TouchableOpacity>
+            ) : loadingImage ? (
+              <ActivityIndicator size={50} />
             ) : (
-              loadingImage? 
-                <ActivityIndicator size={50}/> 
-                :
-                <TouchableOpacity onPress={pickImage}>
-                 <Text style={styles.addImageText}>+</Text>
-                </TouchableOpacity>
+              <TouchableOpacity onPress={pickImage}>
+                <Text style={styles.addImageText}>+</Text>
+              </TouchableOpacity>
             )}
           </View>
           <View style={styles.cameraButtonContainer}>
@@ -129,7 +135,7 @@ const ChooseProfilePicture = () => {
         <ReusableButton
           innerText="Finalizar"
           onPress={() => uploadImages()}
-          styleContainer={{ marginTop: 60 }}
+          styleContainer={{ marginTop: 40 }}
         />
 
         <AwesomeAlert
@@ -175,7 +181,7 @@ const styles = StyleSheet.create({
     borderRadius: 28,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 42,
+    marginTop: 20,
   },
   image: {
     width: 192,
