@@ -4,9 +4,9 @@
     <image src="https://user-images.githubusercontent.com/98957023/222693439-c7cdb4da-89f0-414c-ac9e-f4a52cd5f800.png"        alt="logo width="200" height="100">
   </p>
 
-# **Vídeo de presentación**
+# **:clapper: Vídeo de presentación**
 
-**_Pulsa play para reproducirlo, habilita el sonido si deseas_**
+**_Pulsa play para reproducirlo, habilita el sonido si deseas :sound:_**
 
 [video_jobmatch.webm](https://user-images.githubusercontent.com/98957023/222695129-5df800a7-567a-4899-b8bc-4ab8f30e3b41.webm)
 
@@ -77,15 +77,15 @@
 
 ## Funcionalidades
 
-- [x] Registrarse con email y password.
-- [x] Registrarse con cuenta de Google.
-- [x] Crear perfil como candidato o empresa.
-- [x] Editar perfiles después de haber sido creados.
-- [x] Ver perfiles de candidadtos o de puestos de trabajo disponibles.
-- [x] Filtrar perfiles por puestos de trabajo, años de experiencia, etc...
-- [x] Añadir perfil a tus favoritos.
-- [x] Darle a gustar o no gustar para hacer match, así como deslizar a la derecha o izquierda un perfil para conseguir lo mismo.
-- [x] Una vez existe un match, se puede empezar a hablar por el chat de la app.
+- :white_check_mark: Registrarse con email y password.
+- :white_check_mark: Registrarse con cuenta de Google.
+- :white_check_mark: Crear perfil como candidato o empresa.
+- :white_check_mark: Editar perfiles después de haber sido creados.
+- :white_check_mark: Ver perfiles de candidadtos o de puestos de trabajo disponibles.
+- :white_check_mark: Filtrar perfiles por puestos de trabajo, años de experiencia, etc...
+- :white_check_mark: Añadir perfil a tus favoritos.
+- :white_check_mark: Darle a gustar o no gustar para hacer match, así como deslizar a la derecha o izquierda un perfil para conseguir lo mismo.
+- :white_check_mark: Una vez existe un match, se puede empezar a hablar por el chat de la app.
 
 
 ## QA Testing
