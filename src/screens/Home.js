@@ -32,6 +32,7 @@ import { useIsFocused, useNavigation } from "@react-navigation/core";
 import theme from "../theme";
 import { generateId } from "../utilities/utilities";
 import ImageOfNoResults from '../svgs/ImageOfNoResults'
+import updateVisits from "../firebase/functions/updateVisits";
 
 const { colors, text } = theme;
 
@@ -42,14 +43,11 @@ const Home = () => {
 
   const [profiles, setProfiles] = useState([]);
   const [empty, setEmpty] = useState(true);
-  const [visits, setVisits] = useState(0);
-  /* const { setTab } = useContext(FocusedTab); */
   const isFocused = useIsFocused();
 
   useEffect(() => {
     isFocused && setTab(1);
     let unsub;
-
     const fetchProfiles = async () => {
       //Obtengos los usuarios que deslice a la izquierda y derecha
       const postPasses = await getDocs(
@@ -181,25 +179,12 @@ const Home = () => {
     if (!profiles[cardIndex]) return;
 
     const userSwiped = profiles[cardIndex];
-      setDoc(
-        //agrego a passes el id del post
-        doc(db, mainCollection, userData.id, "passes", userSwiped.id),
-        userSwiped
+    setDoc(
+      //agrego a passes el id del post
+      doc(db, mainCollection, userData.id, "passes", userSwiped.id),
+      userSwiped
       );
-
-    /* if (userData.worker){
-      console.log(visits)
-      updateDoc(doc(db, mainCollection, userSwiped.userId), {
-        visits: visits + 1,
-      })
-    } else {
-      setVisits(userSwiped.id.visits)
-      console.log(visits)
-      updateDoc(doc(db, mainCollection, userSwiped.id), {
-        visits: visits+1,
-      });
-    } */
-      
+      userData.worker ? updateVisits(userSwiped.userId) : updateVisits(userSwiped.id)
   };
 
   const swipeRight = (cardIndex) => {
@@ -208,7 +193,7 @@ const Home = () => {
     const postSwiped = profiles[cardIndex];
     //Para obtener todos los datos del usuario logueado
     const loggedInUser = { ...userData };
-
+    userData.worker ? updateVisits(postSwiped.userId) : updateVisits(postSwiped.id)
 
     if (userData.worker) {
       //Necesito chequear si el usuario al que le di like, me dio like previamente
@@ -225,11 +210,6 @@ const Home = () => {
             ...postSwiped,
             timestamp: serverTimestamp(),
           });
-          
-/*           updateDoc(doc(db, mainCollection, postSwiped.userId), {
-            visits: +1,
-          }) */
-
 
           //guardo el like recibido en el perfil empresa
           setDoc(
@@ -274,9 +254,6 @@ const Home = () => {
             postSwiped,
           });
         } else {
-/*           updateDoc(doc(db, mainCollection, postSwiped.userId), {
-            visits: +1 ,
-          }) */
           //solo guardo el like
           setDoc(doc(db, mainCollection, userData.id, "likes", postSwiped.id), {
             ...postSwiped,
@@ -308,10 +285,7 @@ const Home = () => {
         (docSnapshot) => {
           if (docSnapshot.exists()) {
             //hay match
-            console.log(`Hiciste un match con ${postSwiped.userName}`);
-/*             updateDoc(doc(db, mainCollection, postSwiped.id), {
-              visits: +1,
-            }); */
+            console.log(`Hiciste un match con ${postSwiped.userName}`);r
             //guardo el like dado
             setDoc(
               doc(db, mainCollection, userData.id, "likes", postSwiped.id),
