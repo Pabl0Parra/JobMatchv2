@@ -31,8 +31,9 @@ import {
 import { useIsFocused, useNavigation } from "@react-navigation/core";
 import theme from "../theme";
 import { generateId } from "../utilities/utilities";
-import ImageOfNoResults from '../svgs/ImageOfNoResults'
+import ImageOfNoResults from "../svgs/ImageOfNoResults";
 import updateVisits from "../firebase/functions/updateVisits";
+import { ActivityIndicator } from 'react-native-paper';
 
 const { colors, text } = theme;
 
@@ -183,8 +184,10 @@ const Home = () => {
       //agrego a passes el id del post
       doc(db, mainCollection, userData.id, "passes", userSwiped.id),
       userSwiped
-      );
-      userData.worker ? updateVisits(userSwiped.userId) : updateVisits(userSwiped.id)
+    );
+    userData.worker
+      ? updateVisits(userSwiped.userId)
+      : updateVisits(userSwiped.id);
   };
 
   const swipeRight = (cardIndex) => {
@@ -193,7 +196,9 @@ const Home = () => {
     const postSwiped = profiles[cardIndex];
     //Para obtener todos los datos del usuario logueado
     const loggedInUser = { ...userData };
-    userData.worker ? updateVisits(postSwiped.userId) : updateVisits(postSwiped.id)
+    userData.worker
+      ? updateVisits(postSwiped.userId)
+      : updateVisits(postSwiped.id);
 
     if (userData.worker) {
       //Necesito chequear si el usuario al que le di like, me dio like previamente
@@ -206,10 +211,13 @@ const Home = () => {
           console.log(`Hiciste un match con ${postSwiped.userName}`);
 
           //guardo el like dado - necesito guardar el id del post, sino me vuelve a aparecer
-          setDoc(doc(db, mainCollection, userData.id, "likes", postSwiped.userId), {
-            ...postSwiped,
-            timestamp: serverTimestamp(),
-          });
+          setDoc(
+            doc(db, mainCollection, userData.id, "likes", postSwiped.userId),
+            {
+              ...postSwiped,
+              timestamp: serverTimestamp(),
+            }
+          );
 
           //guardo el like recibido en el perfil empresa
           setDoc(
@@ -285,7 +293,7 @@ const Home = () => {
         (docSnapshot) => {
           if (docSnapshot.exists()) {
             //hay match
-            console.log(`Hiciste un match con ${postSwiped.userName}`);r
+            console.log(`Hiciste un match con ${postSwiped.userName}`);
             //guardo el like dado
             setDoc(
               doc(db, mainCollection, userData.id, "likes", postSwiped.id),
@@ -333,7 +341,7 @@ const Home = () => {
                 timestamp: serverTimestamp(),
               }
             );
-/*             updateDoc(doc(db, mainCollection, postSwiped.id), {
+            /*             updateDoc(doc(db, mainCollection, postSwiped.id), {
               visits: +1,
             }); */
             //guardo el like recibido en el otro perfil
@@ -359,12 +367,16 @@ const Home = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <Header screen="Home" />
-        {profiles.length === 0? (
+        {profiles.length === 0 ? (
           <View style={styles.noProfiles}>
-            <ImageOfNoResults />
-            <Text style={[text.text14, { textAlign: "center", paddingHorizontal: 28, marginTop: 20}]} >
-              No tienes más vacantes por ver.
-              Pronto apareceran las nuevas solicitudes.
+            <ActivityIndicator animating={true} color={colors.secondary} size="large" />
+            <Text
+              style={[
+                text.text14,
+                { textAlign: "center", paddingHorizontal: 28, marginTop: 20 },
+              ]}
+            >
+              Cargando perfiles...
             </Text>
           </View>
         ) : (
@@ -425,14 +437,22 @@ const Home = () => {
                     card ? (
                       <Card card={card} refe={useRef} />
                     ) : (
-                      <View style={styles.noProfiles}>
-                        <Text>No hay más perfiles :c</Text>
-                        <Image
-                          style={{ width: 200, height: 200 }}
-                          source={{
-                            uri: "https://emojis.wiki/emoji-pics/google/neutral-face-google.png",
-                          }}
-                        />
+                      <View style={[styles.noProfiles, {height:"80%"}]}>
+                        <ImageOfNoResults />
+
+                        <Text
+                          style={[
+                            text.text14,
+                            {
+                              textAlign: "center",
+                              paddingHorizontal: 28,
+                              marginTop: 20,
+                            },
+                          ]}
+                        >
+                          No tienes más vacantes por ver :/ {"\n"}
+                          Pronto apareceran las nuevas oportunidades!
+                        </Text>
                       </View>
                     )
                   }
@@ -470,7 +490,6 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    fontSize: 32,
     backgroundColor: `${colors.background}`,
   },
 });
