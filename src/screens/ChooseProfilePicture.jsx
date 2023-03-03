@@ -6,7 +6,7 @@ import DisplayContainer from "../components/DisplayContainer";
 import { UserDataContext } from "../context/UserDataContext";
 import registerUser from "../firebase/functions/registerUser";
 import uploadProfilePicture from "../firebase/functions/uploadProfilePicture";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ProfilePicture from "../svgs/ProfilePicture";
 import { useNavigation } from "@react-navigation/core";
 import RegisterProgressBar from "../components/RegisterProgressBar";
@@ -83,37 +83,38 @@ const ChooseProfilePicture = () => {
           alignContents: "flex-start",
         }}
       >
-        <Text style={styles.title}>Añadir foto</Text>
-        <Text style={styles.subTitle}>
-          Causa una buena impresión, sube una foto de plano medio.
-        </Text>
+        <View style={{ marginLeft: 6, marginRight: 24, marginTop: 11 }}>
+          <Text style={styles.title}>Añadir foto</Text>
+          <Text style={styles.subTitle}>
+            Causa una buena impresión, sube una foto de plano medio.
+          </Text>
+        </View>
         <View>
           <View style={styles.rectangle}>
             {image ? (
-              <TouchableOpacity onPress={pickImage} style={styles.imageWrapper}>
+              <TouchableOpacity onPress={pickImage}>
                 <Image source={{ uri: image }} style={styles.image} />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity onPress={pickImage} style={styles.addImage}>
+              <TouchableOpacity onPress={pickImage}>
                 <Text style={styles.addImageText}>+</Text>
               </TouchableOpacity>
             )}
           </View>
-          {/* <View style={styles.cameraButtonContainer}>
-            <TouchableOpacity style={styles.cameraButton}>
-              <MaterialIcons name="photo-camera" size={24} color="#FFF" />
+          <View style={styles.cameraButtonContainer}>
+            <TouchableOpacity style={styles.cameraButton} onPress={pickImage}>
+              <MaterialCommunityIcons
+                name="camera-plus-outline"
+                size={24}
+                color={colors.details}
+              />
             </TouchableOpacity>
-          </View> */}
+          </View>
         </View>
-        {image ? (
-          <TouchableOpacity style={styles.changeImage} onPress={changeImage}>
-            <Text style={styles.changeImageText}>Cambiar foto</Text>
-          </TouchableOpacity>
-        ) : null}
         <ReusableButton
           innerText="Finalizar"
           onPress={() => uploadImages()}
-          styleContainer={{ marginTop: 50 }}
+          styleContainer={{ marginTop: 60 }}
         />
 
         <AwesomeAlert
@@ -151,48 +152,44 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: `${colors.text}`,
   },
-  image: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    marginBottom: 20,
+  rectangle: {
+    width: 192,
+    height: 288,
+    borderWidth: 1,
+    borderColor: "#727272",
+    borderRadius: 28,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 42,
   },
+  image: {
+    width: 192,
+    height: 288,
+    borderRadius: 28,
+  },
+  cameraButtonContainer: {
+    position: "absolute",
+    bottom: -16,
+    right: -20,
+    backgroundColor: `${colors.secondary}`,
+    borderRadius: 25,
+    alignItems: "center",
+    justifyContent: "center",
+    width: 40,
+    height: 40,
+    zIndex: 1,
+  },
+
   addImage: {
     width: 200,
     height: 200,
-    borderRadius: 100,
     borderWidth: 1,
-    borderColor: "#000",
     alignItems: "center",
     justifyContent: "center",
   },
   addImageText: {
     fontSize: 50,
-  },
-  changeImage: {
-    width: 144,
-    height: 30,
-    backgroundColor: `${colors.secondary}`,
-    borderRadius: 25,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  changeImageText: {
-    fontSize: 12,
-    color: `${colors.details}`,
-  },
-  finished: {
-    width: 288,
-    height: 40,
-    backgroundColor: "#D9D9D9",
-    borderRadius: 25,
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
-    marginTop: 100,
-  },
-  finishedText: {
-    fontSize: 16,
+    color: "#727272",
   },
 });
 
