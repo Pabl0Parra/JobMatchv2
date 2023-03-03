@@ -1,11 +1,17 @@
 <div align="center">
   <p align="center">C9-47-ft-ReactNative</p>
-    
-  <a href="" target="_blank">
-    <img src="https://res.cloudinary.com/dcwx2biey/image/upload/v1677685463/logoJobMatch_jrqgd2.jpg" alt="Logo" width="500" height="200">
-  </a>
+  <p align="center">   
+    <image src="https://user-images.githubusercontent.com/98957023/222693439-c7cdb4da-89f0-414c-ac9e-f4a52cd5f800.png"        alt="logo width="200" height="100">
+  </p>
 
+# **Vídeo de presentación**
 
+**_Pulsa play para reproducirlo, habilita el sonido si deseas_**
+
+[video_jobmatch.webm](https://user-images.githubusercontent.com/98957023/222695129-5df800a7-567a-4899-b8bc-4ab8f30e3b41.webm)
+
+  <br />
+  
   <p align="center">
     <a href="" target="_blank">Ver demo</a>
     ·
