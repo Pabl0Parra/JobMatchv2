@@ -4,7 +4,6 @@ import React from "react";
 export default function SenderMessage({ message }) {
   return (
     <View style={styles.container}>
-      {/* <Image source={{ uri: message.image }} style={styles.image} /> */}
       <Text style={styles.message}>{message.message}</Text>
     </View>
   );
