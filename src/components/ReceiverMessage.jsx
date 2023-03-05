@@ -12,7 +12,6 @@ export default function ReceiverMessage({ message }) {
 
 const styles = StyleSheet.create({
   container: {
-    height: 60,
     backgroundColor: "#A3D2FE",
     borderRadius: 8,
     borderTopLeftRadius: 0,
@@ -20,7 +19,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     marginHorizontal: 30,
     marginVertical: 8,
-    justifyContent: "center",
     alignSelf: "flex-start",
     marginLeft: 50,
   },
@@ -34,6 +32,5 @@ const styles = StyleSheet.create({
   },
   message: {
     color: "#000",
-    fontSize: 16,
   },
 });

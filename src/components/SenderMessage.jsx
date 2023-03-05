@@ -1,12 +1,10 @@
 import { View, Text, StyleSheet, Image } from "react-native";
 import React from "react";
-import { theme } from "../theme";
-
-const { colors } = theme;
 
 export default function SenderMessage({ message }) {
   return (
     <View style={styles.container}>
+      {/* <Image source={{ uri: message.image }} style={styles.image} /> */}
       <Text style={styles.message}>{message.message}</Text>
     </View>
   );
@@ -14,7 +12,6 @@ export default function SenderMessage({ message }) {
 
 const styles = StyleSheet.create({
   container: {
-    height: 60,
     backgroundColor: "#D4E5FA",
     borderRadius: 8,
     borderTopRightRadius: 0,
@@ -22,7 +19,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     marginHorizontal: 10,
     marginVertical: 4,
-    justifyContent: "center",
     alignSelf: "flex-end",
     marginLeft: "auto",
   },
@@ -35,7 +31,6 @@ const styles = StyleSheet.create({
     right: 0,
   },
   message: {
-    color: `${colors.text}`,
-    fontSize: 16,
+    color: "#000",
   },
 });

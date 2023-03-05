@@ -1,12 +1,5 @@
 import React, { useState, useContext } from "react";
-import {
-  Text,
-  Image,
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  ActivityIndicator,
-} from "react-native";
+import { Text, Image, View, TouchableOpacity, StyleSheet, ActivityIndicator } from "react-native";
 import DisplayContainer from "../components/DisplayContainer";
 import checkRegisteredEmail from "../firebase/functions/checkRegisteredEmail";
 import { useNavigation } from "@react-navigation/native";
@@ -26,16 +19,16 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
 
   const formSubmit = async (values) => {
-    setLoading(true);
+    setLoading(true)
     const registeredUser = await checkRegisteredEmail(values[0]);
 
     if (registeredUser) {
-      setLoading(false);
+      setLoading(false)
       setShowAlert(true);
       console.log("ya hay un usuario registrado con el email proporcionado");
     } else {
       setUserData({ ...userData, email: values[0], password: values[1] });
-      setLoading(false);
+      setLoading(false)
       navigation.navigate("RegisterStack");
     }
   };
@@ -51,7 +44,6 @@ const Register = () => {
         onConfirmPressed={() => setShowAlert(false)}
         showConfirmButton={true}
         confirmText="OK"
-        confirmButtonTextStyle={{ color: colors.details }}
         confirmButtonColor={colors.secondary}
       />
       <View style={styles.background}>
@@ -192,7 +184,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     shadowColor: "gray",
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.8,
+    shadowOpacity: 0.5,
     shadowRadius: 3,
   },
   image: {
