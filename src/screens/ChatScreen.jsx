@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { SafeAreaView, Text } from "react-native";
+import { SafeAreaView, Text, StyleSheet } from "react-native";
 import theme from "../theme";
 import ChatList from "../components/ChatList";
 import { useIsFocused } from "@react-navigation/native";
@@ -17,31 +17,31 @@ export default function ChatScreen() {
 
   return (
     <>
-      <SafeAreaView
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          backgroundColor: `${colors.primary}`,
-          padding: 10,
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: 5 },
-          shadowOpacity: 0.75,
-          shadowRadius: 5,
-          elevation: 5,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 28,
-            fontWeight: "700",
-            marginTop: 50,
-            color: `${colors.secondary}`,
-          }}
-        >
-          Mensajes
-        </Text>
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.title}>Mensajes</Text>
       </SafeAreaView>
       <ChatList />
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: `${colors.primary}`,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.75,
+    shadowRadius: 5,
+    elevation: 5,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "700",
+    marginTop: 50,
+    color: `${colors.secondary}`,
+  },
+});

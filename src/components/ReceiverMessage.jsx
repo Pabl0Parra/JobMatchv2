@@ -15,7 +15,7 @@ export default function ReceiverMessage({ message }) {
 
 const styles = StyleSheet.create({
   container: {
-    height: 60,
+    height: 50,
     backgroundColor: "#A3D2FE",
     borderRadius: 8,
     borderTopLeftRadius: 0,
@@ -38,6 +38,6 @@ const styles = StyleSheet.create({
   message: {
     color: `${colors.text}`,
     fontSize: 16,
-    fontWeight: "500",
+    fontWeight: "400",
   },
 });

@@ -9,14 +9,14 @@ export default function SenderMessage({ message }) {
     <View style={styles.container}>
       <Text style={styles.message}>{message.message}</Text>
       <View style={styles.containerBefore} />
-      <View style={styles.contaninerAfter} />
+      <View style={styles.containerAfter} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    height: 60,
+    height: 50,
     position: "relative",
     justifyContent: "center",
     alignContent: "flex-end",
@@ -56,14 +56,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 10,
     borderTopColor: "#D4E5FA",
     clear: "both",
-  },
-  image: {
-    width: 30,
-    height: 30,
-    borderRadius: 50,
-    position: "absolute",
-    top: 0,
-    right: 0,
   },
   message: {
     color: `${colors.text}`,
