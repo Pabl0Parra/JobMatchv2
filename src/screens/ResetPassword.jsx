@@ -4,28 +4,42 @@ import DisplayContainer from "../components/DisplayContainer";
 import checkRegisteredEmail from "../firebase/functions/checkRegisteredEmail";
 import sendEmailResetPass from "../firebase/functions/sendEmailResetPass";
 import InputForm from "../components/InputForm";
+import AwesomeAlert from "react-native-awesome-alerts";
 
 const ResetPassword = () => {
   const navigation = useNavigation();
+  const [userNotFound, setUserNotFound] = useState(false);
 
   const requestNewPassword = async (values) => {
-     const registeredUser = await checkRegisteredEmail(values[0]);
+    const registeredUser = await checkRegisteredEmail(values[0]);
 
     if (!registeredUser) {
       // implementar un mensaje de error con AwesomeAlert
+      <AwesomeAlert
+        show={userNotFound}
+        title="No hemos encontrado ninguna cuenta asociada a ese email 🔒"
+        message="Innténtelo de nuevo."
+        closeOnTouchOutside={true}
+        onDismiss={() => setIncorrectPassword(false)}
+        onConfirmPressed={() => setIncorrectPassword(false)}
+        showConfirmButton={true}
+        confirmText="OK"
+        confirmButtonTextStyle={{ color: colors.details }}
+        confirmButtonColor={colors.secondary}
+      />;
       console.log(
         `No hemos encontrado ninguna cuenta asociada a ${values[0]}. Prueba con otro email.`
       );
     } else {
-        console.log(
-            `Introduce el código de verificación de 6 dígitos que te hemos enviado a ${values[0]}.`
-          );
-        sendEmailResetPass(values[0])
+      console.log(
+        `Introduce el código de verificación de 6 dígitos que te hemos enviado a ${values[0]}.`
+      );
+      sendEmailResetPass(values[0]);
     }
   };
 
   return (
-    <DisplayContainer >
+    <DisplayContainer>
       <View
         style={[
           styles.background,
