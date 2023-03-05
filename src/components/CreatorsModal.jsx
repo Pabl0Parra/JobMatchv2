@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   name: {
     color: `${colors.text}`,
     fontSize: 30,
-    fontWeight: "bold",
+    fontWeight: "500",
   },
   role: {
     color: `${colors.text}`,
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: `${colors.details}`,
-    fontWeight: "bold",
+    fontWeight: "500",
     textAlign: "center",
     fontSize: 16,
   },

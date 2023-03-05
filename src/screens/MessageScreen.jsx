@@ -156,7 +156,11 @@ export default function MessageScreen() {
             onPress={sendMessage}
             disabled={input.length === 0}
           >
-            <Feather name="send" size={24} color="white" />
+            <Feather
+              name="send"
+              size={20}
+              color={input.length === 0 ? "#FFF" : "#84FFFF"}
+            />
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
@@ -196,8 +200,10 @@ const styles = StyleSheet.create({
   },
   enabledSendButton: {
     backgroundColor: "#091D5C",
+    color: "#091D5C",
   },
   disabledSendButton: {
     backgroundColor: "gray",
+    color: "gray",
   },
 });
