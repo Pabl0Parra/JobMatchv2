@@ -1,6 +1,5 @@
 import {
   View,
-  SafeAreaView,
   Text,
   TextInput,
   StyleSheet,
@@ -71,69 +70,69 @@ export default function MessageScreen() {
   };
 
   return (
-      <View style={{ flex: 1 }}>
-        <View style={{ height: 80 }}>
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              marginTop: 40,
-              marginLeft: 20,
-              alignItems: "center",
+    <View style={{ flex: 1 }}>
+      <View style={{ height: 80 }}>
+        <TouchableOpacity
+          style={{
+            flexDirection: "row",
+            marginTop: 40,
+            marginLeft: 20,
+            alignItems: "center",
+          }}
+          onPress={() => navigation.goBack()}
+        >
+          <AntDesign name="arrowleft" size={24} color="black" />
+          <Text style={{ marginLeft: 10, fontSize: 20, color: "#091D5C" }}>
+            {getMatchedUserInfo(matchDetails.users, userData.id).userName}
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={10}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <FlatList
+            data={messages}
+            inverted={-1}
+            styles={{
+              paddingLeft: 6,
+              paddingBottom: 50,
             }}
-            onPress={() => navigation.goBack()}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item: message }) =>
+              message.userId === userData.id ? (
+                <SenderMessage key={messages.id} message={message} />
+              ) : (
+                <ReceiverMessage key={messages.id} message={message} />
+              )
+            }
+          />
+        </TouchableWithoutFeedback>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Manda tu mensaje..."
+            onChangeText={setInput}
+            onSubmitEditing={sendMessage}
+            value={input}
+          />
+          <TouchableOpacity
+            style={[
+              styles.sendButton,
+              input.length === 0
+                ? styles.disabledSendButton
+                : styles.enabledSendButton,
+            ]}
+            onPress={sendMessage}
+            disabled={input.length === 0}
           >
-            <AntDesign name="arrowleft" size={24} color="black" />
-            <Text style={{ marginLeft: 10, fontSize: 20, color: "#091D5C" }}>
-              {getMatchedUserInfo(matchDetails.users, userData.id).userName}
-            </Text>
+            <Feather name="send" size={24} color="white" />
           </TouchableOpacity>
         </View>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={{ flex: 1 }}
-          keyboardVerticalOffset={10}
-        >
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <FlatList
-              data={messages}
-              inverted={-1}
-              styles={{
-                paddingLeft: 6,
-                paddingBottom: 50,
-              }}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item: message }) =>
-                message.userId === userData.id ? (
-                  <SenderMessage key={messages.id} message={message} />
-                ) : (
-                  <ReceiverMessage key={messages.id} message={message} />
-                )
-              }
-            />
-          </TouchableWithoutFeedback>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder="Manda tu mensaje..."
-              onChangeText={setInput}
-              onSubmitEditing={sendMessage}
-              value={input}
-            />
-            <TouchableOpacity
-              style={[
-                styles.sendButton,
-                input.length === 0
-                  ? styles.disabledSendButton
-                  : styles.enabledSendButton,
-              ]}
-              onPress={sendMessage}
-              disabled={input.length === 0}
-            >
-              <Feather name="send" size={24} color="white" />
-            </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
-      </View>
+      </KeyboardAvoidingView>
+    </View>
   );
 }
 
