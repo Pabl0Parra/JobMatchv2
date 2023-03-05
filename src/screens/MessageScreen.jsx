@@ -2,6 +2,7 @@ import {
   View,
   Text,
   TextInput,
+  Image,
   StyleSheet,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
@@ -27,6 +28,9 @@ import {
 import { db } from "../firebase/credentials";
 import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
+import theme from "../theme";
+
+const { colors } = theme;
 
 export default function MessageScreen() {
   const navigation = useNavigation();
@@ -71,7 +75,18 @@ export default function MessageScreen() {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ height: 80 }}>
+      <View
+        style={{
+          height: 100,
+          justifyContent: "center",
+          backgroundColor: `${colors.primary}`,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 5 },
+          shadowOpacity: 0.75,
+          shadowRadius: 5,
+          elevation: 5,
+        }}
+      >
         <TouchableOpacity
           style={{
             flexDirection: "row",
@@ -82,7 +97,20 @@ export default function MessageScreen() {
           onPress={() => navigation.goBack()}
         >
           <AntDesign name="arrowleft" size={24} color="black" />
-          <Text style={{ marginLeft: 10, fontSize: 20, color: "#091D5C" }}>
+          <Image
+            source={{
+              uri: getMatchedUserInfo(matchDetails.users, userData.id).image,
+            }}
+            style={styles.image}
+          />
+          <Text
+            style={{
+              marginLeft: 5,
+              fontSize: 24,
+              fontWeight: "500",
+              color: "#091D5C",
+            }}
+          >
             {getMatchedUserInfo(matchDetails.users, userData.id).userName}
           </Text>
         </TouchableOpacity>
@@ -142,7 +170,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 30,
+  },
+  image: {
+    width: 40,
+    height: 40,
+    borderRadius: 25,
+    marginHorizontal: 20,
   },
   input: {
     flex: 1,
