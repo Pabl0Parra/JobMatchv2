@@ -4,7 +4,6 @@ import {
   Text,
   ActivityIndicator,
   FlatList,
-  Button,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
@@ -124,7 +123,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center",
-    opacity: 0.8,
+    opacity: 0.9,
   },
   contentContainer: {
     width: "80%",
