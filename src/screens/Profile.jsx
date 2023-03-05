@@ -29,11 +29,11 @@ const Profile = () => {
   const { userData, setUserData, setTab } = useContext(UserLoginContex);
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-<<<<<<< Updated upstream
+
   const [percentage, setPercentage] = useState(50);
-=======
-/*   const [percentage, setPercentage] = useState(60); */
->>>>>>> Stashed changes
+
+  /*   const [percentage, setPercentage] = useState(60); */
+
   /* const {setTab}  =useContext(FocusedTab) */
   const isFocused = useIsFocused();
   const [savedCount, setSavedCount] = useState(0);
@@ -43,21 +43,23 @@ const Profile = () => {
   });
 
   useEffect(() => {
+    let porc = 50;
 
-
-    let porc = 50
-
-    userData.aboutme !== undefined && userData.aboutme !== "" && userData.aboutme !== null &&  (porc = porc + 20);
-    userData.image !== "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" && (porc = porc + 20);
+    userData.aboutme !== undefined &&
+      userData.aboutme !== "" &&
+      userData.aboutme !== null &&
+      (porc = porc + 20);
+    userData.image !==
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" &&
+      (porc = porc + 20);
     if (userData.worker) {
-      (userData.experiences?.length) && (porc = porc + 10)
+      userData.experiences?.length && (porc = porc + 10);
     } else {
-      (userData.posts?.length) && (porc = porc + 10);
+      userData.posts?.length && (porc = porc + 10);
     }
 
-    setPercentage(porc)
-      
-  }, [userData])
+    setPercentage(porc);
+  }, [userData]);
 
   const changeProfilePicture = async () => {
     try {
@@ -141,11 +143,16 @@ const Profile = () => {
                   width: 180,
                   height: 180,
                   backgroundColor: "#D7E0E9",
-                  borderRadius: 200
+                  borderRadius: 200,
                 }}
               />
-              {loading.image? (
-                <View style={[styles.image, {alignItems: "center", justifyContent: "center"}]}>
+              {loading.image ? (
+                <View
+                  style={[
+                    styles.image,
+                    { alignItems: "center", justifyContent: "center" },
+                  ]}
+                >
                   <ActivityIndicator size={90} />
                 </View>
               ) : (
