@@ -205,7 +205,7 @@ const DrawerMenu = ({ navigation }) => {
           textItem={"Equipo"}
           onPress={() => setShowCreatorsModal(true)}
         >
-          <FontAwesome name="users" size={24} color={colors.secondary} />
+          <Feather name="users" size={24} color={colors.secondary} />
         </ProfileDrawerItem>
         <Modal
           animationIn="zoomIn"

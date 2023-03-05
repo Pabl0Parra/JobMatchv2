@@ -22,7 +22,7 @@ const CreatorsModal = ({ closeModal }) => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 300);
   }, []);
 
   // Para traer los datos de los miembros del equipo cuando este publicado el repo
@@ -86,7 +86,7 @@ const CreatorsModal = ({ closeModal }) => {
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         {isLoading ? (
-          <ActivityIndicator />
+          <ActivityIndicator size={30} />
         ) : (
           <>
             <Text style={styles.title}>Contacto:</Text>
