@@ -46,10 +46,6 @@ const ChooseProfilePicture = () => {
     setLoadingImage(false);
   };
 
-  const changeImage = async () => {
-    pickImage();
-  };
-
   const uploadImages = async () => {
     try {
       setLoading(true);
@@ -147,6 +143,7 @@ const ChooseProfilePicture = () => {
           closeOnHardwareBackPress={false}
           showConfirmButton={true}
           confirmText="OK"
+          confirmButtonStyle={{ backgroundColor: `${colors.details}` }}
           confirmButtonColor={colors.secondary}
           onConfirmPressed={() => hideAlert()}
         />
