@@ -27,25 +27,25 @@ const Login = ({ navigation }) => {
 
   const formSubmit = async (values) => {
     setLoading(true);
-   
-      const registeredUser = await checkRegisteredEmail(values[0]);
-      if (!registeredUser) {
-        setLoading(false);
-        setShowAlert(true);
-        console.log("No hay un usuario registrado con el email proporcionado");
+
+    const registeredUser = await checkRegisteredEmail(values[0]);
+    if (!registeredUser) {
+      setLoading(false);
+      setShowAlert(true);
+      console.log("No hay un usuario registrado con el email proporcionado");
+    } else {
+      const res = await loginWithEmail(values[0], values[1]);
+
+      if (res) {
+        setUserData(...userData, {
+          email: values[0],
+          password: values[1],
+        });
       } else {
-        const res = await loginWithEmail(values[0], values[1]);
-        
-        if (res) {
-          setUserData(...userData, {
-            email: values[0],
-            password: values[1],
-          });
-        } else {
-          setLoading(false);
-          setIncorrectPassword(true);
-        }
+        setLoading(false);
+        setIncorrectPassword(true);
       }
+    }
   };
 
   return (
@@ -63,7 +63,7 @@ const Login = ({ navigation }) => {
       />
       <AwesomeAlert
         show={incorrectPassword}
-        title="Contraseña incorrecto 🔒"
+        title="Contraseña incorrecta 🔒"
         message="La contraseña que ingreso no es correcta, inténtelo de nuevo."
         closeOnTouchOutside={true}
         onDismiss={() => setIncorrectPassword(false)}
@@ -101,7 +101,7 @@ const Login = ({ navigation }) => {
             buttonText="Iniciar Sesión"
             buttonMarginTop={24}
           />
-          
+
           {/*  <Text
             style={[
               styles.text,
@@ -123,7 +123,6 @@ const Login = ({ navigation }) => {
             </TouchableOpacity>
           </View> */}
 
-          
           <Text style={[styles.text, { paddingVertical: 24 }]}>
             ¿Aún no tienes una cuenta?{" "}
             <Text

@@ -7,7 +7,6 @@ import {
   StyleSheet,
 } from "react-native";
 import { RadioButton } from "react-native-paper";
-import DisplayContainer from "../components/DisplayContainer";
 import { useNavigation } from "@react-navigation/native";
 import { UserDataContext } from "../context/UserDataContext";
 import RegisterProgressBar from "../components/RegisterProgressBar";

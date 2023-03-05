@@ -4,7 +4,6 @@ import {
   Text,
   ActivityIndicator,
   FlatList,
-  Button,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
@@ -22,7 +21,7 @@ const CreatorsModal = ({ closeModal }) => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 300);
   }, []);
 
   // Para traer los datos de los miembros del equipo cuando este publicado el repo
@@ -95,7 +94,7 @@ const CreatorsModal = ({ closeModal }) => {
               keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
                 <View style={styles.itemContainer}>
-                  <Feather name="user" size={24} color="black" />
+                  <Feather name="user" size={24} color={colors.text} />
                   <View>
                     <Text style={styles.name}>{item.memberName}</Text>
                     <Text style={styles.role}>{item.memberRole}</Text>
@@ -124,7 +123,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center",
-    opacity: 0.8,
+    opacity: 0.9,
   },
   contentContainer: {
     width: "80%",
@@ -142,13 +141,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginBottom: 20,
   },
-  icon: {
+  imageContainer: {
     marginRight: 10,
   },
   name: {
     color: `${colors.text}`,
     fontSize: 30,
-    fontWeight: "bold",
+    fontWeight: "500",
   },
   role: {
     color: `${colors.text}`,
@@ -165,7 +164,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: `${colors.details}`,
-    fontWeight: "bold",
+    fontWeight: "500",
     textAlign: "center",
     fontSize: 16,
   },

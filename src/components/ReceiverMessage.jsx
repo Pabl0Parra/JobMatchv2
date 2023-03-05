@@ -1,5 +1,8 @@
 import { View, Image, Text, StyleSheet } from "react-native";
 import React from "react";
+import theme from "../theme";
+
+const { colors } = theme;
 
 export default function ReceiverMessage({ message }) {
   return (
@@ -12,10 +15,12 @@ export default function ReceiverMessage({ message }) {
 
 const styles = StyleSheet.create({
   container: {
+    height: 50,
     backgroundColor: "#A3D2FE",
     borderRadius: 8,
     borderTopLeftRadius: 0,
     paddingHorizontal: 20,
+    justifyContent: "center",
     paddingVertical: 5,
     marginHorizontal: 30,
     marginVertical: 8,
@@ -31,6 +36,8 @@ const styles = StyleSheet.create({
     left: -36,
   },
   message: {
-    color: "#000",
+    color: `${colors.text}`,
+    fontSize: 16,
+    fontWeight: "400",
   },
 });
