@@ -1,9 +1,16 @@
 import React, { useContext, useEffect } from "react";
-import { SafeAreaView, Text } from "react-native";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  FlatList,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import theme from "../theme";
 import ChatList from "../components/ChatList";
 import { useIsFocused } from "@react-navigation/native";
-import { UserLoginContex } from "../context/UserDataContext";
+import { FocusedTab, UserLoginContex } from "../context/UserDataContext";
 
 const colors = theme.colors;
 

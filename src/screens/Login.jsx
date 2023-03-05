@@ -17,7 +17,7 @@ import checkRegisteredEmail from "../firebase/functions/checkRegisteredEmail";
 import AwesomeAlert from "react-native-awesome-alerts";
 import theme from "../theme";
 
-const { colors } = theme;
+const colors = theme.colors;
 
 const Login = ({ navigation }) => {
   const { userData, setUserData } = useContext(UserDataContext);
@@ -27,31 +27,30 @@ const Login = ({ navigation }) => {
 
   const formSubmit = async (values) => {
     setLoading(true);
-
-    const registeredUser = await checkRegisteredEmail(values[0]);
-    if (!registeredUser) {
-      setLoading(false);
-      setShowAlert(true);
-      console.log("No hay un usuario registrado con el email proporcionado");
-    } else {
-      const res = await loginWithEmail(values[0], values[1]);
-
-      if (res) {
-        setUserData(...userData, {
-          email: values[0],
-          password: values[1],
-        });
-      } else {
+   
+      const registeredUser = await checkRegisteredEmail(values[0]);
+      if (!registeredUser) {
         setLoading(false);
-        setIncorrectPassword(true);
+        setShowAlert(true);
+        console.log("No hay un usuario registrado con el email proporcionado");
+      } else {
+        const res = await loginWithEmail(values[0], values[1]);
+        
+        if (res) {
+          setUserData(...userData, {
+            email: values[0],
+            password: values[1],
+          });
+        } else {
+          setLoading(false);
+          setIncorrectPassword(true);
+        }
       }
-    }
   };
 
   return (
     <DisplayContainer>
       <AwesomeAlert
-        amimationType="zoom"
         show={showAlert}
         title="Email no registrado 🔒"
         message="No hay un usuario registrado con el email proporcionado"
@@ -60,20 +59,17 @@ const Login = ({ navigation }) => {
         onConfirmPressed={() => setShowAlert(false)}
         showConfirmButton={true}
         confirmText="OK"
-        confirmButtonTextStyle={{ color: colors.details }}
         confirmButtonColor={colors.secondary}
       />
       <AwesomeAlert
-        amimationType="zoom"
         show={incorrectPassword}
-        title="Contraseña incorrecta 🔒"
+        title="Contraseña incorrecto 🔒"
         message="La contraseña que ingreso no es correcta, inténtelo de nuevo."
         closeOnTouchOutside={true}
         onDismiss={() => setIncorrectPassword(false)}
         onConfirmPressed={() => setIncorrectPassword(false)}
         showConfirmButton={true}
         confirmText="OK"
-        confirmButtonTextStyle={{ color: colors.details }}
         confirmButtonColor={colors.secondary}
       />
       <View style={styles.background}>
@@ -105,7 +101,7 @@ const Login = ({ navigation }) => {
             buttonText="Iniciar Sesión"
             buttonMarginTop={24}
           />
-
+          
           {/*  <Text
             style={[
               styles.text,
@@ -127,6 +123,7 @@ const Login = ({ navigation }) => {
             </TouchableOpacity>
           </View> */}
 
+          
           <Text style={[styles.text, { paddingVertical: 24 }]}>
             ¿Aún no tienes una cuenta?{" "}
             <Text

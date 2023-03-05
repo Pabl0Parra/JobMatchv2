@@ -1,13 +1,12 @@
 import { StyleSheet, Text, View, TouchableOpacity, Button } from "react-native";
 import DisplayContainer from "./DisplayContainer";
 import Constants from "expo-constants";
-import { AntDesign, Feather, FontAwesome } from "@expo/vector-icons";
+import { AntDesign, Feather } from "@expo/vector-icons";
 import Modal from "react-native-modal";
 import { Switch } from "react-native-paper";
 
 import theme from "../theme";
 import ProfileDrawerItem from "./ProfileDrawerItem";
-import CreatorsModal from "./CreatorsModal";
 import logOut from "../firebase/functions/logOut";
 import { useContext, useState } from "react";
 import { UserLoginContex } from "../context/UserDataContext";
@@ -22,7 +21,6 @@ const DrawerMenu = ({ navigation }) => {
   const { userData, setUserData } = useContext(UserLoginContex);
   const [showModeModal, setShowModeModal] = useState(false);
   const [showModalPresentation, setShowModalPresentation] = useState(false);
-  const [showCreatorsModal, setShowCreatorsModal] = useState(false);
   const [userMode, setUserMode] = useState(userData.available);
 
   const changeMode = async () => {
@@ -46,10 +44,6 @@ const DrawerMenu = ({ navigation }) => {
       }
     }
     setShowModeModal(false);
-  };
-
-  const closeCreatorsModal = () => {
-    setShowCreatorsModal(false);
   };
 
   return (
@@ -102,94 +96,92 @@ const DrawerMenu = ({ navigation }) => {
           }
         />
         <View style={styles.divider} />
-        {!userData.worker ? null : (
-          <>
-            <ProfileDrawerItem
-              textItem={
-                !userData.available ? "Activar busqueda" : "desactivar busqueda"
-              }
-              onPress={() => setShowModeModal(true)}
-            >
-              {}
+        { !userData.worker? null : (<>
+          <ProfileDrawerItem
+            textItem={
+              !userData.available ? "Activar busqueda" : "desactivar busqueda"
+            }
+            onPress={() => setShowModeModal(true)}
+          >
+            {}
+            {
+              <AntDesign
+                name={!userData.available ? "check" : "close"}
+                size={24}
+                color={colors.secondary}
+              />
+            }
+          </ProfileDrawerItem>
+          <Modal
+            isVisible={showModeModal}
+            animationIn="zoomIn"
+            animationOut="zoomOut"
+            onBackButtonPress={() => {
+              setShowModeModal(false);
+              setUserMode(userData.available);
+            }}
+            onBackdropPress={() => {
+              setShowModeModal(false);
+              setUserMode(userData.available);
+            }}
+            backdropOpacity={0}
+            style={{ alignItems: "center", justifyContent: "center" }}
+          >
+            <View style={styles.modeModalContainer}>
+              <Text>
+                {userData.worker
+                  ? "¿En busca de empelo?"
+                  : "¿Dispuesto a contratar?"}
+              </Text>
               {
-                <AntDesign
-                  name={!userData.available ? "check" : "close"}
-                  size={24}
-                  color={colors.secondary}
-                />
+                // switcher
               }
-            </ProfileDrawerItem>
-            <Modal
-              isVisible={showModeModal}
-              animationIn="zoomIn"
-              animationOut="zoomOut"
-              onBackButtonPress={() => {
-                setShowModeModal(false);
-                setUserMode(userData.available);
-              }}
-              onBackdropPress={() => {
-                setShowModeModal(false);
-                setUserMode(userData.available);
-              }}
-              backdropOpacity={0}
-              style={{ alignItems: "center", justifyContent: "center" }}
-            >
-              <View style={styles.modeModalContainer}>
-                <Text>
-                  {userData.worker
-                    ? "¿En busca de empelo?"
-                    : "¿Dispuesto a contratar?"}
-                </Text>
-                {
-                  // switcher
-                }
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text>No</Text>
-                  <Switch
-                    trackColor={{ false: "#767577", true: colors.secondary }}
-                    thumbColor={"#f4f3f4"}
-                    onValueChange={() => setUserMode(!userMode)}
-                    value={userMode}
-                  />
-                  <Text>Si</Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignSelf: "center",
-                    marginTop: 15,
-                  }}
-                >
-                  <ReusableButton
-                    styleContainer={[{ width: 80 }]}
-                    innerText={"Aceptar"}
-                    onPress={changeMode}
-                  />
-                  <View style={{ width: 15 }}></View>
-                  <ReusableButton
-                    onPress={() => {
-                      setShowModeModal(false);
-                      setUserMode(userData.available);
-                    }}
-                    styleContainer={[{ backgroundColor: "#eee", width: 80 }]}
-                    styleText={{ color: "gray" }}
-                    innerText={"Cancelar"}
-                  />
-                </View>
-                {
-                  // end switcher
-                }
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Text>No</Text>
+                <Switch
+                  trackColor={{ false: "#767577", true: colors.secondary }}
+                  thumbColor={"#f4f3f4"}
+                  onValueChange={() => setUserMode(!userMode)}
+                  value={userMode}
+                />
+                <Text>Si</Text>
               </View>
-            </Modal>
-            <View style={styles.divider} />
-          </>
-        )}
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignSelf: "center",
+                  marginTop: 15,
+                }}
+              >
+                <ReusableButton
+                  styleContainer={[{ width: 80 }]}
+                  innerText={"Aceptar"}
+                  onPress={changeMode}
+                />
+                <View style={{ width: 15 }}></View>
+                <ReusableButton
+                  onPress={() => {
+                    setShowModeModal(false);
+                    setUserMode(userData.available);
+                  }}
+                  styleContainer={[{ backgroundColor: "#eee", width: 80 }]}
+                  styleText={{ color: "gray" }}
+                  innerText={"Cancelar"}
+                />
+              </View>
+              {
+                // end switcher
+              }
+            </View>
+          </Modal>
+          <View style={styles.divider} />
+        </>)}
         <ProfileDrawerItem
           textItem={"Ayuda y soporte técnico"}
           onPress={() => navigation.navigate("HelpAndSupport")}
@@ -201,25 +193,6 @@ const DrawerMenu = ({ navigation }) => {
           />
         </ProfileDrawerItem>
         <View style={styles.divider} />
-        <ProfileDrawerItem
-          textItem={"Equipo"}
-          onPress={() => setShowCreatorsModal(true)}
-        >
-          <Feather name="users" size={24} color={colors.secondary} />
-        </ProfileDrawerItem>
-        <Modal
-          animationIn="zoomIn"
-          animationOut="zoomOut"
-          isVisible={showCreatorsModal}
-          onBackdropPress={() => setShowCreatorsModal(false)}
-          onBackButtonPress={() => setShowCreatorsModal(false)}
-        >
-          <CreatorsModal
-            isVisible={showCreatorsModal}
-            closeModal={closeCreatorsModal}
-          />
-        </Modal>
-
         <ProfileDrawerItem
           textItem={"Cerrar sesión"}
           onPress={() => {
