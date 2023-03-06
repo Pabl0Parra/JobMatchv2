@@ -1,10 +1,79 @@
 const theme = {
   colors: {
-    primary: "#000000",
-    secondary: "#000000",
-    background: "rgba(256, 256, 256, 1)",
-    text: "rgba(28, 28, 30, 1)",
+    primary: "#fff",
+    secondary: "#091D5C",
+    details: "#84FFFF",
+    background: "#f2f3f4",
+    text: "#525252",
   },
+  text:{
+    headerTitle:{
+      fontFamily:"Roboto",
+      fontWeight:"400",
+      fontSize:28,
+      letterSpacing:0.5,
+      color: "#525252",
+    },
+    cardTitle:{
+      fontFamily:"Roboto",
+      fontWeight:"400",
+      fontSize:32,
+      letterSpacing:0.5,
+      color: "#525252",
+    },
+    cardSubtitleMedium:{
+      fontFamily:"Roboto",
+      fontWeight:"500",
+      fontSize:20,
+      letterSpacing:0.5,
+      color: "#525252",
+    },
+    text16:{
+      fontFamily:"Roboto",
+      fontWeight:"400",
+      fontSize:16,
+      letterSpacing:0.5,
+      color: "#525252",
+    },
+    text14:{
+      fontFamily:"Roboto",
+      fontWeight:"400",
+      fontSize:14,
+      letterSpacing:0.5,
+      color: "#525252",
+    },
+    text12:{
+      fontFamily:"Roboto",
+      fontWeight:"400",
+      fontSize:12,
+      letterSpacing:0.5,
+      color: "#525252",
+    },
+    descriptionTitle:{
+      fontFamily:"Roboto",
+      fontWeight:"bold",
+      fontSize:24,
+      letterSpacing:0.5,
+      color: "#525252",
+      marginBottom:8,
+    },
+    descriptionSubtitle:{
+      fontFamily:"Roboto",
+      fontWeight:"bold",
+      fontSize:16,
+      letterSpacing:0.5,
+      color: "#525252",
+      marginBottom:8,
+    },
+    descriptionItem:{
+      fontFamily:"Roboto",
+      fontWeight:"bold",
+      fontSize:14,
+      letterSpacing:0.5,
+      color: "#525252",
+      marginBottom:2,
+    },
+  }
 };
 
 export default theme;

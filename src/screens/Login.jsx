@@ -1,121 +1,228 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserDataContext } from "../context/UserDataContext";
 import {
   Text,
-  Image,
-  TextInput,
-  Pressable,
   StyleSheet,
   View,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
 } from "react-native";
+import LogoForBlueBackround from "../svgs/LogoForBlueBackground";
 import DisplayContainer from "../components/DisplayContainer";
 import loginWithEmail from "../firebase/functions/loginWithEmailPassword";
-import loginWithGoogle from "../firebase/functions/LoginWithGoogle";
-import { useNavigation } from '@react-navigation/native';
+import loginWithGoogle from "../firebase/functions/loginWithGoogle";
+import InputForm from "../components/InputForm";
+import checkRegisteredEmail from "../firebase/functions/checkRegisteredEmail";
+import AwesomeAlert from "react-native-awesome-alerts";
+import theme from "../theme";
 
-const Login = ({navigate}) => {
+const colors = theme.colors;
 
-  const [dataLogin, setDataLogin] = useState({ email: "", password: "" });
-  const navigation = useNavigation();
+const Login = ({ navigation }) => {
+  const { userData, setUserData } = useContext(UserDataContext);
+  const [showAlert, setShowAlert] = useState(false);
+  const [incorrectPassword, setIncorrectPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const emailLogin = async (e) => {
+  const formSubmit = async (values) => {
+    setLoading(true);
 
-    const res = await loginWithEmail(dataLogin.email, dataLogin.password);
-
-    if (res === undefined) {
-      return console.log("email o password incorrecto");
+    const registeredUser = await checkRegisteredEmail(values[0]);
+    if (!registeredUser) {
+      setLoading(false);
+      setShowAlert(true);
+      console.log("No hay un usuario registrado con el email proporcionado");
     } else {
-      navigation.navigate('Home');
-    };
+      const res = await loginWithEmail(values[0], values[1]);
 
+      if (res) {
+        setUserData(...userData, {
+          email: values[0],
+          password: values[1],
+        });
+      } else {
+        setLoading(false);
+        setIncorrectPassword(true);
+      }
+    }
   };
 
   return (
     <DisplayContainer>
-      <Image
-        style={styles.image}
-        source={{
-          uri: `https://us.123rf.com/450wm/mathier/mathier1905/mathier190500002/mathier190500002.jpg`,
-        }}
+      <AwesomeAlert
+        show={showAlert}
+        title="Email no registrado 🔒"
+        message="No hay un usuario registrado con el email proporcionado"
+        closeOnTouchOutside={true}
+        onDismiss={() => setShowAlert(false)}
+        onConfirmPressed={() => setShowAlert(false)}
+        showConfirmButton={true}
+        confirmText="OK"
+        confirmButtonColor={colors.secondary}
       />
-      <View>
-        <Text style={styles.textDescription}>
-          Forem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-          turpis molestie, est a, mattis tellus.
-        </Text>
+      <AwesomeAlert
+        show={incorrectPassword}
+        title="Contraseña incorrecta 🔒"
+        message="La contraseña que ingreso no es correcta, inténtelo de nuevo."
+        closeOnTouchOutside={true}
+        onDismiss={() => setIncorrectPassword(false)}
+        onConfirmPressed={() => setIncorrectPassword(false)}
+        showConfirmButton={true}
+        confirmText="OK"
+        confirmButtonColor={colors.secondary}
+      />
+      <View style={styles.background}>
+        <Image style={styles.image} source={require("../images/image4.png")} />
       </View>
-      <View>
-        <Text style={styles.text}>Iniciar sesión</Text>
-      </View>
-      <View>
-        <TextInput
-          style={styles.input}
-          placeholder="Correo"
-          value={dataLogin.email}
-          onChange={(e) =>
-            setDataLogin({ ...dataLogin, email: e.target.value })
-          }
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Contraseña"
-          value={dataLogin.password}
-          onChange={(e) =>
-            setDataLogin({ ...dataLogin, password: e.target.value })
-          }
-        />
-      </View>
-      <View style={{ gap: 10 }}>
-        <Pressable style={styles.button} onPress={emailLogin}>
-          <Text style={{ ...styles.text, color: "#666666" }}>
-            iniciar sesión
+      <View style={styles.group}>
+        <View style={{ marginLeft: -30 }}>
+          <LogoForBlueBackround />
+          <Text style={{ ...styles.textTop, lineHeight: 30, marginTop: 20 }}>
+            ¡Te estabamos {"\n"}esperando!
           </Text>
-        </Pressable>
-        <Text style={styles.textDescription}>O</Text>
-        <Pressable style={styles.button} onPress={(e) => console.log(e)}>
-          <Text style={{ ...styles.text, color: "#666666" }}>
-            iniciar sesión con Google
+          <Text style={{ ...styles.textTop, fontSize: 15 }}>
+            Conecta con las mejores {"\n"}opciones laborales
           </Text>
-        </Pressable>
+        </View>
+        <View style={styles.boxForm}>
+          <InputForm
+            fields={[
+              { label: "Correo", name: "email", type: "email" },
+              {
+                label: "Contraseña",
+                name: "password",
+                type: "password",
+                recoverPassword: true,
+              },
+            ]}
+            onSubmit={formSubmit}
+            requestText="Iniciar Sesión"
+            buttonText="Iniciar Sesión"
+            buttonMarginTop={24}
+          />
+
+          {/*  <Text
+            style={[
+              styles.text,
+              styles.textButton,
+              { paddingVertical: 8, fontWeight: "700" },
+            ]}
+          >
+            o iniciar sesión con
+          </Text>
+          <View>
+            <TouchableOpacity
+              style={styles.buttonGoogle}
+              onPress={(e) => loginWithGoogle()}
+            >
+              <Image
+                style={styles.imageGoogle}
+                source={require("../images/google_buscador.png")}
+              />
+            </TouchableOpacity>
+          </View> */}
+
+          <Text style={[styles.text, { paddingVertical: 24 }]}>
+            ¿Aún no tienes una cuenta?{" "}
+            <Text
+              style={{
+                ...styles.text,
+                ...styles.textButton,
+                fontWeight: "700",
+              }}
+              onPress={() => navigation.navigate("Register")}
+            >
+              Crear cuenta
+            </Text>
+          </Text>
+        </View>
       </View>
-      <Text style={styles.text}>¿Aún no tienes una cuenta? Crear cuenta</Text>
+      {loading ? (
+        <View style={styles.loading}>
+          <ActivityIndicator size={130} />
+        </View>
+      ) : null}
     </DisplayContainer>
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+    position: "absolute",
+    top: 0,
+    alignItems: "center",
+    backgroundColor: "#192B65",
+    width: "120%",
+    height: "50%",
+    borderBottomLeftRadius: 130,
+    borderBottomRightRadius: 130,
+  },
+  group: {
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  textTop: {
+    color: "white",
+    textAlign: "left",
+    fontWeight: "400",
+    fontSize: 32,
+  },
+  boxForm: {
+    flex: 1,
+    borderRadius: 55,
+    paddingHorizontal: 14,
+    paddingVertical: 15,
+    marginTop: 30,
+    backgroundColor: "#ffffff",
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "gray",
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.5,
+    shadowRadius: 3,
+  },
   image: {
-    width: 79,
-    height: 79,
+    position: "absolute",
+    width: "100%",
+    height: "100%",
   },
   text: {
     textAlign: "center",
     fontFamily: "Roboto",
-    fontSize: 18,
-    fontWeight: "semibold",
-  },
-  textDescription: {
-    textAlign: "center",
-    fontFamily: "Inter",
     fontSize: 16,
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: 18,
-  },
-  input: {
-    width: 300,
-    height: 40,
-    borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 6,
-    margin: 10,
-    padding: 10,
+    fontWeight: "semibold",
   },
   button: {
     justifyContent: "center",
+    alignItems: "center",
     width: 288,
     height: 40,
     backgroundColor: "#D9D9D9",
     borderRadius: 25,
+  },
+  textButton: {
+    color: "#1D1152",
+    fontSize: 16,
+    marginLeft: 8,
+  },
+  buttonGoogle: {
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+  },
+  imageGoogle: {
+    width: 70,
+    height: 70,
+  },
+  loading: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(20, 20, 20, .4)",
+    zIndex: 2,
   },
 });
 
