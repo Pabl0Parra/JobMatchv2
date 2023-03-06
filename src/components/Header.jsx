@@ -15,7 +15,7 @@ const Header = ({ screen }) => {
         <>
           <LogoHeader />
           <View style={{ flexDirection: "row" }}>
-          {/* <TouchableOpacity style={styles.notification} onPress={()=> navigation.navigate('PostForm')}>
+            {/* <TouchableOpacity style={styles.notification} onPress={()=> navigation.navigate('PostForm')}>
             <Ionicons name="add" size={24} color={colors.secondary} />
           </TouchableOpacity> */}
             <TouchableOpacity
@@ -35,10 +35,21 @@ const Header = ({ screen }) => {
         </>
       ) : screen === "Profile" ? (
         <>
-          <Text style={{fontSize: 20}}>Perfil</Text>
-          <TouchableOpacity style={styles.notification} onPress={() => navigation.openDrawer()}>
+          <Text style={{ fontSize: 20 }}>Perfil</Text>
+          <TouchableOpacity
+            style={styles.notification}
+            onPress={() => navigation.openDrawer()}
+          >
             <Feather name="settings" size={20} color={colors.secondary} />
           </TouchableOpacity>
+        </>
+      ) : screen === "Conexiones" ? (
+        <>
+          <Text style={{ fontSize: 20 }}>Conexiones</Text>
+        </>
+      ) : screen === "ChatScreen" ? (
+        <>
+          <Text style={{ fontSize: 20 }}>Mensajes</Text>
         </>
       ) : null}
     </View>
