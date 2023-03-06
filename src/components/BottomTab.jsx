@@ -119,7 +119,7 @@ export default function BottomTab({ navigation }) {
           headerStyle: { backgroundColor: `${colors.primary}` },
           headerTitleStyle: {
             color: `${colors.text}`,
-            fontFamily: "Robotto",
+            fontFamily: "Roboto",
             fontSize: 20,
           },
         }}
