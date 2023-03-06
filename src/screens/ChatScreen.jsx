@@ -4,6 +4,8 @@ import theme from "../theme";
 import ChatList from "../components/ChatList";
 import { useIsFocused } from "@react-navigation/native";
 import { UserLoginContex } from "../context/UserDataContext";
+import DisplayContainer from "../components/DisplayContainer";
+import { Header } from "@react-navigation/elements";
 
 const colors = theme.colors;
 
@@ -17,31 +19,17 @@ export default function ChatScreen() {
 
   return (
     <>
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>Mensajes</Text>
-      </SafeAreaView>
-      <ChatList />
+      <DisplayContainer style={styles.container}>
+        {/* <Header screen="ChatScreen" style={{ backgroundColor: "white" }} /> */}
+        <ChatList />
+      </DisplayContainer>
     </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: `${colors.primary}`,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.75,
-    shadowRadius: 5,
-    elevation: 5,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "700",
-    marginTop: 50,
-    color: `${colors.secondary}`,
+    flex: 1,
+    backgroundColor: colors.background,
   },
 });

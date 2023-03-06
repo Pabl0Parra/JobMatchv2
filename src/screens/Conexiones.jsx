@@ -63,7 +63,7 @@ const Conexiones = ({ navigation }) => {
 
   return (
     <DisplayContainer style={styles.container}>
-      <Header />
+      <Header screen="Conexiones" />
       <ScrollView>
         <View style={styles.header}>
           <MaterialCommunityIcons
