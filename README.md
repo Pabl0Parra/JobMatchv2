@@ -13,10 +13,10 @@
   <br />
   
   <p align="center">
-    <a href="https://drive.google.com/file/d/1btWglprKq53Zc5DOAwtMC1zF-HGXnbVQ/view?usp=sharing" target="_blank">Descargar app</a>
-    ·
+    <a href="https://drive.google.com/file/d/1btWglprKq53Zc5DOAwtMC1zF-HGXnbVQ/view?usp=sharing" target="_blank">Descargar JobMatch</a>
+    :link:
     <a href="https://github.com/No-Country/C9-47-ft-ReactNative/issues" target="_blank">Reportar error</a>
-    ·
+    :link:
     <a href="https://github.com/No-Country/C9-47-ft-ReactNative/issues" target="_blank">Solicitar nueva funcionalidad</a>
   </p>
 </div>
@@ -56,6 +56,7 @@
 - Sigue la [documentación](https://firebase.google.com/docs/web/setup?hl=es-419) para crear tus credenciales e importarlas a tu proyecto.
 - Crea un archivo llamado `.env`, añade tus credenciales de Firebase en ese archivo, agregalo el archivo .env a .gitignore (para evitar que se suba a Github).
 - Para arrancar el proyecto haz `npm i` para crear los node_modules, luego `npm start` para lanzar el proyecto.
+<br />
 
 ## Librerías externas
 
@@ -114,3 +115,4 @@
 > **Note** > **_Este proyecto ha sido creado sin ningún conocimiento previo de React Native.
 > Se ha desarrollado durante cinco semanas para el Cohorte 9 de [NoCountry](https://www.nocountry.tech/perfilesit).
 > Se aceptan pull requests para mejoras, así como nuevas funcionalidades o para avisar de posibles bugs encontrados durante su uso._**
+> Prueba [JobMatch](https://drive.google.com/file/d/1btWglprKq53Zc5DOAwtMC1zF-HGXnbVQ/view?usp=sharing) :link: ya!
