@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
-import { useContext } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { useContext, useState } from "react";
+import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import Modal from "react-native-modal";
 import { UserLoginContex } from "../context/UserDataContext";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
@@ -14,11 +14,12 @@ const { colors, text } = theme;
 
 const MainDataEditingForm = ({ setShowModal, showModal, inputArray }) => {
   const { userData, setUserData } = useContext(UserLoginContex);
+  const [loading, setLoading] = useState(false);
 
   const yupValText = yup
     .string()
     .required("Este campo es requerido")
-    .matches(/^[a-zA-Z\s]*$/, "Solo se permiten letras y espacios")
+    .matches(/^[a-zA-Z\s]*$/, "Solo se permiten letras y espacios");
 
   const formik = useFormik({
     initialValues: inputArray.reduce(
@@ -29,16 +30,17 @@ const MainDataEditingForm = ({ setShowModal, showModal, inputArray }) => {
       {}
     ),
     onSubmit: async (values) => {
-
+      setLoading(true);
       try {
-        await updateDataUser(values, userData.worker? userData.id : userData.userId);
-        const res = await getUserDataDB(userData.worker? userData.id : userData.userId);
+        await updateDataUser(values, userData.id);
+        const res = await getUserDataDB(userData.id);
 
         if (res) {
           setUserData(res);
           setShowModal(false);
         } else {
           console.log("error al cargar los datos");
+          setLoading(false);
         }
       } catch (error) {
         console.log(error);
@@ -80,38 +82,49 @@ const MainDataEditingForm = ({ setShowModal, showModal, inputArray }) => {
       <View style={[styles.modalContainer]}>
         {inputArray.map((inp) => (
           <View key={inp.name}>
-            <Text style={[text.text16, {color: colors.secondary, fontWeight: "700"}]}>{inp.title} </Text>
+            <Text
+              style={[
+                text.text16,
+                { color: colors.secondary, fontWeight: "700" },
+              ]}
+            >
+              {inp.title}{" "}
+            </Text>
             <InputContainer
               style={[styles.inputContainer]}
               value={formik.values[`${inp.name}`]}
               error={formik.errors[`${inp.name}`]}
               touched={formik.touched[`${inp.name}`]}
               onChangeText={formik.handleChange(inp.name)}
-              stylePlaceholder={{ backgroundColor: "rgba(255,255,255,1" }}
+              stylePlaceholder={{ display: "none" }}
             />
           </View>
         ))}
-        <View
-          style={{ flexDirection: "row", alignSelf: "center", marginTop: 15 }}
-        >
-          <ReusableButton
-            styleContainer={[{ width: 130 }]}
-            innerText={"Aceptar"}
-            onPress={() => {
-              formik.handleSubmit();
-            }}
-          />
-          <View style={{ width: 15 }}></View>
-          <ReusableButton
-            onPress={() => {
-              setShowModal(false);
-              resetValues();
-            }}
-            styleContainer={[{ backgroundColor: "#eee", width: 130 }]}
-            styleText={{ color: "gray" }}
-            innerText={"Cancelar"}
-          />
-        </View>
+        {loading ? (
+          <ActivityIndicator size={60} />
+        ) : (
+          <View
+            style={{ flexDirection: "row", alignSelf: "center", marginTop: 15 }}
+          >
+            <ReusableButton
+              styleContainer={[{ width: 130 }]}
+              innerText={"Aceptar"}
+              onPress={() => {
+                formik.handleSubmit();
+              }}
+            />
+            <View style={{ width: 15 }}></View>
+            <ReusableButton
+              onPress={() => {
+                setShowModal(false);
+                resetValues();
+              }}
+              styleContainer={[{ backgroundColor: "#eee", width: 130 }]}
+              styleText={{ color: "gray" }}
+              innerText={"Cancelar"}
+            />
+          </View>
+        )}
       </View>
     </Modal>
   );

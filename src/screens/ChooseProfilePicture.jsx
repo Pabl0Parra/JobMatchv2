@@ -85,11 +85,6 @@ const ChooseProfilePicture = () => {
 
   return (
     <View>
-      {loading ? (
-        <View style={styles.loading}>
-          <ActivityIndicator size={130} />
-        </View>
-      ) : null}
       <BackButton text="Crear cuenta" />
       <RegisterProgressBar currentStep={5} numSteps={5} />
       <View style={styles.bgContainer}>
@@ -132,12 +127,15 @@ const ChooseProfilePicture = () => {
             </TouchableOpacity>
           </View>
         </View>
-        <ReusableButton
-          innerText="Finalizar"
-          onPress={() => uploadImages()}
-          styleContainer={{ marginTop: 40 }}
-        />
-
+        {loading ? (
+          <ActivityIndicator size={80} color={colors.details} style={{marginTop: 20}} />
+        ) : (
+          <ReusableButton
+            innerText="Finalizar"
+            onPress={() => uploadImages()}
+            styleContainer={{ marginTop: 40 }}
+          />
+        )}
         <AwesomeAlert
           show={showAlert}
           showProgress={false}
@@ -211,16 +209,7 @@ const styles = StyleSheet.create({
   addImageText: {
     fontSize: 50,
     color: "#727272",
-  },
-  loading: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(20, 20, 20, .7)",
-    zIndex: 2,
-  },
+  }
 });
 
 export default ChooseProfilePicture;

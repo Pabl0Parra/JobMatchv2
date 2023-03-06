@@ -10,7 +10,7 @@ import {
   RadioButton,
   SegmentedButtons,
   TextInput,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native-paper";
 import DisplayContainer from "../components/DisplayContainer";
 import ReusableButton from "../components/ReusableButton";
@@ -45,7 +45,7 @@ const PostForm = () => {
       salary: route.params ? route.params.salary : "",
     },
     onSubmit: async (values) => {
-      setLoading(true)
+      setLoading(true);
       const post = {
         ...values,
         userId: userData.id,
@@ -67,12 +67,11 @@ const PostForm = () => {
           setUserData(res);
           navigation.navigate("Perfil");
         } else {
-          
           console.log(
             "ocurrio un error al crear el puesto, intentelo de nuevo"
           );
         }
-        setLoading(false)
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -348,25 +347,26 @@ const PostForm = () => {
         </View>
       </ScrollView>
       <View style={{ paddingVertical: 16 }}>
-        <ReusableButton
-          innerText="Publicar empleo"
-          onPress={formik.handleSubmit}
-          styleContainer={{ height: 50 }}
-        />
+        {loading ? (
+          <ActivityIndicator color={colors.details} size={100} />
+        ) : (
+          <>
+            <ReusableButton
+              innerText="Publicar empleo"
+              onPress={formik.handleSubmit}
+              styleContainer={{ height: 50 }}
+            />
+            <Button
+              mode="text"
+              title="submit"
+              textColor={`${colors.secondary}`}
+              onPress={() => navigation.goBack()}
+            >
+              Cancelar
+            </Button>
+          </>
+        )}
       </View>
-      <Button
-        mode="text"
-        title="submit"
-        textColor={`${colors.secondary}`}
-        onPress={() => navigation.goBack()}
-      >
-        Cancelar
-      </Button>
-      {loading ? (
-        <View style={styles.loading}>
-          <ActivityIndicator color={colors.secondary} size={130} />
-        </View>
-      ) : null}
     </DisplayContainer>
   );
 };
@@ -381,16 +381,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: "100%",
     backgroundColor: "#fff",
-  },
-  loading: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    backgroundColor: "rgba(20, 20, 20, .4)",
-    alignItems: "center",
-    zIndex: 2,
-  },
+  }
 });
 
 export default PostForm;

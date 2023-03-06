@@ -88,7 +88,7 @@ const AboutMe = () => {
       {showInput ? (
         loading ? <ActivityIndicator size={35}/> : (
           <InputContainer
-            stylePlaceholder={{ backgroundColor: "rgba(255,255,255,1" }}
+            stylePlaceholder={{ display: "none" }}
             styleContainer={styles.input}
             value={formik.values.description}
             onChangeText={formik.handleChange("description")}

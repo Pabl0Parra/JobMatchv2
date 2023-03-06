@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, TouchableOpacity, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import DisplayContainer from "./DisplayContainer";
 import Constants from "expo-constants";
 import { AntDesign, Feather } from "@expo/vector-icons";
@@ -24,9 +30,11 @@ const DrawerMenu = ({ navigation }) => {
   const [showModalPresentation, setShowModalPresentation] = useState(false);
   const [showCreatorsModal, setShowCreatorsModal] = useState(false);
   const [userMode, setUserMode] = useState(userData.available);
+  const [loading, setLoading] = useState(false);
 
   const changeMode = async () => {
     if (userMode !== userData.available) {
+      setLoading(true)
       try {
         await updateDataUser(
           { available: userMode },
@@ -46,6 +54,7 @@ const DrawerMenu = ({ navigation }) => {
       }
     }
     setShowModeModal(false);
+    setLoading(false)
   };
 
   const closeCreatorsModal = () => {
@@ -159,29 +168,34 @@ const DrawerMenu = ({ navigation }) => {
                   />
                   <Text>Si</Text>
                 </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignSelf: "center",
-                    marginTop: 15,
-                  }}
-                >
-                  <ReusableButton
-                    styleContainer={[{ width: 80 }]}
-                    innerText={"Aceptar"}
-                    onPress={changeMode}
-                  />
-                  <View style={{ width: 15 }}></View>
-                  <ReusableButton
-                    onPress={() => {
-                      setShowModeModal(false);
-                      setUserMode(userData.available);
+                {loading ? (
+                  <ActivityIndicator size={65} />
+                ) : (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignSelf: "center",
+                      marginTop: 15,
                     }}
-                    styleContainer={[{ backgroundColor: "#eee", width: 80 }]}
-                    styleText={{ color: "gray" }}
-                    innerText={"Cancelar"}
-                  />
-                </View>
+                  >
+                    <ReusableButton
+                      styleContainer={[{ width: 80 }]}
+                      innerText={"Aceptar"}
+                      onPress={changeMode}
+                    />
+                    <View style={{ width: 15 }}></View>
+                    <ReusableButton
+                      onPress={() => {
+                        setShowModeModal(false);
+                        setUserMode(userData.available);
+                      }}
+                      styleContainer={[{ backgroundColor: "#eee", width: 80 }]}
+                      styleText={{ color: "gray" }}
+                      innerText={"Cancelar"}
+                    />
+                  </View>
+                )}
+
                 {
                   // end switcher
                 }
