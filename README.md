@@ -13,7 +13,7 @@
   <br />
   
   <p align="center">
-    <a href="" target="_blank">Ver demo</a>
+    <a href="https://drive.google.com/file/d/1btWglprKq53Zc5DOAwtMC1zF-HGXnbVQ/view?usp=sharing" target="_blank">Descargar app</a>
     ·
     <a href="https://github.com/No-Country/C9-47-ft-ReactNative/issues" target="_blank">Reportar error</a>
     ·
