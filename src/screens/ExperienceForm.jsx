@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ActivityIndicator } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import { Formik } from "formik";
 import DisplayContainer from "../components/DisplayContainer";
 import InputContainer from "../components/InputContainer";
@@ -48,16 +55,23 @@ const ExperienceForm = () => {
         >
           <AntDesign name="arrowleft" size={36} color={colors.secondary} />
         </TouchableOpacity>
-        <Text style={[text.headerTitle , styles.headerText]}>{route.params ? "Editar experiencia" : "Crear experiancia"}</Text>
+        <Text style={[text.headerTitle]}>
+          {route.params ? "Editar experiencia" : "Crear experiancia"}
+        </Text>
       </View>
       <Formik
         initialValues={inicialValue}
         validationSchema={yup.object().shape(validationSchema)}
         onSubmit={async (obj) => {
-          setLoading(true)
+          setLoading(true);
           try {
             route.params
-              ? await updateExperienceOrPost(obj, userData.id, route.params.id, userData.worker)
+              ? await updateExperienceOrPost(
+                  obj,
+                  userData.id,
+                  route.params.id,
+                  userData.worker
+                )
               : await addExperience(obj, userData.id);
             const res = await getUserDataDB(userData.id);
 
@@ -67,7 +81,7 @@ const ExperienceForm = () => {
             } else {
               console.log("error al obtener los datos");
             }
-            setLoading(false)
+            setLoading(false);
           } catch (error) {
             console.log(error);
           }
@@ -112,25 +126,28 @@ const ExperienceForm = () => {
                 stylePlaceholder={{ backgroundColor: colors.background }}
               />
             </View>
-            <ReusableButton
-              styleContainer={{ marginVertical: 10 }}
-              innerText={"Aceptar"}
-              onPress={handleSubmit}
-            />
-            <ReusableButton
-              innerText={"Cancelar"}
-              onPress={() => navigation.navigate("Perfil")}
-              styleContainer={{ backgroundColor: "#888" }}
-              styleText={{ color: "#ddd" }}
-            />
+            <View>
+              {loading ? (
+                <ActivityIndicator color={colors.details} size={100} />
+              ) : (
+                <>
+                  <ReusableButton
+                    styleContainer={{ marginVertical: 10 }}
+                    innerText={"Aceptar"}
+                    onPress={handleSubmit}
+                  />
+                  <ReusableButton
+                    innerText={"Cancelar"}
+                    onPress={() => navigation.navigate("Perfil")}
+                    styleContainer={{ backgroundColor: "#888" }}
+                    styleText={{ color: "#ddd" }}
+                  />
+                </>
+              )}
+            </View>
           </ScrollView>
         )}
       </Formik>
-      {loading ? (
-        <View style={styles.loading}>
-          <ActivityIndicator color={colors.secondary} size={130} />
-        </View>
-      ) : null}
     </DisplayContainer>
   );
 };
@@ -155,18 +172,7 @@ const styles = StyleSheet.create({
     marginLeft: 28,
     marginBottom: 15,
   },
-  headerText: {
-  },
   arrowLeft: {
-    marginHorizontal: 15
-  },
-  loading: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    backgroundColor: "rgba(20, 20, 20, .4)",
-    alignItems: "center",
-    zIndex: 2,
-  },
+    marginHorizontal: 15,
+  }
 });
