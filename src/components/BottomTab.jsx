@@ -117,6 +117,11 @@ export default function BottomTab({ navigation }) {
           ),
           headerShown: true,
           headerStyle: { backgroundColor: `${colors.primary}` },
+          headerTitleStyle: {
+            color: `${colors.text}`,
+            fontFamily: "Robotto",
+            fontSize: 20,
+          },
         }}
       />
       <Tab.Screen
