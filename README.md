@@ -13,7 +13,7 @@
   <br />
   
   <p align="center">
-    <a href="https://drive.google.com/file/d/1btWglprKq53Zc5DOAwtMC1zF-HGXnbVQ/view?usp=sharing" target="_blank">Descargar JobMatch</a>
+    <a href="https://drive.google.com/file/d/10zUPNLRae3_LeWUB8-9qufWZfywMNWxX/view?usp=drivesdk" target="_blank">Descargar JobMatch</a>
     :link:
     <a href="https://github.com/No-Country/C9-47-ft-ReactNative/issues" target="_blank">Reportar error</a>
     :link:
@@ -115,4 +115,4 @@
 > **Note** > **_Este proyecto ha sido creado sin ningún conocimiento previo de React Native.
 > Se ha desarrollado durante cinco semanas para el Cohorte 9 de [NoCountry](https://www.nocountry.tech/perfilesit).
 > Se aceptan pull requests para mejoras, así como nuevas funcionalidades o para avisar de posibles bugs encontrados durante su uso._**
-> Prueba [JobMatch](https://drive.google.com/file/d/1btWglprKq53Zc5DOAwtMC1zF-HGXnbVQ/view?usp=sharing) :link: ya!
+> Prueba [JobMatch](https://drive.google.com/file/d/10zUPNLRae3_LeWUB8-9qufWZfywMNWxX/view?usp=drivesdk) :link: ya!
