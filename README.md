@@ -1,3 +1,4 @@
+
 <div align="center">
   <p align="center">C9-47-ft-ReactNative</p>
   <p align="center">   
@@ -13,7 +14,7 @@
   <br />
   
   <p align="center">
-    <a href="https://drive.google.com/file/d/10zUPNLRae3_LeWUB8-9qufWZfywMNWxX/view?usp=drivesdk" target="_blank">Descargar JobMatch</a>
+    <a href="https://drive.google.com/file/d/1UD8evgeo8afK1Zifod-eAc6ROREokwjy/view?usp=share_link" target="_blank">Descargar JobMatch</a>
     :link:
     <a href="https://github.com/No-Country/C9-47-ft-ReactNative/issues" target="_blank">Reportar error</a>
     :link:
@@ -79,7 +80,6 @@
 ## Funcionalidades
 
 - :white_check_mark: Registrarse con email y password.
-- :white_check_mark: Registrarse con cuenta de Google.
 - :white_check_mark: Crear perfil como candidato o empresa.
 - :white_check_mark: Editar perfiles después de haber sido creados.
 - :white_check_mark: Ver perfiles de candidatos o de puestos de trabajo disponibles.
@@ -104,15 +104,23 @@
 
 ## Contacto
 
-- Diseño: [@YeseniaMorero](https://www.linkedin.com/in/yesenia-moreno-bernal/)
-- Frontend Devs:
+<strong>QA Testing: </strong>
+<li>Tatiana Montoya  <a target="_blank" href="https://www.linkedin.com/in/tatiana-montoya-73593654/"><img  width="20px" height="20px" src="https://lh3.googleusercontent.com/drive-viewer/AJc5JmT3rEWw0KwxXzlpI_BpGFOCQmGN4Bxy53pidk-bfuo02PpRqwIXqZ9ISLN5Nk0AJOg2Z_7JqZA=w1265-h817" /></a></li>
+<br />
+<strong>Diseño: </strong>
+<li>Yesenia Moreno  <a target="_blank" href="https://www.linkedin.com/in/yesenia-moreno-bernal/"><img  width="20px" height="20px" src="https://lh3.googleusercontent.com/drive-viewer/AJc5JmT3rEWw0KwxXzlpI_BpGFOCQmGN4Bxy53pidk-bfuo02PpRqwIXqZ9ISLN5Nk0AJOg2Z_7JqZA=w1265-h817" /></a></li>
+<br />
+<strong>Frontend Devs: </strong>
+<li>Pablo Parra  <a target="_blank" href="https://www.linkedin.com/in/pablo-parra-bcn/"><img  width="20px" height="20px" src="https://lh3.googleusercontent.com/drive-viewer/AJc5JmT3rEWw0KwxXzlpI_BpGFOCQmGN4Bxy53pidk-bfuo02PpRqwIXqZ9ISLN5Nk0AJOg2Z_7JqZA=w1265-h817" /></a></li>
+<br />
+<li>Nicolás Sepertino  <a target="_blank" href="https://www.linkedin.com/in/nicolassepertino/"><img  width="20px" height="20px" src="https://lh3.googleusercontent.com/drive-viewer/AJc5JmT3rEWw0KwxXzlpI_BpGFOCQmGN4Bxy53pidk-bfuo02PpRqwIXqZ9ISLN5Nk0AJOg2Z_7JqZA=w1265-h817" /></a></li>
+<br />
+<li>Nicolás Radin  <a target="_blank" href="https://www.linkedin.com/in/nico-radin/"><img  width="20px" height="20px" src="https://lh3.googleusercontent.com/drive-viewer/AJc5JmT3rEWw0KwxXzlpI_BpGFOCQmGN4Bxy53pidk-bfuo02PpRqwIXqZ9ISLN5Nk0AJOg2Z_7JqZA=w1265-h817" /></a></li>
+<br />
   
-  - [@PabloParra](https://linkedin.com/in/pablo-parra-bcn)
-  - [@NicolásSepertino](https://www.linkedin.com/in/nicolassepertino/)
-  - [@NicolásRadín](https://www.linkedin.com/in/nico-radin/)
-- QA Tester: [@TatianaMontoya](https://www.linkedin.com/in/tatiana-montoya-73593654/)
 
 > **Note** > **_Este proyecto ha sido creado sin ningún conocimiento previo de React Native.
 > Se ha desarrollado durante cinco semanas para el Cohorte 9 de [NoCountry](https://www.nocountry.tech/perfilesit).
 > Se aceptan pull requests para mejoras, así como nuevas funcionalidades o para avisar de posibles bugs encontrados durante su uso._**
-> Prueba [JobMatch](https://drive.google.com/file/d/10zUPNLRae3_LeWUB8-9qufWZfywMNWxX/view?usp=drivesdk) :link: ya!
+
+                                                                                                             
