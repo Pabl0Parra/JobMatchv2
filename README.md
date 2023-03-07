@@ -14,7 +14,7 @@
   <br />
   
   <p align="center">
-    <a href="https://drive.google.com/file/d/1UD8evgeo8afK1Zifod-eAc6ROREokwjy/view?usp=share_link" target="_blank">Descargar JobMatch</a>
+    <a href="https://drive.google.com/file/d/1UD8evgeo8afK1Zifod-eAc6ROREokwjy/view?usp=share_link" target="_blank" rel="noopener noreferrer">Descargar JobMatch</a>
     :link:
     <a href="https://github.com/No-Country/C9-47-ft-ReactNative/issues" target="_blank">Reportar error</a>
     :link:
