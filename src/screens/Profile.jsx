@@ -11,7 +11,7 @@ import Constants from "expo-constants";
 import Header from "../components/Header";
 import { Ionicons, Octicons, Feather } from "@expo/vector-icons";
 import { useState, useContext, useEffect } from "react";
-import CircularProgress from "../components/CircularProgress";
+import CircularProgress from "react-native-circular-progress-indicator";
 import { UserLoginContex } from "../context/UserDataContext";
 import DisplayContainer from "../components/DisplayContainer";
 import theme from "../theme";
@@ -127,15 +127,12 @@ const Profile = () => {
               }}
             >
               <CircularProgress
-                percent={0.9}
-                radius={80}
-                bgRingWidth={38}
-                progressRingWidth={20}
-                ringColor={"#091D5C"}
-                ringBgColor={"#D7E0E9"}
-                startDegrees={0}
-                clockwise={10}
-                textFontSize={0}
+                value={percentage}
+                radius={100}
+                duration={2000}
+                activeStrokeColor={"#2465FD"}
+                activeStrokeSecondaryColor={"#C25AFF"}
+                maxValue={100}
               />
               <View
                 style={{
