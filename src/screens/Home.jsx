@@ -1,15 +1,10 @@
-import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
-import Constants from "expo-constants";
+// IMPORTANT: Remove "where("id", "not-in", [...passesId, ...likesId])" commentting to avoid duplicates
+// Left like this during development to avoid not having profiles & to recreate matches
+import { View, Text, StyleSheet } from "react-native";
 import Card from "../components/Card";
 import Header from "../components/Header";
 import Swiper from "react-native-deck-swiper";
-import {
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import {
   collection,
   doc,
@@ -19,20 +14,14 @@ import {
   query,
   serverTimestamp,
   setDoc,
-  updateDoc,
   where,
 } from "@firebase/firestore";
 import { db, mainCollection, postCollection } from "../firebase/credentials";
-import {
-  FocusedTab,
-  SwipeContext,
-  UserLoginContex,
-} from "../context/UserDataContext";
+import { SwipeContext, UserLoginContex } from "../context/UserDataContext";
 import { useIsFocused, useNavigation } from "@react-navigation/core";
 import theme from "../theme";
 import { generateId } from "../utilities/utilities";
 import ImageOfNoResults from "../svgs/ImageOfNoResults";
-import { ActivityIndicator } from "react-native-paper";
 import { updateVisits } from "../firebase/functions/updateFunctions";
 
 const { colors, text } = theme;
@@ -41,7 +30,7 @@ const Home = () => {
   const swipeRef = useRef(null);
   const { userData, setTab } = useContext(UserLoginContex);
   const navigation = useNavigation();
-  
+
   const [profiles, setProfiles] = useState([]);
   const [empty, setEmpty] = useState(true);
   const isFocused = useIsFocused();
@@ -72,7 +61,7 @@ const Home = () => {
         jobsQuery = query(
           collection(db, postCollection),
           //excluyo los que ya me aparecieron
-          where("id", "not-in", [...passesId, ...likesId]),
+          // where("id", "not-in", [...passesId, ...likesId]),
           where("roleWanted", "==", userData.filter.roleWanted)
         );
       } else if (
@@ -82,7 +71,7 @@ const Home = () => {
         jobsQuery = query(
           collection(db, postCollection),
           //excluyo los que ya me aparecieron
-          where("id", "not-in", [...passesId, ...likesId]),
+          // where("id", "not-in", [...passesId, ...likesId]),
           where("seniority", "==", userData.filter.seniority)
         );
       } else if (
@@ -94,15 +83,15 @@ const Home = () => {
         jobsQuery = query(
           collection(db, postCollection),
           //excluyo los que ya me aparecieron
-          where("id", "not-in", [...passesId, ...likesId]),
+          // where("id", "not-in", [...passesId, ...likesId]),
           where("roleWanted", "==", userData.filter.roleWanted),
           where("seniority", "==", userData.filter.seniority)
         );
       } else {
         jobsQuery = query(
-          collection(db, postCollection),
+          collection(db, postCollection)
           //excluyo los que ya me aparecieron
-          where("id", "not-in", [...passesId, ...likesId])
+          // where("id", "not-in", [...passesId, ...likesId])
         );
       }
 
@@ -116,7 +105,7 @@ const Home = () => {
           collection(db, mainCollection),
           where("worker", "==", true),
           //excluyo los que ya me aparecieron
-          where("id", "not-in", [...passesId, ...likesId]),
+          // where("id", "not-in", [...passesId, ...likesId]),
           where("available", "==", true),
           where("userRole", "==", userData.filter.roleWanted)
         );
@@ -128,7 +117,7 @@ const Home = () => {
           collection(db, mainCollection),
           where("worker", "==", true),
           //excluyo los que ya me aparecieron
-          where("id", "not-in", [...passesId, ...likesId]),
+          // where("id", "not-in", [...passesId, ...likesId]),
           where("available", "==", true),
           where("seniority", "==", userData.filter.seniority)
         );
@@ -142,7 +131,7 @@ const Home = () => {
           collection(db, mainCollection),
           where("worker", "==", true),
           //excluyo los que ya me aparecieron
-          where("id", "not-in", [...passesId, ...likesId]),
+          // where("id", "not-in", [...passesId, ...likesId]),
           where("available", "==", true),
           where("userRole", "==", userData.filter.roleWanted),
           where("seniority", "==", userData.filter.seniority)
@@ -152,7 +141,7 @@ const Home = () => {
           collection(db, mainCollection),
           where("worker", "==", true),
           //excluyo los que ya me aparecieron
-          where("id", "not-in", [...passesId, ...likesId]),
+          // where("id", "not-in", [...passesId, ...likesId]),
           where("available", "==", true)
         );
       }
@@ -368,118 +357,119 @@ const Home = () => {
   };
 
   return (
-      <View style={styles.container}>
-        <Header screen="Home" />
-        {profiles.length === 0 ? (
-          <View style={[styles.noProfiles, { height: "95%" }]}>
-            <ImageOfNoResults />
+    <View style={styles.container}>
+      <Header screen="Home" />
+      {profiles.length === 0 ? (
+        <View style={[styles.noProfiles, { height: "95%" }]}>
+          <ImageOfNoResults />
 
-            <Text
-              style={[
-                text.text14,
-                {
-                  textAlign: "center",
-                  paddingHorizontal: 28,
-                  marginTop: 20,
-                },
-              ]}
-            >
-              No tienes más {userData.worker ? "puestos" : "perfiles"} por ver
-              :/ {"\n"}
-              Pronto aparecerán las nuevas oportunidades!
-            </Text>
-          </View>
-        ) : (
-          <>
-            <SwipeContext.Provider value={{ swipeRef }}>
-              <View style={styles.header}>
-                <Text style={text.headerTitle}>
-                  Hola,{" "}
-                  <Text style={{ color: `${colors.secondary}` }}>
-                    {userData?.userName}!
-                  </Text>
+          <Text
+            style={[
+              text.text14,
+              {
+                textAlign: "center",
+                paddingHorizontal: 28,
+                marginTop: 20,
+              },
+            ]}
+          >
+            No tienes más {userData.worker ? "puestos" : "perfiles"} por ver :/{" "}
+            {"\n"}
+            Pronto aparecerán las nuevas oportunidades!
+          </Text>
+        </View>
+      ) : (
+        <>
+          <SwipeContext.Provider value={{ swipeRef }}>
+            <View style={styles.header}>
+              <Text style={text.headerTitle}>
+                Hola,{" "}
+                <Text style={{ color: `${colors.secondary}` }}>
+                  {userData?.userName}!
                 </Text>
-                <Text style={[text.text16]}>
-                  {userData.worker
-                    ? "Estas son las vacantes disponibles"
-                    : "Estos son los perfiles disponibles"}
-                </Text>
-              </View>
-              <View style={{ flex: 1, width: "100%", position: "relative" }}>
-                <Swiper
-                  ref={swipeRef}
-                  containerStyle={{ backgroundColor: "#F2F3F4", flex: 1 }}
-                  cardStyle={{ top: 20 }}
-                  cardHorizontalMargin={16}
-                  stackSize={3}
-                  cardIndex={0}
-                  verticalSwipe={false}
-                  onSwipedLeft={(cardIndex) => swipeLeft(cardIndex)}
-                  onSwipedRight={(cardIndex) => swipeRight(cardIndex)}
-                  onSwipedAll={() => handleEnd()}
-                  animateCardOpacity
-                  overlayLabels={{
-                    left: {
-                      title: "No me interesa",
-                      style: {
-                        label: {
-                          textAlign: "right",
-                          color: `${colors.text}`,
-                        },
+              </Text>
+              <Text style={[text.text16]}>
+                {userData.worker
+                  ? "Estas son las vacantes disponibles"
+                  : "Estos son los perfiles disponibles"}
+              </Text>
+            </View>
+            <View style={{ flex: 1, width: "100%", position: "relative" }}>
+              <Swiper
+                // añadiendo el key para que se re-renderize el componente cada vez que se cambia el array de profiles - quitar para que no se re-renderizen los profiles ya vistos
+                key={profiles.length}
+                ref={swipeRef}
+                containerStyle={{ backgroundColor: "#F2F3F4", flex: 1 }}
+                cardStyle={{ top: 20 }}
+                cardHorizontalMargin={16}
+                stackSize={3}
+                cardIndex={0}
+                verticalSwipe={false}
+                onSwipedLeft={(cardIndex) => swipeLeft(cardIndex)}
+                onSwipedRight={(cardIndex) => swipeRight(cardIndex)}
+                onSwipedAll={() => handleEnd()}
+                animateCardOpacity
+                overlayLabels={{
+                  left: {
+                    title: "No me interesa",
+                    style: {
+                      label: {
+                        textAlign: "right",
+                        color: `${colors.text}`,
                       },
                     },
-                    right: {
-                      title: "Me interesa",
-                      style: {
-                        label: {
-                          textAlign: "left",
-                          color: `${colors.text}`,
-                        },
+                  },
+                  right: {
+                    title: "Me interesa",
+                    style: {
+                      label: {
+                        textAlign: "left",
+                        color: `${colors.text}`,
                       },
                     },
-                  }}
-                  overlayLabelStyle={{
-                    fontSize: 24,
-                    padding: 16,
-                  }}
-                  cards={profiles}
-                  renderCard={(card) =>
-                    card ? (
-                      <Card card={card} refe={useRef} />
-                    ) : (
-                      <View style={[styles.noProfiles, { height: "80%" }]}>
-                        <ImageOfNoResults />
+                  },
+                }}
+                overlayLabelStyle={{
+                  fontSize: 24,
+                  padding: 16,
+                }}
+                cards={profiles}
+                renderCard={(card) =>
+                  card ? (
+                    <Card card={card} refe={useRef} />
+                  ) : (
+                    <View style={[styles.noProfiles, { height: "80%" }]}>
+                      <ImageOfNoResults />
 
-                        <Text
-                          style={[
-                            text.text14,
-                            {
-                              textAlign: "center",
-                              paddingHorizontal: 28,
-                              marginTop: 20,
-                            },
-                          ]}
-                        >
-                          No tienes más{" "}
-                          {userData.worker ? "puestos" : "perfiles"} por ver :/{" "}
-                          {"\n"}
-                          Pronto aparecerán las nuevas oportunidades!
-                        </Text>
-                      </View>
-                    )
-                  }
-                />
-              </View>
-            </SwipeContext.Provider>
-          </>
-        )}
-      </View>
+                      <Text
+                        style={[
+                          text.text14,
+                          {
+                            textAlign: "center",
+                            paddingHorizontal: 28,
+                            marginTop: 20,
+                          },
+                        ]}
+                      >
+                        No tienes más {userData.worker ? "puestos" : "perfiles"}{" "}
+                        por ver :/ {"\n"}
+                        Pronto aparecerán las nuevas oportunidades!
+                      </Text>
+                    </View>
+                  )
+                }
+              />
+            </View>
+          </SwipeContext.Provider>
+        </>
+      )}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: Constants.statusBarHeight,
+    marginTop: 0,
     flex: 1,
     justifyContent: "flex-start",
     gap: 10,
