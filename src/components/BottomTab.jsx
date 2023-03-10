@@ -118,9 +118,10 @@ export default function BottomTab({ navigation }) {
           headerShown: true,
           headerStyle: { backgroundColor: `${colors.primary}` },
           headerTitleStyle: {
-            color: `${colors.text}`,
+            color: `${colors.secondary}`,
             fontFamily: "Roboto",
             fontSize: 20,
+            fontWeight: "500",
           },
         }}
       />
