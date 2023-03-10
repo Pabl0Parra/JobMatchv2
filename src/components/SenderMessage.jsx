@@ -16,7 +16,6 @@ export default function SenderMessage({ message }) {
 
 const styles = StyleSheet.create({
   container: {
-    height: 50,
     position: "relative",
     justifyContent: "center",
     alignContent: "flex-end",

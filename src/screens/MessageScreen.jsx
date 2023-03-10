@@ -77,7 +77,7 @@ export default function MessageScreen() {
     <View style={{ flex: 1 }}>
       <View
         style={{
-          height: 100,
+          height: 80,
           justifyContent: "center",
           backgroundColor: `${colors.primary}`,
           shadowColor: "#000",
