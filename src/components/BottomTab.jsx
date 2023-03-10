@@ -1,6 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import theme from "../theme";
-import { Animated } from "react-native";
 
 //screens
 import Home from "../screens/Home";
@@ -9,16 +8,8 @@ import ChatScreen from "../screens/ChatScreen";
 import DrawerNavigatorProfile from "./DrawerNavigatorProfile";
 import { DrawerActions } from "@react-navigation/routers";
 
-//icons
-/* import {
-  MaterialIcons,
-  Fontisto,
-  FontAwesome5,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons"; */
-
 import { View, StyleSheet } from "react-native";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { UserLoginContex } from "../context/UserDataContext";
 import HomeIcon from "../svgs/HomeIcon";
 import ConectionsIcon from "../svgs/ConectionsIcon";
@@ -30,7 +21,6 @@ const { colors } = theme;
 
 export default function BottomTab({ navigation }) {
   const { tab } = useContext(UserLoginContex);
-  /* const [tab, setTab] = useState(); */
 
   return (
     <Tab.Navigator
@@ -60,11 +50,6 @@ export default function BottomTab({ navigation }) {
                   color={tab === 1 ? colors.details : "#C8CFCF"}
                   active={tab === 1 ? true : false}
                 />
-                {/* <MaterialIcons
-                    name="home-repair-service"
-                    size={24}
-                    color={color}
-                  /> */}
               </View>
             </View>
           ),
@@ -84,11 +69,6 @@ export default function BottomTab({ navigation }) {
                   color={tab === 2 ? colors.details : "#C8CFCF"}
                   active={tab === 2 ? true : false}
                 />
-                {/* <MaterialCommunityIcons
-                    name="heart"
-                    size={24}
-                    color={color}
-                  /> */}
               </View>
             </View>
           ),
@@ -107,11 +87,6 @@ export default function BottomTab({ navigation }) {
                   color={tab === 3 ? colors.details : "#C8CFCF"}
                   active={tab === 3 ? true : false}
                 />
-                {/* <MaterialCommunityIcons
-                    name="message"
-                    size={24}
-                    color={color}
-                  /> */}
               </View>
             </View>
           ),

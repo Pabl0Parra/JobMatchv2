@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 import { onSnapshot, query, collection, where } from "firebase/firestore";
 import { db } from "../firebase/credentials";
 import ChatRow from "./ChatRow";

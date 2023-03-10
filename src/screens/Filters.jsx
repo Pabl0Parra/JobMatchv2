@@ -5,21 +5,13 @@ import { SelectList } from "react-native-dropdown-select-list";
 import theme from "../theme";
 import { UserLoginContex } from "../context/UserDataContext";
 import { useNavigation } from "@react-navigation/core";
-import {
-  collection,
-  doc,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-} from "@firebase/firestore";
+import { collection, getDocs, query, where } from "@firebase/firestore";
 import { db, mainCollection, postCollection } from "../firebase/credentials";
 
 const { text, colors } = theme;
 const defaultSelected = { seniority: "", roleWanted: "" };
 
 const Filters = () => {
-  const [filterSettings, setFilterSettings] = useState({});
   const [vacantList, setVacantList] = useState([]);
   const [seniorityList, setSeniorityList] = useState([]);
   const [selected, setSelected] = useState(defaultSelected);
@@ -27,40 +19,31 @@ const Filters = () => {
 
   const navigation = useNavigation();
   let setOfVacant = new Set();
-  let vacant
+  let vacant;
   let seniority = ["Todos", "Junior", "Semi-Senior", "Senior"];
-/*   let setOfSeniority = new Set()
-  let array */
 
   useEffect(() => {
     const getOptions = async () => {
-      if (userData.worker){
+      if (userData.worker) {
         const vacantOptions = await getDocs(
           query(collection(db, postCollection), where("roleWanted", "!=", ""))
         );
         vacantOptions.forEach((doc) => setOfVacant.add(doc.data().roleWanted));
-        /*   console.log(vacant) */
-        vacant=Array.from(setOfVacant);
-        vacant.unshift("Todos")
+
+        vacant = Array.from(setOfVacant);
+        vacant.unshift("Todos");
         setVacantList(vacant);
       } else {
         const vacantOptions = await getDocs(
           query(collection(db, mainCollection), where("userRole", "!=", ""))
         );
         vacantOptions.forEach((doc) => setOfVacant.add(doc.data().userRole));
-        /*   console.log(vacant) */
-        vacant=Array.from(setOfVacant);
-        vacant.unshift("Todos")
+
+        vacant = Array.from(setOfVacant);
+        vacant.unshift("Todos");
         setVacantList(vacant);
       }
 
-/*       const seniorityOptions = await getDocs(
-        query(collection(db, mainCollection), where("seniority", "!=", ""))
-      );
-      seniorityOptions.forEach((doc) => setOfSeniority.add(doc.data().seniority));
-
-      array=Array.from(setOfSeniority);
-      array.unshift("Todos") */
       setSeniorityList(seniority);
     };
 
