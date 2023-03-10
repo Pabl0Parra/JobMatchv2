@@ -3,7 +3,6 @@ import { FontAwesome, Feather, Ionicons } from "@expo/vector-icons";
 import LogoHeader from "../svgs/LogoHeader";
 import theme from "../theme";
 import { useNavigation } from "@react-navigation/core";
-import { AntDesign } from "@expo/vector-icons";
 
 const { colors } = theme;
 const Header = ({ screen }) => {
@@ -15,9 +14,6 @@ const Header = ({ screen }) => {
         <>
           <LogoHeader />
           <View style={{ flexDirection: "row" }}>
-            {/* <TouchableOpacity style={styles.notification} onPress={()=> navigation.navigate('PostForm')}>
-            <Ionicons name="add" size={24} color={colors.secondary} />
-          </TouchableOpacity> */}
             <TouchableOpacity
               style={styles.notification}
               onPress={() => navigation.navigate("Filters")}

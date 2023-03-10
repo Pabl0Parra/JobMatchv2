@@ -12,7 +12,7 @@ import Header from "../components/Header";
 import { Ionicons, Octicons, Feather } from "@expo/vector-icons";
 import { useState, useContext, useEffect } from "react";
 import CircularProgress from "../components/CircularProgress";
-import { FocusedTab, UserLoginContex } from "../context/UserDataContext";
+import { UserLoginContex } from "../context/UserDataContext";
 import DisplayContainer from "../components/DisplayContainer";
 import theme from "../theme";
 import { useIsFocused } from "@react-navigation/core";
@@ -244,7 +244,7 @@ const Profile = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: Constants.statusBarHeight,
+    marginTop: 0,
     justifyContent: "center",
   },
   blueBackground: {
