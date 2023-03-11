@@ -29,7 +29,7 @@ const ChooseProfilePicture = () => {
   const [loadingImage, setLoadingImage] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { userData, setUserData } = useContext(UserDataContext);
+  const { userData } = useContext(UserDataContext);
   const navigation = useNavigation();
 
   const pickImage = async () => {
@@ -44,10 +44,6 @@ const ChooseProfilePicture = () => {
       setImage(result.uri);
     }
     setLoadingImage(false);
-  };
-
-  const changeImage = async () => {
-    pickImage();
   };
 
   const uploadImages = async () => {
@@ -128,7 +124,11 @@ const ChooseProfilePicture = () => {
           </View>
         </View>
         {loading ? (
-          <ActivityIndicator size={80} color={colors.details} style={{marginTop: 20}} />
+          <ActivityIndicator
+            size={80}
+            color={colors.details}
+            style={{ marginTop: 20 }}
+          />
         ) : (
           <ReusableButton
             innerText="Finalizar"
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
   addImageText: {
     fontSize: 50,
     color: "#727272",
-  }
+  },
 });
 
 export default ChooseProfilePicture;

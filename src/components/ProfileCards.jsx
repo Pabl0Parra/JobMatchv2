@@ -14,7 +14,7 @@ const ProfileCards = () => {
   const { userData } = useContext(UserLoginContex);
 
   const cardsMap = () => {
-    if (userData[`${userData.worker? "experiences" : "posts"}`].length === 0) {
+    if (userData[`${userData.worker ? "experiences" : "posts"}`].length === 0) {
       return (
         <Text
           style={[
@@ -26,7 +26,9 @@ const ProfileCards = () => {
               padding: 3,
             },
           ]}
-          onPress={() => navigation.navigate(userData.worker ? "ExperienceForm" : "PostForm")}
+          onPress={() =>
+            navigation.navigate(userData.worker ? "ExperienceForm" : "PostForm")
+          }
         >
           Agregar {userData.worker ? "Experiencias" : "Puestos vacantes"}
         </Text>
@@ -41,11 +43,9 @@ const ProfileCards = () => {
       return userData.posts.map((post) => (
         <JobCard key={post.id} postData={post} />
       ));
-      }
-    };
-    
-    
-    
+    }
+  };
+
   return (
     <View style={styles.containerSectionExperience}>
       <View
@@ -94,6 +94,6 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 16,
     borderWidth: 2,
-    borderColor: colors.secondary
+    borderColor: colors.secondary,
   },
 });

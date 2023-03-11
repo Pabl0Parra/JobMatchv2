@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import Constants from "expo-constants";
 import Header from "../components/Header";
 import DisplayContainer from "../components/DisplayContainer";
@@ -7,20 +7,19 @@ import theme from "../theme";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import MiniCard from "../components/MiniCard";
 import { useContext, useEffect, useState } from "react";
-import { collection, doc, onSnapshot, query, setDoc } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { db, mainCollection } from "../firebase/credentials";
-import { FocusedTab, UserLoginContex } from "../context/UserDataContext";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { UserLoginContex } from "../context/UserDataContext";
+import { useIsFocused } from "@react-navigation/native";
 
 const { text, colors } = theme;
 
-const Conexiones = ({ navigation }) => {
+const Conexiones = () => {
   const { userData, setUserData, setTab } = useContext(UserLoginContex);
   const [saved, setSaved] = useState([]);
   const [matches, setMatches] = useState([]);
   const [likedTo, setLikedTo] = useState([]);
-  /* const { setTab } = useContext(FocusedTab); */
-  /* const navigation = useNavigation() */
+
   const isFocused = useIsFocused();
 
   useEffect(() => {
