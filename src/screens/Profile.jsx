@@ -27,14 +27,11 @@ const { text, colors } = theme;
 
 const Profile = () => {
   const { userData, setUserData, setTab } = useContext(UserLoginContex);
-  const [isEnabled, setIsEnabled] = useState(false);
+  const [setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
   const [percentage, setPercentage] = useState(50);
 
-  /*   const [percentage, setPercentage] = useState(60); */
-
-  /* const {setTab}  =useContext(FocusedTab) */
   const isFocused = useIsFocused();
   const [savedCount, setSavedCount] = useState(0);
   const [visitsCount, setVisitsCount] = useState(0);
