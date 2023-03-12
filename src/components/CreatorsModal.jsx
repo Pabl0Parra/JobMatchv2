@@ -2,84 +2,34 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
+  Image,
   ActivityIndicator,
   FlatList,
   StyleSheet,
   TouchableOpacity,
+  Linking,
 } from "react-native";
-import { Feather } from "@expo/vector-icons";
-// import axios from "axios";
+
+import axios from "axios";
 import theme from "../theme";
 
 const { colors } = theme;
 
+const EXCLUDED_MEMBER = "SevindzhRu";
+const CONTRIBUTORS_API = `https://api.github.com/repos/No-Country/C9-47-ft-ReactNative/contributors?exclude=${EXCLUDED_MEMBER}`;
+
 const CreatorsModal = ({ closeModal }) => {
   const [isLoading, setIsLoading] = useState(true);
-  //   const [members, setMembers] = useState([]);
+  const [contributors, setContributors] = useState([]);
 
-  // Se usa mientras el repo no este publicado
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 300);
+    axios
+      .get(CONTRIBUTORS_API)
+      .then((response) => {
+        setContributors(response.data), setIsLoading(false);
+      })
+      .catch((error) => console.error(error));
   }, []);
-
-  // Para traer los datos de los miembros del equipo cuando este publicado el repo
-  //   useEffect(() => {
-  //     axios
-  //       .get("api.github/cuando sea publico el repo reemplazar por la url")
-  //       .then((response) => {
-  //         setMembers(response.data);
-  //         setIsLoading(false);
-  //       })
-  //       .catch((error) => {
-  //         console.error(error);
-  //         setIsLoading(false);
-  //       });
-  //   }, []);
-
-  const members = [
-    {
-      id: 1,
-      memberName: "Yesenia Moreno",
-      memberRole: "UX/UI Designer",
-      memberGithub: "",
-      memberLinkedin: "",
-      memberImage: "",
-    },
-    {
-      id: 2,
-      memberName: "Tatiana Montoya",
-      memberRole: "QA",
-      memberGithub: "",
-      memberLinkedin: "",
-      memberImage: "",
-    },
-    {
-      id: 3,
-      memberName: "Nicolás Radin",
-      memberRole: "Frontend Developer",
-      memberGithub: "https://github.com/niicodeer",
-      memberLinkedin: "",
-      memberImage: "",
-    },
-    {
-      id: 4,
-      memberName: "Nicolás Sepertino",
-      memberRole: "Frontend Developer",
-      memberGithub: "https://github.com/NicoSeper89",
-      memberLinkedin: "",
-      memberImage: "",
-    },
-    {
-      id: 5,
-      memberName: "Pablo Parra",
-      memberRole: "Frontend Developer",
-      memberGithub: "",
-      memberLinkedin: "",
-      memberImage: "",
-    },
-  ];
 
   return (
     <View style={styles.container}>
@@ -90,15 +40,20 @@ const CreatorsModal = ({ closeModal }) => {
           <>
             <Text style={styles.title}>Contacto:</Text>
             <FlatList
-              data={members}
+              data={contributors}
               keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
                 <View style={styles.itemContainer}>
-                  <Feather name="user" size={24} color={colors.text} />
-                  <View>
-                    <Text style={styles.name}>{item.memberName}</Text>
-                    <Text style={styles.role}>{item.memberRole}</Text>
-                  </View>
+                  <Image
+                    source={{ uri: item.avatar_url }}
+                    style={styles.avatar}
+                  />
+                  <Text
+                    style={styles.username}
+                    onPress={() => Linking.openURL(item.html_url)}
+                  >
+                    {item.login}
+                  </Text>
                 </View>
               )}
             />
@@ -120,13 +75,23 @@ export default CreatorsModal;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "row",
     backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center",
     opacity: 0.9,
+    marginVertical: "20%",
+    borderRadius: 28,
+  },
+  avatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 40,
+    marginBottom: 10,
   },
   contentContainer: {
     width: "80%",
+    marginTop: 20,
   },
   title: {
     color: `${colors.text}`,
@@ -138,21 +103,16 @@ const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 20,
+    justifyContent: "space-around",
+    marginBottom: 40,
   },
   imageContainer: {
-    marginRight: 10,
+    marginRight: 20,
   },
-  name: {
+  username: {
     color: `${colors.text}`,
     fontSize: 30,
     fontWeight: "500",
-  },
-  role: {
-    color: `${colors.text}`,
-    fontSize: 18,
-    fontWeight: "400",
   },
   button: {
     backgroundColor: `${colors.secondary}`,
@@ -160,7 +120,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 10,
     elevation: 2,
-    marginTop: 20,
+    marginBottom: 60,
   },
   buttonText: {
     color: `${colors.details}`,

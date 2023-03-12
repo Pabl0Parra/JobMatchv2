@@ -1,5 +1,5 @@
 import { collection, doc, serverTimestamp, setDoc } from "@firebase/firestore";
-import { async } from "@firebase/util";
+
 import { useNavigation, useRoute } from "@react-navigation/core";
 import { useFormik } from "formik";
 import React, { useContext, useState } from "react";
@@ -8,7 +8,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import {
   Button,
   RadioButton,
-  SegmentedButtons,
   TextInput,
   ActivityIndicator,
 } from "react-native-paper";
@@ -356,14 +355,11 @@ const PostForm = () => {
               onPress={formik.handleSubmit}
               styleContainer={{ height: 50 }}
             />
-            <Button
-              mode="text"
-              title="submit"
-              textColor={`${colors.secondary}`}
+            <ReusableButton
+              innerText="Cancelar"
               onPress={() => navigation.goBack()}
-            >
-              Cancelar
-            </Button>
+              styleContainer={{ height: 50 }}
+            />
           </>
         )}
       </View>
@@ -381,7 +377,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: "100%",
     backgroundColor: "#fff",
-  }
+  },
 });
 
 export default PostForm;

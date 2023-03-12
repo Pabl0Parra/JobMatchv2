@@ -1,13 +1,9 @@
-import {
-  Image,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import React from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useRef } from "react";
 import { useNavigation, useRoute } from "@react-navigation/core";
 import theme from "../theme";
 import ReusableButton from "../components/ReusableButton";
+import ConfettiCannon from "react-native-confetti-cannon";
 
 const { colors, text } = theme;
 
@@ -17,10 +13,29 @@ const MatchModal = () => {
 
   const { loggedInUser, postSwiped } = params;
 
+  const confettiRef = useRef(null);
+
+  useEffect(() => {
+    confettiRef.current.start();
+  }, []);
+
   return (
-    <View style={styles.contanier}>
+    <View style={styles.container}>
+      <ConfettiCannon
+        count={200}
+        origin={{ x: -10, y: 0 }}
+        explosionSpeed={500}
+        ref={confettiRef}
+        colors={["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]}
+        duration={5000}
+        onConfettiComplete={() => {
+          confettiRef.current && confettiRef.current.reset();
+        }}
+        pointerEvents="none"
+      />
+
       <Text style={[text.cardSubtitleMedium, { fontWeight: "400" }]}>
-        ¡Felicitaciones!
+        ¡Enhorabuena!
       </Text>
       <Text
         style={[text.cardTitle, { color: colors.secondary, fontWeight: "800" }]}
@@ -96,14 +111,12 @@ const MatchModal = () => {
         <Text
           style={[
             text.cardTitle,
-            { textAlign: "center", color: colors.secondary },
+            { textAlign: "center", color: colors.secondary, paddingTop: 10 },
           ]}
         >
           {postSwiped.userName}
         </Text>
-        <Text style={[text.text16, { textAlign: "center" }]}>
-          Animate a dar el primer paso.
-        </Text>
+        <Text style={styles.action}>Animate a dar el primer paso.</Text>
       </View>
       <ReusableButton
         innerText={"Enviar mensaje"}
@@ -111,7 +124,15 @@ const MatchModal = () => {
           navigation.goBack();
           navigation.navigate("ChatScreen");
         }}
-        styleContainer={{marginTop: 19}}
+        styleContainer={{ marginTop: 19 }}
+      />
+      <ReusableButton
+        innerText={"Quizás más tarde"}
+        onPress={() => {
+          navigation.goBack();
+          navigation.navigate("Main");
+        }}
+        styleContainer={{ marginTop: 30 }}
       />
     </View>
   );
@@ -120,18 +141,18 @@ const MatchModal = () => {
 export default MatchModal;
 
 const styles = StyleSheet.create({
-  contanier: {
+  container: {
     height: "100%",
     width: "100%",
-    padding: 5,
-    opacity: 0.95,
+    opacity: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: colors.primary,
   },
   title: {
     fontSize: 32,
-    fontWeight: "bold",
-    color: "#888",
+    fontWeight: "500",
+    color: "#fff",
   },
   imageContainer: {
     width: "90%",
@@ -146,7 +167,12 @@ const styles = StyleSheet.create({
     borderRadius: 200,
     justifyContent: "center",
     alignItems: "center",
+    marginHorizontal: -20,
   },
+  action: {
+    color: "#fff",
+  },
+
   button: {
     width: 250,
     height: 50,
@@ -158,5 +184,3 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
-
-/* postSwiped.userName */

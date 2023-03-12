@@ -99,33 +99,15 @@ const Card = ({ card }) => {
                     </Text>
                     <Text style={[text.cardTitle, { color: "#fff" }]}>
                       {card.roleWanted}{" "}
-{/*                       <Text
-                        style={[
-                          text[16],
-                          { color: `${colors.primary}`, fontStyle: "normal" },
-                        ]}
-                      >
-                        {card.seniority}
-                      </Text> */}
                     </Text>
                     <Text
-                        style={[
-                          text.text16,
-                          { color: `${colors.details}`, fontStyle: "italic" },
-                        ]}
-                      >
-                        {card.seniority}
-                      </Text>
-
-                    {/* Salario */}
-{/*                     <Text
                       style={[
-                        text[14],
+                        text.text16,
                         { color: `${colors.details}`, fontStyle: "italic" },
                       ]}
                     >
-                      {card.salary}
-                    </Text> */}
+                      {card.seniority}
+                    </Text>
                     <View style={{ marginVertical: 16 }}>
                       <Text
                         style={[text.cardSubtitleMedium, { color: "#fff" }]}
@@ -146,9 +128,12 @@ const Card = ({ card }) => {
                   <>
                     <Text>{"\n"}</Text>
                     <Text style={[text.cardTitle, { color: "#fff" }]}>
-                      {card.userName}{" "}{card.userLastName ? card.userLastName : ""}
+                      {card.userName}{" "}
+                      {card.userLastName ? card.userLastName : ""}
                     </Text>
-                    <Text style={[text.text16, { color: "#fff", fontSize: 18 }]}>
+                    <Text
+                      style={[text.text16, { color: "#fff", fontSize: 18 }]}
+                    >
                       {card.userRole}{" "}
                       {card.seniority ? (
                         <Text
@@ -178,21 +163,33 @@ const Card = ({ card }) => {
                               },
                             ]}
                           >
-                            {"- "}{card.city}
+                            {"- "}
+                            {card.city}
                           </Text>
                         ) : (
                           <Text></Text>
                         )}
                       </Text>
 
-                      {card.userLastRole ? <Text style={[text.text14, { color: `${colors.primary}` }]}>
-                      {"\n"}
-                        Último trabajo:{"\n"}
-                        <Text style={[text.text14, { color: `${colors.primary}`}]}>
-                          {"  "}{card.userLastRole} en {card.userLastCompany}
+                      {card.userLastRole ? (
+                        <Text
+                          style={[text.text14, { color: `${colors.primary}` }]}
+                        >
+                          {"\n"}
+                          Último trabajo:{"\n"}
+                          <Text
+                            style={[
+                              text.text14,
+                              { color: `${colors.primary}` },
+                            ]}
+                          >
+                            {"  "}
+                            {card.userLastRole} en {card.userLastCompany}
+                          </Text>
                         </Text>
-
-                      </Text> : <Text></Text>}
+                      ) : (
+                        <Text></Text>
+                      )}
                     </View>
                   </>
                 )}
@@ -200,37 +197,41 @@ const Card = ({ card }) => {
             </View>
             <Pressable
               onPress={() =>
-                navigation.navigate("Details", userData.worker ? {
-                  //Agregar los datos necesarios para mostrar en pantalla
-                  //Datos de empresa
-                  image: image,
-                  roleWanted: card.roleWanted,
-                  seniority: card.seniority,
-                  country: card.country,
-                  mode: card.mode,
-                  timeJob: card.timeJob,
-                  requirements: card.requirements,
-                  salary: card.salary,
-                  hourHand: card.hourHand,
-                  contract: card.contract,
-                  education: card.education,
-                  experience: card.experience,
-                  english: card.english,
-                  functions: card.functions,
-                } : {
-                  //Datos de perfil
-                  id:card.id,
-                  image:image, 
-                  userRole: card.userRole,
-                  seniority: card.seniority,
-                  country: card.country,
-                  education: card.education,
-                  experience: card.experience,
-                  english: card.english,
-                  name: card.userName,
-                  lastName: card.userLastName,
-                  aboutme: card.aboutme,
-                })
+                navigation.navigate(
+                  "Details",
+                  userData.worker
+                    ? {
+                        //Datos de empresa
+                        image: image,
+                        roleWanted: card.roleWanted,
+                        seniority: card.seniority,
+                        country: card.country,
+                        mode: card.mode,
+                        timeJob: card.timeJob,
+                        requirements: card.requirements,
+                        salary: card.salary,
+                        hourHand: card.hourHand,
+                        contract: card.contract,
+                        education: card.education,
+                        experience: card.experience,
+                        english: card.english,
+                        functions: card.functions,
+                      }
+                    : {
+                        //Datos de perfil
+                        id: card.id,
+                        image: image,
+                        userRole: card.userRole,
+                        seniority: card.seniority,
+                        country: card.country,
+                        education: card.education,
+                        experience: card.experience,
+                        english: card.english,
+                        name: card.userName,
+                        lastName: card.userLastName,
+                        aboutme: card.aboutme,
+                      }
+                )
               }
             >
               <Text
@@ -246,7 +247,6 @@ const Card = ({ card }) => {
               </Text>
             </Pressable>
           </View>
-
           <ActionsButtons card={card} />
         </ImageBackground>
       </View>
@@ -273,9 +273,7 @@ const styles = StyleSheet.create({
     width: "100%",
     overflow: "hidden",
     zIndex: -2,
-    /*     backgroundColor: "teal", */
   },
-
   image: {
     width: "100%",
     height: "100%",
@@ -283,7 +281,6 @@ const styles = StyleSheet.create({
   footer: {
     flex: 1,
     width: "100%",
-    /* padding: 32, */
     position: "absolute",
     top: "40%",
     left: 32,

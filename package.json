@@ -27,6 +27,8 @@
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
     "react-native-awesome-alerts": "^2.0.0",
+    "react-native-circular-progress-indicator": "^4.4.2",
+    "react-native-confetti-cannon": "^1.5.2",
     "react-native-deck-swiper": "^2.0.13",
     "react-native-dotenv": "^3.4.8",
     "react-native-dropdown-select-list": "^2.0.4",

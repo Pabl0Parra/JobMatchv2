@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { Menu, MenuItem } from "react-native-material-menu";
 import theme from "../theme";
@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { useIsFocused, useNavigation } from "@react-navigation/core";
 import deleteExperienceOrPost from "../firebase/functions/deleteExperienceOrPost";
 import getUserDataDB from "../firebase/functions/getUserDataDB";
-import { FocusedTab, UserLoginContex } from "../context/UserDataContext";
+import { UserLoginContex } from "../context/UserDataContext";
 
 const { text, colors } = theme;
 
@@ -14,16 +14,14 @@ const ExperienceCard = ({ experienceData, details }) => {
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
   const { setUserData, setTab } = useContext(UserLoginContex);
-  /* const {setTab}  =useContext(FocusedTab) */
-  const isFocused = useIsFocused()
+  const isFocused = useIsFocused();
 
   const hideMenu = () => setVisible(false);
 
   const showMenu = () => setVisible(true);
-  useEffect(()=> {
-    isFocused && setTab(4)
-  
-}, [isFocused]);
+  useEffect(() => {
+    isFocused && setTab(4);
+  }, [isFocused]);
 
   return (
     <View style={styles.experienceCard}>
@@ -47,58 +45,80 @@ const ExperienceCard = ({ experienceData, details }) => {
           >
             {experienceData.position}
           </Text>
-          {!details ? 
-          <Menu
-            visible={visible}
-            anchor={
-              <Ionicons
-                style={{ flex: 1 }}
-                name="md-ellipsis-horizontal-sharp"
-                size={24}
-                color={colors.secondary}
-                onPress={showMenu}
-              />
-            }
-            onRequestClose={hideMenu}
-          >
-            <MenuItem
-              onPress={() => {
-                hideMenu();
-                navigation.navigate("ExperienceForm", experienceData);
-              }}
+          {!details ? (
+            <Menu
+              visible={visible}
+              anchor={
+                <Ionicons
+                  style={{ flex: 1 }}
+                  name="md-ellipsis-horizontal-sharp"
+                  size={24}
+                  color={colors.secondary}
+                  onPress={showMenu}
+                />
+              }
+              onRequestClose={hideMenu}
             >
-              Editar
-            </MenuItem>
-            <MenuItem
-              onPress={async () => {
-                hideMenu();
-                try {
-                  await deleteExperienceOrPost(
-                    experienceData.userId,
-                    experienceData.id,
-                    true
-                  );
-                  const res = await getUserDataDB(experienceData.userId);
+              <MenuItem
+                onPress={() => {
+                  hideMenu();
+                  navigation.navigate("ExperienceForm", experienceData);
+                }}
+              >
+                Editar
+              </MenuItem>
+              <MenuItem
+                onPress={async () => {
+                  hideMenu();
+                  try {
+                    await deleteExperienceOrPost(
+                      experienceData.userId,
+                      experienceData.id,
+                      true
+                    );
+                    const res = await getUserDataDB(experienceData.userId);
 
-                  if (res) {
-                    setUserData(res);
-                  } else {
-                    console.log("error al obtener los datos");
+                    if (res) {
+                      setUserData(res);
+                    } else {
+                      console.log("error al obtener los datos");
+                    }
+                  } catch (error) {
+                    console.log(error);
                   }
-                } catch (error) {
-                  console.log(error);
-                }
-              }}
-            >
-              Eliminar
-            </MenuItem>
-          </Menu> : 
-          null}
+                }}
+              >
+                Eliminar
+              </MenuItem>
+            </Menu>
+          ) : null}
         </View>
-        <Text style={[text.text14, { flex: 1, fontStyle: "italic", fontWeight: "600", color: colors.text, marginBottom: 4 }]}>
+        <Text
+          style={[
+            text.text14,
+            {
+              flex: 1,
+              fontStyle: "italic",
+              fontWeight: "600",
+              color: colors.text,
+              marginBottom: 4,
+            },
+          ]}
+        >
           {experienceData.country}
         </Text>
-        <Text style={[text.text14, { flex: 1, fontStyle: "italic", fontWeight: "400", color: colors.text, marginBottom: 4 }]}>
+        <Text
+          style={[
+            text.text14,
+            {
+              flex: 1,
+              fontStyle: "italic",
+              fontWeight: "400",
+              color: colors.text,
+              marginBottom: 4,
+            },
+          ]}
+        >
           {experienceData.period}
         </Text>
         <Text style={[text.text14, { flex: 1, fontWeight: "600" }]}>

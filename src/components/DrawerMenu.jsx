@@ -34,7 +34,7 @@ const DrawerMenu = ({ navigation }) => {
 
   const changeMode = async () => {
     if (userMode !== userData.available) {
-      setLoading(true)
+      setLoading(true);
       try {
         await updateDataUser(
           { available: userMode },
@@ -54,7 +54,7 @@ const DrawerMenu = ({ navigation }) => {
       }
     }
     setShowModeModal(false);
-    setLoading(false)
+    setLoading(false);
   };
 
   const closeCreatorsModal = () => {
@@ -189,8 +189,7 @@ const DrawerMenu = ({ navigation }) => {
                         setShowModeModal(false);
                         setUserMode(userData.available);
                       }}
-                      styleContainer={[{ backgroundColor: "#eee", width: 80 }]}
-                      styleText={{ color: "gray" }}
+                      styleContainer={[{ width: 80 }]}
                       innerText={"Cancelar"}
                     />
                   </View>

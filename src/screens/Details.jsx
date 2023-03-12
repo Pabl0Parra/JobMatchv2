@@ -1,29 +1,15 @@
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import Constants from "expo-constants";
-import ActionsButtons from "../components/ActionsButtons";
 import { useContext, useEffect, useState } from "react";
-import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import theme from "../theme";
 import { UserLoginContex } from "../context/UserDataContext";
 import ExperienceCard from "../components/ExperienceCard";
-import {
-  collection,
-  doc,
-  getDocs,
-  onSnapshot,
-} from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { db, mainCollection } from "../firebase/credentials";
 
 const { colors, text } = theme;
 
-const Details = ({ route, navigation }) => {
+const Details = ({ route }) => {
   const { userData } = useContext(UserLoginContex);
   const [experiences, setExperiences] = useState();
   const {
@@ -45,20 +31,11 @@ const Details = ({ route, navigation }) => {
     lastName,
     aboutme,
     id,
-    userRole
+    userRole,
   } = route.params;
 
   useEffect(() => {
-/*     userData.employer &&
-    getDocs(doc(db, mainCollection, id, "experiences")).then((snapshot) => {
-      if (snapshot.exists()) {
-        let exp=[];
-        snapshot.forEach((doc) => exp.push(doc));
-        setExperiences(exp)
-      }
-    }); */
-    if(userData.employer){
-
+    if (userData.employer) {
       const exp = onSnapshot(
         collection(db, mainCollection, id, "experiences"),
         (snapshot) => {
@@ -66,9 +43,9 @@ const Details = ({ route, navigation }) => {
           snapshot.forEach((doc) => temp.push(doc.data()));
           setExperiences(temp);
         }
-        );
-        return exp;
-      }
+      );
+      return exp;
+    }
   }, []);
 
   return (
@@ -124,7 +101,6 @@ const Details = ({ route, navigation }) => {
                       <Text style={text.text14}>No especificado</Text>
                     )}
                   </Text>
-
                   <View style={{ marginVertical: 8 }}>
                     <Text style={text.descriptionItem}>
                       Condiciones contractuales{"\n"}
@@ -160,7 +136,6 @@ const Details = ({ route, navigation }) => {
                       }
                     </Text>
                   </View>
-
                   <View style={{ marginVertical: 8 }}>
                     <Text style={text.descriptionItem}>
                       Requisitos{"\n"}
@@ -200,7 +175,6 @@ const Details = ({ route, navigation }) => {
                   <Text style={text.descriptionTitle}>
                     {name} {lastName ? lastName : ""}
                   </Text>
-
                   <Text style={text.text16}>{userRole}</Text>
                   <Text style={text.text14}>{seniority}</Text>
                   <Text style={text.text14}>{country}</Text>
@@ -211,21 +185,22 @@ const Details = ({ route, navigation }) => {
                 </View>
                 <View style={{ marginVertical: 20 }}>
                   <Text style={text.descriptionSubtitle}>Experiencia</Text>
-                  {experiences ?
+                  {experiences ? (
                     experiences.map((exp) => (
                       <ExperienceCard
                         key={exp.id}
                         experienceData={exp}
                         details={true}
                       />
-                    )): <Text></Text>}
+                    ))
+                  ) : (
+                    <Text></Text>
+                  )}
                 </View>
               </>
             )}
           </ScrollView>
         </View>
-        {/* Tendria que pasar el objeto de datos de card para que funcione */}
-        {/* <ActionsButtons/> */}
       </View>
     </View>
   );

@@ -11,8 +11,8 @@ import Constants from "expo-constants";
 import Header from "../components/Header";
 import { Ionicons, Octicons, Feather } from "@expo/vector-icons";
 import { useState, useContext, useEffect } from "react";
-import CircularProgress from "../components/CircularProgress";
-import { FocusedTab, UserLoginContex } from "../context/UserDataContext";
+import CircularProgress from "react-native-circular-progress-indicator";
+import { UserLoginContex } from "../context/UserDataContext";
 import DisplayContainer from "../components/DisplayContainer";
 import theme from "../theme";
 import { useIsFocused } from "@react-navigation/core";
@@ -27,14 +27,11 @@ const { text, colors } = theme;
 
 const Profile = () => {
   const { userData, setUserData, setTab } = useContext(UserLoginContex);
-  const [isEnabled, setIsEnabled] = useState(false);
+  const [setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
   const [percentage, setPercentage] = useState(50);
 
-  /*   const [percentage, setPercentage] = useState(60); */
-
-  /* const {setTab}  =useContext(FocusedTab) */
   const isFocused = useIsFocused();
   const [savedCount, setSavedCount] = useState(0);
   const [visitsCount, setVisitsCount] = useState(0);
@@ -127,15 +124,12 @@ const Profile = () => {
               }}
             >
               <CircularProgress
-                percent={0.9}
-                radius={80}
-                bgRingWidth={38}
-                progressRingWidth={20}
-                ringColor={"#091D5C"}
-                ringBgColor={"#D7E0E9"}
-                startDegrees={0}
-                clockwise={10}
-                textFontSize={0}
+                value={percentage}
+                radius={100}
+                duration={2000}
+                activeStrokeColor={"#2465FD"}
+                activeStrokeSecondaryColor={"#C25AFF"}
+                maxValue={100}
               />
               <View
                 style={{
@@ -244,7 +238,7 @@ const Profile = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: Constants.statusBarHeight,
+    marginTop: 0,
     justifyContent: "center",
   },
   blueBackground: {

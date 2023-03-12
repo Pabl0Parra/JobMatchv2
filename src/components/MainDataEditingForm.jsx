@@ -119,8 +119,7 @@ const MainDataEditingForm = ({ setShowModal, showModal, inputArray }) => {
                 setShowModal(false);
                 resetValues();
               }}
-              styleContainer={[{ backgroundColor: "#eee", width: 130 }]}
-              styleText={{ color: "gray" }}
+              styleContainer={[{ width: 130 }]}
               innerText={"Cancelar"}
             />
           </View>

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StyleSheet, View, KeyboardAvoidingView, Platform } from "react-native"; // import KeyboardAvoidingView and Platform
+import { StyleSheet, View, KeyboardAvoidingView, Platform } from "react-native";
 import InputForm from "../components/InputForm";
 import { useNavigation } from "@react-navigation/native";
 import DisplayContainer from "../components/DisplayContainer";

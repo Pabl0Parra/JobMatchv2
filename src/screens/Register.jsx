@@ -1,5 +1,12 @@
 import React, { useState, useContext } from "react";
-import { Text, Image, View, TouchableOpacity, StyleSheet, ActivityIndicator } from "react-native";
+import {
+  Text,
+  Image,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 import DisplayContainer from "../components/DisplayContainer";
 import checkRegisteredEmail from "../firebase/functions/checkRegisteredEmail";
 import { useNavigation } from "@react-navigation/native";
@@ -19,16 +26,16 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
 
   const formSubmit = async (values) => {
-    setLoading(true)
+    setLoading(true);
     const registeredUser = await checkRegisteredEmail(values[0]);
 
     if (registeredUser) {
-      setLoading(false)
+      setLoading(false);
       setShowAlert(true);
       console.log("ya hay un usuario registrado con el email proporcionado");
     } else {
       setUserData({ ...userData, email: values[0], password: values[1] });
-      setLoading(false)
+      setLoading(false);
       navigation.navigate("RegisterStack");
     }
   };

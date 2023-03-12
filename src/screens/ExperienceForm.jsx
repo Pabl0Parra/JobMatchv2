@@ -88,7 +88,9 @@ const ExperienceForm = () => {
         }}
       >
         {({ handleSubmit, handleChange, values, errors, touched }) => (
-          <ScrollView contentContainerStyle={{ alignItems: "center" }}>
+          <ScrollView
+            contentContainerStyle={{ alignItems: "center", marginTop: 30 }}
+          >
             <View>
               <InputContainer
                 value={values.position}
@@ -97,6 +99,7 @@ const ExperienceForm = () => {
                 touched={touched["position"]}
                 error={errors["position"]}
                 stylePlaceholder={{ backgroundColor: colors.background }}
+                styleContainer={{ marginBottom: 20 }}
               />
               <InputContainer
                 value={values.description}
@@ -116,6 +119,7 @@ const ExperienceForm = () => {
                 touched={touched["period"]}
                 error={errors["period"]}
                 stylePlaceholder={{ backgroundColor: colors.background }}
+                styleContainer={{ marginBottom: 20 }}
               />
               <InputContainer
                 value={values.country}
@@ -124,6 +128,7 @@ const ExperienceForm = () => {
                 touched={touched["country"]}
                 error={errors["country"]}
                 stylePlaceholder={{ backgroundColor: colors.background }}
+                styleContainer={{ marginBottom: 20 }}
               />
             </View>
             <View>
@@ -132,15 +137,13 @@ const ExperienceForm = () => {
               ) : (
                 <>
                   <ReusableButton
-                    styleContainer={{ marginVertical: 10 }}
+                    styleContainer={{ marginVertical: 40 }}
                     innerText={"Aceptar"}
                     onPress={handleSubmit}
                   />
                   <ReusableButton
                     innerText={"Cancelar"}
                     onPress={() => navigation.navigate("Perfil")}
-                    styleContainer={{ backgroundColor: "#888" }}
-                    styleText={{ color: "#ddd" }}
                   />
                 </>
               )}
@@ -163,6 +166,7 @@ const styles = StyleSheet.create({
     height: 130,
     textAlign: "justify",
     textAlignVertical: "top",
+    marginBottom: 20,
   },
   boxReturn: {
     flexDirection: "row",
@@ -174,5 +178,5 @@ const styles = StyleSheet.create({
   },
   arrowLeft: {
     marginHorizontal: 15,
-  }
+  },
 });
