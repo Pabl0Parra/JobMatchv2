@@ -30,9 +30,6 @@ const ResetPassword = () => {
           confirmButtonColor={colors.secondary}
         />
       );
-      console.log(
-        `No hemos encontrado ninguna cuenta asociada a ${values[0]}. Prueba con otro email.`
-      );
     } else {
       console.log(
         `Introduce el código de verificación de 6 dígitos que te hemos enviado a ${values[0]}.`
