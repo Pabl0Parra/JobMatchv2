@@ -35,9 +35,11 @@ export const UserDataContextProvider = ({ children }) => {
   return (
     <UserDataContext.Provider
       value={useMemo(() => {
-        userData;
-        setUserData;
-      })}
+        return {
+          userData,
+          setUserData,
+        };
+      }, [userData, setUserData])}
     >
       {children}
     </UserDataContext.Provider>
