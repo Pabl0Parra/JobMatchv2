@@ -14,6 +14,7 @@ const ResetPassword = () => {
 
   const requestNewPassword = async (values) => {
     const registeredUser = await checkRegisteredEmail(values[0]);
+    const userNotFound = !registeredUser;
 
     if (!registeredUser) {
       <AwesomeAlert

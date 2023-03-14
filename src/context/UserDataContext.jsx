@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useMemo, useState } from "react";
 
 export const UserDataContext = createContext();
 export const UserLoginContex = createContext();
@@ -26,14 +26,18 @@ export const UserDataContextProvider = ({ children }) => {
       seniority: "",
     },
     firstTime: true,
-    visits:0,
+    visits: 0,
     available: true,
-    aboutme:"",
-    seniority:""
+    aboutme: "",
+    seniority: "",
   });
 
   return (
-    <UserDataContext.Provider value={{ userData, setUserData }}>
+    <UserDataContext.Provider
+      value={useMemo(() => {
+        userData, setUserData;
+      })}
+    >
       {children}
     </UserDataContext.Provider>
   );
