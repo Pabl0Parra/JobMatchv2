@@ -17,17 +17,19 @@ const ResetPassword = () => {
     const userNotFound = !registeredUser;
 
     if (!registeredUser) {
-      <AwesomeAlert
-        show={userNotFound}
-        title="No hemos encontrado ninguna cuenta asociada a ese email 🔒"
-        message="Innténtelo de nuevo."
-        closeOnTouchOutside={true}
-        onDismiss={() => setIncorrectPassword(false)}
-        onConfirmPressed={() => setIncorrectPassword(false)}
-        showConfirmButton={true}
-        confirmText="OK"
-        confirmButtonColor={colors.secondary}
-      />;
+      return (
+        <AwesomeAlert
+          show={userNotFound}
+          title="No hemos encontrado ninguna cuenta asociada a ese email 🔒"
+          message="Innténtelo de nuevo."
+          closeOnTouchOutside={true}
+          onDismiss={() => setIncorrectPassword(false)}
+          onConfirmPressed={() => setIncorrectPassword(false)}
+          showConfirmButton={true}
+          confirmText="OK"
+          confirmButtonColor={colors.secondary}
+        />
+      );
       console.log(
         `No hemos encontrado ninguna cuenta asociada a ${values[0]}. Prueba con otro email.`
       );
