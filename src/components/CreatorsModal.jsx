@@ -26,8 +26,7 @@ const CreatorsModal = ({ closeModal }) => {
     axios
       .get(CONTRIBUTORS_API)
       .then((response) => {
-        setContributors(response.data);
-        setIsLoading(false);
+        setContributors(response.data), setIsLoading(false);
       })
       .catch((error) => console.error(error));
   }, []);

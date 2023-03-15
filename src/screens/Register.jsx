@@ -75,7 +75,7 @@ const Register = () => {
               { fontSize: 26, marginBottom: 4 },
             ]}
           >
-            Login
+            Crear Cuenta
           </Text>
         </View>
         <View style={{ marginLeft: -30 }}>
@@ -107,7 +107,7 @@ const Register = () => {
             buttonText="Crear cuenta"
             buttonMarginTop={24}
           />
-          <Text
+          {/* <Text
             style={[
               styles.text,
               styles.textButton,
@@ -126,7 +126,7 @@ const Register = () => {
                 source={require("../images/google_buscador.png")}
               />
             </TouchableOpacity>
-          </View>
+          </View> */}
           <Text style={[styles.text, { paddingVertical: 8 }]}>
             ¿Tienes cuenta?{" "}
             <Text

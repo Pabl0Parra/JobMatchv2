@@ -23,7 +23,6 @@ import theme from "../theme";
 import { generateId } from "../utilities/utilities";
 import ImageOfNoResults from "../svgs/ImageOfNoResults";
 import { updateVisits } from "../firebase/functions/updateFunctions";
-import Animated, { Layout, RollInLeft } from "react-native-reanimated";
 
 const { colors, text } = theme;
 
@@ -395,11 +394,7 @@ const Home = () => {
                   : "Estos son los perfiles disponibles"}
               </Text>
             </View>
-            <Animated.View
-              style={{ flex: 1, width: "100%", position: "relative" }}
-              layout={Layout.stiffness}
-              entering={RollInLeft}
-            >
+            <View style={{ flex: 1, width: "100%", position: "relative" }}>
               <Swiper
                 // añadiendo el key para que se re-renderize el componente cada vez que se cambia el array de profiles - quitar para que no se re-renderizen los profiles ya vistos
                 key={profiles.length}
@@ -464,7 +459,7 @@ const Home = () => {
                   )
                 }
               />
-            </Animated.View>
+            </View>
           </SwipeContext.Provider>
         </>
       )}

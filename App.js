@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import theme from "./src/theme";
 import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
-import { auth } from "./src/firebase/credentials";
+import { auth, db, mainCollection } from "./src/firebase/credentials";
 import { onAuthStateChanged } from "@firebase/auth";
 import BottomTab from "./src/components/BottomTab";
 import Details from "./src/screens/Details";
@@ -91,18 +91,16 @@ export default function App() {
           console.log("error al obtener los datos");
         }
       } else {
-        console.log("Error de login");
+        ("Error de login");
       }
     });
 
     return () => clearTimeout(timer);
   }, []);
-  //value={{ userData, setUserData, tab, setTab }}
+
   console.log("APP:" + userData?.id);
   return (
-    <UserLoginContex.Provider
-      value={useMemo(() => ({ userData, setUserData, tab, setTab }))}
-    >
+    <UserLoginContex.Provider value={{ userData, setUserData, tab, setTab }}>
       <UserDataContextProvider>
         <NavigationContainer theme={theme}>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
