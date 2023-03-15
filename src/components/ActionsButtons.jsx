@@ -1,4 +1,4 @@
-import { AntDesign, Entypo, FontAwesome, Fontisto } from "@expo/vector-icons";
+import { AntDesign, Entypo, FontAwesome } from "@expo/vector-icons";
 import { deleteDoc, doc, getDoc, setDoc } from "@firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
