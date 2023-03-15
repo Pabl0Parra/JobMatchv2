@@ -38,7 +38,7 @@ const InputForm = ({
             .string()
             .required("Este campo es requerido")
             .matches(
-              /^[a-zA-Z0-9._%+-ñ]+@[a-zA-Z0-9.-]+\.[a-zA-Zñ]{2,}$/i,
+              /^[a-zA-Z0-9._%+-ñÑáéíóúÁÉÍÓÚ]+@[a-zA-Z0-9.-ñÑáéíóúÁÉÍÓÚ]+.[a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,}$/,
               "Formato de correo inválido"
             );
           break;
@@ -47,30 +47,23 @@ const InputForm = ({
             .string()
             .required("Este campo es requerido")
             .min(8, `Contraseña debe tener al menos 8 caracteres`)
-            .max(16, `Contraseña debe tener como máximo 16 caracteres`)
-            .matches(
-              /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/,
-              "Debe contener al menos una mayúscula,\n una minúscula, un dígito"
-            );
+            .max(16,`Contraseña debe tener como máximo 16 caracteres`)
+            .matches(/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/, 
+            "Debe contener al menos una mayúscula,\n una minúscula, un dígito");
           break;
         case "verifyPassword":
           yupVal = yup
             .string()
             .oneOf([yup.ref("password")], "Contraseña no coincide")
             .required("Este campo es requerido")
-            .matches(
-              /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/,
-              "Debe contener al menos una mayúscula,\n una minúscula, un dígito"
-            );
+            .matches(/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/, 
+            "Debe contener al menos una mayúscula,\n una minúscula, un dígito");
           break;
         case "text":
           yupVal = yup
             .string()
             .required("Este campo es requerido")
-            .matches(
-              /^[a-zA-Z\s\/-\ñ\u00C0-\u00FF]*$/,
-              "Solo se permiten letras y espacios"
-            );
+            .matches(/^[a-zA-Z\s\/-\ñ\u00C0-\u00FF]*$/, "Solo se permiten letras y espacios");
           break;
       }
 

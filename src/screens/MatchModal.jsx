@@ -22,7 +22,7 @@ const MatchModal = () => {
   return (
     <View style={styles.container}>
       <ConfettiCannon
-        count={300}
+        count={200}
         origin={{ x: -10, y: 0 }}
         explosionSpeed={500}
         ref={confettiRef}
@@ -31,19 +31,7 @@ const MatchModal = () => {
         onConfettiComplete={() => {
           confettiRef.current && confettiRef.current.reset();
         }}
-        fadeOut={true}
-      />
-      <ConfettiCannon
-        count={300}
-        origin={{ x: 610, y: 0 }}
-        explosionSpeed={500}
-        ref={confettiRef}
-        colors={["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]}
-        duration={5000}
-        onConfettiComplete={() => {
-          confettiRef.current && confettiRef.current.reset();
-        }}
-        fadeOut={true}
+        pointerEvents="none"
       />
 
       <Text style={[text.cardSubtitleMedium, { fontWeight: "400" }]}>
