@@ -4,14 +4,22 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getReactNativePersistence } from "firebase/auth/react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  API_KEY,
+  AUTH_DOMAIN,
+  PROJECT_ID,
+  STORAGE_BUCKET,
+  MESSAGING_SENDER_ID,
+  APP_ID,
+} from "@env";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB5dbKO0HFevN1gV70T7-174JvON4lpDcE",
-  authDomain: "tinder-clone-82dec.firebaseapp.com",
-  projectId: "tinder-clone-82dec",
-  storageBucket: "tinder-clone-82dec.appspot.com",
-  messagingSenderId: "525014269077",
-  appId: "1:525014269077:web:74b12dafaac1ee0dc22f9c",
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  messagingSenderId: MESSAGING_SENDER_ID,
+  appId: APP_ID,
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
