@@ -1,6 +1,4 @@
-
 <div align="center">
-  <p align="center">C9-47-ft-ReactNative</p>
   <p align="center">   
     <image src="https://user-images.githubusercontent.com/98957023/222693439-c7cdb4da-89f0-414c-ac9e-f4a52cd5f800.png"        alt="logo width="200" height="100">
   </p>
@@ -45,7 +43,7 @@
 
 ## Diseño
 
-- El diseño de la app ha sido creada por nuestra UI/UX designer [Yesenia Morero](https://www.linkedin.com/in/yesenia-moreno-bernal/), se puede ver en [Figma](https://www.figma.com/file/7LXyAnXTSPlwpIZfNyhl9T/JobMatch*?node-id=3%3A271&t=LuAB7656ZLoEoyh2-0).
+- El diseño se puede ver en [Figma](https://www.figma.com/file/7LXyAnXTSPlwpIZfNyhl9T/JobMatch*?node-id=3%3A271&t=LuAB7656ZLoEoyh2-0).
 
 ## Prerequisitos
 
@@ -57,7 +55,7 @@
 - Sigue la [documentación](https://firebase.google.com/docs/web/setup?hl=es-419) para crear tus credenciales e importarlas a tu proyecto.
 - Crea un archivo llamado `.env`, añade tus credenciales de Firebase en ese archivo, agregalo el archivo .env a .gitignore (para evitar que se suba a Github).
 - Para arrancar el proyecto haz `npm i` para crear los node_modules, luego `npm start` para lanzar el proyecto.
-<br />
+  <br />
 
 ## Librerías externas
 
@@ -88,9 +86,10 @@
 - :white_check_mark: Darle a gustar o no gustar para hacer match, así como deslizar a la derecha o izquierda un perfil para conseguir lo mismo.
 - :white_check_mark: Una vez existe un match, se puede empezar a hablar por el chat de la app.
 
-
 ## QA Testing
+
 **_Pulsa sobre cada imagen para expandirla_**
+
 <p align="center">
 <img src="https://user-images.githubusercontent.com/98957023/222697406-0bb22d1b-6043-4a45-a59c-242f0125f619.png" alt="image" width="300" height="200" style="display:inline-block">
 <img src="https://user-images.githubusercontent.com/98957023/222697646-82d6361c-0c67-4059-9392-8f5af16b6294.png" alt="image" width="300" height="200" style="display:inline-block">
@@ -100,27 +99,8 @@
 <img src="https://user-images.githubusercontent.com/98957023/222697985-19974495-f79a-42e0-8021-89e4b6e7ab60.png" alt="image" width="300" height="200" style="display:inline-block">
 </p>
 
-
-
 ## Contacto
 
-<strong>QA Testing: </strong>
-<li>Tatiana Montoya  <a target="_blank" href="https://www.linkedin.com/in/tatiana-montoya-73593654/"><img  width="20px" height="20px" src="https://lh3.googleusercontent.com/drive-viewer/AJc5JmT3rEWw0KwxXzlpI_BpGFOCQmGN4Bxy53pidk-bfuo02PpRqwIXqZ9ISLN5Nk0AJOg2Z_7JqZA=w1265-h817" /></a></li>
-<br />
-<strong>Diseño: </strong>
-<li>Yesenia Moreno  <a target="_blank" href="https://www.linkedin.com/in/yesenia-moreno-bernal/"><img  width="20px" height="20px" src="https://lh3.googleusercontent.com/drive-viewer/AJc5JmT3rEWw0KwxXzlpI_BpGFOCQmGN4Bxy53pidk-bfuo02PpRqwIXqZ9ISLN5Nk0AJOg2Z_7JqZA=w1265-h817" /></a></li>
-<br />
-<strong>Frontend Devs: </strong>
 <li>Pablo Parra  <a target="_blank" href="https://www.linkedin.com/in/pablo-parra-bcn/"><img  width="20px" height="20px" src="https://lh3.googleusercontent.com/drive-viewer/AJc5JmT3rEWw0KwxXzlpI_BpGFOCQmGN4Bxy53pidk-bfuo02PpRqwIXqZ9ISLN5Nk0AJOg2Z_7JqZA=w1265-h817" /></a></li>
-<br />
-<li>Nicolás Sepertino  <a target="_blank" href="https://www.linkedin.com/in/nicolassepertino/"><img  width="20px" height="20px" src="https://lh3.googleusercontent.com/drive-viewer/AJc5JmT3rEWw0KwxXzlpI_BpGFOCQmGN4Bxy53pidk-bfuo02PpRqwIXqZ9ISLN5Nk0AJOg2Z_7JqZA=w1265-h817" /></a></li>
-<br />
-<li>Nicolás Radin  <a target="_blank" href="https://www.linkedin.com/in/nico-radin/"><img  width="20px" height="20px" src="https://lh3.googleusercontent.com/drive-viewer/AJc5JmT3rEWw0KwxXzlpI_BpGFOCQmGN4Bxy53pidk-bfuo02PpRqwIXqZ9ISLN5Nk0AJOg2Z_7JqZA=w1265-h817" /></a></li>
-<br />
-  
 
-> **Note** > **_Este proyecto ha sido creado sin ningún conocimiento previo de React Native.
-> Se ha desarrollado durante cinco semanas para el Cohorte 9 de [NoCountry](https://www.nocountry.tech/perfilesit).
-> Se aceptan pull requests para mejoras, así como nuevas funcionalidades o para avisar de posibles bugs encontrados durante su uso._**
-
-                                                                                                             
+> **Note** > **_Se aceptan pull requests para mejoras, así como nuevas funcionalidades o para avisar de posibles bugs encontrados durante su uso._**
