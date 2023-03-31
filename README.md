@@ -1,3 +1,5 @@
+[![English](https://img.shields.io/badge/language-English-blue.svg)](README.en.md)
+
 <div align="center">
   <p align="center">   
     <image src="https://user-images.githubusercontent.com/98957023/222693439-c7cdb4da-89f0-414c-ac9e-f4a52cd5f800.png"        alt="logo width="200" height="100">
