@@ -53,7 +53,7 @@
 - Create an account on [Firebase](https://firebase.google.com/).
 - Follow the [documentación](https://firebase.google.com/docs/web/setup?hl=es-419) to create your credentials and import them into your project.
 - Create a file named `.env`, add your Firebase credentials and add the `.env` file to gitignore.
-- To start the project, run npm i to create the node_modules, then npm start to launch the project.
+- To start the project, run `npm i` to create the node_modules, then `npm start` to launch the project.
   <br />
 
 ## External libraries
