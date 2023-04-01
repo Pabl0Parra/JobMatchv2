@@ -36,7 +36,7 @@
 
 ## Introduction
 
-- JobMatch is an application that allows you to create new job relationships in a Tinder-style. You can register as a candidate or as a company looking for new employees.
+- JobMatch is an application that allows you to find a new job in a Tinder-style. You can register as a candidate or as a company looking for new employees.
 - Once your profile is created, you can view job offers (if you are looking for a job) or view candidates that meet the requirements your company needs.
 - When a match is made, a chat is created, giving the opportunity to get to know each other and see if there is a possibility of establishing a job relationship.
 
