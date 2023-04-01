@@ -47,8 +47,8 @@
 ## Prerequisites
 
 - You will need [Git](https://git-scm.com)
-- Install Node.js (which comes with npm) on your computer.
-- You will also need to have Expo CLI installed.
+- Install [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) on your computer.
+- You will also need to have [Expo CLI](https://docs.expo.dev/workflow/expo-cli/).
 - Run npx create-expo-app my-app && cd my-app
 - Create an account on Firebase.
 - Follow the documentation to create your credentials and import them into your project.
