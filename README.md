@@ -30,7 +30,7 @@
     <li><a href="#prerequisitos">Prerequisitos</a></li>    
     <li><a href="#librerías-externas">Librerias externas</a></li>
     <li><a href="#funcionalidades">Funcionalidades</a></li>
-    <li><a href="#qa-testing">QA Testing</a></li>
+    
     <li><a href="#contacto">Contacto</a></li>
   </ol>
 </details>
@@ -50,7 +50,7 @@
 ## Prerequisitos
 
 - Necesitarás [Git](https://git-scm.com).
-- Instala [Node.js](https://nodejs.org/en/download/) (que viene con [npm](http://npmjs.com)) en tu computadora.
+- Instala [Node.js](https://nodejs.org/en/download/) (que viene con [npm](http://npmjs.com)) en tu ordenador.
 - También necesitaras tener instalado [Expo CLI](https://docs.expo.dev/workflow/expo-cli/).
 - Ejecuta `npx create-expo-app my-app && cd my-app`
 - Crea una cuenta en [Firebase](https://firebase.google.com/).
