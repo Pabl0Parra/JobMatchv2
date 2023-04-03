@@ -1,65 +1,62 @@
-[![English](https://img.shields.io/badge/language-English-blue.svg)](README.en.md)
+[![Spanish](https://img.shields.io/badge/language-Spanish-blue.svg)](README.md)
 
 <div align="center">
   <p align="center">   
     <image src="https://user-images.githubusercontent.com/98957023/222693439-c7cdb4da-89f0-414c-ac9e-f4a52cd5f800.png"        alt="logo width="200" height="100">
   </p>
 
-# **:clapper: Vídeo de presentación**
+# **:clapper: Presentation video**
 
-**_Pulsa play para reproducirlo, habilita el sonido si deseas :sound:_**
+**_Press play to watch it, enable sound if you wish :sound:_**
 
 [video_jobmatch.webm](https://user-images.githubusercontent.com/98957023/222695129-5df800a7-567a-4899-b8bc-4ab8f30e3b41.webm)
 
   <br />
-  
   <p align="center">
-    <a href="https://drive.google.com/file/d/1UD8evgeo8afK1Zifod-eAc6ROREokwjy/view?usp=share_link" target="_blank" rel="noopener noreferrer">Descargar JobMatch</a>
+    <a href="https://drive.google.com/file/d/1UD8evgeo8afK1Zifod-eAc6ROREokwjy/view?usp=share_link" target="_blank" rel="noopener noreferrer">Download JobMatch</a>
     :link:
-    <a href="https://github.com/No-Country/C9-47-ft-ReactNative/issues" target="_blank">Reportar error</a>
+    <a href="https://github.com/No-Country/C9-47-ft-ReactNative/issues" target="_blank">Report issue</a>
     :link:
-    <a href="https://github.com/No-Country/C9-47-ft-ReactNative/issues" target="_blank">Solicitar nueva funcionalidad</a>
+    <a href="https://github.com/No-Country/C9-47-ft-ReactNative/issues" target="_blank">Request new functionality</a>
   </p>
 </div>
-
 <details>
-  <summary>Tabla de contenidos</summary>
+  <summary>Table of Contents</summary>
   <ol>
-    <li><a href="#introducción">Introducción</a></li>       
-    <li><a href="#diseño">Diseño</a></li>   
-    <li><a href="#prerequisitos">Prerequisitos</a></li>    
-    <li><a href="#librerías-externas">Librerias externas</a></li>
-    <li><a href="#funcionalidades">Funcionalidades</a></li>
-    
-    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="#introduction">Introduction</a></li>       
+    <li><a href="#design">Design</a></li>   
+    <li><a href="#prerequisites">Prerequisites</a></li>    
+    <li><a href="#external-libraries">External Libraries</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#qa-testing">QA Testing</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
-
 <br />
 
-## Introducción
+## Introduction
 
-- JobMatch es una aplicación que permite crear nuevas relaciones laborales al estilo Tinder. Te puedes registrar como candidato o como empresa que busca nuevos empleados.
-- Una vez creado tu perfil puedes ver ofertas de trabajo (si estás en búsqueda de empleo) o ver candidatos que cumplan los requisitos que tu empresa necesita.
-- Al hacer match, se crea un chat, dando así la oportunidad de conocerse y ver si cabe la posibilidad de entablar una relación laboral.
+- JobMatch is an application that allows you to find a new job in a Tinder-style. You can register as a candidate or as a company looking for new employees.
+- Once your profile is created, you can view job offers (if you are looking for a job) or view candidates that meet the requirements your company needs.
+- When a match is made, a chat is created, giving the opportunity to get to know each other and see if there is a possibility of establishing a job relationship.
 
-## Diseño
+## Design
 
-- El diseño se puede ver en [Figma](https://www.figma.com/file/7LXyAnXTSPlwpIZfNyhl9T/JobMatch*?node-id=3%3A271&t=LuAB7656ZLoEoyh2-0).
+- The design can be found in [Figma](https://www.figma.com/file/7LXyAnXTSPlwpIZfNyhl9T/JobMatch*?node-id=3%3A271&t=LuAB7656ZLoEoyh2-0).
 
-## Prerequisitos
+## Prerequisites
 
-- Necesitarás [Git](https://git-scm.com).
-- Instala [Node.js](https://nodejs.org/en/download/) (que viene con [npm](http://npmjs.com)) en tu ordenador.
-- También necesitaras tener instalado [Expo CLI](https://docs.expo.dev/workflow/expo-cli/).
-- Ejecuta `npx create-expo-app my-app && cd my-app`
-- Crea una cuenta en [Firebase](https://firebase.google.com/).
-- Sigue la [documentación](https://firebase.google.com/docs/web/setup?hl=es-419) para crear tus credenciales e importarlas a tu proyecto.
-- Crea un archivo llamado `.env`, añade tus credenciales de Firebase en ese archivo, agregalo el archivo .env a .gitignore (para evitar que se suba a Github).
-- Para arrancar el proyecto haz `npm i` para crear los node_modules, luego `npm i` para lanzar el proyecto.
+- You will need [Git](https://git-scm.com)
+- Install [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) on your computer.
+- You will also need to have [Expo CLI](https://docs.expo.dev/workflow/expo-cli/).
+- Run `npx create-expo-app my-app && cd my-app`.
+- Create an account on [Firebase](https://firebase.google.com/).
+- Follow the [documentación](https://firebase.google.com/docs/web/setup?hl=es-419) to create your credentials and import them into your project.
+- Create a file named `.env`, add your Firebase credentials and add the `.env` file to gitignore.
+- To start the project, run `npm i` to create the node_modules, then `npm start` to launch the project.
   <br />
 
-## Librerías externas
+## External libraries
 
 - [Yup](https://github.com/jquense/yup)
 - [Formik](https://formik.org/)
@@ -77,20 +74,20 @@
 - [React-native-safe-area-context](https://github.com/th3rdwave/react-native-safe-area-context)
 - [React-native-dropdown-select-list](https://www.npmjs.com/package/react-native-dropdown-select-list)
 
-## Funcionalidades
+## Functionalities
 
-- :white_check_mark: Registrarse con email y password.
-- :white_check_mark: Crear perfil como candidato o empresa.
-- :white_check_mark: Editar perfiles después de haber sido creados.
-- :white_check_mark: Ver perfiles de candidatos o de puestos de trabajo disponibles.
-- :white_check_mark: Filtrar perfiles por puestos de trabajo, años de experiencia, etc...
-- :white_check_mark: Añadir perfil a tus favoritos.
-- :white_check_mark: Darle a gustar o no gustar para hacer match, así como deslizar a la derecha o izquierda un perfil para conseguir lo mismo.
-- :white_check_mark: Una vez existe un match, se puede empezar a hablar por el chat de la app.
+- :white_check_mark: Register with email and password.
+- :white_check_mark: Create a profile as a candidate or a company.
+- :white_check_mark: Edit profiles after they have been created.
+- :white_check_mark: View candidate or available job profiles.
+- :white_check_mark: Filter profiles by job positions, years of experience, etc.
+- :white_check_mark: Add a profile to your favorites.
+- :white_check_mark: Like or dislike a profile to match, as well as swipe right or left to achieve the same.
+- :white_check_mark: Once a match exists, you can start talking through the app's chat.
 
 ## QA Testing
 
-**_Pulsa sobre cada imagen para expandirla_**
+**_Click on each image to enlarge_**
 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/98957023/222697406-0bb22d1b-6043-4a45-a59c-242f0125f619.png" alt="image" width="300" height="200" style="display:inline-block">
@@ -101,8 +98,6 @@
 <img src="https://user-images.githubusercontent.com/98957023/222697985-19974495-f79a-42e0-8021-89e4b6e7ab60.png" alt="image" width="300" height="200" style="display:inline-block">
 </p>
 
-## Contacto
+## Contact
 
 <li>Pablo Parra  <a target="_blank" href="https://www.linkedin.com/in/pablo-parra-bcn/"><img  width="20px" height="20px" src="https://lh3.googleusercontent.com/drive-viewer/AJc5JmT3rEWw0KwxXzlpI_BpGFOCQmGN4Bxy53pidk-bfuo02PpRqwIXqZ9ISLN5Nk0AJOg2Z_7JqZA=w1265-h817" /></a></li>
-
-> **Note** > **_Se aceptan pull requests para mejoras, así como nuevas funcionalidades o para avisar de posibles bugs encontrados durante su uso._**
