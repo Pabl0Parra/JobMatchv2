@@ -51,7 +51,7 @@ const ChooseUserType = () => {
                 <RadioButton
                   value="worker"
                   status={selectedValue === "worker" ? "checked" : "unchecked"}
-                  onPress={(type) => {
+                  onPress={() => {
                     setUserData({ ...userData, worker: true, employer: false }),
                       setSelectedValue("worker");
                   }}
