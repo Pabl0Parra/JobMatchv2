@@ -71,7 +71,7 @@ const ChooseUserType = () => {
                   status={
                     selectedValue === "employer" ? "checked" : "unchecked"
                   }
-                  onPress={(type) => {
+                  onPress={() => {
                     setUserData({ ...userData, worker: false, employer: true }),
                       setSelectedValue("employer");
                   }}
